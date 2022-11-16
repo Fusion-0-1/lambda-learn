@@ -1,0 +1,23 @@
+@import url("main.css");
+
+.background_image_container {
+    width: 65%;
+}
+
+.background_image_container > img {
+    width: 100%;
+}
+
+.login_container_logo {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login_container_logo > img {
+    width: 100%;
+}
+
+.margin-top {
+    margin-top: 20px;
+}

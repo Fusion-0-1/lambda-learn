@@ -1,0 +1,38 @@
+@import url("main.css");
+
+h1 {
+    text-align: center;
+}
+
+.main-container {
+    width: -moz-max-content;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 35% 35% auto;
+    column-gap: 40px;
+    justify-items: start;
+}
+
+.input {
+    width: 375px;
+}
+
+td:nth-child(3) {
+    background-color: var(--white);
+}
+
+td:nth-child(4) {
+    background-color: var(--white);
+}
+
+.error {
+    padding: 20px;
+    width: 100%;
+}
+
+.success {
+    padding: 20px;
+    width: 100%;
+}
