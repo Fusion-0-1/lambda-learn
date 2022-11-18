@@ -1,0 +1,15 @@
+{
+    "name": "fusion-0-1/lambda-learn",
+    "description": "Lambda - Learn | Learning Managment System for Higher Education",
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
+    "authors": [
+        {
+            "name": "fusion-0-1"
+        }
+    ],
+    "require": {}
+}
