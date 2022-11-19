@@ -5,10 +5,12 @@
 <link href="css/sidebar.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
-<div class="sidebar">
-    <a href="home.php"><i class="fa fa-home" aria-hidden="true"></i></a>
-    <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
-    <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+<div class="sidebar flex v-center h-center">
+    <div class="elements">
+        <a href="home.php"><i class="fa fa-home" aria-hidden="true"></i></a>
+        <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+        <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    </div>
 </div>
 
 <?php
