@@ -20,20 +20,30 @@ class Request
         return substr($path, 0, $position);
     }
 
-    public function get_method(): string
+    public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+
+    public function is_get(): bool
+    {
+        return $this->method() === 'get';
+    }
+
+    public function is_post(): bool
+    {
+        return $this->method() === 'post';
     }
 
     public function get_body()
     {
         $body = [];
-        if ($this->get_method() === 'get') {
+        if ($this->is_get()) {
             foreach ($_GET as $key => $value) {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
         }
-        if ($this->get_method() === 'post') {
+        if ($this->is_post()) {
             foreach ($_POST as $key => $value) {
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             }
