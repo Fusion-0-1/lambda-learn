@@ -1,7 +1,47 @@
-<form action="profile_page.php" method="post">
-  <label for="fname">First name:</label><br>
-  <input type="text" id="fname" name="fname" value="John"><br>
-  <label for="lname">Last name:</label><br>
-  <input type="text" id="lname" name="lname" value="Doe"><br><br>
-  <input type="submit" value="Submit">
+<form action="profile" method="POST">
+
+    <div class="input-field">
+        <label>Name</label><br>
+        <input type="text" name="name" value="" class="input"> <br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Index Number</label><br>
+        <input type="number" name="index" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Registration Number</label><br>
+        <input type="text" name="reg" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Email</label><br>
+        <input type="text" name="email" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Contact Number</label><br>
+        <input type="number" name="contact" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Personal Email</label><br>
+        <input type="text" name="personal_email" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Password</label><br>
+        <input type="password" name="pass" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <label>Degree Program</label><br>
+        <input type="text" name="degree" value="" class="input"><br><br>
+    </div>
+
+    <div class="input-field">
+        <button type="submit" name="update_student" class="btn">Update</button>
+    </div>
+
 </form>

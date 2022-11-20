@@ -23,6 +23,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/form.css">
+
     <!-- Favicon -->
 
     <!-- Icons: FontAwesome -->
@@ -31,10 +33,12 @@
     <title>Lambda - Learn </title>
 </head>
 <body>
-<div class="sidebar">
-    <a href="home.php"><i class="fa fa-home" aria-hidden="true"></i></a>
-    <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
-    <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+<div class="sidebar flex v-center h-center">
+    <div class="elements">
+        <a href="home.php"><i class="fa fa-home" aria-hidden="true"></i></a>
+        <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
+        <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+    </div>
 </div>
 <div class="container">
     {{content}}

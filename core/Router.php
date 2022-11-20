@@ -46,9 +46,9 @@ class Router
             return $this->render_view($callback);
         }
         if (is_array($callback)) {
-            $callback[0] = new $callback[0]();
+            $callback[0] = new $callback[0](); // Create an instance of the class
         }
-        return call_user_func($callback);
+        return call_user_func($callback, $this->request);
     }
 
     public function render_view($view, $params = [])

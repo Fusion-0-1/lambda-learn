@@ -5,6 +5,7 @@ namespace app\controllers;
 
 use app\core\Application;
 use app\core\Controller;
+use app\core\Request;
 
 /**
  * Class Response
@@ -13,17 +14,32 @@ use app\core\Controller;
  */
 class SiteController extends Controller
 {
-    public function profile(): string
+//    public function profile()
+//    {
+//        $params = [
+//            'fname' => "Ramindu",
+//            'lname' => "Walgama"
+//        ];
+//        return $this->render('profile_page', $params);
+//    }
+
+    public function profile(Request $request)
     {
-        $params = [
-            'fname' => "Ramindu",
-            'lname' => "Walgama"
-        ];
-        return $this->render('profile_page', $params);
+        $body = $request->get_body();
+        echo "<pre>";
+        var_dump($body);
+        echo "</pre>";
+        exit;
+//        return $this->render('profile_page');
     }
 
-    public function update_profile(): string
+    public function update_profile()
     {
         return $this->render('update_profile');
+    }
+
+    public function handle_form(Request $request) {
+        $body = $request->get_body();
+
     }
 }
