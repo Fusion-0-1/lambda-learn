@@ -5,8 +5,8 @@
     <meta charset="UTF-8" />
     <meta content="Lambda Learning Management System" name="description" />
     <meta
-        content="Lambda, Learning Management System, LMS, Lambda Learning, University"
-        name="keywords"
+            content="Lambda, Learning Management System, LMS, Lambda Learning, University"
+            name="keywords"
     />
     <meta content="Fusion 0-1" name="author">
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -14,8 +14,8 @@
     <!-- Open Graph meta tags for social media sharing -->
     <meta content="Lambda - Fusion 0-1" property="og:title" />
     <meta
-        content="Lambda Learning Management System"
-        property="og:description"
+            content="Lambda Learning Management System"
+            property="og:description"
     />
 
 
@@ -36,6 +36,8 @@
     <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
     <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
 </div>
-{{content}}
+<div class="container">
+    {{content}}
+</div>
 </body>
 </html>

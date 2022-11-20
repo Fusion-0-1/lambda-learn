@@ -1,4 +1,4 @@
 <?php
  ?>
 
-<h1>Profile Page</h1>
+<h1>Profile Page <?php echo $fname . " " . $lname?></h1>
