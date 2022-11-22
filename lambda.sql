@@ -79,8 +79,7 @@ CREATE TABLE CourseSubTopic (
     is_being_tracked BOOLEAN NOT NULL,
     lec_reg_no VARCHAR(12) NOT NULL,
     CONSTRAINT PK_CourseSubTopic PRIMARY KEY (course_code, topic_id, sub_topic_id),
-    CONSTRAINT FK_CourseSubTopic_Course FOREIGN KEY (course_code) REFERENCES Course(course_code),
-    CONSTRAINT FK_CourseSubTopic_CourseTopic FOREIGN KEY (topic_id) REFERENCES CourseTopic(topic_id),
+    CONSTRAINT FK_CourseSubTopic_CourseTopic FOREIGN KEY (course_code, topic_id) REFERENCES CourseTopic(course_code, topic_id),
     CONSTRAINT FK_CourseSubTopic_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no));
  
 DROP TABLE IF EXISTS CourseSubTopicRec;
@@ -90,9 +89,7 @@ CREATE TABLE CourseSubTopicRec (
     sub_topic_id VARCHAR(8) NOT NULL,
     recording VARCHAR(100) NOT NULL,
     CONSTRAINT PK_CourseSubTopicRec PRIMARY KEY (course_code, topic_id, sub_topic_id),
-    CONSTRAINT FK_CourseSubTopicRec_Course FOREIGN KEY (course_code) REFERENCES Course(course_code),
-    CONSTRAINT FK_CourseSubTopicRec_CourseTopic FOREIGN KEY (topic_id) REFERENCES CourseTopic(topic_id),
-    CONSTRAINT FK_CourseSubTopicRec_CourseSubTopic FOREIGN KEY (sub_topic_id) REFERENCES CourseSubTopic(sub_topic_id));
+    CONSTRAINT FK_CourseSubTopicRec_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id));
    
 DROP TABLE IF EXISTS CourseSubTopicSlide;
 CREATE TABLE CourseSubTopicSlide (
@@ -101,9 +98,7 @@ CREATE TABLE CourseSubTopicSlide (
     sub_topic_id VARCHAR(8) NOT NULL,
     slide VARCHAR(100) NOT NULL,
     CONSTRAINT PK_CourseSubTopicSlide PRIMARY KEY (course_code, topic_id, sub_topic_id),
-    CONSTRAINT FK_CourseSubTopicSlide_Course FOREIGN KEY (course_code) REFERENCES Course(course_code),
-    CONSTRAINT FK_CourseSubTopicSlide_CourseTopic FOREIGN KEY (topic_id) REFERENCES CourseTopic(topic_id),
-    CONSTRAINT FK_CourseSubTopicSlide_CourseSubTopic FOREIGN KEY (sub_topic_id) REFERENCES CourseSubTopic(sub_topic_id));
+    CONSTRAINT FK_CourseSubTopicSlide_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id));
  
 DROP TABLE IF EXISTS CourseSubmission;
 CREATE TABLE CourseSubmission (
@@ -125,13 +120,14 @@ CREATE TABLE KanbanTask (
     description VARCHAR(300),
     due_date DATETIME,
     state INT NOT NULL,
+    course_code VARCHAR(8),
     submission_id VARCHAR(4),
     stu_reg_no VARCHAR(12) NOT NULL,
     lec_reg_no VARCHAR(12),
     CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id),
+    CONSTRAINT FK_KanbanTask_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id),
     CONSTRAINT FK_KanbanTask_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_KanbanTask_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no),
-    CONSTRAINT FK_KanbanTask_CourseSubmission FOREIGN KEY (submission_id) REFERENCES CourseSubmission(submission_id));
+    CONSTRAINT FK_KanbanTask_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no));
  
 DROP TABLE IF EXISTS TimeTableEvent;
 CREATE TABLE TimeTableEvent (
@@ -221,9 +217,7 @@ CREATE TABLE StuCourseSubTopic (
     is_completed BOOLEAN,
     CONSTRAINT PK_StuCourseSubTopic PRIMARY KEY (stu_reg_no, course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_StuCourseSubTopic_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_StuCourseSubTopic_Course FOREIGN KEY (course_code) REFERENCES Course(course_code),
-    CONSTRAINT FK_StuCourseSubTopic_CourseTopic FOREIGN KEY (topic_id) REFERENCES CourseTopic(topic_id),
-    CONSTRAINT FK_StuCourseSubTopic_CourseSubTopic FOREIGN KEY (sub_topic_id) REFERENCES CourseSubTopic(sub_topic_id));
+    CONSTRAINT FK_StuCourseSubTopic_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id));
  
 DROP TABLE IF EXISTS StuCourse;
 CREATE TABLE StuCourse (
@@ -246,12 +240,12 @@ CREATE TABLE LecCourse (
 DROP TABLE IF EXISTS StuCourseSubmission;
 CREATE TABLE StuCourseSubmission (
     stu_reg_no VARCHAR(12) NOT NULL,
-    submission_id VARCHAR(4) NOT NULL,
     course_code VARCHAR(8) NOT NULL,
+    submission_id VARCHAR(4) NOT NULL,
     stu_submission_point INT,
     stu_submission_mark INT,
-    CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, submission_id, course_code),
+    CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (submission_id) REFERENCES CourseSubmission(submission_id),
-    CONSTRAINT FK_StuCourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code));
+    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id));
  
+
