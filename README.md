@@ -12,4 +12,6 @@ Update the dependencies by executing below command in the root directory.
 > compose update
 
 Start the server from the `./public/` directory,
-> php -S localhost:8080
+> php -S 127.0.0.1:8080
+
+Open `127.0.0.1` in browser.

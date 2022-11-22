@@ -11,5 +11,8 @@
             "name": "fusion-0-1"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+      "ext-mysqli": "*"
+    }
 }

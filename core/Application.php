@@ -2,10 +2,10 @@
 
 namespace app\core;
 
-
 /**
  * Class Application
  *
+ * @property $config
  * @package app\core
  */
 class Application
@@ -16,14 +16,16 @@ class Application
     public Request $request;
     public Response $response;
     public static Application $app;
+    public DbConnection $db;
 
-    public function __construct($root_path)
+    public function __construct($root_path, $config = [])
     {
         self::$ROOT_DIR = $root_path;
         self::$app = $this;
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
+        $this->db = new DbConnection($config['db']);
     }
 
     public function run()

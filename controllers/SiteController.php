@@ -25,7 +25,7 @@ class SiteController extends Controller
 
     public function profile(Request $request)
     {
-        $body = $request->get_body();
+        $body = $request->getBody();
         echo "<pre>";
         var_dump($body);
         echo "</pre>";
@@ -39,7 +39,7 @@ class SiteController extends Controller
     }
 
     public function handle_form(Request $request) {
-        $body = $request->get_body();
+        $body = $request->getBody();
 
     }
 }

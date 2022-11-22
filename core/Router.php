@@ -35,15 +35,15 @@ class Router
 
     public function resolve()
     {
-        $path = $this->request->get_path();
+        $path = $this->request->getPath();
         $method = $this->request->method();
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->set_status_code(404);
-            return $this->render_view('error_404');
+            return $this->renderView('error_404'); //TODO: use renderOnlyView and create a separate page here
         }
         if (is_string($callback)) {
-            return $this->render_view($callback);
+            return $this->renderView($callback);
         }
         if (is_array($callback)) {
             $callback[0] = new $callback[0](); // Create an instance of the class
@@ -51,27 +51,27 @@ class Router
         return call_user_func($callback, $this->request);
     }
 
-    public function render_view($view, $params = [])
+    public function renderView($view, $params = [])
     {
-        $layout_content = $this->layout_content();
-        $view_content = $this->render_only_view($view, $params);
+        $layout_content = $this->layoutContent();
+        $view_content = $this->renderOnlyView($view, $params);
         return str_replace('{{content}}', $view_content, $layout_content);
     }
 
-    public function render_content($view_content)
+    public function renderContent($view_content)
     {
-        $layout_content = $this->layout_content();
+        $layout_content = $this->layoutContent();
         return str_replace('{{content}}', $view_content, $layout_content);
     }
 
-    protected function layout_content()
+    protected function layoutContent()
     {
         ob_start();
         include_once Application::$ROOT_DIR."/views/layouts/main.php";
         return ob_get_clean();
     }
 
-    protected function render_only_view($view, $params = [])
+    public function renderOnlyView($view, $params = [])
     {
         foreach ($params as $key => $value) {
             $$key = $value;
