@@ -16,7 +16,7 @@
 <body>
 
 <div class="container">
-    <a href="student_view.php">BACK</a>
+    <a href="student_view.php" class="back">BACK</a>
     <?php
         include("message.php");
     ?>

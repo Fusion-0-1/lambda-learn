@@ -11,21 +11,21 @@
 }
 
 .container{
-    width: 1000px;
     margin: auto;
     margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
 }
 
 .card{
     width: 250px;
-    margin: 10px;
-    padding: 10px 20px;
     background: rgb(19, 19, 132);
     text-align: center;
     font-size: 15px;
     color: white;
     float: left;
-    margin: 10px;
+    margin: 20px;
     padding: 20px;
     border-radius: 17px;
 }
@@ -37,56 +37,4 @@
     border-radius: 17px;
 }
 
-/*
-.container{
-    width: 1100px;
-    max-width: 0 auto;
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    line-height: 1.5;
-    min-height: 80vh;
-}
-
-.row{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-}
-
-.card{
-    background: rgb(28, 28, 126);
-    flex: 1 1 21; 
-    margin: 10px;
-    padding: 10px 20px;
-    align-self: normal;
-    flex-direction: column;
-    align-items: center;
-}
-
-.card h4{
-    font-size: 1.3rem;
-    margin: 10px 0;
-    text-align: center;
-    color: white;
-}
-
-
-
-
-.dash-link{
-    position: relative;
-    color: rgb(7, 1, 27);
-    display: table;
-    width: 300px;
-    padding: 30px;
-    
-}
-
-.card img{
-    max-width: 100px;
-} */
 

@@ -22,7 +22,7 @@ body{
 }
 
 nav{
-    position: absolute;
+    position: fixed;
     top:0;
     bottom:0;
     height:100%;
@@ -53,4 +53,20 @@ nav{
 .fa-right-from-bracket{
     color: black;
 }
+
+.display{
+    display: flex;
+    flex-direction: column;        
+    align-content: center;
+    justify-content: center; 
+    /* align-items: center;  */ 
+}
+
+.user h4{
+    text-align: right;
+    padding: 10px;
+    font-weight: normal;
+    margin-right: 10px;
+}
+ 
 

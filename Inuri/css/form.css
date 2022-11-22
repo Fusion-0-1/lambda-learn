@@ -1,5 +1,5 @@
 .container{
-    background:#f2f4f7;
+    /* background:#f2f4f7; */
     padding: 0 10px;
 }
 
@@ -62,6 +62,11 @@
 
 .wrapper .form .input-field .btn:hover{
     background: #173d65;
+}
+
+.back{
+    margin-left: 100px;
+    font-weight: bold;
 }
 
 
