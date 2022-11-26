@@ -21,4 +21,21 @@ class DbConnection
         $this->db = $conn;
         mysqli_select_db($this->db, $db_name);
     }
+
+    public function select($table, $columns = '*', $where = null, $order = null, $limit = null)
+    {
+        $sql = "SELECT $columns FROM $table";
+        if ($where != null) {
+            $sql .= " WHERE $where";
+        }
+        if ($order != null) {
+            $sql .= " ORDER BY $order";
+        }
+        if ($limit != null) {
+            $sql .= " LIMIT $limit";
+        }
+        $result = mysqli_query($this->db, $sql);
+
+        return mysqli_fetch_assoc($result);
+    }
 }
