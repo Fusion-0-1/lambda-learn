@@ -35,9 +35,7 @@
 <body>
 <div class="sidebar flex v-center h-center">
     <div class="elements">
-        <a href="home.php"><i class="fa fa-home" aria-hidden="true"></i></a>
-        <a href="course.php"><i class="fa fa-graduation-cap" aria-hidden="true"></i></a>
-        <a href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
 </div>
 <div class="container">

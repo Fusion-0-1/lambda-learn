@@ -20,8 +20,6 @@ $config = [
 $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', 'home');
-$app->router->post('/profile', [SiteController::class, 'profile']);
-$app->router->get('/update_profile', [SiteController::class, 'update_profile']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);

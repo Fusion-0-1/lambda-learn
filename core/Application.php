@@ -6,6 +6,7 @@ namespace app\core;
  * Class Application
  *
  * @property $config
+ * @property DbConnection $db
  * @package app\core
  */
 class Application
@@ -16,7 +17,7 @@ class Application
     public Request $request;
     public Response $response;
     public static Application $app;
-    public DbConnection $db;
+    public static DbConnection $db;
 
     public function __construct($root_path, $config = [])
     {
@@ -25,7 +26,7 @@ class Application
         $this->request = new Request();
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
-        $this->db = new DbConnection($config['db']);
+        static::$db = DbConnection::getDatabaseInstance($config['db']);
     }
 
     public function run()

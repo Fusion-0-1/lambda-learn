@@ -8,8 +8,8 @@
                 <img src="images/logo.png" alt="logo">
             </div>
             <?php
-            if (isset($_GET['error'])) {
-                echo "<p class='error error-bg text-center'> Invalid Credentials </p>";
+            if (isset($error)) {
+                echo "<div class='error'>$error</div>";
             }
             ?>
             <form action="login" method="POST" class="login_form flex flex-column h-center">

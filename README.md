@@ -14,4 +14,4 @@ Update the dependencies by executing below command in the root directory.
 Start the server from the `./public/` directory,
 > php -S 127.0.0.1:8080
 
-Open `127.0.0.1` in browser.
+Open `127.0.0.1:8080` in browser.
