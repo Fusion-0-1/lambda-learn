@@ -36,9 +36,7 @@ nav{
     position: relative;
     color: rgb(7, 1, 27);
     display: table;
-    width: 300px;
     padding: 30px;
-
 }
 
 .top-menu{
@@ -69,4 +67,11 @@ nav{
     margin-right: 10px;
 }
  
-
+#logo {
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    left: 0;
+    position: fixed;
+}

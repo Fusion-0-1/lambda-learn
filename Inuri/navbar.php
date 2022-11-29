@@ -1,15 +1,5 @@
 <?php
-
 session_start();
-if(isset($_SESSION['User'])){
-   
-    echo "<div class='user'><h4>{$_SESSION['User']}</h4></div>";
-    //echo '<div class="top-menu"><h1>_</h1><a href="logout.php?logout" class="logout">Logout</i></i></a></div>';
-} 
-else{
-    header("location:index.php");
-}
-
 ?>
 
 
@@ -24,13 +14,23 @@ else{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 <body>
-    <div class="navbar">
-    <nav>
+    
+<div id="logo">
+    <img src="img/logo.jpg" alt="" class="img">
+</div>
+<?php 
+if(isset($_SESSION['User'])){
+   
+   echo "<div class='user'><h4>{$_SESSION['User']}</h4></div>";
+   //echo '<div class="top-menu"><h1>_</h1><a href="logout.php?logout" class="logout">Logout</i></i></a></div>';
+} 
+else{
+   header("location:index.php");
+}
+?>
+    <nav class="navbar">
+        <div class="display">
         <ul>
-            <li><img src="img/logo.jpg" alt="" class="img"></li>
-        </ul>
-        <ul class="display">
-            
             <li><a href="dashboard.php" class="nav-link">
                 <i class="fa-solid fa-house"></i>
             </a></li>
@@ -56,8 +56,9 @@ else{
                     }
                 ?>
             </li>
+            </ul>
+        </div>
     </nav>
-    </div>
     
 </body>
 </html>
