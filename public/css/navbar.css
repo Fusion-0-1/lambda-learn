@@ -1,0 +1,18 @@
+.sidebar {
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    top: 0;
+    left: 0;
+    background-color: var(--pure-white);
+    box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.1);
+}
+
+a {
+    display: block;
+    color: var(--x-dark-blue);
+    padding: 13px;
+    text-decoration: none;
+}

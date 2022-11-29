@@ -1,6 +1,6 @@
 {
     "name": "fusion-0-1/lambda-learn",
-    "description": "Lambda - Learn | Learning Managment System for Higher Education",
+    "description": "Lambda - Learn | Learning Management System for Higher Education",
     "autoload": {
         "psr-4": {
             "app\\": "./"
@@ -11,5 +11,8 @@
             "name": "fusion-0-1"
         }
     ],
-    "require": {}
+    "require": {
+        "vlucas/phpdotenv": "^5.5",
+      "ext-mysqli": "*"
+    }
 }

@@ -10,7 +10,7 @@ namespace app\core;
 
 class Request
 {
-    public function get_path()
+    public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
         $position = strpos($path, '?');
@@ -20,8 +20,36 @@ class Request
         return substr($path, 0, $position);
     }
 
-    public function get_method(): string
+    public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
+    }
+
+    public function isGet(): bool
+    {
+        return $this->method() === 'get';
+    }
+
+    public function isPost(): bool
+    {
+        return $this->method() === 'post';
+    }
+
+    public function getBody()
+    {
+        $body = [];
+        if ($this->isGet()) {
+            foreach ($_GET as $key => $value) {
+                // Special Characters - < > " ' & are encoded to HTML entities : &lt; &gt; &quot; &apos; &amp;
+                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        if ($this->isPost()) {
+            foreach ($_POST as $key => $value) {
+                // Special Characters - < > " ' & are encoded to HTML entities : &lt; &gt; &quot; &apos; &amp;
+                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        return $body;
     }
 }
