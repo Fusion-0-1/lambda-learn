@@ -127,13 +127,10 @@ CREATE TABLE KanbanTask (
     title VARCHAR(50) NOT NULL,
     description VARCHAR(300),
     due_date DATETIME,
-    state INT NOT NULL,
-    course_code VARCHAR(8),
-    submission_id VARCHAR(4),
-    stu_reg_no VARCHAR(12) NOT NULL,
+    state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
+    stu_reg_no VARCHAR(12),
     lec_reg_no VARCHAR(12),
     CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id),
-    CONSTRAINT FK_KanbanTask_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id),
     CONSTRAINT FK_KanbanTask_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_KanbanTask_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no)
 );
@@ -264,6 +261,7 @@ CREATE TABLE StuCourseSubmission (
     submission_id VARCHAR(4) NOT NULL,
     stu_submission_point INT,
     stu_submission_mark INT,
+    state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
     CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
