@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 :root {
-    --x-dark-blue: #0D2137;
+    --x-dark-blue: #284DCE;
     --blue: #0B2273;
     --ash: #47596D;
     --ash-green: #476F86;
@@ -13,18 +13,24 @@
     --error-bg: #EADCDC;
     --green: #009900;
     --green-bg: #DCEADD;
+    --background-white: #F7F7F7;
+    --heading-blue: #0D2137;
 }
 
 body {
-    background: var(--white);
+    background: var(--background-white);
     margin-left: 60px;
     margin-top: 60px;
     font-family: Roboto, sans-serif;
 }
+/* --------------------------------------------------- */
 
+
+
+/* --------------- Container formatting --------------- */
 .main-container {
     background-color: var(--white);
-    padding: 30px;
+    padding: 40px;
     border-radius: 20px;
 }
 
@@ -40,17 +46,13 @@ body {
 .border {
     border: 3px solid var(--border-white);
 }
+/* --------------------------------------------------- */
 
-.v-center {
-    align-items: center;
-}
 
-.h-center {
-    justify-content: center;
-}
 
-.h-justify {
-    justify-content: space-between;
+/* ----------------- Text formatting ----------------- */
+.heading-color{
+    color: var(--heading-blue);
 }
 
 .text-center {
@@ -85,6 +87,10 @@ body {
     font-weight: bold;
 }
 
+.text-normal{
+    font-weight: normal;
+}
+
 .text-italic {
     font-style: italic;
 }
@@ -100,10 +106,14 @@ body {
 .text-no-decoration {
     text-decoration: none;
 }
+/* --------------------------------------------------- */
 
+
+
+/* ----------------- Flex formatting ----------------- */
 .flex {
     display: flex;
-}
+} 
 
 .flex-wrap {
     flex-wrap: wrap;
@@ -117,27 +127,52 @@ body {
     flex-direction: row;
 }
 
-.dark-btn{
-    width: 75%;
-    height: 35px;
+.v-center {
+    align-items: center;
+}
+
+.h-center {
+    justify-content: center;
+}
+
+.h-justify {
+    justify-content: space-between;
+}
+
+.align-stretch{
+    align-items: stretch;
+}
+/* --------------------------------------------------- */
+
+
+
+/* ----------------- Form formatting ----------------- */
+.dark-btn{    
+    /* TODO: Add default with of the input field */
     background-color: var(--x-dark-blue);
     color: var(--white);
     margin-left: auto;
     margin-right: auto;
     border-radius: 8px;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input {
-    width: 100%;
-    height: 40px;
+    /* TODO: Add default with of the input field */
     background-color: var(--blue-white);
     border: 3px solid var(--border-white);
-    text-align: right;
     color: var(--blue);
-    padding-right: 15px;
+    padding-left: 14px;
     border-radius: 8px;
 }
+/* --------------------------------------------------- */
 
+
+
+/* ---------------- Table formatting ---------------- */
 table {
     width: 100%;
     border: none;
@@ -163,8 +198,13 @@ tr:nth-child(odd) {
     background-color: var(--blue);
     color: var(--white);
 }
+/* --------------------------------------------------- */
 
-.error {
+
+
+/* --------------- Messages Formatting --------------- */
+.error-message{
+    font-size: 13px;
     color: var(--error);
 }
 
@@ -172,14 +212,14 @@ tr:nth-child(odd) {
     background-color: var(--error-bg);
 }
 
-.success {
+.success-message {
+    font-size: 13px;
     color: var(--green);
 }
 
 .success-bg {
     background-color: var(--green-bg);
 }
-
 
 .error-btn {
     color: var(--error);
@@ -198,7 +238,11 @@ tr:nth-child(odd) {
     border: var(--x-dark-blue) 1px solid;
     background-color: var(--blue-white);
 }
+/* --------------------------------------------------- */
 
+
+
+/* ----------------- Modal Formatting ---------------- */
 .modal {
     display: none;
     position: fixed;
@@ -232,7 +276,16 @@ tr:nth-child(odd) {
     text-decoration: none;
     cursor: pointer;
 }
+/* --------------------------------------------------- */
 
+
+
+/* ---------------- Content Formatting --------------- */
 .hide {
     display: none;
 }
+
+.float-right{
+    float: right;
+}
+

@@ -9,7 +9,7 @@ Install php. Install composer from `https://getcomposer.org/download/`.
 
 ## Installation
 Update the dependencies by executing below command in the root directory.
-> compose update
+> composer update
 
 Start the server from the `./public/` directory,
 > php -S 127.0.0.1:8080
