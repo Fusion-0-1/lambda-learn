@@ -178,7 +178,7 @@ CREATE TABLE PerformanceHistory (
     date_time DATETIME NOT NULL,
     cpu_usage VARCHAR(6),
     ram_usage VARCHAR(6),
-    storage_usage VARCHAR(6),
+    storage_usage VARCHAR(10),
     concurrent_users VARCHAR(6),
     CONSTRAINT PK_PerformanceHistory PRIMARY KEY (date_time)
 );
