@@ -78,7 +78,7 @@ DROP TABLE IF EXISTS CourseSubTopic;
 CREATE TABLE CourseSubTopic (
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
-    sub_topic_id DECIMAL(3,3) NOT NULL,
+    sub_topic_id DECIMAL(4,2) NOT NULL,
     sub_topic VARCHAR(50) NOT NULL,
     is_being_tracked BOOLEAN NOT NULL,
     lec_reg_no VARCHAR(12) NOT NULL,
@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS CourseSubTopicRec;
 CREATE TABLE CourseSubTopicRec (
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
-    sub_topic_id DECIMAL(3,3) NOT NULL,
+    sub_topic_id DECIMAL(4,2) NOT NULL,
     recording VARCHAR(100) NOT NULL,
     CONSTRAINT PK_CourseSubTopicRec PRIMARY KEY (course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_CourseSubTopicRec_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)
@@ -101,7 +101,7 @@ DROP TABLE IF EXISTS CourseSubTopicSlide;
 CREATE TABLE CourseSubTopicSlide (
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
-    sub_topic_id DECIMAL(3,3) NOT NULL,
+    sub_topic_id DECIMAL(4,2) NOT NULL,
     slide VARCHAR(100) NOT NULL,
     CONSTRAINT PK_CourseSubTopicSlide PRIMARY KEY (course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_CourseSubTopicSlide_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)
@@ -227,7 +227,7 @@ CREATE TABLE StuCourseSubTopic (
     stu_reg_no VARCHAR(12) NOT NULL,
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
-    sub_topic_id DECIMAL(3,3) NOT NULL,
+    sub_topic_id DECIMAL(4,2) NOT NULL,
     is_completed BOOLEAN,
     CONSTRAINT PK_StuCourseSubTopic PRIMARY KEY (stu_reg_no, course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_StuCourseSubTopic_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
