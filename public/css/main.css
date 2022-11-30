@@ -54,6 +54,10 @@ body {
     display: inline-flex;
 }
 
+.width-full{
+    width: 80%;
+}
+
 /* --------------------------------------------------- */
 
 
@@ -113,6 +117,10 @@ body {
 
 .text-no-decoration {
     text-decoration: none;
+}
+
+.line-height{
+    line-height: 3px;
 }
 /* --------------------------------------------------- */
 
@@ -254,6 +262,19 @@ td{
     border: var(--x-dark-blue) 1px solid;
     background-color: var(--x-dark-blue);
 }
+
+.edit-btn-text{
+    height: 35px;
+    border-radius: 10px;
+}
+
+.confirm-btn{
+    color: var(--white);
+    border: none;
+    height: 35px;
+    border-radius: 10px;
+    background-color: var(--green);
+}
 /* --------------------------------------------------- */
 
 
@@ -272,15 +293,14 @@ td{
 }
 
 .modal-content {
-    background-color: var(--white);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    border-radius: 15px;
 }
 
 .close {
-    color: var(--x-dark-blue);
+    color: var(--heading-blue);
     float: right;
     font-size: 28px;
     font-weight: bold;

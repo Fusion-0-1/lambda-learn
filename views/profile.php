@@ -34,13 +34,13 @@
 </head>
 <body>
     <div class="border main-container v-center flex-gap">
-        <div class="flex h-center v-center flex-gap">
+        <div class="flex h-center v-center">
             <div>
                 <h2 class="text-center">Inuri Lavanya</h2>
-                <h3 class="text-center text-normal">Student</h3>
+                <h3 class="text-center text-normal line-height">Student</h3>
             </div>
             <div>
-                <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+<!--                <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
             </div>
 
         </div>
@@ -56,39 +56,64 @@
                 <div class="margin-top">
                     <label class="margin-top">Index Number</label> <br>
                     <div class="flex">
-                        <input type="text" value="20000715" class="input text-right"><br>
+                        <input type="text" value="20000715" class="input text-right width-full"><br>
                     </div>
                 </div>
 
                 <div class="margin-top">
                     <label class="margin-top">Registration Number</label><br>
                     <div class="flex">
-                        <input type="text" value="20000715" class="input text-right"><br>
+                        <input type="text" value="20000715" class="input text-right width-full"><br>
                     </div>
                 </div>
 
                 <div class="margin-top">
                     <label class="margin-top">Email</label><br>
                     <div class="flex">
-                        <input type="text" value="2020cs0071@gmail.com" class="input text-right">
-                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                        <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+<!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                     </div>
                 </div>
 
                 <div class="margin-top">
                     <label class="margin-top">Contact Number</label><br>
                     <div class="flex">
-                        <input type="text" value="2020cs0071@gmail.com" class="input text-right">
-                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                        <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+<!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                     </div>
                 </div>
 
                 <div class="margin-top">
                     <label class="margin-top">Personal Email</label><br>
                     <div class="flex">
-                        <input type="text" value="2020cs0071@gmail.com" class="input text-right">
-                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                        <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+<!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                     </div>
+                </div>
+                <div class="flex margin-top">
+                    <button class="edit-btn edit-btn-text width-full">Change Password</button>
+                    <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                </div>
+            </div>
+
+            <div id="modal" class="modal" >
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form>
+                        <div class="margin-top">
+                            <label>Existing Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <div class="margin-top">
+                            <label>New Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <div class="margin-top">
+                            <label>Confirm Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <button class="confirm-btn margin-top flex h-center v-center">Confirm</button>
+                    </form>
                 </div>
             </div>
 
@@ -139,5 +164,23 @@
         </div>
 
     </div>
+
+    <script>
+        var modal = document.getElementById("modal");
+        var btn = document.getElementById("edit");
+        var span = document.getElementsByClassName("close");
+
+        btn.onclick = function (){
+            modal.style.display = "block";
+        }
+        span.onclick = function (){
+            modal.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

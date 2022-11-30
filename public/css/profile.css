@@ -15,7 +15,7 @@
     margin-top: 20px;
 }
 
-.edit-btn{
+.edit-btn-icon{
     margin-left: 20px;
 }
 
@@ -27,4 +27,16 @@ tr:nth-child(odd) {
 .main-container{
     padding-top: 10px;
 }
+
+.modal-content{
+    width: 25%;
+    background-color: var(--white);
+}
+
+.confirm-btn{
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
