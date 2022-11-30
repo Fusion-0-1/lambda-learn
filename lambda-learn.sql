@@ -93,7 +93,7 @@ CREATE TABLE CourseSubTopicRec (
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
     recording VARCHAR(100) NOT NULL,
-    CONSTRAINT PK_CourseSubTopicRec PRIMARY KEY (course_code, topic_id, sub_topic_id),
+    CONSTRAINT PK_CourseSubTopicRec PRIMARY KEY (course_code, topic_id, sub_topic_id, recording),
     CONSTRAINT FK_CourseSubTopicRec_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)
 );
    
@@ -103,7 +103,7 @@ CREATE TABLE CourseSubTopicSlide (
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
     slide VARCHAR(100) NOT NULL,
-    CONSTRAINT PK_CourseSubTopicSlide PRIMARY KEY (course_code, topic_id, sub_topic_id),
+    CONSTRAINT PK_CourseSubTopicSlide PRIMARY KEY (course_code, topic_id, sub_topic_id, slide),
     CONSTRAINT FK_CourseSubTopicSlide_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)
 );
  
