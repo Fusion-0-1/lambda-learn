@@ -1,0 +1,30 @@
+.profile_img{
+    width: 120PX;
+    height: 120PX;
+    border-radius: 50%;
+    border: 3px solid var(--heading-blue);
+}
+
+.profile_img_center{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.margin-top{
+    margin-top: 20px;
+}
+
+.edit-btn{
+    margin-left: 20px;
+}
+
+tr:nth-child(odd) {
+    border-bottom: 15px solid white;
+    border-top: 15px solid white;
+}
+
+.main-container{
+    padding-top: 10px;
+}
+
