@@ -26,7 +26,7 @@ class AuthController extends Controller
                         $user = new Lecturer($regNo);
                     } else if (User::getUserType($regNo) == 'Admin') {
                         $user = new Admin($regNo);
-                    }x
+                    }
                     $user->setLogin();
                     $_SESSION['user'] = serialize($user);
                     $_SESSION['last_activity'] = time();
