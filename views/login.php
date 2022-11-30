@@ -1,3 +1,9 @@
+<?php
+if (isset($_SESSION['user'])) {
+    header('Location: /');
+    exit;
+}
+?>
 <section class="login">
     <div class="login_container flex flex-row h-center">
         <div class="background_image_container">

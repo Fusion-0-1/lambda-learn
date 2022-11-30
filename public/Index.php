@@ -24,5 +24,6 @@ $app->router->get('/', 'home');
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
 
+$app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->run();

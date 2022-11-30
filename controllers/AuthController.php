@@ -26,13 +26,25 @@ class AuthController extends Controller
                         $user = new Lecturer($regNo);
                     } else if (User::getUserType($regNo) == 'Admin') {
                         $user = new Admin($regNo);
-                    }
-                    $_SESSION['user'] = $user;
+                    }x
+                    $user->setLogin();
+                    $_SESSION['user'] = serialize($user);
+                    $_SESSION['last_activity'] = time();
                     return $this->render('home'); // TODO: Change to dashboard and create dashboard view
                 }
             }
             // TODO: Accept this error message from the login view
             return $this->renderOnlyView('login', ['error' => 'Invalid credentials']);
         }
+    }
+
+    public function logout()
+    {
+        if (isset($_SESSION['user'])) {
+            $user = unserialize($_SESSION['user']);
+            $user->setLogout();
+            session_destroy();
+        }
+        return $this->renderOnlyView('login');
     }
 }
