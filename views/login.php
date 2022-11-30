@@ -1,3 +1,11 @@
+<?php
+if (isset($_SESSION['user'])) {
+    header('Location: /');
+    exit;
+}
+?>
+<section class="login">
+    <div class="login_container flex flex-row h-center">
 <!DOCTYPE html>
 <html lang="en">
 <head>

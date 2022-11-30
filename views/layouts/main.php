@@ -1,3 +1,20 @@
+<?php
+if (!isset($_SESSION['user'])) {
+    header('Location: /login');
+    exit;
+} else {
+    // Session timeout after 30 minutes
+    if (time() - $_SESSION['last_activity'] > 60*30) {
+        $user = unserialize($_SESSION['user']);
+        $user->setLogout();
+        session_destroy();
+        header('Location: /logout');
+        exit;
+    }
+    $_SESSION['last_activity'] = time();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +43,7 @@
     <link rel="stylesheet" href="css/form.css">
 
     <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon-light.svg">
 
     <!-- Icons: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -36,6 +54,11 @@
 <div class="sidebar flex v-center h-center">
     <div class="elements">
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
+    </div>
+</div>
+<div class="topbar flex v-center h-center">
+    <div class="elements">
+        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
     </div>
 </div>
 <div class="container">

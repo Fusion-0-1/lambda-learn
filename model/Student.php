@@ -7,16 +7,6 @@ use app\core\User;
 
 class Student extends User
 {
-    private string $regNo;
-    private string $firstName;
-    private string $lastName;
-    private string $email;
-    private string $personalEmail;
-    private string $contactNo;
-    private string $lastLogin;
-    private string $lastLogout;
-    private bool $activeStatus;
-    private string $profilePicture;
     private int $indexNo;
     private string $dateJoined;
     private string $degreeProgramCode;

@@ -31,15 +31,15 @@ class DbConnection
         return static::$instance;
     }
 
-    public function select($table, $columns = '*', $where = null, $order = null, $limit = null): array
+    /*
+     * @param bool $getAsArray: If true, returns the result as an array.
+     *                          If false, returns the result as an object of mysqli_query.
+     */
+    public function select($table, $columns = '*', $where = null, $order = null, $limit = null, $getAsArray=true)
     {
         $sql = "SELECT $columns FROM $table";
         if ($where != null) {
-            $sql .= " WHERE " . array_keys($where)[0] . "='" . array_values($where)[0] . "'";
-            array_shift($where);
-            foreach ($where as $key => $value) {
-                $sql .= " AND $key = '$value'";
-            }
+            $sql .= $this->addSQLWhere($where);
         }
         if ($order != null) {
             $sql .= " ORDER BY $order";
@@ -48,6 +48,9 @@ class DbConnection
             $sql .= " LIMIT $limit";
         }
         $result = mysqli_query($this->db, $sql);
+        if (!$getAsArray) {
+            return $result;
+        }
 
         return mysqli_fetch_assoc($result);
     }
@@ -58,16 +61,36 @@ class DbConnection
         return mysqli_query($this->db, $sql);
     }
 
-    public function update($table, $columns, $where): array
+    public function update($table, $columns, $where): bool|\mysqli_result
     {
-        $sql = "UPDATE $table SET $columns WHERE $where";
+        $sql = "UPDATE $table";
+
+        $sql .= " SET ";
+        foreach ($columns as $key => $value) {
+            $sql .= "$key = '$value', ";
+        }
+        $sql = substr($sql, 0, -2);
+
+        $sql .= $this->addSQLWhere($where);
+
         return mysqli_query($this->db, $sql);
     }
 
-    public function delete($table, $where): array
+    public function delete($table, $where): bool|\mysqli_result
     {
-        $sql = "DELETE FROM $table WHERE $where";
+        $sql = "DELETE FROM $table";
+        $sql .= $this->addSQLWhere($where);
         return mysqli_query($this->db, $sql);
+    }
+
+    public function fetch($result): bool|array|null
+    {
+        return mysqli_fetch_assoc($result);
+    }
+
+    public function rowCount($result): int|string
+    {
+        return mysqli_num_rows($result);
     }
 
     public function setEmptyToNullColumns($table): array
@@ -78,6 +101,16 @@ class DbConnection
             }
         }
         return $table;
+    }
+
+    private function addSQLWhere($where)
+    {
+        $sql = " WHERE " . array_keys($where)[0] . "='" . array_values($where)[0] . "'";
+        array_shift($where);
+        foreach ($where as $key => $value) {
+            $sql .= " AND $key = '$value'";
+        }
+        return $sql;
     }
 
     public function __destruct()

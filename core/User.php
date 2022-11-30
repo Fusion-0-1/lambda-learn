@@ -4,10 +4,19 @@ namespace app\core;
 
 abstract class User
 {
+    protected string $regNo;
+    protected string $firstName;
+    protected string $lastName;
+    protected string $email;
+    protected string $personalEmail;
+    protected string $contactNo;
+    protected string $lastLogin;
+    protected string $lastLogout;
+    protected bool $activeStatus;
+    protected string $profilePicture;
+
     protected function getUserData($regNo): array
     {
-        // TODO: Catch Invalid user type error thrown by getUserType()
-        // TODO: Create a view without password field
         $userType = self::getUserType($regNo);
         $table = Application::$db->select(
             table: $userType=='Lecturer'? 'AcademicStaff': $userType,
@@ -34,17 +43,45 @@ abstract class User
         return false;
     }
 
+    private static function getUserTable($regNo): string
+    {
+        $userType = self::getUserType($regNo);
+        return $userType=='Lecturer'? 'AcademicStaff': $userType;
+    }
+
     public static function authenticateUser($regNo, $password): bool
     {
-        // TODO: Catch Invalid user type error thrown by getUserType()
-        $userType = self::getUserType($regNo);
-        $table = Application::$db->select(
-            table: $userType=='Lecturer'? 'AcademicStaff': $userType,
+        $result = Application::$db->select(
+            table: self::getUserTable($regNo),
             columns: 'password',
             where: ['reg_no'=>$regNo],
-            limit: 1
+            limit: 1,
+            getAsArray: false
         );
+        if (Application::$db->rowCount($result) == 1) {
+            $table = Application::$db->fetch($result);
+            return password_verify($password, $table['password']);
+        }
+        return false;
+    }
 
-        return password_verify($password, $table['password']);
+    public function setLogin($time=null, $activeStatus=1): void
+    {
+        $time = $time ?? date('Y-m-d H:i:s', time());
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: ['last_login'=>$time, 'active_status'=>$activeStatus],
+            where: ['reg_no'=>$this->regNo]
+        );
+    }
+
+    public function setLogout($time=null, $activeStatus=0): void
+    {
+        $time = $time ?? date('Y-m-d H:i:s', time());
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: ['last_logout'=>$time, 'active_status'=>$activeStatus],
+            where: ['reg_no'=>$this->regNo]
+        );
     }
 }

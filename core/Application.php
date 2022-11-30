@@ -27,6 +27,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         static::$db = DbConnection::getDatabaseInstance($config['db']);
+        session_start();
     }
 
     public function run()
