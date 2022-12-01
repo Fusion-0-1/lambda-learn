@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="css/profile.css">
+
 <div class="border main-container v-center flex-gap">
     <div class="flex h-center v-center">
         <div>
-            <h2 class="text-center">Inuri Lavanya</h2>
+            <h2 class="text-center"><?php echo $firstName." ".$lastName ?></h2>
             <h3 class="text-center text-normal line-height">Student</h3>
         </div>
         <div>
@@ -22,21 +23,23 @@
             <div class="margin-top">
                 <label class="margin-top">Index Number</label> <br>
                 <div class="flex">
-                    <input type="text" value="20000715" class="input text-right width-full"><br>
+<!--                    TODO: Hide index number field for other users-->
+                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full"><br>
                 </div>
             </div>
+
 
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
                 <div class="flex">
-                    <input type="text" value="20000715" class="input text-right width-full"><br>
+                    <input type="text" value="<?php echo $regNo?>" class="input text-right width-full"><br>
                 </div>
             </div>
 
             <div class="margin-top">
                 <label class="margin-top">Email</label><br>
                 <div class="flex">
-                    <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+                    <input type="text" value="<?php echo $email?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -44,7 +47,7 @@
             <div class="margin-top">
                 <label class="margin-top">Contact Number</label><br>
                 <div class="flex">
-                    <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+                    <input type="text" value="<?php echo $contactNo?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -52,7 +55,7 @@
             <div class="margin-top">
                 <label class="margin-top">Personal Email</label><br>
                 <div class="flex">
-                    <input type="text" value="2020cs0071@gmail.com" class="input text-right width-full">
+                    <input type="text" value="<?php echo $personalEmail?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -87,8 +90,8 @@
             <div class="border main-container flex-gap">
                 <!--Login Activity-->
                 <h3>Login Activity</h3>
-                <h4 class="text-normal text-center">Last Login Date : Monday, October 31, 2022  |  08:00</h4>
-                <h4 class="text-normal text-center">Last Logout Date : Monday, October 31, 2022  |  08:00</h4>
+                <h4 class="text-normal text-center"><?php echo $lastLogin?></h4>
+                <h4 class="text-normal text-center"><?php echo $lastLogout?></h4>
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
