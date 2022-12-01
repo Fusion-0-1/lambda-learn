@@ -31,4 +31,13 @@ class Student extends User
         $this->dateJoined = $table['date_joined'];
         $this->degreeProgramCode = $table['degree_program_code'];
     }
+
+    public function flatten(): array
+    {
+        $array = parent::flatten();
+        $array['indexNo'] = $this->indexNo;
+        $array['dateJoined'] = $this->dateJoined;
+        $array['degreeProgramCode'] = $this->degreeProgramCode;
+        return $array;
+    }
 }
