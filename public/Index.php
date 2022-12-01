@@ -21,6 +21,8 @@ $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', 'home');
 
+$app->router->get('/profile', 'profile');
+
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
 
