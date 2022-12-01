@@ -25,3 +25,51 @@ a {
     padding: 13px;
     text-decoration: none;
 }
+
+.elements{
+    padding: 30px;
+}
+
+.logo{
+    height: 46px;
+    margin-left: 50px;
+}
+
+.point-border{
+    border: 2px solid var(--border-white);
+    padding: 3px 10px;
+    color: var(--blue);
+}
+
+.point{
+    border-radius: 8px 0px 0px 8px;
+}
+
+.rank{
+    border-radius: 0px 8px 8px 0px;
+}
+
+.profile-nav{
+    width: 36px;
+    max-height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--heading-blue);
+}
+
+.search-bar{
+    width: 260px;
+    padding: 10px;
+    color: var(--blue);
+}
+
+.font{
+    font-size: 15px;
+}
+
+.btn-search{
+    background-color: transparent;
+    border: none;
+}
+
+
+
