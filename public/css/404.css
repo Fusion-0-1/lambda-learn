@@ -1,0 +1,28 @@
+.secondary-container-img {
+    width: 50%;
+}
+
+.secondary-container-img > img {
+    width: 100%;
+}
+
+.secondary-container {
+    width: 30%;
+    padding: 40px;
+    margin-left: 40px;
+}
+
+.secondary-container > img {
+    width: 100%;
+}
+
+.main-container-404 {
+    background-color: var(--white);
+    border-radius: 20px;
+}
+
+h1 {
+    color: #056494;
+    font-weight: 900;
+}
+
