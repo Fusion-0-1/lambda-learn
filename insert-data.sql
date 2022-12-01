@@ -291,11 +291,11 @@ INSERT INTO TimeTableEvent (course_code, location, start_datetime, end_datetime,
     ("IS 2002", "C203", "2022-11-25 08:00:00", "2022-11-25 10:00:00", "2016/LC/0015"),
     ("IS 2003", "D102", "2022-11-25 13:00:00", "2022-11-25 17:00:00", "1998/LC/0019");
  
-INSERT INTO SiteAnnouncement (heading, content, date, admin_reg_no, cord_reg_no) VALUES
+INSERT INTO SiteAnnouncement (heading, content, publish_date, admin_reg_no, cord_reg_no) VALUES
     ("Commencement of New Academic Year", "Academic year 2022/23 willl be commenced on 21st of November 2022", "2022-11-18", "2009/AD/0005", NULL),
     ("First year 2nd semester examination results", "Results of 2nd semester examination will be released in 2 weeks. Prepare your emotional support system :)", "2022-11-21", NULL, "2003/LC/0004");
  
-INSERT INTO CourseAnnouncement (heading, content, date, lec_reg_no, course_code) VALUES
+INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, course_code) VALUES
     ("Lecture Materials", "New lecture materials are uploaded to the course page. Make sure to refer them before the lecture", "2022-11-21", "2014/LC/0034", "CS 2001"),
     ("Assessment", "There will be an inclass assessment based on prepositions and sets you learned. Date will be informed later.", "2022-11-23", "2006/LC/0014", "CS 2002"),
     ("Practical Session", "The lecture on 22nd will be conducted as a practical session. Bringing your laptops will be beneficial", "2022-11-19", "2018/LC/0022", "CS 2003"),
@@ -304,13 +304,13 @@ INSERT INTO CourseAnnouncement (heading, content, date, lec_reg_no, course_code)
     ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2002"),
     ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2003");
 
-INSERT INTO PerformanceHistory (date_time, cpu_usage, ram_usage, storage_usage, concurrent_users) VALUES
+INSERT INTO PerformanceHistory (record_date, cpu_usage, ram_usage, storage_usage, concurrent_users) VALUES
     ("2022-10-01 10:00:00", "75%", "63%", "126.4GB", "56"),
     ("2022-10-15 20:00:00", "41%", "34%", "126.8GB", "16"),
     ("2022-11-01 08:00:00", "88%", "76%", "127GB", "126"),
     ("2022-11-15 12:00:00", "70%", "68%", "127.2GB", "61");
 
-INSERT INTO AdminReport (title, report_date, date_time) VALUES
+INSERT INTO AdminReport (title, report_date, record_date) VALUES
     ("Performance Report Oct II", "2022-10-30", "2022-10-15 20:00:00"),
     ("Performance Report Nov I", "2022-11-24", "2022-11-01 08:00:00");
 
