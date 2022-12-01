@@ -40,7 +40,6 @@ if (!isset($_SESSION['user'])) {
     <!-- CSS -->
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/404.css">
-    <link rel="stylesheet" href="css/form.css">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon-light.svg">
