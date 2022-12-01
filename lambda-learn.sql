@@ -152,7 +152,7 @@ CREATE TABLE SiteAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
     heading VARCHAR(50) NOT NULL,
     content VARCHAR(300) NOT NULL,
-    date DATETIME NOT NULL,
+    publish_date DATETIME NOT NULL,
     admin_reg_no VARCHAR(12),
     cord_reg_no VARCHAR(12),
     CONSTRAINT PK_SiteAnnouncement PRIMARY KEY (announcement_id),
@@ -165,7 +165,7 @@ CREATE TABLE CourseAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
     heading VARCHAR(50) NOT NULL,
     content VARCHAR(300) NOT NULL,
-    date DATETIME NOT NULL,
+    publish_date DATETIME NOT NULL,
     lec_reg_no VARCHAR(12),
     course_code VARCHAR(8),
     CONSTRAINT PK_CourseAnnouncement PRIMARY KEY (announcement_id),
@@ -175,12 +175,12 @@ CREATE TABLE CourseAnnouncement (
  
 DROP TABLE IF EXISTS PerformanceHistory;
 CREATE TABLE PerformanceHistory (
-    date_time DATETIME NOT NULL,
+    record_date DATETIME NOT NULL,
     cpu_usage VARCHAR(6),
     ram_usage VARCHAR(6),
     storage_usage VARCHAR(10),
     concurrent_users VARCHAR(6),
-    CONSTRAINT PK_PerformanceHistory PRIMARY KEY (date_time)
+    CONSTRAINT PK_PerformanceHistory PRIMARY KEY (record_date)
 );
  
 DROP TABLE IF EXISTS AdminReport;
@@ -188,9 +188,9 @@ CREATE TABLE AdminReport (
     report_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     report_date DATETIME NOT NULL,
-    date_time DATETIME NOT NULL,
+    record_date DATETIME NOT NULL,
     CONSTRAINT PK_AdminReport PRIMARY KEY (report_id),
-    CONSTRAINT FK_AdminReport_PerformanceHistory FOREIGN KEY (date_time) REFERENCES PerformanceHistory(date_time)
+    CONSTRAINT FK_AdminReport_PerformanceHistory FOREIGN KEY (record_date) REFERENCES PerformanceHistory(record_date)
 );
  
 DROP TABLE IF EXISTS AttendanceReport;
