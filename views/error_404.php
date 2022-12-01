@@ -59,7 +59,7 @@ if (!isset($_SESSION['user'])) {
         </div>
         <div class="secondary-container flex flex-column v-center h-center">
             <div class="heading-color">
-                <h1>PAGE NOT FOUND! <span class="far fa-frown>"</span></h1>
+                <h1>PAGE NOT FOUND!</h1>
                 <br>
                 <h2 class="text-normal">The page you are looking for seems to be missing...</h2>
                 <br>
