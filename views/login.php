@@ -1,3 +1,9 @@
+<?php
+if (isset($_SESSION['user'])) {
+    header('Location: /');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -25,7 +31,7 @@
     <link rel="stylesheet" href="css/login.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/logo.png">
+    <link rel="icon" type="image/x-icon" href="/images/favicon-light.svg">
 
     <!-- Icons: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
@@ -59,25 +65,27 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         function isValid(){
             let reg_no = document.forms["form_login"]["reg_no"].value;
             try {
                 let reg_no_split = reg_no.split("/");
 
-                if(reg_no_split[0].length == 4
+                if(reg_no_split[0].length === 4
                     && !isNaN(reg_no_split[0])
-                    && ((reg_no_split[1]).toLowerCase() == "cs" || (reg_no_split[1]).toLowerCase() == "is" ||
-                        (reg_no_split[1]).toLowerCase() == "lc" || (reg_no_split[1]).toLowerCase() == "ad")
-                    && (reg_no_split[2].length == 4&& !isNaN(reg_no_split[2]))
+                    && ((reg_no_split[1]).toLowerCase() === "cs" || (reg_no_split[1]).toLowerCase() === "is" ||
+                        (reg_no_split[1]).toLowerCase() === "lc" || (reg_no_split[1]).toLowerCase() === "ad")
+                    && (reg_no_split[2].length === 4 && !isNaN(reg_no_split[2]))
                 ){
                     return true;
+                } else {
+                    throw 'Invalid Registration Number';
                 }
-            } finally {
+            } catch (e) {
                 document.getElementById("error").innerHTML=("Invalid Registration No");
+                return false;
             }
-            return false;
         }
     </script>
 
