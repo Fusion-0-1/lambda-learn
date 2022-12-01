@@ -56,11 +56,43 @@ if (!isset($_SESSION['user'])) {
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
 </div>
-<div class="topbar flex v-center h-center">
+<div class="topbar flex h-justify v-center font">
     <div class="elements">
-        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <img src="images/logo.png" alt="logo" class="logo">
+    </div>
+
+    <div class="v-center flex">
+        <div class="elements">
+            <input type="search" class="search-bar input" placeholder="Search" >
+            <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
+        </div>
+        <div class="elements">
+            <span class="point-border point">
+                <span class="text-bold">1204</span>
+                <span class="text-normal">Points</span>
+            </span>
+            <span class="point-border rank text-bold">
+                5
+            </span>
+        </div>
+        <div class="flex">
+            <div>
+                <a href="/profile">Inuri Lavanya</a>
+            </div>
+            <div>
+                <img src="images/profile.png" alt="profile" class="profile-nav">
+            </div>
+        </div>
+
+        <div class="elements">
+            <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        </div>
     </div>
 </div>
+
+<!--TODO:Remove bottom space in top nav-->
+
+
 <div class="container">
     {{content}}
 </div>
