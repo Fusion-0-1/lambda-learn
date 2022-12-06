@@ -1,6 +1,5 @@
 .sidebar, .topbar {
     position: fixed;
-    overflow-x: hidden;
     top: 0;
     left: 0;
     background-color: var(--pure-white);
@@ -70,6 +69,4 @@ a {
     background-color: transparent;
     border: none;
 }
-
-
 
