@@ -214,8 +214,6 @@ a:active {
 /* ---------------- Table formatting ---------------- */
 table {
     width: 100%;
-    border-collapse: collapse;
-    border-radius: 20px;
 }
 
 th {
@@ -226,22 +224,29 @@ th {
 tr, th {
     text-align: left;
     height: 40px;
-    border-radius: 20px
+    padding-bottom:45px;
 }
 
-tr:nth-child(even) {
+tr:nth-child(even) > td {
     background-color: var(--blue-white);
     color: var(--blue);
 }
 
-tr:nth-child(odd) {
+tr td:first-of-type {
+    border-radius: 12px 0px 0px 12px;
+}
+
+tr td:last-of-type {
+    border-radius: 0 12px 12px 0;
+}
+
+tr:nth-child(odd) > td {
     background-color: var(--blue);
     color: var(--white);
 }
 
 td{
     padding: 8px 20px;
-    /**border-radius: 20px;**/
 }
 /* --------------------------------------------------- */
 
