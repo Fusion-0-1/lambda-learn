@@ -39,12 +39,10 @@
         $result = mysqli_query($conn, $query);
 
         if($result){
-            $_SESSION['message'] = "Student updated successfilly!!";
             header("location: student_view.php");
             exit(0);
         }
         else{
-            $_SESSION['message'] = "Failed to update student";
             header("location: student_view.php");
             exit(0);
         }
@@ -67,12 +65,10 @@
         $result = mysqli_query($conn, $query);
 
         if($result){
-            $_SESSION['message'] = "Student created successfilly!!";
             header("location: student_add.php");
             exit(0);
         }
         else{
-            $_SESSION['message'] = "Failed to create student";
             header("location: student_add.php");
             exit(0);
         }
