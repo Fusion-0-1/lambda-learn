@@ -80,7 +80,7 @@
                         <label>Confirm Password</label><br>
                         <input type="password" name="password" class="input text-right width-full">
                     </div>
-                    <button class="confirm-btn margin-top h-center v-center flex-responsive">Confirm</button>
+                    <button class="flex confirm-btn margin-top h-center v-center flex-responsive">Confirm</button>
                 </form>
             </div>
         </div>
