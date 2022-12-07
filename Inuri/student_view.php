@@ -26,17 +26,12 @@
     <br>
     
     <div class="table">
-        <?php include('message.php'); ?>
-
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Index Number</th>
                     <th>Registration Number</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -52,14 +47,11 @@
                                     <td><?= $stu['index_no']; ?></td>
                                     <td><?= $stu['reg_no']; ?></td>
                                     
-                                    <td>
+                                    <td class="inline">
                                         <button class="btn-view"><a href="student_profile.php?id=<?=$stu['reg_no']?>" class="link"><i class="fa-solid fa-eye"></i></a></button>
-                                        
-                                    </td>
-                                    <td>
+
                                         <button class="btn-edit"><a href="student_edit.php?id=<?=$stu['reg_no']?>" class="link"><i class="fa-solid fa-pen-to-square"></i></a></button>
-                                    </td>
-                                    <td>
+
                                         <form action="crud.php" method="POST">
                                             <button type="submit" name="delete_student" value="<?=$stu['reg_no']?>" class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
                                         </form>
@@ -72,9 +64,6 @@
                         echo "<h5>No results found</h5>";
                     }
                 ?>
-                <tr>
-                    <td></td>
-                </tr>
             </tbody>
         </table>
 

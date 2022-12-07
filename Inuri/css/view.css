@@ -1,11 +1,3 @@
-table{
-    width:50%;
-    min-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: collapse;
-}
-
 .header{
     display: flex;
     justify-content: space-between;
@@ -27,13 +19,13 @@ button{
 .add-new{
     padding: 10px 20px;
     color: white;
-    background-color: rgb(14, 116, 200);
+    background-color: #284DCE;
 }
 
 .btn-view{
     padding: 10px 10px;
     color: white;
-    background-color: rgb(14, 116, 200);
+    background-color: #284DCE;
 }
 
 .btn-edit{
@@ -56,17 +48,44 @@ button{
     color: white;
 }
 
-thead th{
-    position: sticky;
-    top: 0;
-    font-size: 15px;
-    background-color: rgb(198, 219, 236);
+table {
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-th,td{
-    border-bottom: 1px solid rgb(228, 226, 255);
-    padding: 10px 20px;
-    text-align: center;
-    word-break: break-all;
-    background-color: white;
+th {
+    background-color: #f2f4f7;
+    color: #284DCE;
+}
+
+tr{
+    text-align: left;
+    height: 40px;
+    border-radius: 20px
+}
+
+tr:nth-child(even) {
+    background-color: #E6ECF2;
+    color: #0B2273;
+}
+
+tr:nth-child(odd) {
+    background-color: #0B2273;
+    color:  #FCFBFC;
+}
+
+td{
+    padding: 8px 20px;
+}
+
+.inline{
+    display: flex;
+    justify-content: space-between;
+}
+
+tr td:last-of-type{
+    background-color: #f2f4f7;
 }
