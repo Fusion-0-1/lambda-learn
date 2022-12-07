@@ -47,12 +47,12 @@ form{
 
 .btn{
     align-self: center;
-    /* display: block; */
     width: 50%;
     height: 35px;
     border-radius: 7px;
     color: white;
-    background: #0D2137;
+    background: #284DCE;
+    border: none;
 }
 
 .input{
