@@ -41,11 +41,26 @@ table{
 @media (max-width: 800px) {
     .flex-responsive{
         flex-direction: column;
+        align-items: center;
     }
     .main-container {
-        padding: 1px 1px;
-        min-width: 500px;
+        min-width: 400px;
     }
+
+    .edit-btn-text{
+        width: 60%;
+        justify-content: center;
+    }
+
+    label{
+        padding-left: 35px;
+    }
+
+    .responsive-container{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
 }
 
 

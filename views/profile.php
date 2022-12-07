@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/profile.css">
 
-<div class="border main-container v-center flex-gap">
+<div class="border main-container v-center flex-gap responsive-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
             <h2 class="text-center"><?php echo $firstName." ".$lastName ?></h2>
@@ -58,7 +58,7 @@
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
-            <div class="flex margin-top flex-responsive">
+            <div class="flex margin-top h-center">
                 <button class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
             </div>
