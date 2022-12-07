@@ -22,8 +22,7 @@ session_start();
 if(isset($_SESSION['User'])){
    
    echo "<div class='user'><h4>{$_SESSION['User']}</h4></div>";
-   //echo '<div class="top-menu"><h1>_</h1><a href="logout.php?logout" class="logout">Logout</i></i></a></div>';
-} 
+}
 else{
    header("location:index.php");
 }
@@ -32,8 +31,8 @@ else{
         <div class="display">
         <ul>
             <li><a href="dashboard.php" class="nav-link">
-                <i class="fa-solid fa-house"></i>
-            </a></li>
+                    <i class="fa-solid fa-house"></i>
+                </a></li>
             <li><a href="#" class="nav-link">
                 <i class="fa-solid fa-calendar-days"></i>
             </a></li>
@@ -47,8 +46,6 @@ else{
             <li>
                 <?php 
                     if(isset($_SESSION['User'])){
-   
-                        //echo "<div class='user'>{$_SESSION['User']}</div>";
                         echo '<a href="logout.php?logout" class="logout nav-link"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>';
                     } 
                     else{

@@ -54,10 +54,8 @@ nav{
 
 .display{
     display: flex;
-    flex-direction: column;        
-    align-content: center;
-    justify-content: center; 
-    /* align-items: center;  */ 
+    justify-content: center;
+    margin-top: 100%;
 }
 
 .user h4{
