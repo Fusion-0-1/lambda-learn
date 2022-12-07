@@ -16,7 +16,6 @@
 <body>
 
 <div class="container">
-    <a href="student_view.php" class="back">BACK</a>
     <?php
         include("message.php");
     ?>
@@ -77,7 +76,7 @@
                                 <input type="text" name="degree" value="<?= $stu['degree_programme']?>" class="input"><br><br>
                                 </div>
 
-                                <div class="input-field">
+                                <div class="input-field align">
                                 <button type="submit" name="update_student" class="btn">Update</button>
                                 </div>
                                 

@@ -14,11 +14,6 @@
 </head>
 <body>
     <div class="container">
-        <a href="student_view.php" class="back">BACK</a>
-        <?php
-            include("message.php");
-        ?>
-        
         <div class="wrapper">
             <h4>Add Student</h4>
 
