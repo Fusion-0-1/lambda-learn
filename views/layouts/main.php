@@ -62,9 +62,13 @@ if (!isset($_SESSION['user'])) {
     </div>
 
     <div class="v-center flex">
-        <div class="elements">
-            <input type="search" class="search-bar input" placeholder="Search" >
-            <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
+        <div class="flex elements">
+            <div class="flex">
+                <input type="search" class="search-bar input" placeholder="Search" >
+            </div>
+            <div class="flex v-center">
+                <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
+            </div>
         </div>
         <div class="elements">
             <span class="point-border point">
@@ -75,13 +79,13 @@ if (!isset($_SESSION['user'])) {
                 5
             </span>
         </div>
-        <div class="flex">
-            <div>
+
+        <div class="elements">
                 <a href="/profile">Inuri Lavanya</a>
-            </div>
-            <div>
-                <img src="images/profile.png" alt="profile" class="profile-nav">
-            </div>
+        </div>
+
+        <div class="elements h-center">
+            <img src="images/profile.png" alt="profile" class="profile-nav">
         </div>
 
         <div class="elements">
@@ -89,8 +93,6 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 </div>
-
-<!--TODO:Remove bottom space in top nav-->
 
 
 <div class="container">

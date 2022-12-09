@@ -20,13 +20,13 @@
 
 a {
     display: block;
-    color: var(--x-dark-blue);
+    color: var(--heading-blue);
     padding: 13px;
     text-decoration: none;
 }
 
 .elements{
-    padding: 30px;
+    padding: 0px 20px;
 }
 
 .logo{
@@ -49,8 +49,8 @@ a {
 }
 
 .profile-nav{
-    width: 36px;
-    max-height: 36px;
+    width: 30px;
+    max-height: 30px;
     border-radius: 50%;
     border: 1px solid var(--heading-blue);
 }
@@ -68,5 +68,9 @@ a {
 .btn-search{
     background-color: transparent;
     border: none;
+}
+
+.fa-magnifying-glass{
+    margin-left: -50px;
 }
 
