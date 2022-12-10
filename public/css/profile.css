@@ -19,11 +19,6 @@
     margin-left: 20px;
 }
 
-tr:nth-child(odd) {
-    border-bottom: 15px solid white;
-    border-top: 15px solid white;
-}
-
 .main-container{
     padding-top: 10px;
 }
@@ -37,6 +32,39 @@ tr:nth-child(odd) {
     width: 50%;
     margin-left: auto;
     margin-right: auto;
+}
+
+table{
+    border-spacing: 0 12px;
+}
+
+@media (max-width: 800px) {
+    .flex-responsive{
+        flex-direction: column;
+        align-items: center;
+    }
+    .main-container {
+        min-width: 400px;
+    }
+
+    .edit-btn-text{
+        width: 60%;
+        justify-content: center;
+    }
+
+    label{
+        padding-left: 35px;
+    }
+
+    .responsive-container{
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .modal-content{
+        min-width: 300px;
+    }
+
 }
 
 

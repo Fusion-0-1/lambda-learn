@@ -1,6 +1,5 @@
 .sidebar, .topbar {
     position: fixed;
-    overflow-x: hidden;
     top: 0;
     left: 0;
     background-color: var(--pure-white);
@@ -21,7 +20,57 @@
 
 a {
     display: block;
-    color: var(--x-dark-blue);
+    color: var(--heading-blue);
     padding: 13px;
     text-decoration: none;
 }
+
+.elements{
+    padding: 0px 20px;
+}
+
+.logo{
+    height: 46px;
+    margin-left: 50px;
+}
+
+.point-border{
+    border: 2px solid var(--border-white);
+    padding: 3px 10px;
+    color: var(--blue);
+}
+
+.point{
+    border-radius: 8px 0px 0px 8px;
+}
+
+.rank{
+    border-radius: 0px 8px 8px 0px;
+}
+
+.profile-nav{
+    width: 30px;
+    max-height: 30px;
+    border-radius: 50%;
+    border: 1px solid var(--heading-blue);
+}
+
+.search-bar{
+    width: 260px;
+    padding: 10px;
+    color: var(--blue);
+}
+
+.font{
+    font-size: 15px;
+}
+
+.btn-search{
+    background-color: transparent;
+    border: none;
+}
+
+.fa-magnifying-glass{
+    margin-left: -50px;
+}
+

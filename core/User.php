@@ -84,4 +84,13 @@ abstract class User
             where: ['reg_no'=>$this->regNo]
         );
     }
+
+    public function flatten(): array
+    {
+        $array = [];
+        foreach ($this as $key => $value) {
+            $array[$key] = $value;
+        }
+        return $array;
+    }
 }

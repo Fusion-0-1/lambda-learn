@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/profile.css">
 
-<div class="border main-container v-center flex-gap">
-    <div class="flex h-center v-center">
+<div class="border main-container v-center flex-gap responsive-container">
+    <div class="flex h-center v-center flex-responsive">
         <div>
             <h2 class="text-center"><?php echo $firstName." ".$lastName ?></h2>
             <h3 class="text-center text-normal line-height">Student</h3>
@@ -11,8 +11,7 @@
         </div>
 
     </div>
-
-    <div class="flex h-center flex-gap">
+    <div class="flex h-center flex-gap flex-responsive">
         <div class="border main-container flex-gap">
             <!-- User details -->
 
@@ -22,7 +21,7 @@
 
             <div class="margin-top">
                 <label class="margin-top">Index Number</label> <br>
-                <div class="flex">
+                <div class="flex flex-responsive">
 <!--                    TODO: Hide index number field for other users-->
                     <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full"><br>
                 </div>
@@ -31,14 +30,14 @@
 
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
-                <div class="flex">
+                <div class="flex flex-responsive">
                     <input type="text" value="<?php echo $regNo?>" class="input text-right width-full"><br>
                 </div>
             </div>
 
             <div class="margin-top">
                 <label class="margin-top">Email</label><br>
-                <div class="flex">
+                <div class="flex flex-responsive">
                     <input type="text" value="<?php echo $email?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
@@ -46,7 +45,7 @@
 
             <div class="margin-top">
                 <label class="margin-top">Contact Number</label><br>
-                <div class="flex">
+                <div class="flex flex-responsive">
                     <input type="text" value="<?php echo $contactNo?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
@@ -54,12 +53,12 @@
 
             <div class="margin-top">
                 <label class="margin-top">Personal Email</label><br>
-                <div class="flex">
+                <div class="flex flex-responsive">
                     <input type="text" value="<?php echo $personalEmail?>" class="input text-right width-full">
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
-            <div class="flex margin-top">
+            <div class="flex margin-top h-center">
                 <button class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
             </div>
@@ -81,7 +80,7 @@
                         <label>Confirm Password</label><br>
                         <input type="password" name="password" class="input text-right width-full">
                     </div>
-                    <button class="confirm-btn margin-top flex h-center v-center">Confirm</button>
+                    <button class="flex confirm-btn margin-top h-center v-center flex-responsive">Confirm</button>
                 </form>
             </div>
         </div>

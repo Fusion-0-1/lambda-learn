@@ -56,11 +56,45 @@ if (!isset($_SESSION['user'])) {
         <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
     </div>
 </div>
-<div class="topbar flex v-center h-center">
+<div class="topbar flex h-justify v-center font">
     <div class="elements">
-        <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        <img src="images/logo.png" alt="logo" class="logo">
+    </div>
+
+    <div class="v-center flex">
+        <div class="flex elements">
+            <div class="flex">
+                <input type="search" class="search-bar input" placeholder="Search" >
+            </div>
+            <div class="flex v-center">
+                <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
+            </div>
+        </div>
+        <div class="elements">
+            <span class="point-border point">
+                <span class="text-bold">1204</span>
+                <span class="text-normal">Points</span>
+            </span>
+            <span class="point-border rank text-bold">
+                5
+            </span>
+        </div>
+
+        <div class="elements">
+                <a href="/profile">Inuri Lavanya</a>
+        </div>
+
+        <div class="elements h-center">
+            <img src="images/profile.png" alt="profile" class="profile-nav">
+        </div>
+
+        <div class="elements">
+            <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        </div>
     </div>
 </div>
+
+
 <div class="container">
     {{content}}
 </div>

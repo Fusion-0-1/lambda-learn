@@ -1,8 +1,8 @@
 <?php
 
 use app\controllers\AuthController;
+use app\controllers\ProfileController;
 use app\core\Application;
-use \app\controllers\SiteController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -21,7 +21,7 @@ $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', 'home');
 
-$app->router->get('/profile', 'profile');
+$app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
