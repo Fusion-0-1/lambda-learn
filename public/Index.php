@@ -21,6 +21,8 @@ $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', 'home');
 
+$app->router->get('/course_overview', 'course_overview');
+
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
