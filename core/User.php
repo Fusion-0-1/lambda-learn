@@ -85,6 +85,91 @@ abstract class User
         );
     }
 
+    // -------------------------Field validation methods---------------------------------
+    public static function validateName($name): bool
+    {
+        /*
+         * ^: This matches the start of the string.
+         * [a-zA-Z]: This matches any character from a to z and A to Z.
+         * *: preceding character can be matched any number of times, including zero.
+         * $: This matches the end of the string.
+         */
+        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+    }
+
+    public static function validateEmail($email): bool
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function validateRegNo($regNo): bool
+    {
+        /*
+         *  ^: This matches the start of the string.
+         *  \d{4}: Matches any four digits at the start of the string.
+         *  \/: This matches a forward slash.
+         *  .*: This matches any number of any characters (except a newline) after the first forward slash. This is the part of the string that should contain the middle section of the pattern.
+         *  \/: This matches a second forward slash.
+         *  \d{4}: This matches any four digits at the end of the string.
+         *  $: This matches the end of the string.
+         */
+        return preg_match("/^\d{4}\/.*\/\d{4}$/", $regNo);
+    }
+
+    public static function validateContactNo($contactNo): bool
+    {
+        /*
+         * Local numbers: 0xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \d{10}: d matches a digit (equivalent to [0-9]). {10} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        if (!preg_match('/^\d{10}$/', $contactNo)) {
+            return false;
+        }
+        /*
+         * International numbers: +94xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \+: This matches a plus sign, which is typically the first character in a phone number with a country code.
+         * \d{11}: d matches a digit (equivalent to [0-9]). {11} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        else if (!preg_match('/^\+\d{11}$/', $contactNo)) {
+            return false;
+        }
+        return true;
+    }
+
+    public static function validateUserAttributes($regNo, $firstName, $lastName, $email, $contactNo): bool
+    {
+        if(
+            // Not null checks
+            strlen($regNo) == 12 && # 20xx/cs/xxxx
+            $firstName !=  '' && $lastName != '' &&
+            $email != ''
+        ) {
+            if (!self::validateName($firstName . $lastName)) {
+                return false;
+            }
+            if (!self::validateEmail($email)) {
+                return false;
+            }
+            if (!self::validateRegNo($regNo)) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if ($contactNo != '') {
+            if (!self::validateContactNo($contactNo)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    // --------------------------------------------------------------------------------
+
     public function flatten(): array
     {
         $array = [];
