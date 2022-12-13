@@ -30,7 +30,7 @@ class AuthController extends Controller
                     $user->setLogin();
                     $_SESSION['user'] = serialize($user);
                     $_SESSION['last_activity'] = time();
-                    return $this->render('home'); // TODO: Change to dashboard and create dashboard view
+                    return $this->render('dashboard'); // TODO: Change to dashboard and create dashboard view
                 }
             }
             // TODO: Accept this error message from the login view
