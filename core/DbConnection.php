@@ -15,7 +15,7 @@ class DbConnection
         $db_name = $db['database'] ?? '';
         $db_port = $db['port'] ?? '';
 
-        $conn = new \mysqli($db_host, $db_user, $db_pass, $db_name, $db_port); // \mysqli
+        $conn = new \mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
         if ($conn->connect_error) {
             die('Could not connect: ' . $conn->connect_error);
         }
