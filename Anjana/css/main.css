@@ -1,0 +1,142 @@
+.main_card {
+    background: #FCFBFC;
+    width: 98%;
+    height: auto;
+    margin: 1%;
+    border-radius: 25px;
+    border: 3px solid #DCE3EA;
+}
+
+.grid_use {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+p.error {
+    background: rgb(253, 57, 57);
+    color: white;
+    padding: 10px;
+}
+
+.login_page_image {
+    width: 90%;
+    height: 90%;
+    border-radius: 25px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+    margin: 15px 5px 10px 5px;
+}
+
+.university_name {
+    text-align: center;
+    margin: 10px 0px 10px 0px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.login_text {
+    text-align: left;
+    margin: 0%;
+}
+
+.field_set {
+    margin: 20px;
+}
+
+.welcome_text {
+    text-align: left;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+input {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #E6ECF2;
+    border: 3px solid #DCE3EA;
+    margin: 20px 0px 20px 0px;
+}
+
+.login {
+    border-radius: 15px;
+    height: 500px;
+    width: 350px;
+    border: 3px solid #DCE3EA;
+    text-align: center;
+}
+
+button {
+    width: 200px;
+    margin-top: 20px;
+    padding: 5px;
+    position: relative;
+    background-color: #0B2273;
+    border: 3px solid #0D2137;
+    box-sizing: border-box;
+    color: white;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #DCE3EA;
+    color: #0B2273;
+}
+
+@media (max-width: 1145px) {
+    .grid_use {
+
+        grid-template-columns: auto;
+        justify-items: center;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* user page */
+header {
+    background: rgb(255, 255, 255);
+    overflow: auto;
+    padding: 10px;
+}
+
+header .appname {
+    float: left;
+}
+
+header .loggedin {
+    float: right;
+}
