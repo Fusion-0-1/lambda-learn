@@ -1,0 +1,141 @@
+.main_heading {
+    text-align: center;
+    padding: 0px;
+    font-size: 2.1rem;
+}
+
+.card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 13%;
+    align-items: center;
+}
+
+.cards {
+    background: #0B2273;
+    position: relative;
+    width: 270px;
+    height: 230px;
+    padding-top: 25px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+
+a {
+    text-decoration: none;
+    margin: 0% 0% 5% 0%;
+}
+
+.cards_inside {
+    background: #E6ECF2;
+    width: 80%;
+    height: 75%;
+    margin: auto;
+    text-align: center;
+    border-radius: inherit;
+    color: black;
+}
+
+.cards_inside_announcement > img{
+    margin-top: 50px;
+}
+
+.card_name{
+    font-size: 1.375rem;
+    font-weight: bold;
+    margin-top: 5%;
+}
+
+.cards_inside img {
+    width: 45%;
+    margin: auto;
+    margin-top: 15%;
+}
+
+
+.cards:hover {
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 1344px){
+    .card{
+        column-gap: 8%;
+    }
+}
+
+@media (max-width: 1251px) {
+    .card {
+        column-gap: 5%;
+    }
+}
+
+@media (max-width: 1181px) {
+    .card {
+        column-gap: 2%;
+    }
+}
+
+@media (max-width: 1120px) {
+    .card {
+        column-gap: 0.5%;
+    }
+}
+
+@media (max-width: 1101px) {
+    .card {
+        column-gap: 11%;
+        row-gap: 5%;
+    }
+}
+
+@media (max-width: 859px) {
+    .card {
+        column-gap: 4%;
+    }
+}
+
+@media (max-width: 859px) {
+    .card {
+        column-gap: 2%;
+    }
+}
+
+@media (max-width: 798px) {
+    .card {
+        justify-content: center;
+        column-gap: 5%;
+        row-gap: 1.5%;
+    }
+    .main_heading {
+        font-size: 1.5rem;
+    }
+    .main_card {
+        margin: 1%;
+    }
+    .cards {
+        width: 220px;
+        height: 187px;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        justify-content: center;
+        column-gap: 5%;
+        row-gap: 1.5%;
+    }
+    .main_heading {
+        font-size: 1.5rem;
+    }
+    .main_card {
+        margin: 1%;
+    }
+    .cards {
+        width: 220px;
+        height: 187px;
+    }
+}
+

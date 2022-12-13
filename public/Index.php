@@ -19,7 +19,7 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->get('/', 'home');
+$app->router->get('/', 'dashboard');
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 
