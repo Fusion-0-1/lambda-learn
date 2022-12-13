@@ -60,7 +60,7 @@ a {
     text-decoration: none;
 }
 
-@media (max-width: 1344px){
+@media (max-width: 1394px){
     .card{
         column-gap: 8%;
     }
