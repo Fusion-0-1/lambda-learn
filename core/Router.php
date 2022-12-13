@@ -40,7 +40,7 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
         if ($callback === false) {
             $this->response->set_status_code(404);
-            return $this->renderView('error_404'); // TODO: use renderOnlyView and create a separate page here
+            return $this->renderView('error_404');
         }
         if (is_string($callback)) {
             return $this->renderView($callback);

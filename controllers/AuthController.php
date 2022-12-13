@@ -13,7 +13,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         if ($request->isGet()) {
-            return $this->renderOnlyView('login'); //TODO: Create login view from scratch(without layout)
+            return $this->renderOnlyView('login');
         } else if ($request->isPost()) {
             $body = $request->getBody();
             $regNo = $body['reg_no'];
@@ -30,10 +30,9 @@ class AuthController extends Controller
                     $user->setLogin();
                     $_SESSION['user'] = serialize($user);
                     $_SESSION['last_activity'] = time();
-                    return $this->render('home'); // TODO: Change to dashboard and create dashboard view
+                    return $this->render('dashboard');
                 }
             }
-            // TODO: Accept this error message from the login view
             return $this->renderOnlyView('login', ['error' => 'Invalid credentials']);
         }
     }
