@@ -16,10 +16,10 @@ class DbConnection
         $db_port = $db['port'] ?? '';
 
         $conn = new \mysqli($db_host, $db_user, $db_pass, $db_name, $db_port); // \mysqli
-        if ($conn->connect_error) { //
+        if ($conn->connect_error) {
             die('Could not connect: ' . $conn->connect_error);
         }
-        $this->db = $conn; //will not be changed
+        $this->db = $conn;
         $conn->select_db($db_name);
     }
 
@@ -47,18 +47,17 @@ class DbConnection
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        $result = $this->db->query($sql); //put $this->db instead of $conn
+        $result = $this->db->query($sql);
         if (!$getAsArray) {
             return $result;
         }
 
-        return $result->fetch_assoc(); //
+        return $result->fetch_assoc();
     }
 
     public function insert($table, $columns, $values): array
     {
         $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-//        return mysqli_query($this->db, $sql);
         return $this->db->query($sql);
     }
 
@@ -74,7 +73,6 @@ class DbConnection
 
         $sql .= $this->addSQLWhere($where);
 
-//        return mysqli_query($this->db, $sql);
         return $this->db->query($sql);
     }
 
@@ -82,19 +80,16 @@ class DbConnection
     {
         $sql = "DELETE FROM $table";
         $sql .= $this->addSQLWhere($where);
-//        return mysqli_query($this->db, $sql);
         return $this->db->query($sql);
     }
 
     public function fetch($result): bool|array|null
     {
-//        return mysqli_fetch_assoc($result);
         return $result->fetch_assoc();
     }
 
     public function rowCount($result): int|string
     {
-//        return mysqli_num_rows($result);
         return $result->num_rows;
     }
 
@@ -120,7 +115,6 @@ class DbConnection
 
     public function __destruct()
     {
-//        mysqli_close($this->db);
         $this->db->close();
     }
 }
