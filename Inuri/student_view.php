@@ -36,14 +36,14 @@
             </thead>
             <tbody>
                 <?php  
-                    $query = "SELECT name,index_no, reg_no FROM student";
+                    $query = "SELECT f_name, l_name, index_no, reg_no FROM student";
                     $result = mysqli_query($conn, $query);
                     
                     if(mysqli_num_rows($result)>0){
                         foreach($result as $stu){
                             ?>
                                 <tr>
-                                    <td><?= $stu['name']; ?></td>
+                                    <td><?= $stu['f_name']." ".$stu['l_name']; ?></td>
                                     <td><?= $stu['index_no']; ?></td>
                                     <td><?= $stu['reg_no']; ?></td>
                                     
