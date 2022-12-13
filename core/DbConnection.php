@@ -15,12 +15,12 @@ class DbConnection
         $db_name = $db['database'] ?? '';
         $db_port = $db['port'] ?? '';
 
-        $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name, $db_port);
-        if (!$conn) {
-            die('Could not connect: ' . mysqli_error($conn));
+        $conn = new \mysqli($db_host, $db_user, $db_pass, $db_name, $db_port);
+        if ($conn->connect_error) {
+            die('Could not connect: ' . $conn->connect_error);
         }
         $this->db = $conn;
-        mysqli_select_db($this->db, $db_name);
+        $conn->select_db($db_name);
     }
 
     public static function getDatabaseInstance($db): DbConnection
@@ -47,18 +47,18 @@ class DbConnection
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        $result = mysqli_query($this->db, $sql);
+        $result = $this->db->query($sql);
         if (!$getAsArray) {
             return $result;
         }
 
-        return mysqli_fetch_assoc($result);
+        return $result->fetch_assoc();
     }
 
     public function insert($table, $columns, $values): array
     {
         $sql = "INSERT INTO $table ($columns) VALUES ($values)";
-        return mysqli_query($this->db, $sql);
+        return $this->db->query($sql);
     }
 
     public function update($table, $columns, $where): bool|\mysqli_result
@@ -73,24 +73,24 @@ class DbConnection
 
         $sql .= $this->addSQLWhere($where);
 
-        return mysqli_query($this->db, $sql);
+        return $this->db->query($sql);
     }
 
     public function delete($table, $where): bool|\mysqli_result
     {
         $sql = "DELETE FROM $table";
         $sql .= $this->addSQLWhere($where);
-        return mysqli_query($this->db, $sql);
+        return $this->db->query($sql);
     }
 
     public function fetch($result): bool|array|null
     {
-        return mysqli_fetch_assoc($result);
+        return $result->fetch_assoc();
     }
 
     public function rowCount($result): int|string
     {
-        return mysqli_num_rows($result);
+        return $result->num_rows;
     }
 
     public function setEmptyToNullColumns($table): array
@@ -115,6 +115,6 @@ class DbConnection
 
     public function __destruct()
     {
-        mysqli_close($this->db);
+        $this->db->close();
     }
 }
