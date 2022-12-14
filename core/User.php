@@ -55,7 +55,6 @@ abstract class User
             table: self::getUserTable($regNo),
             columns: 'password',
             where: ['reg_no'=>$regNo],
-            limit: 1,
             getAsArray: false
         );
         if (Application::$db->rowCount($result) == 1) {
@@ -85,6 +84,7 @@ abstract class User
         );
     }
 
+    public abstract function insert();
     // -------------------------Field validation methods---------------------------------
     public static function validateName($name): bool
     {
