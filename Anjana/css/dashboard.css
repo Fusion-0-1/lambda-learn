@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import "/css/main.css";
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main_heading {
+    text-align: center;
+    padding: 0px;
+    font-size: 2.1rem;
+}
+
+.main_card {
+    max-width: 100%;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    margin: 1%;
+    border: 4px solid #DCE3EA;
+    margin-top: 30px;
+
+
+}
+
+.card {
+
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-between;
+    margin: 0% 4% 0% 4%;
+    margin-bottom: 20px;
+    align-items: center;
+
+
+}
+
+
+
+
+.cards {
+    background: #0B2273;
+    position: relative;
+    width: 270px;
+    height: 230px;
+    padding: 5px;
+    padding-top: 25px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+
+}
+
+a {
+    text-decoration: none;
+    margin: 0% 0% 10% 0%;
+}
+
+@media (max-width: 1073px) {
+    .card {
+
+        grid-template-columns: auto auto;
+        justify-content: space-between;
+
+    }
+}
+
+@media (max-width: 730px) {
+    .card {
+
+        grid-template-columns: auto;
+        justify-content: center;
+
+    }
+}
+
+
+
+.cards_inside {
+
+    background: #E6ECF2;
+    width: 80%;
+    height: 75%;
+    margin: auto;
+    text-align: center;
+    border-radius: inherit;
+    color: black;
+    justify-items: center;
+
+}
+
+.cards_inside img {
+    width: 45%;
+    margin: auto;
+    margin-top: 15%;
+}
+
+
+.cards:hover {
+    color: white;
+    text-decoration: none;
+
+}

@@ -1,0 +1,424 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.main_card {
+    max-width: 100%;
+    background: gray;
+    margin: 1%;
+    border-radius: 15px;
+    background: white;
+    border: 3px solid #DCE3EA;
+}
+
+
+.course_name {
+    text-align: center;
+    padding: 2% 0% 2% 0%;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+
+.announcement_card {
+    width: 85%;
+    margin: auto;
+    padding-bottom: 2%;
+    background: white;
+    border-radius: 15px;
+    border: 3px solid #DCE3EA;
+    margin-bottom: 40px;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    padding: 0.5% 2.5%;
+    align-items: center;
+}
+
+.container_edit_delete {
+    grid-template-columns: 75% 25%;
+}
+
+.edit_delete_timeremaining {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    justify-content: space-between;
+    padding: 0.5% 2.5%;
+    align-items: center;
+}
+
+.delete_btn {
+    border: none;
+}
+
+.delete_btn img {
+    width: 40%;
+}
+
+.edit_btn {
+    border: none;
+}
+
+.edit_btn img {
+    width: 40%;
+}
+
+.edit_time {
+    font-size: 1.2rem;
+    margin: 1%;
+}
+
+.heading_content {
+    margin: 6px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    overflow-wrap: break-word;
+}
+
+.add_headline {
+    border-radius: 5px;
+    border: none;
+    font-size: 1.125rem;
+    font-weight: bold;
+    width: 400%;
+    overflow-wrap: break-word;
+    align-items: center;
+}
+
+
+.btn {
+    width: 100px;
+    border: 0px;
+    height: 30px;
+    border-radius: 12px;
+    background: #2AB514;
+    color: white;
+    justify-content: center;
+    align-items: center
+        /* display: none; */
+}
+
+
+.add_name {
+    border-radius: 5px;
+    background: #0B2273;
+    color: white;
+    border: none;
+    font-size: 1.3rem;
+    width: 200%;
+}
+
+
+.add_announcement_content_div textarea {
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    height: 30px;
+    padding: 5px;
+    outline: none;
+    resize: none;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}
+
+textarea::-webkit-scrollbar{
+    width: 0px;
+}
+
+.add_announcement_content_div {
+    padding: 1% 2% 1% 2%;
+}
+
+.container_heading {
+    margin: 0%;
+    display: grid;
+    background: #0B2273;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    color: white;
+    grid-column-gap: 2%;
+    border-radius: inherit;
+    padding: 1% 2% 1% 2%;
+    align-items: center;
+
+}
+
+.announcement_card_inside {
+    width: 95%;
+    height: 75%;
+    position: relative;
+    border-radius: 15px;
+    margin: auto;
+    background: white;
+    border: 3px solid #DCE3EA;
+}
+
+
+.announcement_content {
+    padding: 2%;
+    overflow-wrap: break-word;
+}
+
+
+/* @media(max-width:800px) {
+    .announcement_card {
+        flex: 100%;
+        max-width: 270px;
+        margin: auto;
+        margin-top: 4%;
+        align-items: center;
+    }
+} */
+
+@media(max-width:1300px) {
+    .add_headline {
+        width: 320%;
+    }
+}
+
+@media(max-width:1080px) {
+    .add_headline {
+        width: 260%;
+    }
+
+    .course_name {
+        font-size: 1.5rem;
+    }
+
+    .edit_time {
+        font-size: 1.1rem;
+    }
+
+    .heading_content {
+        font-size: 1.1rem;
+    }
+
+    .add_headline {
+        font-size: 1.075rem;
+    }
+
+    .add_name {
+        font-size: 1.2rem;
+    }
+
+    .add_announcement_content {
+        font-size: 0.9rem;
+    }
+
+    .announcement_content {
+        font-size: 0.9rem;
+    }
+}
+
+@media(max-width:920px) {
+    .add_headline {
+        width: 210%;
+    }
+
+    .add_name {
+        width: 150%;
+    }
+}
+
+@media(max-width:768px) {
+    .add_headline {
+        width: 150%;
+    }
+
+    .course_name {
+        font-size: 1.2rem;
+    }
+
+    .btn {
+        width: 80px;
+        height: 25px;
+        border-radius: 10px;
+    }
+
+    .edit_time {
+        font-size: 1.0rem;
+    }
+
+    .heading_content {
+        font-size: 1.1rem;
+    }
+
+    .add_headline {
+        font-size: 1.075rem;
+    }
+
+    .add_name {
+        font-size: 1.0rem;
+    }
+
+    .add_announcement_content {
+        font-size: 0.9rem;
+    }
+
+    .announcement_content {
+        font-size: 0.9rem;
+    }
+}
+
+@media(max-width:600px) {
+    .add_headline {
+        width: 100%;
+    }
+
+    .add_name {
+        width: 150%;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* .card {
+    max-width: 100%;
+    background: gray;
+    margin: 1%;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    border-radius: 15px;
+    background: white;
+    border: 3px solid #DCE3EA;
+}
+
+
+.card h2 {
+    text-align: center;
+}
+
+
+.card .ann-card {
+    width: 85%;
+    margin: auto;
+    height: 280px;
+    padding-bottom: 1%;
+    background: white;
+    border-radius: 15px;
+    border: 3px solid #DCE3EA;
+    margin-bottom: 30px;
+}
+
+
+
+.container .add_headline {
+    border-radius: 5px;
+    height: 30px;
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    width: 200%;
+}
+
+
+.container_heading .left .add_name {
+    border-radius: 5px;
+    width: 100%;
+    background: #0B2273;
+    color: white;
+    border: none;
+    font-size: 20px;
+}
+
+
+.ann-card-inside .add_content {
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    font-size: 16px;
+}
+
+
+
+.container_heading {
+    max-width: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+    background: #0B2273;
+    border-radius: inherit;
+    padding: 0 20px;
+    align-items: center;
+    font-size: 16px; 
+    color: white;
+}
+
+
+.card .ann-card .ann-card-inside {
+    width: 95%;
+    height: 75%;
+    position: relative;
+    border-radius: 15px;
+    margin: auto;
+    background: white;
+    border: 3px solid #DCE3EA;
+}
+
+
+.card .ann-card .ann-card-inside p {
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+
+.container{
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+.card .ann-card .container .btn {
+    width: 100px;
+    border: 0px;
+    height: 30px;
+    border-radius: 12px;
+    background: #2AB514;
+    color: white;
+}
+
+
+@media(max-width:800px) {
+    a {
+        flex: 100%;
+        max-width: 270px;
+        margin: auto;
+        margin-top: 4%;
+    }
+} */
