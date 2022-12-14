@@ -119,6 +119,15 @@ body {
     cursor: move;
 }
 
+.card-header-modal {
+    width: 100%;
+    border-radius: 10px;
+    background-color: #0B2273;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 7px 20px; 
+}
+
 .card-border {
     border: 2px solid #DCE3EA;
     border-radius: 10px;
@@ -180,13 +189,12 @@ body {
     border: 2px solid #DCE3EA;
     border-radius: 10px;
     padding: 10px;
-    /* display: none;
+    display: none;
     position: fixed;
     z-index: 1;
     left: 25%;
-    top: 25%; */
-
-    /* overflow: auto; */
+    top: 25%;
+    overflow: auto; 
 }
 
 .card-modal-container-update {
@@ -195,7 +203,8 @@ body {
     border: 2px solid #DCE3EA;
     border-radius: 10px;
     padding: 10px;
-    /* display: none;
+    display: none;
+    /* 
     position: fixed;
     z-index: 1;
     left: 25%;

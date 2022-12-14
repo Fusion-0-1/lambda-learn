@@ -34,22 +34,22 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
     <div class="main-container">
         <div class="title"><h1>Kanban Board</h1></div>
 
-        <div class="card-modal-container-new">
+        <div class="card-modal-container-new" id="card-add-modal">
             <form action="card_add.php" method="POST">
-                <div><input type="text" name="card-header" class="card-header card-border" placeholder="Card Title"></div>
+                <div><input type="text" name="card-header" class="card-header-modal card-border" placeholder="Card Title"></div>
                 <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content"></textarea></div>
                 <div class="card-footer-modal">
                     <div class="card-deadline-label">
                         <label>Deadline :</label>
                         <input type="date" name="card-deadline" class="card-deadline">
                     </div>
-                    <div><input type="radio" name="card-status" value="To Do"> To Do </div>
-                    <div><input type="radio" name="card-status" value="In Progress"> In Progress </div>
-                    <div><input type="radio" name="card-status" value="Done"> Done </div>
+                    <div id="radio-todo"><input type="radio" name="card-status" value="To Do"> To Do </div>
+                    <div id="radio-inprogress"><input type="radio" name="card-status" value="In Progress"> In Progress </div>
+                    <div id="radio-done"><input type="radio" name="card-status" value="Done"> Done </div>
                     
                 </div>
                 <div class="card-save-container">
-                    <input type="submit" value="Save" class="card-save">
+                    <input type="submit" value="Save" class="card-save" id="card-add-save">
                 </div>
             </form>
         </div>
@@ -79,13 +79,13 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
             <div class="card-list">
                 <div class="list-header">
                     <div><h2>To Do</h2></div>
-                    <div class="add-card"><button class="card-button"><span class="fa fa-plus-square"></span></button></div>
+                    <div class="add-card"><button class="card-button" id="card-add-todo"><span class="fa fa-plus-square"></span></button></div>
                 </div>
 
                 <div class="droppable">
 
                     <?php
-                        $viewtodo = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'To Do'";
+                        $viewtodo = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'To Do' ORDER BY due_date DESC";
                         $result = $connection -> query($viewtodo);
 
                         if(mysqli_num_rows($result)>0) {
@@ -115,13 +115,13 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
             <div class="card-list">
                 <div class="list-header">
                     <div><h2>In Progress</h2></div>
-                    <div class="add-card"><span class="fa fa-plus-square"></span></div>
+                    <div class="add-card"><button class="card-button" id="card-add-inprogress"><span class="fa fa-plus-square"></span></button></div>
                 </div>
 
                 <div class="droppable">
                     
                     <?php
-                        $viewinprogress = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'In Progress'";
+                        $viewinprogress = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'In Progress' ORDER BY due_date DESC";
                         $result = $connection -> query($viewinprogress);
 
                         if(mysqli_num_rows($result)>0) {
@@ -151,12 +151,12 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
             <div class="card-list">
                 <div class="list-header">
                     <div><h2>Done</h2></div>
-                    <div class="add-card"><span class="fa fa-plus-square"></span></div>
+                    <div class="add-card"><button class="card-button" id="card-add-done"><span class="fa fa-plus-square"></button></span></div>
                 </div>
                 <div class="droppable">
 
                     <?php
-                        $viewdone = "SELECT task_id, title, description, due_date FROM KanbanTask WHERE state = 'Done'";
+                        $viewdone = "SELECT task_id, title, description, due_date FROM KanbanTask WHERE state = 'Done' ORDER BY due_date DESC";
                         $result = $connection -> query($viewdone);
 
                         if(mysqli_num_rows($result)>0) {
@@ -199,23 +199,41 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
         const droppables = document.querySelectorAll('.droppable');
         const draggables = document.querySelectorAll('.draggable');
 
-        const newmodal = document.querySelectorAll('.card-modal-container-new');
-        const newbutton = document.querySelectorAll('.add-card');
-        const savebutton = document.querySelectorAll('.card-save');
+        const newmodal = document.getElementById('card-add-modal');
+        const savebutton = document.getElementById('card-add-save');
 
-        newbutton.addEventListener('click', function () {
+        const newbtntodo = document.getElementById('card-add-todo');
+        const newbtninprogress = document.getElementById('card-add-inprogress');
+        const newbtndone = document.getElementById('card-add-done');
+        
+        const radiotodo = document.getElementById('radio-todo');
+        const radioinprogress = document.getElementById('radio-inprogress');
+        const radiodone = document.getElementById('radio-done');
+
+        newbtntodo.addEventListener('click', function () {
             newmodal.style.display = 'block';
+            radiotodo.innerHTML = '<input type="radio" name="card-status" value="To Do" checked> To Do';
+        });
+
+        newbtninprogress.addEventListener('click', function () {
+            newmodal.style.display = 'block';
+            radioinprogress.innerHTML = '<input type="radio" name="card-status" value="In Progress" checked> In Progress';
+        });
+
+        newbtndone.addEventListener('click', function () {
+            newmodal.style.display = 'block';
+            radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
         });
 
         savebutton.addEventListener('click', function () {
             newmodal.style.display = 'none';
         });
 
-        window.addEventListener('click', e => {
-            if(e.target == newmodal) {
+        window.onclick = function(event) {
+            if (event.target == newmodal) {
                 newmodal.style.display = 'none';
             }
-        });
+        }
 
         document.addEventListener('dragstart', e=> {
             if(e.target.classList.contains('draggable')) {
