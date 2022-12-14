@@ -10,7 +10,7 @@
         $result = mysqli_query($conn, $query);
 
         if($result){
-            $_SESSION['message'] = "Student deleted successfilly!!";
+//            $_SESSION['message'] = "Student deleted successfilly!!";
             header("location: student_view.php");
             exit(0);
         }
@@ -26,7 +26,8 @@
     //update student
     if(isset($_POST['update_student'])){
 
-        $name = $_POST['name'];
+        $f_name = $_POST['f_name'];
+        $l_name = $_POST['l_name'];
         $index = $_POST['index'];
         $reg = $_POST['reg'];
         $email = $_POST['email'];
@@ -35,7 +36,7 @@
         $password = $_POST['pass'];
         $degree = $_POST['degree'];
 
-        $query = "UPDATE student SET name='$name', index_no='$index', reg_no='$reg', email='$email', contact_no='$contact', personal_email='$personal_email', password='$password', degree_programme='$degree' WHERE reg_no='$reg' ";
+        $query = "UPDATE student SET f_name='$f_name',l_name='$l_name', index_no='$index', reg_no='$reg', email='$email', contact_no='$contact', personal_email='$personal_email', password='$password', degree_programme='$degree' WHERE reg_no='$reg' ";
         $result = mysqli_query($conn, $query);
 
         if($result){
@@ -50,7 +51,8 @@
 
     //create student
     if(isset($_POST['save_student'])){
-        $name = $_POST['name'];
+        $f_name = $_POST['f_name'];
+        $l_name = $_POST['l_name'];
         $index = $_POST['index'];
         $reg = $_POST['reg'];
         $email = $_POST['email'];
@@ -59,8 +61,8 @@
         $password = $_POST['pass'];
         $degree = $_POST['degree'];
 
-        $query = "INSERT INTO student(name, index_no, reg_no, email, contact_no, personal_email, password, degree_programme) VALUES 
-            ('$name', '$index', '$reg', '$email', '$contact', '$personal_email', '$password', '$degree')";
+        $query = "INSERT INTO student(f_name, l_name, index_no, reg_no, email, contact_no, personal_email, password, degree_programme) VALUES 
+            ('$f_name','$l_name', '$index', '$reg', '$email', '$contact', '$personal_email', '$password', '$degree')";
 
         $result = mysqli_query($conn, $query);
 

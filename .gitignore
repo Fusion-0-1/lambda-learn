@@ -1,0 +1,10 @@
+# IDEs
+.vscode/*
+.idea/*
+
+# Project files
+/vendor/
+.env
+
+# Mac OS
+.DS_Store

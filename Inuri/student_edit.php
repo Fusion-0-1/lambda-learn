@@ -37,8 +37,13 @@
                             <form action="crud.php" method="POST">
 
                                 <div class="input-field">
-                                <label>Name</label><br>
-                                <input type="text" name="name" value="<?=$stu['name']?>" class="input"> <br><br>
+                                <label>First Name</label><br>
+                                <input type="text" name="f_name" value="<?=$stu['f_name']?>" class="input"> <br><br>
+                                </div>
+
+                                <div class="input-field">
+                                    <label>Last Name</label><br>
+                                    <input type="text" name="l_name" value="<?=$stu['l_name']?>" class="input"> <br><br>
                                 </div>
                                 
                                 <div class="input-field">
