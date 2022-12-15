@@ -10,9 +10,7 @@
     justify-content: center;
     align-items: center;
     column-gap: 3.70%;
-
 }
-
 
 a {
     text-decoration: none;
@@ -109,52 +107,6 @@ a {
         column-gap: 1.5%;
     }
 }
-
-/*@media (max-width: 1303px) {*/
-
-/*    .main_heading {*/
-/*        font-size: 2.0rem;*/
-/*    }*/
-
-/*    .card {*/
-/*        gap: 10%;*/
-/*        justify-content: center;*/
-/*    }*/
-
-/*    .cards {*/
-/*        width: 300px;*/
-/*        height: 165px;*/
-/*        border-radius: 30px;*/
-/*    }*/
-
-/*    .cards_inside {*/
-/*        border-radius: 20px 20px 20px 0px;*/
-/*        height: 87.5px;*/
-/*    }*/
-
-/*    .course_name {*/
-/*        font-size: 1.8rem;*/
-/*    }*/
-
-/*    .course_code {*/
-/*        font-size: 1.5rem;*/
-/*        margin: 8px;*/
-/*    }*/
-
-/*    .lecturer_name {*/
-/*        margin: 0px 8px 8px 8px;*/
-/*        font-size: 1rem;*/
-/*    }*/
-
-/*    .precentage {*/
-/*        margin-right: 15px;*/
-/*    }*/
-
-/*    .precentage_inside {*/
-/*        height: 80%;*/
-/*    }*/
-/*}*/
-
 @media (max-width: 1303px) {
 
     .main_heading {

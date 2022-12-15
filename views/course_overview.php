@@ -4,7 +4,6 @@
     <h1 class="main_heading"><b>Course Overview</b></h1>
     <div class="card">
 
-
         <a href="#">
             <div class="cards">
                 <div class="cards_inside">
@@ -123,9 +122,6 @@
                 </div>
             </div>
         </a>
-
-
-
 
     </div>
 </div>
