@@ -358,6 +358,22 @@ td{
 .absolute-position{
     position: absolute;
 }
+/* --------------------------------------------------- */
+
+
+
+/* ---------------- Mobile Responsive  --------------- */
+/*Hide side bar*/
+@media(max-width:480px){
+    .sidebar{
+        display: none;
+    }
+    body{
+        margin-left: 8px;
+    }
+}
+/* --------------------------------------------------- */
+
 
 
 
