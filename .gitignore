@@ -5,6 +5,7 @@
 # Project files
 /vendor/
 .env
+composer.lock
 
 # Mac OS
 .DS_Store
