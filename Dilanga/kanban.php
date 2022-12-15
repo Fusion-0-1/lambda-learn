@@ -34,24 +34,26 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
     <div class="main-container">
         <div class="title"><h1>Kanban Board</h1></div>
 
-        <div class="card-modal-container-new" id="card-add-modal">
-            <form action="card_add.php" method="POST">
-                <div><input type="text" name="card-header" class="card-header-modal card-border" placeholder="Card Title"></div>
-                <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content"></textarea></div>
-                <div class="card-footer-modal">
-                    <div class="card-deadline-label">
-                        <label>Deadline :</label>
-                        <input type="date" name="card-deadline" class="card-deadline">
+        <div class="modal-container" id="card-add-modal">
+            <div class="card-add-modal">
+                <form action="card_add.php" method="POST">
+                    <div><input type="text" name="card-header" class="card-header-modal card-border" placeholder="Card Title"></div>
+                    <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content"></textarea></div>
+                    <div class="card-footer-modal">
+                        <div class="card-deadline-label">
+                            <label>Deadline :</label>
+                            <input type="date" name="card-deadline" class="card-deadline">
+                        </div>
+                        <div id="radio-todo"><input type="radio" name="card-status" value="To Do"> To Do </div>
+                        <div id="radio-inprogress"><input type="radio" name="card-status" value="In Progress"> In Progress </div>
+                        <div id="radio-done"><input type="radio" name="card-status" value="Done"> Done </div>
+                        
                     </div>
-                    <div id="radio-todo"><input type="radio" name="card-status" value="To Do"> To Do </div>
-                    <div id="radio-inprogress"><input type="radio" name="card-status" value="In Progress"> In Progress </div>
-                    <div id="radio-done"><input type="radio" name="card-status" value="Done"> Done </div>
-                    
-                </div>
-                <div class="card-save-container">
-                    <input type="submit" value="Save" class="card-save" id="card-add-save">
-                </div>
-            </form>
+                    <div class="card-save-container">
+                        <input type="submit" value="Save" class="card-save" id="card-add-save">
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="card-modal-container-update">
@@ -85,7 +87,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                 <div class="droppable">
 
                     <?php
-                        $viewtodo = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'To Do' ORDER BY due_date DESC";
+                        $viewtodo = "SELECT task_id, title, description, due_date FROM KanbanTask WHERE state = 'To Do' ORDER BY due_date ASC";
                         $result = $connection -> query($viewtodo);
 
                         if(mysqli_num_rows($result)>0) {
@@ -98,8 +100,18 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                         <div class="card-footer card-border">
                             <div class="card-deadline"><?= $todo['due_date']; ?></div>
                             <div class="card-options">
-                                <div class="card-edit"><span class="fas fa-pen"></span></div>
-                                <div class="card-delete"><span class="fa fa-trash"></span></div>
+                                <div>
+                                    <button type="submit" name="card-update" value="<?= $todo['task_id'] ?>" class="card-button">
+                                        <span class="fa fa-pen"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <form action="card_delete.php" method="POST">
+                                        <button type="submit" name="card-delete" value="<?= $todo['task_id'] ?>" class="card-button">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -121,7 +133,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                 <div class="droppable">
                     
                     <?php
-                        $viewinprogress = "SELECT title, description, due_date FROM KanbanTask WHERE state = 'In Progress' ORDER BY due_date DESC";
+                        $viewinprogress = "SELECT task_id, title, description, due_date FROM KanbanTask WHERE state = 'In Progress' ORDER BY due_date ASC";
                         $result = $connection -> query($viewinprogress);
 
                         if(mysqli_num_rows($result)>0) {
@@ -134,8 +146,18 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                         <div class="card-footer card-border">
                             <div class="card-deadline"><?= $inprogress['due_date']; ?></div>
                             <div class="card-options">
-                                <div class="card-edit"><span class="fas fa-pen"></span></div>
-                                <div class="card-delete"><span class="fa fa-trash"></span></div>
+                                <div>
+                                    <button type="submit" name="card-update" value="<?= $inprogress['task_id'] ?>" class="card-button">
+                                        <span class="fa fa-pen"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <form action="card_delete.php" method="POST">
+                                        <button type="submit" name="card-delete" value="<?= $inprogress['task_id'] ?>" class="card-button">
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -230,7 +252,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
         });
 
         window.onclick = function(event) {
-            if (event.target == newmodal) {
+            if (event.target === newmodal) {
                 newmodal.style.display = 'none';
             }
         }
