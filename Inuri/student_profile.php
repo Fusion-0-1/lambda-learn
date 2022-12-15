@@ -27,7 +27,7 @@
         $stu = mysqli_fetch_array($result);
 
         ?>
-            <h4><?=$stu['name']?></h4><br><br>
+            <h4><?=$stu['f_name']." ".$stu['l_name']?></h4><br><br>
 
             <form class="form">
                 <div class="input-field">
