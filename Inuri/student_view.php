@@ -24,6 +24,15 @@
     </div>
 
     <br>
+    <div class="msg">
+        <h4>
+        <?php
+        include("message.php");
+        ?>
+        </h4>
+    </div>
+
+    <br>
     
     <div class="table">
         <table>

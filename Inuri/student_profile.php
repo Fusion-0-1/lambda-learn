@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="input-field">
-                    <label>Email</label><br>
+                    <label>University Email</label><br>
                     <input type="text" value="<?= $stu['email']?>" class="input"><br><br>
                 </div>
 
