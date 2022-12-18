@@ -1,11 +1,27 @@
 const droppables = document.querySelectorAll('.droppable');
 const draggables = document.querySelectorAll('.draggable');
 
-const newmodal = document.querySelectorAll('.card-modal-container-new');
-const newbutton = document.querySelectorAll('.add-card');
-const savebutton = document.querySelectorAll('.card-save');
+const newmodal = document.getElementById('card-add-modal');
+const savebutton = document.getElementById('card-add-save');
 
-newbutton.addEventListener('click', function () {
+const newbtntodo = document.getElementById('card-add-todo');
+const newbtninprogress = document.getElementById('card-add-inprogress');
+const newbtndone = document.getElementById('card-add-done');
+
+const radiotodo = document.getElementById('radio-todo');
+const radioinprogress = document.getElementById('radio-inprogress');
+const radiodone = document.getElementById('radio-done');
+
+newbtntodo.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radiotodo.innerText = "checked";
+});
+
+newbtninprogress.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+});
+
+newbtndone.addEventListener('click', function () {
     newmodal.style.display = 'block';
 });
 
@@ -13,11 +29,11 @@ savebutton.addEventListener('click', function () {
     newmodal.style.display = 'none';
 });
 
-window.addEventListener('click', e => {
-    if(e.target == newmodal) {
+window.onclick = function(event) {
+    if (event.target == newmodal) {
         newmodal.style.display = 'none';
     }
-});
+}
 
 document.addEventListener('dragstart', e=> {
     if(e.target.classList.contains('draggable')) {

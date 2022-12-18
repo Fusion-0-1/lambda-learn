@@ -3,9 +3,9 @@
 $dbhost = "localhost";
 $dbuser = "root";
 $dbpass = "";
-$dbname = "users";
+$dbname = "anjana_lamda";
 
-$connection = mysqli_connect('localhost', 'root','','users');
+$connection = mysqli_connect('localhost', 'root','','anjana_lamda');
 
 // checking connection
 if(mysqli_connect_errno()){

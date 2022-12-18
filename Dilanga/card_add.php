@@ -9,7 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $state = $_POST['card-status'];
 }    
 
-    $insert = "INSERT INTO `KanbanTask` (title, description, due_date, state) VALUES ('$title', '$description', '$due_date', '$state')";
+    if ($due_date) {
+        $insert = "INSERT INTO `KanbanTask` (title, description, due_date, state) VALUES ('$title', '$description', '$due_date', '$state')";
+    }
+
+    else {
+        $insert = "INSERT INTO `KanbanTask` (title, description, state) VALUES ('$title', '$description', '$state')";
+    }
+    
 
     $result = $connection -> query($insert);    
 

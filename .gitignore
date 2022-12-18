@@ -1,5 +1,6 @@
 # IDEs
 .vscode/*
+*/.vscode/*
 .idea/*
 
 # Project files
