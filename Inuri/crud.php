@@ -10,7 +10,7 @@
         $result = mysqli_query($conn, $query);
 
         if($result){
-//            $_SESSION['message'] = "Student deleted successfilly!!";
+            $_SESSION['message'] = "Student deleted successfilly!!";
             header("location: student_view.php");
             exit(0);
         }
@@ -25,25 +25,20 @@
     
     //update student
     if(isset($_POST['update_student'])){
-
-        $f_name = $_POST['f_name'];
-        $l_name = $_POST['l_name'];
-        $index = $_POST['index'];
-        $reg = $_POST['reg'];
         $email = $_POST['email'];
         $contact = $_POST['contact'];
         $personal_email = $_POST['personal_email'];
-        $password = $_POST['pass'];
-        $degree = $_POST['degree'];
 
-        $query = "UPDATE student SET f_name='$f_name',l_name='$l_name', index_no='$index', reg_no='$reg', email='$email', contact_no='$contact', personal_email='$personal_email', password='$password', degree_programme='$degree' WHERE reg_no='$reg' ";
+        $query = "UPDATE student SET email='$email', contact_no='$contact', personal_email='$personal_email'";
         $result = mysqli_query($conn, $query);
 
         if($result){
+            $_SESSION['message'] = "Student Updated successfilly!!";
             header("location: student_view.php");
             exit(0);
         }
         else{
+            $_SESSION['message'] = "Failed to Update student";
             header("location: student_view.php");
             exit(0);
         }
@@ -67,10 +62,12 @@
         $result = mysqli_query($conn, $query);
 
         if($result){
+            $_SESSION['message'] = "Student created successfully!!";
             header("location: student_add.php");
             exit(0);
         }
         else{
+            $_SESSION['message'] = "Failed add Student";
             header("location: student_add.php");
             exit(0);
         }
