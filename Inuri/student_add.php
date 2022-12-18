@@ -14,6 +14,8 @@
 </head>
 <body>
     <div class="container">
+        <br>
+        <h4 class="back"><a href="student_view.php">Back</a></h4>
         <div class="wrapper">
             <h4>Add Student</h4>
 
@@ -21,27 +23,27 @@
                 <form action="crud.php" method="POST">
                 <div class="input-field">
                     <label>First Name</label><br>
-                    <input type="text" name="f_name" class="input"><br><br>
+                    <input type="text" name="f_name" class="input" required><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Last Name</label><br>
-                    <input type="text" name="l_name" class="input"><br><br>
+                    <input type="text" name="l_name" class="input" require><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Index Number</label><br>
-                    <input type="number" name="index" class="input"><br><br>
+                    <input type="number" name="index" class="input" required><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Registration Number</label><br>
-                    <input type="text" name="reg" class="input"><br><br>
+                    <input type="text" name="reg" class="input" required><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>Email</label><br>
-                    <input type="text" name="email" class="input"><br><br>
+                    <label>University Email</label><br>
+                    <input type="text" name="email" class="input" required><br><br>
                 </div>
 
                 <div class="input-field">
@@ -56,12 +58,15 @@
 
                 <div class="input-field">
                     <label>Password</label><br>
-                    <input type="text" name="pass" class="input"><br><br>
+                    <input type="text" name="pass" class="input" required><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Degree Program</label><br>
-                    <input type="text" name="degree" class="input"><br><br>
+                    <select name="degree" class="input" required>
+                        <option value="Computer Science">Computer Science</option>
+                        <option value="Information Systems">Information Systems</option>
+                    </select>
                 </div>
                 <div class="input-field">
                     <button type="submit" name="save_student" class="btn">Save</button>
