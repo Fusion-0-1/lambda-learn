@@ -3,10 +3,10 @@ CREATE DATABASE inuri_lambda;
 USE inuri_lambda;
 
 CREATE TABLE login (
-    User_ID varchar(10),
     Username varchar(100),
+    Name varchar(200),
     Password varchar(100),
-    PRIMARY KEY (User_ID)
+    PRIMARY KEY (Username)
 );
 
 CREATE TABLE student (
@@ -22,8 +22,8 @@ CREATE TABLE student (
    PRIMARY KEY (reg_no)
 );
 
-INSERT INTO `login`(`User_ID`, `Username`, `Password`) VALUES ('ad001','Inuri_Lavanya','20000715');
-INSERT INTO `login`(`User_ID`, `Username`, `Password`) VALUES ('ad002','Lavanya','071');
+INSERT INTO `login`( `Username`, `Name`, `Password`) VALUES ('2018/AD/0012', 'A.B.C. Perera','ad@12');
+INSERT INTO `login`(`Username`, `Name`, `Password`) VALUES ('2018/AD/0001', 'C.D. Gamage','ad@01');
 
 INSERT INTO `student`(`f_name`,`l_name` , `index_no`, `reg_no`, `email`, `contact_no`, `personal_email`, `password`, `degree_programme`) VALUES ('Inuri','Lavanya','20000715','2020/cs/071','inuri@ms.ac.lk','0713465234','inuri@gmail.com','inuri','computer science');
 INSERT INTO `student`(`f_name`,`l_name`, `index_no`, `reg_no`, `email`, `contact_no`, `personal_email`, `password`, `degree_programme`) VALUES ('Dilanga', 'Harshani','20000723','2020/cs/072','dilanga@ms.ac.lk','0753465234','dilanga@gmail.com','dilanga','computer science');
