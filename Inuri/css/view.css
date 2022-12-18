@@ -25,13 +25,13 @@ button{
 .btn-view{
     padding: 10px 10px;
     color: white;
-    background-color: #284DCE;
+    background-color: rgb(45, 200, 14);
 }
 
 .btn-edit{
     padding: 10px 10px;
     color: white;
-    background-color: rgb(45, 200, 14);
+    background-color: #284DCE;
 }
 
 .btn-delete{
@@ -88,4 +88,9 @@ td{
 
 tr td:last-of-type{
     background-color: #f2f4f7;
+}
+
+.msg{
+    color: rgb(45, 200, 14);
+    text-align: center;
 }
