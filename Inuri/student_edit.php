@@ -37,27 +37,7 @@
                             <form action="crud.php" method="POST">
 
                                 <div class="input-field">
-                                <label>First Name</label><br>
-                                <input type="text" name="f_name" value="<?=$stu['f_name']?>" class="input"> <br><br>
-                                </div>
-
-                                <div class="input-field">
-                                    <label>Last Name</label><br>
-                                    <input type="text" name="l_name" value="<?=$stu['l_name']?>" class="input"> <br><br>
-                                </div>
-                                
-                                <div class="input-field">
-                                <label>Index Number</label><br>
-                                <input type="number" name="index" value="<?= $stu['index_no']?>" class="input"><br><br>
-                                </div>
-                                
-                                <div class="input-field">
-                                <label>Registration Number</label><br>
-                                <input type="text" name="reg" value="<?= $stu['reg_no']?>" class="input"><br><br>
-                                </div>
-
-                                <div class="input-field">
-                                <label>Email</label><br>
+                                <label>University Email</label><br>
                                 <input type="text" name="email" value="<?= $stu['email']?>" class="input"><br><br>   
                                 </div>
 
@@ -71,18 +51,8 @@
                                 <input type="text" name="personal_email" value="<?= $stu['personal_email']?>" class="input"><br><br>
                                 </div>
 
-                                <div class="input-field">
-                                <label>Password</label><br>
-                                <input type="password" name="pass" value="<?= $stu['password']?>" class="input"><br><br>
-                                </div>
-
-                                <div class="input-field">
-                                <label>Degree Program</label><br>
-                                <input type="text" name="degree" value="<?= $stu['degree_programme']?>" class="input"><br><br>
-                                </div>
-
                                 <div class="input-field align">
-                                <button type="submit" name="update_student" class="btn">Update</button>
+                                <button type="submit" name="update_student" class="btn-green">Update</button>
                                 </div>
                                 
                             </form>
