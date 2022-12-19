@@ -195,14 +195,27 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.card-add-modal {
+.card-add-modal, .card-delete-modal {
     width: 50%;
     background-color: #f6f7f8;
     border: 2px solid #DCE3EA;
     border-radius: 10px;
     padding: 10px;
     margin: 15% auto;
-    
+}
+
+.delete-modal-wrap {
+    border: 2px solid #DCE3EA;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center-div {
+    display: flex;
+    justify-content: center;
 }
 
 .card-modal-container-update {
@@ -234,11 +247,16 @@ body {
     justify-content: center;
 }
 
-.card-save {
+.card-save, .card-delete, .modal-cancel, .modal-delete {
     border-radius: 10px;
     background-color: #0B2273;
     color: #ffffff;
     padding: 6px 40px; 
+}
+
+#warning {
+    font-size: xxx-large;
+    color: #923a25;
 }
 
 .card-save:hover, .card-save:focus {
