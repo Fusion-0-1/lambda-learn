@@ -67,7 +67,7 @@ body{
 }
 
 .delete_btn img {
-    width: 100%;
+    width: 80%;
 }
 
 .edit_btn {
@@ -75,7 +75,7 @@ body{
 }
 
 .edit_btn img {
-    width: 40%;
+    width: 80%;
 }
 
 .edit_time {
