@@ -37,7 +37,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
         <div class="modal-container" id="card-add-modal">
             <div class="card-add-modal">
                 <form action="card_add.php" method="POST">
-                    <div><input type="text" name="card-header" class="card-header-modal card-border" placeholder="Card Title"></div>
+                    <div><input type="text" name="card-header" id="card-header-modal" class="card-header-modal card-border" placeholder="Card Title" required></div>
                     <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content"></textarea></div>
                     <div class="card-footer-modal">
                         <div class="card-deadline-label">
@@ -55,6 +55,29 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                 </form>
             </div>
         </div>
+
+        <div class="modal-container" id="card-delete-modal">
+            <div class="card-delete-modal">
+                <div class="delete-modal-wrap">
+                    <div class="center-div"><span class="fa fa-exclamation-triangle" id="warning"></span></div>
+                    <div class="center-div">
+                        <h1>Are you sure?</h1>
+                    </div>
+                    <div class="center-div">
+                        <h3>Do you really want to delete this card? This action cannot be undone.</h3><br>
+                    </div>
+                    <div class="center-div">
+                        <form action="card_delete.php" method="POST">
+                            <div>
+                            <input type="submit" value="Cancel" class="modal-cancel" id="card-delete-cancel">
+                                <input type="submit" name="card-delete" value="Delete" class="modal-delete" id="modal-delete">
+
+                            </div>
+                        </form>
+                    </div>    
+                </div>
+            </div>
+        </div> 
 
         <div class="card-modal-container-update">
             <form action="card_add.php" method="POST">
@@ -106,11 +129,11 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                                     </button>
                                 </div>
                                 <div>
-                                    <form action="card_delete.php" method="POST">
-                                        <button type="submit" name="card-delete" value="<?= $todo['task_id'] ?>" class="card-button">
+                                    <!-- <form action="card_delete.php" method="POST"> -->
+                                        <button type="submit" id="card-delete" value="<?= $todo['task_id'] ?>" class="card-button">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                    </form>
+                                    <!-- </form> -->
                                 </div>
                             </div>
                         </div>
@@ -159,7 +182,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                                     </form>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
 
                     <?php
@@ -221,16 +244,37 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
         const droppables = document.querySelectorAll('.droppable');
         const draggables = document.querySelectorAll('.draggable');
 
-        const newmodal = document.getElementById('card-add-modal');
-        const savebutton = document.getElementById('card-add-save');
-
         const newbtntodo = document.getElementById('card-add-todo');
         const newbtninprogress = document.getElementById('card-add-inprogress');
         const newbtndone = document.getElementById('card-add-done');
+
+        const deletecard = document.getElementById('card-delete');
+        const deletemodal = document.getElementById('card-delete-modal');
+        const deletebutton = document.getElementById('modal-delete');
+        const cancelbutton = document.getElementById('card-delete-cancel');
+
+        const newmodal = document.getElementById('card-add-modal');
+        const savebutton = document.getElementById('card-add-save');
+        const cardtitle = document.getElementById('card-header-modal');     
         
         const radiotodo = document.getElementById('radio-todo');
         const radioinprogress = document.getElementById('radio-inprogress');
         const radiodone = document.getElementById('radio-done');
+
+        deletecard.addEventListener('click', function () {
+            deletemodal.style.display = 'block';
+        })
+
+        deletebutton.addEventListener('click', function () {
+            deletemodal.style.display = 'none';
+            deletebutton.innerHTML.value = deletecard.innerHTML.value;
+        });
+
+        window.onclick = function(event) {
+            if (event.target == deletemodal) {
+                deletemodal.style.display = 'none';
+            }
+        }
 
         newbtntodo.addEventListener('click', function () {
             newmodal.style.display = 'block';
@@ -248,11 +292,16 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
         });
 
         savebutton.addEventListener('click', function () {
-            newmodal.style.display = 'none';
+            if (cardtitle == NULL) {
+                cardtitle.innerHTML.value = "Please enter a card title"
+            }
+            else {
+                newmodal.style.display = 'none';
+            }
         });
 
         window.onclick = function(event) {
-            if (event.target === newmodal) {
+            if (event.target == newmodal) {
                 newmodal.style.display = 'none';
             }
         }

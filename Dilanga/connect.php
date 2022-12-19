@@ -3,7 +3,7 @@
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "lambda_int";
+$database = "lambda_dh";
 
 $connection = new mysqli($hostname, $username, $password, $database);
 

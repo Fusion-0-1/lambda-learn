@@ -16,8 +16,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     else {
         $insert = "INSERT INTO `KanbanTask` (title, description, state) VALUES ('$title', '$description', '$state')";
     }
-    
-
     $result = $connection -> query($insert);    
 
     if($result){
@@ -30,4 +28,3 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     }
 
 ?>
-
