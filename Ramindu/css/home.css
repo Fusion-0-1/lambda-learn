@@ -1,0 +1,22 @@
+.main-container {
+    gap: 60px;
+}
+
+.dashboard-row {
+    width: 100%;
+}
+
+.dashboard-card {
+    color: var(--white);
+    background-color: var(--blue);
+    width: 18rem;
+    height: 18rem;
+    border-radius: 20px;
+}
+
+.dashboard-card-icon {
+    background-color: var(--white);
+    margin: 30px 30px 0 30px;
+    border-radius: 20px;
+    padding: 20px;
+}

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 :root {
-    --x-dark-blue: #0D2137;
+    --x-dark-blue: #284DCE;
     --blue: #0B2273;
     --ash: #47596D;
     --ash-green: #476F86;
@@ -13,6 +13,8 @@
     --error-bg: #EADCDC;
     --green: #009900;
     --green-bg: #DCEADD;
+    --background-white: #F7F7F7;
+    --heading-blue: #0D2137;
 }
 
 body {
@@ -23,7 +25,7 @@ body {
 
 .main-container {
     background-color: var(--white);
-    padding: 30px;
+    padding: 36px 125px 82px 125px;
     border-radius: 20px;
 }
 
@@ -161,6 +163,14 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
     background-color: var(--blue);
     color: var(--white);
+}
+
+tr td:first-of-type {
+    border-radius: 12px 0px 0px 12px;
+}
+
+tr td:last-of-type {
+    border-radius: 0 12px 12px 0;
 }
 
 .error {

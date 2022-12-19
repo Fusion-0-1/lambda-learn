@@ -2,7 +2,7 @@
     $db_host = 'localhost';
     $db_user = 'root';
     $db_pass = '';
-    $db_name = 'lambda';
+    $db_name = 'ramindu_lambda';
 
     $conn = mysqli_connect($db_host, $db_user, $db_pass, $db_name);
     if (!$conn) {
