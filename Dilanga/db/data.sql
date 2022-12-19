@@ -11,7 +11,7 @@ CREATE TABLE Student (
     email VARCHAR(50) NOT NULL,
     contact_no VARCHAR(12),
     password VARCHAR(60) NOT NULL,
-    date_joined DATETIME NOT NULL,
+    date_joined DATE NOT NULL,
     CONSTRAINT PK_Student PRIMARY KEY (reg_no)
 );
 
@@ -20,7 +20,7 @@ CREATE TABLE KanbanTask (
     task_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     description VARCHAR(300),
-    due_date DATETIME,
+    due_date DATE,
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
     stu_reg_no VARCHAR(12),
     CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id),

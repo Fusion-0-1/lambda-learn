@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
 ?>
 
@@ -69,9 +70,9 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                     <div class="center-div">
                         <form action="card_delete.php" method="POST">
                             <div>
-                            <input type="submit" value="Cancel" class="modal-cancel" id="card-delete-cancel">
+                            <?$_POST['card-delete'] = $_GET['taskid']?> 
+                                <input type="submit" value="Cancel" class="modal-cancel" id="card-delete-cancel">
                                 <input type="submit" name="card-delete" value="Delete" class="modal-delete" id="modal-delete">
-
                             </div>
                         </form>
                     </div>    
@@ -133,6 +134,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
                                         <button type="submit" id="card-delete" value="<?= $todo['task_id'] ?>" class="card-button">
                                             <span class="fa fa-trash"></span>
                                         </button>
+                                        <?$_GET['taskid'] = $todo['task_id']?>
                                     <!-- </form> -->
                                 </div>
                             </div>
