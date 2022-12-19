@@ -38,17 +38,17 @@
 
                                 <div class="input-field">
                                 <label>University Email</label><br>
-                                <input type="text" name="email" value="<?= $stu['email']?>" class="input"><br><br>   
+                                <input type="text" name="email" value="<?= $stu['email']?>" pattern=".+@fusion\.ac\.lk" class="input"><br><br>
                                 </div>
 
                                 <div class="input-field">
                                 <label>Contact Number</label><br>
-                                <input type="number" name="contact" value="<?= $stu['contact_no']?>" class="input"><br><br>
+                                <input type="text" name="contact" value="<?= $stu['contact_no']?>" pattern="0.+" maxlength="10" minlength="10" class="input"><br><br>
                                 </div>
 
                                 <div class="input-field">
                                 <label>Personal Email</label><br>
-                                <input type="text" name="personal_email" value="<?= $stu['personal_email']?>" class="input"><br><br>
+                                <input type="text" name="personal_email" value="<?= $stu['personal_email']?>" pattern=".+@gmail\.com" class="input"><br><br>
                                 </div>
 
                                 <div class="input-field align">

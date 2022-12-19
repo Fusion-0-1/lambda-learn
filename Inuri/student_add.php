@@ -22,42 +22,42 @@
             <div class="form">
                 <form action="crud.php" method="POST">
                 <div class="input-field">
-                    <label>First Name</label><br>
-                    <input type="text" name="f_name" class="input" required><br><br>
+                    <label>* First Name</label><br>
+                    <input type="text" name="f_name" class="input" pattern="[a-zA-Z]+" required placeholder="Sanduni"><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>Last Name</label><br>
-                    <input type="text" name="l_name" class="input" require><br><br>
+                    <label>* Last Name</label><br>
+                    <input type="text" name="l_name" class="input" pattern="[a-zA-Z]+" required placeholder="Perera"><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>Index Number</label><br>
-                    <input type="number" name="index" class="input" required><br><br>
+                    <label>* Index Number</label><br>
+                    <input type="text" name="index" class="input" required pattern="[0-9]+" maxlength="8" placeholder="20000000"><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>Registration Number</label><br>
-                    <input type="text" name="reg" class="input" required><br><br>
+                    <label>* Registration No</label><br>
+                    <input type="text" name="reg" class="input" maxlength="12" required placeholder="2020/CS/001"><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>University Email</label><br>
-                    <input type="text" name="email" class="input" required><br><br>
+                    <label>* University Email</label><br>
+                    <input type="text" name="email" class="input" pattern=".+@fusion\.ac\.lk" required placeholder="2020cs0000@fusion.ac.lk"><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Contact Number</label><br>
-                    <input type="number" name="contact" class="input"><br><br>
+                    <input type="text" name="contact" class="input" pattern="0.+" maxlength="10" minlength="10" placeholder="0718235648"><br><br>
                 </div>
 
                 <div class="input-field">
                     <label>Personal Email</label><br>
-                    <input type="text" name="personal_email" class="input"><br><br>
+                    <input type="text" name="personal_email" class="input" pattern=".+@gmail\.com" placeholder="sanduni@gmail.com"><br><br>
                 </div>
 
                 <div class="input-field">
-                    <label>Password</label><br>
+                    <label>* Password</label><br>
                     <input type="text" name="pass" class="input" required><br><br>
                 </div>
 
@@ -69,7 +69,7 @@
                     </select>
                 </div>
                 <div class="input-field">
-                    <button type="submit" name="save_student" class="btn">Save</button>
+                    <button type="submit" name="save_student" class="btn">Add Student</button>
                 </div>
                 </form>
             </div>

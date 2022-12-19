@@ -53,7 +53,7 @@
         $email = $_POST['email'];
         $contact = $_POST['contact'];
         $personal_email = $_POST['personal_email'];
-        $password = $_POST['pass'];
+        $password = password_hash($_POST['pass'], PASSWORD_BCRYPT);
         $degree = $_POST['degree'];
 
         $query = "INSERT INTO student(f_name, l_name, index_no, reg_no, email, contact_no, personal_email, password, degree_programme) VALUES 
