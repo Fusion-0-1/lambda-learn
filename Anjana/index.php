@@ -53,7 +53,7 @@
                 <form class="login" action="index.php" method="post">
                     <div class="field_set">
                         <img class="logo" src="./image/logo.png" alt="logo">
-                            <p class="university_name">University of ABC</p>
+                            <p class="university_name">Institute of Fusion</p>
                             <p class="login_text">Login</p>
                             <h1 class="welcome_text">Welcome</h1>                        
                                 <?php

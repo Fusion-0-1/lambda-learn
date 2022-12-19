@@ -5,11 +5,11 @@ include('db.php');
 $reg_no = $_POST['reg_no'];
 $password = $_POST['password'];
 
-$sql = "SELECT * FROM Users WHERE reg_no='$reg_no' AND password='$password'";
+$sql = "SELECT * FROM Users WHERE reg_no='$reg_no'";
 $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-if (mysqli_num_rows($result) == 1 && $row['password'] == $password) {
+if (mysqli_num_rows($result) == 1 && password_verify($password, $row['password'])) {
     $_SESSION['reg_no'] = $row['reg_no'];
     $_SESSION['f_name'] = $row['f_name'];
     $_SESSION['l_name'] = $row['l_name'];
@@ -22,9 +22,8 @@ if (mysqli_num_rows($result) == 1 && $row['password'] == $password) {
     $result = mysqli_query($conn, $sql) or die(mysqli_error($conn));
 
     header("location: home.php", true, 301);
-    die();
 } else {
     header("location: login.php?error=1", true, 301);
-    die();
 }
+die();
 ?>

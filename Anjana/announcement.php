@@ -135,12 +135,12 @@ if (isset($_GET["delete_ann_id"])) {
 <body>
     <header class="head">
         <div class="header_logo"><img src="./image/logo.png" alt=""></div>
-        <p class="topbar_logout"> Welcome <?php echo $_SESSION['user_name']; ?>! <a href="logout.php">Log Out</a></p>
+        <div class="topbar_logout"><p> Welcome ! <a href="logout.php"><img src="/image/logout.png" alt="logout image"></a></p></div>
     </header>
 
 
     <div class="main_card">
-        <div class="course_name">Data Structures and Algorithms - Announcement</div>
+        <div class="course_name">Announcement</div>
         <div class="bl" id="blur">
             <?php
             if (!empty($msg)) {
@@ -180,7 +180,7 @@ if (isset($_GET["delete_ann_id"])) {
             </div>
 
             <?php
-            $query = "SELECT announcement_id, heading, content, dates, lec_name FROM courseannouncement";
+            $query = "SELECT announcement_id, heading, content, dates, lec_name FROM courseannouncement ORDER BY announcement_id DESC ";
             $users = mysqli_query($connection, $query);
             if ($users) {
                 while ($courseannouncement = mysqli_fetch_assoc($users)) {
@@ -190,8 +190,8 @@ if (isset($_GET["delete_ann_id"])) {
                         <div class="container container_edit_delete">
                             <div class="heading_content"><?php echo $courseannouncement['heading'] ?></div>
                             <div class="edit_delete_timeremaining">
-                                <a href="announcement.php?delete_ann_id=<?php echo $courseannouncement['announcement_id'] ?>" onclick="return confirm('Are you sure?');"><img src="./image/Delete.png" alt="Delete Button"></a>
-                                <a href="announcement.php?announcement_id=<?php echo $courseannouncement['announcement_id'] ?>"><img src="./image/Edit.png" alt="Edit Button"></a>
+                                <a href="announcement.php?delete_ann_id=<?php echo $courseannouncement['announcement_id'] ?>" class="delete_btn" onclick="return confirm('Are you sure?');"><img src="./image/Delete.png" alt="Delete Button"></a>
+                                <a href="announcement.php?announcement_id=<?php echo $courseannouncement['announcement_id'] ?>" class="edit_btn"><img src="./image/Edit.png" alt="Edit Button"></a>
                             </div>
                         </div>
                         <div class="announcement_card_inside">
