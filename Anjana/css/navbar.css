@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+.display li {
+        list-style: none;
+        margin-bottom: 60% ;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    background: white;
+    width: 60px;
+    overflow: hidden;
+    box-shadow: 5px 5px 5px 0 #e6ebf0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+a{
+    padding: 0; 
+}
+
+
+.display {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.display img {
+    width: 30px;
+    margin-top: 10%;
+}

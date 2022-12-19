@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 * {
     font-family: 'Roboto', sans-serif;
+}
+
+body{
+    margin: 0;
 }
 
 .main_card {
@@ -11,6 +15,8 @@
     border-radius: 15px;
     background: white;
     border: 3px solid #DCE3EA;
+    margin-top: 5.5%;
+    margin-left: 5.5%;
 }
 
 
@@ -32,7 +38,6 @@
     margin-bottom: 40px;
 }
 
-
 .container {
     display: grid;
     grid-template-columns: auto auto;
@@ -47,18 +52,22 @@
 
 .edit_delete_timeremaining {
     display: grid;
-    grid-template-columns: 50% 50%;
-    justify-content: space-between;
-    padding: 0.5% 2.5%;
+    grid-template-columns: auto auto;
+    justify-content: flex-end;
+    padding: 0.5% 1%;
+    column-gap: 5%;
     align-items: center;
 }
 
 .delete_btn {
+    width: 100%;
+    border-radius: 25px;
     border: none;
+    padding: 0;
 }
 
 .delete_btn img {
-    width: 40%;
+    width: 100%;
 }
 
 .edit_btn {
@@ -166,16 +175,6 @@ textarea::-webkit-scrollbar{
 }
 
 
-/* @media(max-width:800px) {
-    .announcement_card {
-        flex: 100%;
-        max-width: 270px;
-        margin: auto;
-        margin-top: 4%;
-        align-items: center;
-    }
-} */
-
 @media(max-width:1300px) {
     .add_headline {
         width: 320%;
@@ -275,150 +274,52 @@ textarea::-webkit-scrollbar{
         width: 150%;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* .card {
-    max-width: 100%;
-    background: gray;
-    margin: 1%;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    border-radius: 15px;
-    background: white;
-    border: 3px solid #DCE3EA;
-}
-
-
-.card h2 {
-    text-align: center;
-}
-
-
-.card .ann-card {
-    width: 85%;
-    margin: auto;
-    height: 280px;
-    padding-bottom: 1%;
-    background: white;
-    border-radius: 15px;
-    border: 3px solid #DCE3EA;
-    margin-bottom: 30px;
-}
-
-
-
-.container .add_headline {
-    border-radius: 5px;
-    height: 30px;
-    border: none;
-    font-size: 18px;
-    font-weight: bold;
-    width: 200%;
-}
-
-
-.container_heading .left .add_name {
-    border-radius: 5px;
-    width: 100%;
-    background: #0B2273;
-    color: white;
-    border: none;
-    font-size: 20px;
-}
-
-
-.ann-card-inside .add_content {
-    border-radius: 5px;
-    width: 100%;
-    border: none;
-    font-size: 16px;
-}
-
-
-
-.container_heading {
-    max-width: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: space-between;
-    height: 40px;
-    background: #0B2273;
-    border-radius: inherit;
-    padding: 0 20px;
+#popup{
+    
+    position: fixed;
+    top: 45%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    padding: 20px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, .50);
+    background: #efefef;
+    border-radius: 10px;
+    display: block;
+    justify-content: center;
     align-items: center;
-    font-size: 16px; 
-    color: white;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
 }
 
-
-.card .ann-card .ann-card-inside {
-    width: 95%;
-    height: 75%;
-    position: relative;
-    border-radius: 15px;
-    margin: auto;
-    background: white;
-    border: 3px solid #DCE3EA;
+.pop_announcement{
+    width: 100%;
+    margin-bottom: 0;
 }
 
+#popup.active {
+    visibility: visible;
+    opacity: 1;
+    transform: 0.5s;
+}
 
-.card .ann-card .ann-card-inside p {
+.bl.active{
+    filter: blur(75px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.errmsg{
+    background: rgba(255, 0, 0, 0.127);
+    color: red;
+    border-radius: 10px;
     padding: 10px;
-    font-size: 16px;
 }
-
-
-
-.container{
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 0 30px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 40px;
-    font-size: 18px;
-    font-weight: bold;
+.msg{
+    width: 80%;
+    margin: auto;
+    padding: 2%;
+    background: rgba(0, 128, 6, 0.132);
+    color: green;
 }
-
-
-.card .ann-card .container .btn {
-    width: 100px;
-    border: 0px;
-    height: 30px;
-    border-radius: 12px;
-    background: #2AB514;
-    color: white;
-}
-
-
-@media(max-width:800px) {
-    a {
-        flex: 100%;
-        max-width: 270px;
-        margin: auto;
-        margin-top: 4%;
-    }
-} */

@@ -1,0 +1,30 @@
+.head {
+
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5%;
+    box-shadow: 0 5px 5px #e6ebf0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+    background: rgb(255, 255, 255);
+}
+
+.header_logo img {
+    padding-left: 20px;
+    width: 40%;
+}
+
+.header_logo {
+    display: flex;
+    align-items: center;
+}
+
+.loggedin {
+    align-items: center;
+}
+
+.topbar_logout{
+    padding-right: 20px;
+}

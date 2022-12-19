@@ -1,8 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import "/css/main.css";
 
 * {
     font-family: 'Roboto', sans-serif;
+}
+
+body{
+    margin: 0;
 }
 
 .main_heading {
@@ -17,9 +20,8 @@
     border-radius: 15px;
     margin: 1%;
     border: 4px solid #DCE3EA;
-    margin-top: 30px;
-
-
+    margin-top: 5.5%;
+    margin-left: 5.5%;
 }
 
 .card {
@@ -27,14 +29,10 @@
     display: grid;
     grid-template-columns: auto auto auto;
     justify-content: space-between;
-    margin: 0% 4% 0% 4%;
+    margin: 0% 6% 0% 6%;
     margin-bottom: 20px;
     align-items: center;
-
-
 }
-
-
 
 
 .cards {
@@ -52,7 +50,7 @@
 
 a {
     text-decoration: none;
-    margin: 0% 0% 10% 0%;
+    margin: 0% 0% 20% 0%;
 }
 
 @media (max-width: 1073px) {

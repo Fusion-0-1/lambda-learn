@@ -1,72 +1,79 @@
 <?php session_start(); ?>
 <?php require_once('connect/connection.php'); ?>
+<?php include('navbar.php'); ?>
 
-<?php 
-    if(!isset($_SESSION['user_id'])){
+<?php
+if (!isset($_SESSION['user_id'])) {
     header('Location: index.php');
 }
-?>    
+?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="./css/dashboard.css">
+    <link rel="stylesheet" href="./css/topbar.css">
+
+
 </head>
+
 <body>
-    <header>
-        <div class="appname">Lamda</div>
-        <div class="loggedin">Wellcome <?php echo $_SESSION['user_name']; ?>! <a href="logout.php">Log Out</a></div>
+    <header class="head">
+        <div class="header_logo"><img src="./image/logo.png" alt=""></div>
+        <p> Welcome <?php echo $_SESSION['user_name']; ?>! <a href="logout.php"> Log Out</a></p>
     </header>
-    
-        <div class="main_card">
+
+    <div class="main_card">
         <h1 class="main_heading"> <b>Dashboard</b> </h1>
-            <div class="card">
+        <div class="card">
 
-                <a href="#">
-                    <div class="cards">
-                        <div class="cards_inside">
-                            <img src="./image/courses.png" alt="courses">
-                        </div>
-                        <h2>Courses</h2>
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./image/courses.png" alt="courses">
                     </div>
-                </a>
+                    <h2>Courses</h2>
+                </div>
+            </a>
 
 
-                <a href="announcement.php">
-                    <div class="cards">
-                        <div class="cards_inside">
-                            <img src="./image/announcement.png" alt="calender">
-                        </div>
-                        <h2>Announcement</h2>
+            <a href="announcement.php">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./image/announcement.png" alt="calender">
                     </div>
-                </a>
+                    <h2>Announcement</h2>
+                </div>
+            </a>
 
 
-                <a href="#">
-                    <div class="cards">
-                        <div class="cards_inside">
-                            <img src="./image/calendar.png" alt="announcement">
-                        </div>
-                        <h2>Calendar</h2>
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./image/calendar.png" alt="announcement">
                     </div>
-                </a>
+                    <h2>Calendar</h2>
+                </div>
+            </a>
 
 
-                <a href="#">
-                    <div class="cards">
-                        <div class="cards_inside">
-                            <img src="./image/kanbanboard.png" alt="leaderBoard">
-                        </div>
-                        <h2>Kanban Board</h2>
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./image/kanbanboard.png" alt="leaderBoard">
                     </div>
-                </a>
+                    <h2>Kanban Board</h2>
+                </div>
+            </a>
 
-    
-            </div>
+
         </div>
+    </div>
 
 </body>
+
 </html>
