@@ -140,7 +140,7 @@ if (isset($_GET["delete_ann_id"])) {
 
 
     <div class="main_card">
-        <div class="course_name">Data Structures and Algorithms - Announcement</div>
+        <div class="course_name">Announcement</div>
         <div class="bl" id="blur">
             <?php
             if (!empty($msg)) {
