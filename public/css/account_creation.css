@@ -1,0 +1,115 @@
+.main_card {
+    max-width: 100%;
+    background: rgb(255, 255, 255);
+    border-radius: 15px;
+    margin: 1%;
+    border: 4px solid #DCE3EA;
+    margin-top: 60px;
+}
+
+.card{
+    max-width: 90%;
+    margin: 2% auto 2% auto;
+    border: 4px solid #DCE3EA;
+    border-radius: 15px;
+}
+
+.main_heading {
+    text-align: center;
+    padding: 15px;
+    padding-top: 25px;
+    margin: 0%;
+    font-size: 2.1rem;
+    font-weight: bold;
+}
+
+.upload_btn{
+    background: #0B2273;
+    color: white;
+    border-radius: 15px;
+    width: 60%;
+    margin: 1% auto 2% auto;
+    padding: 0.2% 1% 0.2% 1%;
+    font-size: 1.3rem;
+    display: grid;
+    grid-template-columns: 94% 6%;
+    align-items: center;
+}
+
+.logo{
+    width: 100%;
+}
+
+.upload_txt{
+    font-size: 24px;
+    width: 75%;
+    margin: auto;
+    margin-top: 3%;
+}
+
+.upload_content{
+    border: 2px solid black;
+    margin: 1% auto 8% auto;
+    width: 75%;
+    border-radius: 15px;
+    padding: 1%;
+    text-align: center;
+    font-size: 18px;
+}
+
+@media(max-width:1080px){
+    .main_heading{
+        font-size: 1.8rem;
+    }
+    .upload_btn{
+        font-size: 1.2rem;
+    }
+    .upload_content{
+        font-size: 1.1rem;
+    }
+    .upload_txt{
+        font-size: 1.3rem;
+    }
+}
+
+@media(max-width:768px) {
+    .main_heading {
+        font-size: 1.8rem;
+    }
+
+    .upload_btn {
+        font-size: 1.0rem;
+        padding: 1%;
+    }
+
+    .upload_content {
+        font-size: 1.1rem;
+    }
+
+    .upload_txt {
+        font-size: 1.3rem;
+    }
+}
+
+@media(max-width:560px) {
+    .main_heading {
+        font-size: 1.6rem;
+        padding: 5px;
+        padding-top: 15px;
+    }
+
+    .upload_btn {
+        font-size: 0.8rem;
+        padding: 1%;
+        width: 75%;
+        border-radius: 15px;
+    }
+
+    .upload_content {
+        font-size: 0.8rem;
+    }
+
+    .upload_txt {
+        font-size: 0.9rem;
+    }
+}
