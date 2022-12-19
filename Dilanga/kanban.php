@@ -53,6 +53,7 @@ if(isset($_SESSION['reg_no'])) {
                         
                     </div>
                     <div class="card-save-container">
+                        <input type="submit" value="Cancel" class="modal-cancel" id="card-save-cancel">
                         <input type="submit" value="Save" class="card-save" id="card-add-save">
                     </div>
                 </form>
@@ -82,25 +83,28 @@ if(isset($_SESSION['reg_no'])) {
             </div>
         </div> 
 
-        <div class="card-modal-container-update">
-            <form action="card_add.php" method="POST">
-                <div><input type="text" name="card-header" class="card-header card-border" value="<?= $done['title']; ?>"></div>
-                <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content"></textarea></div>
-                <div class="card-footer-modal">
-                    <div class="card-deadline-label">
-                        <label>Deadline :</label>
-                        <input type="date" name="card-deadline" class="card-deadline">
+        <!-- <div class="modal-container" id="card-update-modal">
+            <div class="card-update-modal">
+                <form action="card_update.php" method="POST">
+                    <div><input type="text" name="card-header" class="card-header card-border" value="<8?= $done['title']; ?>"></div>
+                    <div><textarea name="card-body" class="card-body card-border" placeholder="Card Content" value="<8?= $done['description']; ?>"></textarea></div>
+                    <div class="card-footer-modal">
+                        <div class="card-deadline-label">
+                            <label>Deadline :</label>
+                            <input type="date" name="card-deadline" class="card-deadline" value="<8?= $done['due_date']; ?>">
+                        </div>
+                        <div><input type="radio" name="card-status" value="To Do"> To Do </div>
+                        <div><input type="radio" name="card-status" value="In Progress"> In Progress </div>
+                        <div><input type="radio" name="card-status" value="Done" checked> Done </div>
+                        
                     </div>
-                    <div><input type="radio" name="card-status" value="To Do"> To Do </div>
-                    <div><input type="radio" name="card-status" value="In Progress"> In Progress </div>
-                    <div><input type="radio" name="card-status" value="Done"> Done </div>
-                    
-                </div>
-                <div class="card-save-container">
-                    <input type="submit" value="Save" class="card-save">
-                </div>
-            </form>
-        </div>
+                    <div class="card-save-container">
+                        <input type="submit" value="Cancel" class="modal-cancel" id="card-update-cancel">
+                        <input type="submit" value="Save" class="card-save" id="card-update-save">
+                    </div>
+                </form>
+            </div>
+        </div> -->
         
         <div class="card-container">
 
@@ -219,9 +223,11 @@ if(isset($_SESSION['reg_no'])) {
                             <div class="card-deadline"><?= $done['due_date']; ?></div>
                             <div class="card-options">
                                 <div>
-                                    <button type="submit" name="card-update" value="<?= $done['task_id'] ?>" class="card-button">
-                                        <span class="fa fa-pen"></span>
-                                    </button>
+                                    <!-- <form action="#" method="POST"> -->
+                                        <button type="submit" id="card-update" name="card-update" value="<?= $done['task_id'] ?>" class="card-button" disabled>
+                                            <span class="fa fa-pen"></span>
+                                        </button>
+                                    <!-- </form> -->
                                 </div>
                                 <div>
                                     <form action="card_delete.php" method="POST">
@@ -255,11 +261,17 @@ if(isset($_SESSION['reg_no'])) {
         const deletecard = document.getElementById('card-delete');
         const deletemodal = document.getElementById('card-delete-modal');
         const deletebutton = document.getElementById('modal-delete');
-        const cancelbutton = document.getElementById('card-delete-cancel');
+        const cancelbtndlt = document.getElementById('card-delete-cancel');
+
+        // const updatecard = document.getElementById('card-update');
+        // const updatemodal = document.getElementById('card-update-modal');
+        // const updatebutton = document.getElementById('card-update-save');
+        // const cancelbtnupdt = document.getElementById('card-update-cancel');
 
         const newmodal = document.getElementById('card-add-modal');
         const savebutton = document.getElementById('card-add-save');
-        const cardtitle = document.getElementById('card-header-modal');     
+        const cardtitle = document.getElementById('card-header-modal'); 
+        const cancelbtnnew = document.getElementById('card-save-cancel');    
         
         const radiotodo = document.getElementById('radio-todo');
         const radioinprogress = document.getElementById('radio-inprogress');
@@ -274,11 +286,33 @@ if(isset($_SESSION['reg_no'])) {
             deletebutton.innerHTML.value = deletecard.innerHTML.value;
         });
 
+        cancelbtndlt.addEventListener('click', function () {
+            deletemodal.style.display = 'none';
+        })
+
         window.onclick = function(event) {
             if (event.target == deletemodal) {
                 deletemodal.style.display = 'none';
             }
         }
+
+        // updatecard.addEventListener('click', function () {
+        //     updatemodal.style.display = 'block';
+        // })
+
+        // updatebutton.addEventListener('click', function () {
+        //     updatemodal.style.display = 'none';
+        // });
+
+        // cancelbtnupdt.addEventListener('click', function () {
+        //     updatemodal.style.display = 'none';
+        // })
+
+        // window.onclick = function(event) {
+        //     if (event.target == deletemodal) {
+        //         updatemodal.style.display = 'none';
+        //     }
+        // }
 
         newbtntodo.addEventListener('click', function () {
             newmodal.style.display = 'block';
@@ -303,6 +337,10 @@ if(isset($_SESSION['reg_no'])) {
                 newmodal.style.display = 'none';
             }
         });
+
+        cancelbtnnew.addEventListener('click', function () {
+            newmodal.style.display = 'none';
+        })
 
         window.onclick = function(event) {
             if (event.target == newmodal) {

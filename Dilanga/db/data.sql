@@ -43,4 +43,7 @@ INSERT INTO KanbanTask (title, description, due_date, state) VALUES
     ("Update Slides", "Update data structures lecture slides", "2023-01-01", 1),
     ("Assignment marks", "Correct 1st year assignments and upload marks", "2022-11-30", 3),
     ("IEEE Script", "IEEE script review with the committee members", "2022-12-21", 1),
-    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 2);
+    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 3),
+    ("Install R studio", "Including the GUI, and explore the software", "2022-12-30", 2),
+    ("DM Calculations", "Modular arithematics, primes and euclidian things", "2022-12-19", 3),
+    ("Automata assignment", "Language grammar types, ambiuous grammar", "2022-12-26", 2);
