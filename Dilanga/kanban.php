@@ -1,6 +1,7 @@
 <?php
 session_start(); 
 require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
+if(isset($_SESSION['reg_no'])) {
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +29,7 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
             <a href="dashboard.php"><span class="fas fa-home"></span></a>
             <span class="fas fa-bullhorn"></span>
             <span class="fas fa-calendar-alt"></span>
+            <a href="logout.php"><span class="fa fa-sign-out"></span></a>
         </div> 
     </div>
     
@@ -356,3 +358,12 @@ require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
 </body>
 
 </html>
+
+<?php
+
+} else {
+    header("Location: index.php");
+    exit();
+}
+
+?>

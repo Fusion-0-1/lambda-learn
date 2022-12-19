@@ -17,7 +17,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     $password = validate($_POST['password']);
 
     if (empty($username)) {
-        header("Location: index.php?error=User Name is required");
+        header("Location: index.php?error=Username is required");
         exit();
 
     } else if(empty($password)){
@@ -36,11 +36,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 header("Location: dashboard.php");
                 exit();
             } else {
-                header("Location: index.php?error=Incorect User name or password");
+                header("Location: index.php?error=Incorrect username or password");
                 exit();
             }
         }else{
-            header("Location: index.php?error=Incorect User name or password");
+            header("Location: index.php?error=Incorrect username or password");
             exit();
         }
     }

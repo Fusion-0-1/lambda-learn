@@ -1,6 +1,7 @@
 <?php 
 
 session_start(); 
+if(isset($_SESSION['reg_no'])) {
 
 ?>
 
@@ -26,6 +27,7 @@ session_start();
             <a href="dashboard.php"><span class="fas fa-home"></span></a>
             <span class="fas fa-bullhorn"></span>
             <span class="fas fa-calendar-alt"></span>
+            <a href="logout.php"><span class="fa fa-sign-out"></span></a>
         </div> 
     </div>
     
@@ -65,3 +67,12 @@ session_start();
     <script src="./script.js"></script>
 </body>
 </html>
+
+<?php
+
+} else{
+    header("Location: index.php");
+    exit();
+}
+
+?>
