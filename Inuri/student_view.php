@@ -59,8 +59,6 @@
                                     <td class="inline">
                                         <button class="btn-view"><a href="student_profile.php?id=<?=$stu['reg_no']?>" class="link"><i class="fa-solid fa-eye"></i></a></button>
 
-                                        <button class="btn-edit"><a href="student_edit.php?id=<?=$stu['reg_no']?>" class="link"><i class="fa-solid fa-pen-to-square"></i></a></button>
-
                                         <form action="crud.php" method="POST">
                                             <button type="submit" name="delete_student" value="<?=$stu['reg_no']?>" class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
                                         </form>

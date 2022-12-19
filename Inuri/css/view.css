@@ -25,7 +25,7 @@ button{
 .btn-view{
     padding: 10px 10px;
     color: white;
-    background-color: rgb(45, 200, 14);
+    background-color: #284DCE;
 }
 
 .btn-edit{
@@ -83,7 +83,7 @@ td{
 
 .inline{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 tr td:last-of-type{
