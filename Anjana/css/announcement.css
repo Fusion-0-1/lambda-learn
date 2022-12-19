@@ -305,7 +305,7 @@ textarea::-webkit-scrollbar{
 }
 
 .bl.active{
-    filter: blur(75px);
+    filter: blur(200px);
     pointer-events: none;
     user-select: none;
 }
