@@ -2,13 +2,17 @@
 session_start();
 include('db.php');
 include('header.html');
+if (isset($_SESSION['reg_no'])) {
+    header("Location: home.php");
+    die();
+}
 ?>
     <link href="css/login.css" rel="stylesheet">
     <title>Lambda LMS</title>
     </head>
 
     <body>
-    <section class="login">
+    <section class="login flex flex-column h-center">
         <div class="login_container flex flex-row h-center">
             <div class="background_image_container">
                 <img src="images/login/login_cover.jpg" alt="Lambda Logo"/>

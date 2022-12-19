@@ -1,5 +1,9 @@
 @import url("main.css");
 
+.login {
+    height: 100vh;
+}
+
 .background_image_container {
     width: 65%;
 }
