@@ -31,23 +31,6 @@ include('navbar.php');
         </div>
         <div class="main-container inner border flex flex-column v-center">
             <h2 id="delete-success-message" class='success success-bg text-center hide'></h2>
-            <div id="edit-modal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <form action="course-edit.php" method="GET">
-                        <p>Course Code</p>
-                        <p>Course Name</p>
-                        <p></p>
-                        <label>
-                            <input id="input-edit-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
-                        </label>
-                        <label>
-                            <input id="input-edit-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
-                        </label>
-                        <button id="edit-save-btn" class="dark-btn" type="submit" onclick="return course_validate(document.getElementById('input-edit-course-code').value)" name="edit">Save</button>
-                    </form>
-                </div>
-            </div>
             <table id="course-table" cellpadding="0" cellspacing="0">
                 <tr>
                     <th>Course Code</th>
@@ -69,6 +52,40 @@ include('navbar.php');
             </table>
         </div>
     </div>
+
+    <!--    Modals-->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form action="course-edit.php" method="GET">
+                <p>Course Code</p>
+                <p>Course Name</p>
+                <p></p>
+                <label>
+                    <input id="input-edit-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
+                </label>
+                <label>
+                    <input id="input-edit-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
+                </label>
+                <button id="edit-save-btn" class="dark-btn" type="submit" onclick="return course_validate(document.getElementById('input-edit-course-code').value)" name="edit">Save</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="delete-modal" class="modal">
+        <div class="modal-content error-modal-content">
+            <div class="flex flex-column v-center h-center">
+                <img src="./images/Error.png">
+                <h3 id="delete-warning" class="modal-header"></h3>
+                <p class="modal-text">Once you delete a course, you cannot undo the process</p>
+                <section class="flex flex-row two-button-row">
+                    <button id="cancel-btn" class="dark-btn cancel-btn">Cancel</button>
+                    <button id="delete-btn" class="dark-btn error-btn">Delete</button>
+                </section>
+            </div>
+        </div>
+    </div>
+
     <script>
         function course_validate(course_code) {
             if (course_code.length !== 7) {
@@ -79,7 +96,23 @@ include('navbar.php');
         }
 
         function delete_course(btn, course_code) {
-            if (confirm("Are you sure you want to delete " + course_code + "?")) {
+            document.getElementById("delete-warning").innerHTML = "Are you sure you want to delete " + course_code + " course? ";
+
+            const modal = document.getElementById("delete-modal");
+            modal.style.display = "block";
+
+            const cancel_btn = document.getElementById("cancel-btn");
+            cancel_btn.onclick = function () {
+                modal.style.display = "none";
+            };
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = "none";
+                }
+            };
+
+            const delete_btn = document.getElementById("delete-btn");
+            delete_btn.onclick = function () {
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function() {
                     if (this.readyState === 4 && this.status === 200) {
@@ -91,6 +124,7 @@ include('navbar.php');
                 }
                 xmlhttp.open("DELETE", "course-delete.php?course_code=" + course_code, true);
                 xmlhttp.send();
+                modal.style.display = "none";
             }
         }
         function edit_course(course_code, course_name) {
