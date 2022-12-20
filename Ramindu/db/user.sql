@@ -19,7 +19,7 @@ CREATE TABLE Users(
 
 
 INSERT INTO Users (reg_no, f_name, l_name, email, password, contact_no, active_status)
-VALUES ('2020/LC/1234', 'John', 'Doe', 'john@gmail.com', '1234', '0712345678', 0);
+VALUES ('2020/LC/1234', 'John', 'Doe', 'john@gmail.com', '$2y$10$WQjy7zPC0qBoRnuYVVRo8uJ4XqrCSMJiNIUBnnP2mJEpQdJwR4X2.', '0712345678', 0);
 
 DROP TABLE IF EXISTS Courses;
 CREATE TABLE Courses(

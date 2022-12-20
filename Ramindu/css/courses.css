@@ -36,3 +36,7 @@ td:nth-child(4) {
     padding: 20px;
     width: 100%;
 }
+
+#edit-modal > .modal-content {
+    width: 90%;
+}
