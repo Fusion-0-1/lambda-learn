@@ -60,7 +60,7 @@ if(isset($_SESSION['reg_no'])) {
             </div>
         </div>
 
-        <div class="modal-container" id="card-delete-modal">
+        <!-- <div class="modal-container" id="card-delete-modal">
             <div class="card-delete-modal">
                 <div class="delete-modal-wrap">
                     <div class="center-div"><span class="fa fa-exclamation-triangle" id="warning"></span></div>
@@ -73,15 +73,15 @@ if(isset($_SESSION['reg_no'])) {
                     <div class="center-div">
                         <form action="card_delete.php" method="POST">
                             <div>
-                            <?$_POST['card-delete'] = $_GET['taskid']?> 
+                            <8? $card_delete = $_POST['taskid']?> 
                                 <input type="submit" value="Cancel" class="modal-cancel" id="card-delete-cancel">
-                                <input type="submit" name="card-delete" value="Delete" class="modal-delete" id="modal-delete">
+                                <input type="submit" name="card-delete" value="$card" class="modal-delete" id="modal-delete">
                             </div>
                         </form>
                     </div>    
                 </div>
             </div>
-        </div> 
+        </div>  -->
 
         <!-- <div class="modal-container" id="card-update-modal">
             <div class="card-update-modal">
@@ -136,12 +136,11 @@ if(isset($_SESSION['reg_no'])) {
                                     </button>
                                 </div>
                                 <div>
-                                    <!-- <form action="card_delete.php" method="POST"> -->
-                                        <button type="submit" id="card-delete" value="<?= $todo['task_id'] ?>" class="card-button">
+                                    <form action="card_delete.php" method="POST">
+                                        <button type="submit" name="card-delete" value="<?= $todo['task_id'] ?>" class="card-button" onclick="return confirm('Are you sure?');">
                                             <span class="fa fa-trash"></span>
                                         </button>
-                                        <?$_GET['taskid'] = $todo['task_id']?>
-                                    <!-- </form> -->
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -184,7 +183,7 @@ if(isset($_SESSION['reg_no'])) {
                                 </div>
                                 <div>
                                     <form action="card_delete.php" method="POST">
-                                        <button type="submit" name="card-delete" value="<?= $inprogress['task_id'] ?>" class="card-button">
+                                        <button type="submit" name="card-delete" value="<?= $inprogress['task_id'] ?>" class="card-button" onclick="return confirm('Are you sure?');">
                                             <span class="fa fa-trash"></span>
                                         </button>
                                     </form>
@@ -231,7 +230,7 @@ if(isset($_SESSION['reg_no'])) {
                                 </div>
                                 <div>
                                     <form action="card_delete.php" method="POST">
-                                        <button type="submit" name="card-delete" value="<?= $done['task_id'] ?>" class="card-button">
+                                        <button type="submit" name="card-delete" value="<?= $done['task_id'] ?>" class="card-button" onclick="return confirm('Are you sure?');">
                                             <span class="fa fa-trash"></span>
                                         </button>
                                     </form>
@@ -258,10 +257,10 @@ if(isset($_SESSION['reg_no'])) {
         const newbtninprogress = document.getElementById('card-add-inprogress');
         const newbtndone = document.getElementById('card-add-done');
 
-        const deletecard = document.getElementById('card-delete');
-        const deletemodal = document.getElementById('card-delete-modal');
-        const deletebutton = document.getElementById('modal-delete');
-        const cancelbtndlt = document.getElementById('card-delete-cancel');
+        // const deletecard = document.getElementById('card-delete');
+        // const deletemodal = document.getElementById('card-delete-modal');
+        // const deletebutton = document.getElementById('modal-delete');
+        // const cancelbtndlt = document.getElementById('card-delete-cancel');
 
         // const updatecard = document.getElementById('card-update');
         // const updatemodal = document.getElementById('card-update-modal');
@@ -277,24 +276,24 @@ if(isset($_SESSION['reg_no'])) {
         const radioinprogress = document.getElementById('radio-inprogress');
         const radiodone = document.getElementById('radio-done');
 
-        deletecard.addEventListener('click', function () {
-            deletemodal.style.display = 'block';
-        })
+        // deletecard.addEventListener('click', function () {
+        //     deletemodal.style.display = 'block';
+        // })
 
-        deletebutton.addEventListener('click', function () {
-            deletemodal.style.display = 'none';
-            deletebutton.innerHTML.value = deletecard.innerHTML.value;
-        });
+        // deletebutton.addEventListener('click', function () {
+        //     deletemodal.style.display = 'none';
+        //     deletebutton.innerHTML.value = deletecard.innerHTML.value;
+        // });
 
-        cancelbtndlt.addEventListener('click', function () {
-            deletemodal.style.display = 'none';
-        })
+        // cancelbtndlt.addEventListener('click', function () {
+        //     deletemodal.style.display = 'none';
+        // })
 
-        window.onclick = function(event) {
-            if (event.target == deletemodal) {
-                deletemodal.style.display = 'none';
-            }
-        }
+        // window.onclick = function(event) {
+        //     if (event.target == deletemodal) {
+        //         deletemodal.style.display = 'none';
+        //     }
+        // }
 
         // updatecard.addEventListener('click', function () {
         //     updatemodal.style.display = 'block';

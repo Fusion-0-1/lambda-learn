@@ -195,7 +195,7 @@ body {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.card-add-modal, .card-delete-modal .card-update-modal {
+.card-add-modal, .card-delete-modal {
     width: 50%;
     background-color: #f6f7f8;
     border: 2px solid #DCE3EA;
