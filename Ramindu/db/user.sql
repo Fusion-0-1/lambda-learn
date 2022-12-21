@@ -9,7 +9,7 @@ CREATE TABLE Users(
                       f_name varchar(50) NOT NULL,
                       l_name varchar(50) NOT NULL,
                       email varchar(50) NOT NULL,
-                      password varchar(50) NOT NULL,
+                      password varchar(60) NOT NULL,
                       contact_no varchar(13),
                       active_status int NOT NULL,
                       login_date_time datetime, -- TODO: REFACTOR TO lastLogin

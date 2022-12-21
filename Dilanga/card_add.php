@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
+require_once "/Applications/XAMPP/xamppfiles/htdocs/lambda-learn/Dilanga/connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $title = $_POST['card-header'];

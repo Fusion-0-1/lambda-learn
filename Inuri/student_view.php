@@ -60,7 +60,7 @@
                                         <button class="btn-view"><a href="student_profile.php?id=<?=$stu['reg_no']?>" class="link"><i class="fa-solid fa-eye"></i></a></button>
 
                                         <form action="crud.php" method="POST">
-                                            <button type="submit" name="delete_student" onclick="alert('Are you sure?')" value="<?=$stu['reg_no']?>" class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
+                                            <button type="submit" name="delete_student" onclick="return confirm('Are you sure you want delete this?')" value="<?=$stu['reg_no']?>" class="btn-delete"><i class="fa-solid fa-trash-can"></i></button>
                                         </form>
                                     </td>
                                 </tr>

@@ -66,7 +66,7 @@ if (isset($_GET['updated'])) {
 
 
 // insert form
-if (isset($_POST['submit'])) {
+if (isset($_GET['publish'])) {
     // $heading = $_POST['heading'];
     // $lec_name = $_POST['lec_name'];
     // $content = $_POST['content'];
@@ -135,7 +135,7 @@ if (isset($_GET["delete_ann_id"])) {
 <body>
     <header class="head">
         <div class="header_logo"><img src="./image/logo.png" alt=""></div>
-        <div class="topbar_logout"><p> Welcome ! <a href="logout.php"><img src="/image/logout.png" alt="logout image"></a></p></div>
+        <div class="topbar_logout"><p> Welcome ! <a href="logout.php"><img src="./image/logout.png" alt="logout image"></a></p></div>
     </header>
 
 
@@ -150,7 +150,7 @@ if (isset($_GET["delete_ann_id"])) {
             }
             ?>
             <div class="announcement_card">
-                <form action="announcement.php" method="post" class="userform">
+                <form action="announcement.php?publish=true" method="post" class="userform">
                     <div class="display_required">
                         <?php
                         if (!empty($errors)) {

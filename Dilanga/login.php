@@ -1,8 +1,8 @@
 <?php 
 
-session_start(); 
+session_start();
 
-require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
+require_once "/Applications/XAMPP/xamppfiles/htdocs/lambda-learn/Dilanga/connect.php";
 
 if (isset($_POST['username']) && isset($_POST['password'])) {
 

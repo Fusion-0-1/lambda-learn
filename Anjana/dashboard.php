@@ -24,7 +24,7 @@ if (!isset($_SESSION['user_id'])) {
 <body>
 <header class="head">
     <div class="header_logo"><img src="./image/logo.png" alt=""></div>
-    <div class="topbar_logout"><p> Welcome ! <a href="logout.php"><img src="/image/logout.png" alt="logout image"></a></p></div>
+    <div class="topbar_logout"><p> Welcome ! <a href="logout.php"><img src="./image/logout.png" alt="logout image"></a></p></div>
 </header>
 
     <div class="main_card">

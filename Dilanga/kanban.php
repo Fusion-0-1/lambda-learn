@@ -1,6 +1,6 @@
 <?php
-session_start(); 
-require_once $_SERVER["DOCUMENT_ROOT"]."/Dilanga/connect.php";
+session_start();
+require_once "/Applications/XAMPP/xamppfiles/htdocs/lambda-learn/Dilanga/connect.php";
 if(isset($_SESSION['reg_no'])) {
 ?>
 
