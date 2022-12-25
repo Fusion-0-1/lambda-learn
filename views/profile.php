@@ -136,7 +136,7 @@
 <script>
     var modal = document.getElementById("modal");
     var btn = document.getElementById("password");
-    var span = document.getElementsByClassName("close");
+    var span = document.getElementsByClassName("close")[0];
 
     btn.onclick = function (){
         modal.style.display = "block";
