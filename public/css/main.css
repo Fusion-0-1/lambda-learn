@@ -20,7 +20,7 @@
 body {
     background: var(--background-white);
     margin-left: 60px;
-    margin-top: 60px;
+    margin-top: 90px;
     font-family: Roboto, sans-serif;
 }
 /* --------------------------------------------------- */
@@ -64,6 +64,41 @@ body {
 
 
 /* ----------------- Text formatting ----------------- */
+h3 {
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--heading-blue);
+    margin: 1rem 0;
+    text-align: center;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 10px 0 0;
+}
+
+h5 {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+@media (max-width: 320px) {
+    h3 {
+        font-size: 20px;
+    }
+    h4 {
+        font-size: 15px;
+    }
+    h5 {
+        font-size: 13px;
+    }
+    p {
+        font-size: 12px;
+    }
+}
+
 .heading-color{
     color: var(--heading-blue);
 }
@@ -143,6 +178,12 @@ a:active {
 }
 /* --------------------------------------------------- */
 
+/* ----------------- Grid formatting ----------------- */
+.grid {
+    display: grid;
+}
+/* --------------------------------------------------- */
+
 /* ----------------- Flex formatting ----------------- */
 .flex {
     display: flex;
@@ -184,7 +225,7 @@ a:active {
 
 
 /* ----------------- Form formatting ----------------- */
-.dark-btn{    
+.dark-btn, .x-dark-btn{
     /* TODO: Add default with of the input field */
     background-color: var(--x-dark-blue);
     color: var(--white);
@@ -195,6 +236,16 @@ a:active {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.x-dark-btn{
+    display: flex;
+    min-width: 80%;
+    min-height: 50px;
+    background-color: var(--blue);
+    font-size: medium;
+    margin-top: 15px;
+    overflow: hidden;
 }
 
 .input {
@@ -357,6 +408,17 @@ td{
 
 .absolute-position{
     position: absolute;
+}
+/* --------------------------------------------------- */
+.csv-header-format {
+    font-weight: lighter;
+    border: 1px solid var(--heading-blue);
+    border-radius: 10px;
+    min-height: 40px;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    padding: 10px 0;
 }
 /* --------------------------------------------------- */
 
