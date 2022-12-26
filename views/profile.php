@@ -19,19 +19,19 @@
 
             <img src="images/profile.png" alt="profile" class="profile_img profile_img_center"><br>
 
-            <div class="margin-top">
-                <label class="margin-top">Index Number</label> <br>
-                <div class="flex flex-responsive">
-<!--                    TODO: Hide index number field for other users-->
-                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full" readonly><br>
-                </div>
-            </div>
-
 
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
                 <div class="flex flex-responsive">
                     <input type="text" value="<?php echo $regNo?>" class="input text-right width-full" readonly><br>
+                </div>
+            </div>
+
+            <div class="margin-top">
+                <label class="margin-top">Index Number</label> <br>
+                <div class="flex flex-responsive">
+<!--                    TODO: Hide index number field for other users-->
+                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full" readonly><br>
                 </div>
             </div>
 
@@ -62,6 +62,10 @@
                 <button id="password" class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
             </div>
+
+            <div class="flex margin-top h-center">
+                <button id="btn_confirm" class="confirm-btn edit-btn-text width-full hide">Confirm</button>
+            </div>
         </div>
 
         <div id="modal" class="modal" >
@@ -80,7 +84,7 @@
                         <label>Confirm Password</label><br>
                         <input type="password" name="password" class="input text-right width-full">
                     </div>
-                    <button class="flex confirm-btn margin-top h-center v-center flex-responsive">Confirm</button>
+                    <button class="flex confirm-btn half-width margin-top h-center v-center flex-responsive">Confirm</button>
                 </form>
             </div>
         </div>
@@ -138,6 +142,7 @@
     var btn = document.getElementById("password");
     var span = document.getElementsByClassName("close")[0];
     var btn_edit = document.getElementById("edit");
+    var btn_confirm = document.getElementById("btn_confirm");
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -155,6 +160,15 @@
         document.getElementById('email').removeAttribute('readonly');
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
+        btn_edit.classList.add('hide');
+        btn.classList.add('hide');
+        btn_confirm.classList.remove('hide');
+    }
+
+    btn_confirm.onclick = function (){
+        btn_confirm.classList.add('hide');
+        btn.classList.remove('hide');
+        btn_edit.classList.remove('hide');
     }
 </script>
 
