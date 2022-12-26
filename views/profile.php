@@ -23,7 +23,7 @@
                 <label class="margin-top">Index Number</label> <br>
                 <div class="flex flex-responsive">
 <!--                    TODO: Hide index number field for other users-->
-                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full"><br>
+                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full" readonly><br>
                 </div>
             </div>
 
@@ -31,14 +31,14 @@
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $regNo?>" class="input text-right width-full"><br>
+                    <input type="text" value="<?php echo $regNo?>" class="input text-right width-full" readonly><br>
                 </div>
             </div>
 
             <div class="margin-top">
                 <label class="margin-top">Email</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $email?>" class="input text-right width-full">
+                    <input type="text" id="email" value="<?php echo $email?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="margin-top">
                 <label class="margin-top">Contact Number</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $contactNo?>" class="input text-right width-full">
+                    <input type="text" id="contact" value="<?php echo $contactNo?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -54,7 +54,7 @@
             <div class="margin-top">
                 <label class="margin-top">Personal Email</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $personalEmail?>" class="input text-right width-full">
+                    <input type="text" id="personal_email" value="<?php echo $personalEmail?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -137,6 +137,7 @@
     var modal = document.getElementById("modal");
     var btn = document.getElementById("edit");
     var span = document.getElementsByClassName("close");
+    var btn_edit = document.getElementById("edit");
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -148,6 +149,12 @@
         if (event.target === modal) {
             modal.style.display = "none";
         }
+    }
+
+    btn.onclick = function(){
+        document.getElementById('email').removeAttribute('readonly');
+        document.getElementById('contact').removeAttribute('readonly');
+        document.getElementById('personal_email').removeAttribute('readonly');
     }
 </script>
 
