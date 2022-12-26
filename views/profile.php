@@ -59,7 +59,7 @@
                 </div>
             </div>
             <div class="flex margin-top h-center">
-                <button class="edit-btn edit-btn-text width-full">Change Password</button>
+                <button id="password" class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
             </div>
         </div>
@@ -135,8 +135,8 @@
 
 <script>
     var modal = document.getElementById("modal");
-    var btn = document.getElementById("edit");
-    var span = document.getElementsByClassName("close");
+    var btn = document.getElementById("password");
+    var span = document.getElementsByClassName("close")[0];
 
     btn.onclick = function (){
         modal.style.display = "block";
