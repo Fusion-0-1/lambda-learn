@@ -137,6 +137,7 @@
     var modal = document.getElementById("modal");
     var btn = document.getElementById("password");
     var span = document.getElementsByClassName("close")[0];
+    var btn_edit = document.getElementById("edit");
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -150,7 +151,7 @@
         }
     }
 
-    btn.onclick = function(){
+    btn_edit.onclick = function(){
         document.getElementById('email').removeAttribute('readonly');
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
