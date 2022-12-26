@@ -31,7 +31,7 @@ if (isset($_SESSION['user'])) {
     <link rel="stylesheet" href="css/login.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon-light.svg">
+    <link rel="icon" type="image/x-icon" href="favicon-light.svg">
 
     <!-- Icons: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">

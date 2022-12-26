@@ -3,8 +3,8 @@
 <div class="border main-container v-center flex-gap responsive-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
-            <h2 class="text-center"><?php echo $firstName." ".$lastName ?></h2>
-            <h3 class="text-center text-normal line-height">Student</h3>
+            <h3 class="text-center"><?php echo $firstName." ".$lastName ?></h3>
+            <h4 class="text-center text-normal line-height">Student</h4>
         </div>
         <div>
             <!--                <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
@@ -15,7 +15,7 @@
         <div class="border main-container flex-gap">
             <!-- User details -->
 
-            <h3 class="text-center">User Details</h3>
+            <h5 class="text-center">User Details</h5>
 
             <img src="images/profile.png" alt="profile" class="profile_img profile_img_center"><br>
 
@@ -88,13 +88,13 @@
         <div class="flex-wrap">
             <div class="border main-container flex-gap">
                 <!--Login Activity-->
-                <h3>Login Activity</h3>
-                <h4 class="text-normal text-center"><?php echo $lastLogin?></h4>
-                <h4 class="text-normal text-center"><?php echo $lastLogout?></h4>
+                <h5>Login Activity</h5>
+                <p class="text-normal text-center">Last Login Date : <?php echo $lastLogin?></p>
+                <p class="text-normal text-center">Last Logout Date : <?php echo $lastLogout?></p>
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
-                <h3>Registered Courses</h3>
+                <h5>Registered Courses</h5>
                 <table>
                     <tr>
                         <td>SCS2201</td>

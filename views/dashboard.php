@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/dashboard.css">
 
 <div class="border main-container v-center flex-gap responsive-container">
-    <h1 class="main_heading"> <b>Dashboard</b> </h1>
+    <h3>Dashboard</h3>
     <div class="card">
 
         <a href="#">
