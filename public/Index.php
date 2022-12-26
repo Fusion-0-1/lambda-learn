@@ -21,6 +21,8 @@ $app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', 'dashboard');
 
+$app->router->get('/account_creation', 'account_creation');
+
 $app->router->get('/course_overview', 'course_overview');
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
