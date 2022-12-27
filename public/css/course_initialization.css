@@ -1,0 +1,14 @@
+.edit-btn{
+    padding-right: 5%;
+    padding-left: 5%;
+}
+
+.input-topic{
+    background-color: var(--white);
+}
+
+.input-subtopic{
+    background-color: var(--blue);
+    color: var(--blue-white);
+    border: none;
+}
