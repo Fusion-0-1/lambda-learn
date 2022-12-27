@@ -1,3 +1,18 @@
+body{
+    min-height: 100vh;
+    margin: 0;
+}
+@media(max-width: 783px){
+    body{
+        margin: 20px;
+    }
+}
+
+.login_container {
+    margin-top: 0 !important;
+    overflow: hidden;
+}
+
 .dark-btn{
     width: 75%;
     height: 35px;
