@@ -85,6 +85,17 @@ abstract class User
         );
     }
 
+    public function editProfile(string $email, string $personalEmail, string $contactNo):void
+    {
+        $userData = array('email'=>$email,'personal_email'=>$personalEmail, 'contact_no'=>$contactNo);
+
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: $userData,
+            where: ['reg_no'=>$this->regNo]
+        );
+    }
+
     public function flatten(): array
     {
         $array = [];

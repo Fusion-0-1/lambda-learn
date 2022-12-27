@@ -61,9 +61,6 @@
             <div class="flex margin-top h-center">
                 <button id="password" class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
-            </div>
-
-            <div class="flex margin-top h-center">
                 <button id="btn_confirm" class="confirm-btn edit-btn-text width-full hide">Confirm</button>
             </div>
         </div>
@@ -169,6 +166,9 @@
         btn_confirm.classList.add('hide');
         btn.classList.remove('hide');
         btn_edit.classList.remove('hide');
+        document.getElementById('email').setAttribute('readonly', true);
+        document.getElementById('contact').setAttribute('readonly', true);
+        document.getElementById('personal_email').setAttribute('readonly', true);
     }
 </script>
 

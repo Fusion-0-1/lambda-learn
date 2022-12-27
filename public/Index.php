@@ -3,6 +3,8 @@
 use app\controllers\AuthController;
 use app\controllers\ProfileController;
 use app\core\Application;
+//
+use app\core\User;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -24,6 +26,8 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/course_overview', 'course_overview');
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
+//
+$app->router->post('/profile', [User::class, 'editProfile']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
