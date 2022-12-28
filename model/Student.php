@@ -37,21 +37,18 @@ class Student extends User
         return $student;
     }
 
-    public static function createNewStu(
-        $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail,
-        $indexNo, $degreeProgramCode, $dateJoined=null
-    )
+    public static function createNewStudent($data)
     {
         $student = new Student();
-        $student->regNo = $regNo;
-        $student->firstName = $firstName;
-        $student->lastName = $lastName;
-        $student->email = $email;
-        $student->personalEmail = $personalEmail;
-        $student->contactNo = $contactNo;
-        $student->indexNo = $indexNo;
-        $student->dateJoined = $dateJoined ?? date('Y-m-d H:i:s', time());
-        $student->degreeProgramCode = $degreeProgramCode;
+        $student->regNo = $data['regNo'];
+        $student->firstName = $data['firstName'];
+        $student->lastName = $data['lastName'];
+        $student->email = $data['email'];
+        $student->personalEmail = $data['personalEmail'];
+        $student->contactNo = $data['contactNo'];
+        $student->indexNo = $data['indexNo'] ?? self::getIndexNoByRegNo($data['regNo']);
+        $student->dateJoined = $data['dateJoined'] ?? date('Y-m-d H:i:s', time());
+        $student->degreeProgramCode = $data['degreeProgramCode'] ?? self::getDegreeProgramCodeByRegNo($data['regNo']);
 
         return $student;
     }
@@ -120,13 +117,15 @@ class Student extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
-    public function flatten(): array
+    public static function getDegreeProgramCodeByRegNo($regNo): string
     {
-        $array = parent::flatten();
-        $array['indexNo'] = $this->indexNo;
-        $array['dateJoined'] = $this->dateJoined;
-        $array['degreeProgramCode'] = $this->degreeProgramCode;
-        return $array;
+        return strtoupper(explode('/', $regNo, 3)[1]);
+    }
+
+    public static function getIndexNoByRegNo($regNo): int
+    {
+        $splits = explode('/', $regNo, 3);
+        return (int)($splits[0] . $splits[2]);
     }
 
     /**
