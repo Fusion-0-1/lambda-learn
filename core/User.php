@@ -85,9 +85,12 @@ abstract class User
         );
     }
 
-    public function editProfile(string $email, string $personalEmail, string $contactNo):void
+    public function editProfile():void
     {
-        $userData = array('email'=>$email,'personal_email'=>$personalEmail, 'contact_no'=>$contactNo);
+        $userData = [
+            'personal_email'=>$this->personalEmail,
+            'contact_no'=>$this->contactNo
+        ];
 
         Application::$db->update(
             table: self::getUserTable($this->regNo),
@@ -96,12 +99,164 @@ abstract class User
         );
     }
 
-    public function flatten(): array
+    /**
+     * @return string
+     */
+    public function getRegNo(): string
     {
-        $array = [];
-        foreach ($this as $key => $value) {
-            $array[$key] = $value;
-        }
-        return $array;
+        return $this->regNo;
     }
+
+    /**
+     * @param string $regNo
+     */
+    public function setRegNo(string $regNo): void
+    {
+        $this->regNo = $regNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalEmail(): string
+    {
+        return $this->personalEmail;
+    }
+
+    /**
+     * @param string $personalEmail
+     */
+    public function setPersonalEmail(string $personalEmail): void
+    {
+        $this->personalEmail = $personalEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactNo(): string
+    {
+        return $this->contactNo;
+    }
+
+    /**
+     * @param string $contactNo
+     */
+    public function setContactNo(string $contactNo): void
+    {
+        $this->contactNo = $contactNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogin(): string
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param string $lastLogin
+     */
+    public function setLastLogin(string $lastLogin): void
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogout(): string
+    {
+        return $this->lastLogout;
+    }
+
+    /**
+     * @param string $lastLogout
+     */
+    public function setLastLogout(string $lastLogout): void
+    {
+        $this->lastLogout = $lastLogout;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActiveStatus(): bool
+    {
+        return $this->activeStatus;
+    }
+
+    /**
+     * @param bool $activeStatus
+     */
+    public function setActiveStatus(bool $activeStatus): void
+    {
+        $this->activeStatus = $activeStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePicture(): string
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @param string $profilePicture
+     */
+    public function setProfilePicture(string $profilePicture): void
+    {
+        $this->profilePicture = $profilePicture;
+    }
+
 }
