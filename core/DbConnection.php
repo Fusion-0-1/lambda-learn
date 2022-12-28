@@ -35,9 +35,12 @@ class DbConnection
      * @param bool $getAsArray: If true, returns the result as an array.
      *                          If false, returns the result as an object of mysqli_query.
      */
-    public function select($table, $columns = '*', $where = null, $order = null, $limit = null, $getAsArray=true)
+    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null, $getAsArray=true)
     {
         $sql = "SELECT $columns FROM $table";
+        if ($join != null) {
+            $sql .= " JOIN $join";
+        }
         if ($where != null) {
             $sql .= $this->addSQLWhere($where);
         }
