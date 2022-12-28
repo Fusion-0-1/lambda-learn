@@ -6,9 +6,6 @@
             <h2 class="text-center"><?php echo $user->getFirstName()." ".$user->getLastName() ?></h2>
             <h3 class="text-center text-normal line-height">Student</h3>
         </div>
-        <div>
-            <!--                <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
-        </div>
 
     </div>
     <div class="flex h-center flex-gap flex-responsive">
@@ -39,7 +36,6 @@
                 <label class="margin-top">Email</label><br>
                 <div class="flex flex-responsive">
                     <input type="text" id="email" value="<?php echo $user->getEmail()?>" class="input text-right width-full" readonly>
-                    <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
 
@@ -47,7 +43,6 @@
                 <label class="margin-top">Contact Number</label><br>
                 <div class="flex flex-responsive">
                     <input type="text" name="contact" id="contact" value="<?php echo $user->getContactNo()?>" class="input text-right width-full" readonly>
-                    <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
 
@@ -55,7 +50,6 @@
                 <label class="margin-top">Personal Email</label><br>
                 <div class="flex flex-responsive">
                     <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
-                    <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
             <div class="flex margin-top h-center">
