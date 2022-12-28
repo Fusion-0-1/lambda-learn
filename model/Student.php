@@ -11,39 +11,90 @@ class Student extends User
     private string $dateJoined;
     private string $degreeProgramCode;
 
-    /**
-     * @param string $regNo
-     */
-    public function __construct(string $regNo)
+
+    // -------------------------------Constructors---------------------------------------
+    private function __construct() {}
+
+    public static function fetchStuFromDb(string $regNo)
     {
-        $table = $this->getUserData($regNo);
-        $this->regNo = $table['reg_no'];
-        $this->firstName = $table['first_name'];
-        $this->lastName = $table['last_name'];
-        $this->email = $table['email'];
-        $this->personalEmail = $table['personal_email'];
-        $this->contactNo = $table['contact_no'];
-        $this->lastLogin = $table['last_login'];
-        $this->lastLogout = $table['last_logout'];
-        $this->activeStatus = $table['active_status'];
-        $this->profilePicture = $table['profile_picture'];
-        $this->indexNo = $table['index_no'];
-        $this->dateJoined = $table['date_joined'];
-        $this->degreeProgramCode = $table['degree_program_code'];
+        $student = new Student();
+        $table = $student->getUserData($regNo);
+
+        $student->regNo = $table['reg_no'];
+        $student->firstName = $table['first_name'];
+        $student->lastName = $table['last_name'];
+        $student->email = $table['email'];
+        $student->personalEmail = $table['personal_email'];
+        $student->contactNo = $table['contact_no'];
+        $student->lastLogin = $table['last_login'];
+        $student->lastLogout = $table['last_logout'];
+        $student->activeStatus = $table['active_status'];
+        $student->profilePicture = $table['profile_picture'];
+        $student->indexNo = $table['index_no'];
+        $student->dateJoined = $table['date_joined'];
+        $student->degreeProgramCode = $table['degree_program_code'];
+
+        return $student;
     }
+
+    public static function createNewStu(
+        $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail,
+        $indexNo, $degreeProgramCode, $dateJoined=null
+    )
+    {
+        $student = new Student();
+        $student->regNo = $regNo;
+        $student->firstName = $firstName;
+        $student->lastName = $lastName;
+        $student->email = $email;
+        $student->personalEmail = $personalEmail;
+        $student->contactNo = $contactNo;
+        $student->indexNo = $indexNo;
+        $student->dateJoined = $dateJoined ?? date('Y-m-d H:i:s', time());
+        $student->degreeProgramCode = $degreeProgramCode;
+
+        return $student;
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    public function insert()
+    {
+        Application::$db->insert(
+            table: 'Student',
+            values: [
+                'reg_no' => $this->regNo,
+                'first_name' => $this->firstName,
+                'last_name' => $this->lastName,
+                'email' => $this->email,
+                'personal_email' => $this->personalEmail,
+                'contact_no' => $this->contactNo,
+                'last_login' => $this->lastLogin ?? date('Y-m-d H:i:s', time()),
+                'last_logout' => $this->lastLogout ?? date('Y-m-d H:i:s', time()),
+                'active_status' => $this->activeStatus ?? 0,
+                'profile_picture' => $this->profilePicture ?? '',
+                'index_no' => $this->indexNo,
+                'date_joined' => $this->dateJoined,
+                'degree_program_code' => $this->degreeProgramCode,
+                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+            ]
+        );
+    }
+
+
 
     // -------------------------Field validation methods---------------------------------
     public static function validateUserAttributes($regNo, $firstName, $lastName, $email, $contactNo,
-                                                  $indexNo=null, $degreeProgramCode=null): bool
+                                                  $personalEmail=null, $indexNo=null, $degreeProgramCode=null): bool
     {
         if(
             // Not null checks
-            strlen($indexNo) == 10 &&
             $degreeProgramCode != ''
         ) {
             /*
              * ^: This matches the start of the string.
-             * \d{10}: This matches 10 consecutive digits. This is the part of the pattern that ensures that the string contains exactly 10 digits.
+             * \d{8}: This matches 8 consecutive digits. This is the part of the pattern that ensures that the string contains exactly 8 digits.
              * $: This matches the end of the string.
              */
             if (!self::validateIndexNo($indexNo)) {
@@ -62,10 +113,13 @@ class Student extends User
          * \d{10}: This matches 10 consecutive digits. This is the part of the pattern that ensures that the string contains exactly 10 digits.
          * $: This matches the end of the string.
          */
-        return preg_match("/^\d{10}$/", $indexNo);
+        return preg_match("/^\d{8}$/", $indexNo);
     }
     // --------------------------------------------------------------------------------
 
+
+
+    // ---------------------------Getters and Setters-----------------------------------
     public function flatten(): array
     {
         $array = parent::flatten();
@@ -114,5 +168,6 @@ class Student extends User
     {
         $this->degreeProgramCode = $degreeProgramCode;
     }
+    // --------------------------------------------------------------------------------
 
 }
