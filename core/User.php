@@ -53,7 +53,7 @@ abstract class User
     {
         $result = Application::$db->select(
             table: self::getUserTable($regNo),
-            columns: 'password',
+            columns: ['password'],
             where: ['reg_no'=>$regNo],
             getAsArray: false
         );
@@ -84,7 +84,57 @@ abstract class User
         );
     }
 
+    public static function userExists($regNo): bool
+    {
+        return Application::$db->checkExists(
+            table: self::getUserTable($regNo),
+            primaryKey: ['reg_no'=>$regNo]
+        );
+    }
+
+    public function editProfile():void
+    {
+        $userData = [
+            'personal_email'=>$this->personalEmail,
+            'contact_no'=>$this->contactNo
+        ];
+
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: $userData,
+            where: ['reg_no'=>$this->regNo]
+        );
+    }
+
+
+    /*
+     * params:
+     *      $line(array) : array of strings
+     * !IMPORTANT: follow the order of the keys as in the code when passing as an associative array.
+     * return: array of User objects
+     * description : unwrap csv file line. Break into an associative array.
+     */
+    public static function unwrapData(array $line): array
+    {
+        return [
+            'regNo' => $line[0],
+            'firstName' => $line[1],
+            'lastName' => $line[2],
+            'email' => $line[3],
+            'personalEmail' => $line[4],
+            'contactNo' => $line[5]
+        ];
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ---------------------------Abstract Methods-----------------------------------
     public abstract function insert();
+    // --------------------------------------------------------------------------------
+
+
+
     // -------------------------Field validation methods---------------------------------
     public static function validateName($name): bool
     {
@@ -124,8 +174,8 @@ abstract class User
          * \d{10}: d matches a digit (equivalent to [0-9]). {10} matches the previous token exactly 11 times
          * $: This matches the end of the string.
          */
-        if (!preg_match('/^\d{10}$/', $contactNo)) {
-            return false;
+        if (preg_match('/^\d{10}$/', $contactNo)) {
+            return true;
         }
         /*
          * International numbers: +94xxxxxxxxx
@@ -134,13 +184,15 @@ abstract class User
          * \d{11}: d matches a digit (equivalent to [0-9]). {11} matches the previous token exactly 11 times
          * $: This matches the end of the string.
          */
-        else if (!preg_match('/^\+\d{11}$/', $contactNo)) {
-            return false;
+        else if (preg_match('/^\+\d{11}$/', $contactNo)) {
+            return true;
         }
-        return true;
+        return false;
     }
 
-    public static function validateUserAttributes($regNo, $firstName, $lastName, $email, $contactNo): bool
+    public static function validateUserAttributes(
+        $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail=null
+    ): bool
     {
         if(
             // Not null checks
@@ -165,25 +217,27 @@ abstract class User
                 return false;
             }
         }
+        if ($personalEmail != '') {
+            if (!self::validateEmail($personalEmail)) {
+                return false;
+            }
+        }
 
         return true;
     }
-    // --------------------------------------------------------------------------------
 
-    public function editProfile():void
+    public static function validateUserAttrFromArray(array $data): bool
     {
-        $userData = [
-            'personal_email'=>$this->personalEmail,
-            'contact_no'=>$this->contactNo
-        ];
-
-        Application::$db->update(
-            table: self::getUserTable($this->regNo),
-            columns: $userData,
-            where: ['reg_no'=>$this->regNo]
+        return self::validateUserAttributes(
+            $data['regNo'], $data['firstName'], $data['lastName'],
+            $data['email'], $data['contactNo'], $data['personalEmail']
         );
     }
+    // --------------------------------------------------------------------------------
 
+
+
+    // ---------------------------Getters and Setters-----------------------------------
     /**
      * @return string
      */
@@ -343,5 +397,6 @@ abstract class User
     {
         $this->profilePicture = $profilePicture;
     }
+    // --------------------------------------------------------------------------------
 
 }
