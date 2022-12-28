@@ -37,6 +37,7 @@
                     <input class="input input-subtopic flex"><br><br>
                     <input class="input input-subtopic flex"><br><br>
                     <input class="input input-subtopic flex"><br><br>
+                    <button id="save" class="edit-btn edit-btn-text"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
             <div class="border main-container v-center flex-gap padding-none">
