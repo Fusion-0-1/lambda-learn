@@ -15,6 +15,10 @@
     --green-bg: #DCEADD;
     --background-white: #F7F7F7;
     --heading-blue: #0D2137;
+    --warn: #85772F;
+    --warn-btn: #FFDD2B;
+    --warn-bg: #F9FFD2;
+    --black: #000;
 }
 
 body {
@@ -252,19 +256,35 @@ a:active {
     margin-right: auto;
     border-radius: 8px;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .x-dark-btn{
-    display: flex;
     min-width: 80%;
     min-height: 50px;
     background-color: var(--blue);
     font-size: medium;
     margin-top: 15px;
     overflow: hidden;
+}
+
+.cancel-btn {
+    font-weight: bold;
+    min-height: 50px;
+    color: var(--black);
+    border: var(--white) 1px solid;
+    background-color: var(--white);
+}
+
+.warn-continue-btn {
+    color: var(--black);
+    border: var(--warn-btn) 1px solid;
+    background-color: var(--warn-btn);
+}
+
+.confirm-btn {
+    color: var(--green);
+    border: var(--green) 1px solid;
+    background-color: var(--green-bg);
 }
 
 .input {
@@ -276,6 +296,10 @@ a:active {
     padding-left: 14px;
     padding-right: 14px;
     border-radius: 8px;
+}
+
+button:hover {
+    cursor: pointer;
 }
 /* --------------------------------------------------- */
 
@@ -377,9 +401,8 @@ td{
 
 /* ----------------- Modal Formatting ---------------- */
 .modal {
-    display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
@@ -389,24 +412,50 @@ td{
 }
 
 .modal-content {
+    background-color: var(--white);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
+    width: 40%;
     border-radius: 15px;
 }
 
-.close {
-    color: var(--heading-blue);
-    float: right;
-    font-size: 28px;
+.warn-modal-content {
+    color: var(--warn);
+    background-color: var(--warn-bg);
+    border: var(--warn) 1px solid;
+}
+
+.modal-content h4 {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: var(--blue);
-    text-decoration: none;
-    cursor: pointer;
+.modal-content button {
+    min-height: 35px;
+    width: 90px;
+    font-weight: bold;
+}
+
+.modal-content #cancel-btn {
+    border: var(--warn-btn) 2px solid;
+}
+
+.modal-content .two-button-row {
+    gap: 30px;
+}
+
+@media(max-width: 425px) {
+    .modal-content .two-button-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content button {
+        min-height: 30px;
+        width: 70px;
+        font-weight: bold;
+        font-size: 12px;
+    }
 }
 /* --------------------------------------------------- */
 

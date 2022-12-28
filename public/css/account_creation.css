@@ -24,3 +24,9 @@
 #student-csv-upload button div p {
     width: 92%;
 }
+
+#stu-id-list {
+    height: 65px;
+    overflow-y: scroll;
+    margin-bottom: 25px;
+}

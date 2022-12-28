@@ -38,7 +38,7 @@ if (isset($_SESSION['user'])) {
 
     <title>Lambda - Learn </title>
 </head>
-<body class="flex v-center">
+<body class="flex v-center h-center">
     <div class="login_container flex-wrap flex align-stretch h-center margin-top">
         <div class="background_image_container">
             <img src="images/login.png" alt="login">
