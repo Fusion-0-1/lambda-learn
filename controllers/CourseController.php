@@ -9,7 +9,6 @@ class CourseController extends Controller
 {
     public function displayCourses()
     {
-        $course_overview = unserialize($_SESSION['user']);
         return $this->render('course_overview', $course);
     }
 }
