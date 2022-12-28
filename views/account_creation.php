@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="css/account_creation.css">
 
-<div id="existing-stu-modal" class="modal" <?php if(!isset($updateStudents)) echo "hidden";?>>
+<!-- TODO 1: Create invalid user modal and error prompt
+    TODO 2: Update user continue click implementation
+-->
+
+<div id="existing-stu-modal" class="modal" <?php if(!isset($updatedUsers)) echo "hidden";?>>
     <div class="modal-content warn-modal-content">
         <div class="flex flex-column v-center h-center">
             <img src="./images/primary_icons/warning.svg">
@@ -9,7 +13,7 @@
             <p id="stu-id-list" class="text-center">
                 <?php
                 $print = '';
-                foreach ($updateStudents as $student) {
+                foreach ($updatedUsers as $student) {
                     $print .= $student->getRegNo() . ", ";
                 }
                 echo substr($print, 0, -2);

@@ -39,8 +39,8 @@ class ProfileController extends Controller
                 return $this->render(
                     'account_creation',
                     [
-                        'updateStudents' => $catergorizedData['update'],
-                        'invalidStudentsRegNo' => $catergorizedData['invalid']
+                        'updatedUsers' => $catergorizedData['update'],
+                        'invalidUsersRegNo' => $catergorizedData['invalid']
                     ]
                 );
             }
