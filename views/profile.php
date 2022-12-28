@@ -3,7 +3,7 @@
 <div class="border main-container v-center flex-gap responsive-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
-            <h2 class="text-center"><?php echo $firstName." ".$lastName ?></h2>
+            <h2 class="text-center"><?php echo $user->getFirstName()." ".$user->getLastName() ?></h2>
             <h3 class="text-center text-normal line-height">Student</h3>
         </div>
         <div>
@@ -12,7 +12,7 @@
 
     </div>
     <div class="flex h-center flex-gap flex-responsive">
-        <div class="border main-container flex-gap">
+        <form id="profile" action="/profile" method="post" class="border main-container flex-gap">
             <!-- User details -->
 
             <h3 class="text-center">User Details</h3>
@@ -23,7 +23,7 @@
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $regNo?>" class="input text-right width-full" readonly><br>
+                    <input type="text" value="<?php echo $user->getRegNo()?>" class="input text-right width-full" readonly><br>
                 </div>
             </div>
 
@@ -31,14 +31,14 @@
                 <label class="margin-top">Index Number</label> <br>
                 <div class="flex flex-responsive">
 <!--                    TODO: Hide index number field for other users-->
-                    <input type="text" value="<?php echo $indexNo?>" class="input text-right width-full" readonly><br>
+                    <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full" readonly><br>
                 </div>
             </div>
 
             <div class="margin-top">
                 <label class="margin-top">Email</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" id="email" value="<?php echo $email?>" class="input text-right width-full" readonly>
+                    <input type="text" id="email" value="<?php echo $user->getEmail()?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="margin-top">
                 <label class="margin-top">Contact Number</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" id="contact" value="<?php echo $contactNo?>" class="input text-right width-full" readonly>
+                    <input type="text" name="contact" id="contact" value="<?php echo $user->getContactNo()?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
@@ -54,16 +54,16 @@
             <div class="margin-top">
                 <label class="margin-top">Personal Email</label><br>
                 <div class="flex flex-responsive">
-                    <input type="text" id="personal_email" value="<?php echo $personalEmail?>" class="input text-right width-full" readonly>
+                    <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
                     <!--                        <button class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>-->
                 </div>
             </div>
             <div class="flex margin-top h-center">
-                <button id="password" class="edit-btn edit-btn-text width-full">Change Password</button>
-                <button id="edit" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
-                <button id="btn_confirm" class="confirm-btn edit-btn-text width-full hide">Confirm</button>
+                <button id="password" type="button" class="edit-btn edit-btn-text width-full">Change Password</button>
+                <button id="edit" type="button" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text width-full hide">Confirm</button>
             </div>
-        </div>
+        </form>
 
         <div id="modal" class="modal" >
             <div class="modal-content">
@@ -90,8 +90,8 @@
             <div class="border main-container flex-gap">
                 <!--Login Activity-->
                 <h3>Login Activity</h3>
-                <h4 class="text-normal text-center"><?php echo $lastLogin?></h4>
-                <h4 class="text-normal text-center"><?php echo $lastLogout?></h4>
+                <h4 class="text-normal text-center"><?php echo $user->getLastLogin()?></h4>
+                <h4 class="text-normal text-center"><?php echo $user->getLastLogout()?></h4>
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
@@ -154,7 +154,6 @@
     }
 
     btn_edit.onclick = function(){
-        document.getElementById('email').removeAttribute('readonly');
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
         btn_edit.classList.add('hide');
@@ -166,7 +165,6 @@
         btn_confirm.classList.add('hide');
         btn.classList.remove('hide');
         btn_edit.classList.remove('hide');
-        document.getElementById('email').setAttribute('readonly', true);
         document.getElementById('contact').setAttribute('readonly', true);
         document.getElementById('personal_email').setAttribute('readonly', true);
     }
