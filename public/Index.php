@@ -26,6 +26,7 @@ $app->router->get('/account_creation', 'account_creation');
 $app->router->get('/course_overview', 'course_overview');
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
+$app->router->post('/profile', [ProfileController::class, 'editProfile']);
 
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);

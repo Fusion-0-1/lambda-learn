@@ -74,4 +74,45 @@ class Student extends User
         $array['degreeProgramCode'] = $this->degreeProgramCode;
         return $array;
     }
+
+    /**
+     * @return int
+     */
+    public function getIndexNo(): int
+    {
+        return $this->indexNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateJoined(): string
+    {
+        return $this->dateJoined;
+    }
+
+    /**
+     * @param string $dateJoined
+     */
+    public function setDateJoined(string $dateJoined): void
+    {
+        $this->dateJoined = $dateJoined;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDegreeProgramCode(): string
+    {
+        return $this->degreeProgramCode;
+    }
+
+    /**
+     * @param string $degreeProgramCode
+     */
+    public function setDegreeProgramCode(string $degreeProgramCode): void
+    {
+        $this->degreeProgramCode = $degreeProgramCode;
+    }
+
 }
