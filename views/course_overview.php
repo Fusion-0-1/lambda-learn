@@ -7,12 +7,12 @@
         <a href="#">
             <div class="cards">
                 <div class="cards_inside">
-                    <div class="course_name"><?php echo $courseName?></div>
+                    <div class="course_name"><?php echo $course->getCourseName()?></div>
                 </div>
                 <div class="border_style"></div>
                 <div class="grid_content">
-                    <div class="course_code"><?php echo $courseCode?></div>
-                    <div class="lecturer_name"><?php echo $lecRegNo?></div>
+                    <div class="course_code"><?php echo $course->getCourseCode()?></div>
+                    <div class="lecturer_name"><?php echo $course->getLecRegNo()?></div>
                     <div class="precentage"><div class="precentage_inside">80%</div></div>
                 </div>
             </div>
