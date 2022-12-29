@@ -1,0 +1,211 @@
+.course_name {
+    padding: 1% 0 1% 0;
+}
+
+.announcement_card {
+    width: 90%;
+    padding-bottom: 2%;
+    border-radius: 15px;
+    margin: auto auto 40px;
+}
+
+.topic_container_add{
+    display: grid;
+    grid-template-columns: 85% auto;
+    padding: 0.5% 2.5%;
+}
+
+.topic_container{
+    grid-template-columns: auto auto;
+    padding: 0.5% 2.5%;
+}
+
+.edit_delete_timeremaining{
+    grid-template-columns: 60% 20% 20%;
+    padding: 0.5% 1%;
+}
+
+a{
+    padding: 0;
+}
+
+a img{
+    width: 80%;
+}
+
+.heading_content{
+    margin: 6px;
+    overflow-wrap: break-word;
+}
+
+.add_headline {
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}
+
+.btn {
+    width: 100px;
+}
+
+.add_name {
+    border-radius: 5px;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    font-size: 1rem;
+}
+
+.add_announcement_content {
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}
+
+.edit_time{
+    font-size: 1rem;
+}
+
+.view_lecture_name_and_date_time{
+    font-size: 1rem;
+}
+
+.add_announcement_content_div{
+    padding: 1% 2% 1% 2%;
+}
+
+.container_heading{
+    margin: 0;
+    background: var(--blue);
+    display: grid;
+    grid-template-columns: 60% auto;
+    color: var(--white);
+    border-radius: inherit;
+    padding: 10px 20px;
+}
+
+.announcement_card_inside {
+    width: 95%;
+    height: 75%;
+    position: relative;
+    border-radius: 15px;
+    margin: auto;
+    background: var(--white);
+}
+
+.announcement_card_inside p{
+    padding: 2%;
+    overflow-wrap: break-word;
+    margin: 0;
+}
+
+#heading_textarea{
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+
+#content_textarea{
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+
+
+@media(max-width:768px) {
+    .announcement_card{
+        width: 95%;
+    }
+    .course_name {
+        font-size: 1.8rem;
+    }
+    .btn{
+        width: 80px;
+        height: 25px;
+        border-radius: 10px;
+    }
+    .add_announcement_content {
+        font-size: 1rem;
+    }
+    .container_heading{
+        border-radius: 10px;
+        padding: 7px 14px;
+    }
+    a img{
+        width: 33px;
+        min-width: 33px;
+    }
+    .edit_delete_timeremaining{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        justify-items: center;
+        width: 80px;
+    }
+    .edit_time {
+        grid-column: 1 / span 2;
+        grid-row: 1;
+        font-size: 14px;
+    }
+    .deletebtn{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .editbtn{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .topic_container_add{
+        grid-template-columns: 80% auto ;
+    }
+}
+
+@media(max-width:426px) {
+    .add_headline {
+        font-size: 0.75rem;
+    }
+    .btn {
+        width: 55px;
+        height: 20px;
+        border-radius: 7px;
+        font-size: 0.7rem;
+    }
+    .add_name {
+        width: 90%;
+        font-size: 0.75rem;
+    }
+    .announcement_card{
+        width: 92%;
+        margin-bottom: 20px;
+    }
+
+    .edit_delete_timeremaining{
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+
+    .edit_time {
+        grid-column: 1 / span 2;
+        grid-row: 1;
+        padding: 5px;
+    }
+
+    .edit_time span{
+        font-size: 0.75rem;
+    }
+
+    .container_heading{
+        border-radius: 8px;
+        padding: 6px 8px;
+    }
+
+    .view_lecture_name_and_date_time{
+        font-size: 0.75rem;
+    }
+
+    .announcement_card_inside p{
+        padding: 5%;
+    }
+}
