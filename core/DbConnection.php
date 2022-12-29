@@ -35,7 +35,7 @@ class DbConnection
      * @param bool $getAsArray: If true, returns the result as an array.
      *                          If false, returns the result as an object of mysqli_query.
      */
-    public function select($table, $columns = '*', $where = null, $order = null, $limit = null, $getAsArray=true)
+    public function select($table, $columns = '*', $where = null, $order = null, $limit = null)
     {
         if ($columns != '*') {
             $columns = implode(', ', $columns);
@@ -50,12 +50,7 @@ class DbConnection
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        $result = $this->db->query($sql);
-        # TODO: Change below line
-        if (!$getAsArray or $this->rowCount($result) > 1) {
-            return $result;
-        }
-        return $result->fetch_assoc();
+        return $this->db->query($sql);
     }
 
     public function insert($table, $values)
@@ -71,8 +66,7 @@ class DbConnection
         $result = $this->select(
             table: $table,
             where: $primaryKey,
-            limit: 1,
-            getAsArray: false
+            limit: 1
         );
         return $this->rowCount($result) > 0;
     }

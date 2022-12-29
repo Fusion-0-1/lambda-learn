@@ -18,11 +18,12 @@ abstract class User
     protected function getUserData($regNo): array
     {
         $userType = self::getUserType($regNo);
-        $table = Application::$db->select(
+        $result = Application::$db->select(
             table: $userType=='Lecturer'? 'AcademicStaff': $userType,
             where: ['reg_no'=>$regNo],
             limit: 1
         );
+        $table = Application::$db->fetch($result);
         return Application::$db->setEmptyToNullColumns($table);
     }
 
@@ -54,8 +55,7 @@ abstract class User
         $result = Application::$db->select(
             table: self::getUserTable($regNo),
             columns: ['password'],
-            where: ['reg_no'=>$regNo],
-            getAsArray: false
+            where: ['reg_no'=>$regNo]
         );
         if (Application::$db->rowCount($result) == 1) {
             $table = Application::$db->fetch($result);
