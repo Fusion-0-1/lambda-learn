@@ -2,7 +2,14 @@
 
 namespace app\controllers;
 
-class AnnouncementController
-{
+use app\core\Controller;
+use app\model\SiteAnnouncement;
 
+class AnnouncementController extends Controller
+{
+    public function displaySiteAnnouncements()
+    {
+        $announcements = ['announcements'=>SiteAnnouncement::getSiteAnnouncements()];
+        return $this->render('announcement', $announcements);
+    }
 }
