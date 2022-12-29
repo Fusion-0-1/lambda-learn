@@ -17,6 +17,8 @@ class Course
         $course = new Course();
         $table = $course->getUserCourses($regNo);
 
+        var_dump($table);
+
         $course->courseCode = $table['course_code'];
         $course->courseName = $table['course_name'];
         $course->optionalFlag = $table['optional_flag'];
