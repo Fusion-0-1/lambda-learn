@@ -12,7 +12,7 @@
         <form id="profile" action="/profile" method="post" class="border main-container flex-gap">
             <!-- User details -->
 
-            <h3 class="text-center">User Details</h3>
+            <h5 class="text-center">User Details</h5>
 
             <img src="images/profile.png" alt="profile" class="profile_img profile_img_center"><br>
 
@@ -89,7 +89,7 @@
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
-                <h3>Registered Courses</h3>
+                <h5>Registered Courses</h5>
                 <table>
                     <tr>
                         <td>SCS2201</td>

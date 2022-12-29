@@ -31,26 +31,26 @@ if (isset($_SESSION['user'])) {
     <link rel="stylesheet" href="css/login.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/images/favicon-light.svg">
+    <link rel="icon" type="image/x-icon" href="favicon-light.svg">
 
     <!-- Icons: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
 
     <title>Lambda - Learn </title>
 </head>
-<body>
-    <div class="login login_container flex-wrap flex align-stretch h-center margin-top">
+<body class="flex v-center h-center">
+    <div class="login_container flex-wrap flex align-stretch h-center margin-top">
         <div class="background_image_container">
             <img src="images/login.png" alt="login">
         </div>
-        <div class="login_container_form flex align-stretch flex-column v-center h-center main-container border">
+        <div class="flex align-stretch flex-column v-center h-center main-container border">
             <div class="login_container_logo">
                 <img src="images/logo.png" alt="logo">
             </div>
             <div class="heading-color">
                 <h3 class="text-center text-normal">Institute of Fusion</h3>
-                <h2 class="text-normal">Login</h2>
-                <h1>Welcome</h1>
+                <h4 class="text-normal">Login</h4>
+                <h2>Welcome</h2>
             </div>
             <div id="error" class="error-message">
             <?php if (isset($error)) echo $error; ?>

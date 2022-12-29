@@ -52,4 +52,9 @@ class Request
         }
         return $body;
     }
+
+    public function getFile()
+    {
+        return $_FILES['file'];
+    }
 }

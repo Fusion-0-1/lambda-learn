@@ -18,11 +18,12 @@ abstract class User
     protected function getUserData($regNo): array
     {
         $userType = self::getUserType($regNo);
-        $table = Application::$db->select(
+        $result = Application::$db->select(
             table: $userType=='Lecturer'? 'AcademicStaff': $userType,
             where: ['reg_no'=>$regNo],
             limit: 1
         );
+        $table = Application::$db->fetch($result);
         return Application::$db->setEmptyToNullColumns($table);
     }
 
@@ -53,10 +54,8 @@ abstract class User
     {
         $result = Application::$db->select(
             table: self::getUserTable($regNo),
-            columns: 'password',
-            where: ['reg_no'=>$regNo],
-            limit: 1,
-            getAsArray: false
+            columns: ['password'],
+            where: ['reg_no'=>$regNo]
         );
         if (Application::$db->rowCount($result) == 1) {
             $table = Application::$db->fetch($result);
@@ -85,6 +84,14 @@ abstract class User
         );
     }
 
+    public static function userExists($regNo): bool
+    {
+        return Application::$db->checkExists(
+            table: self::getUserTable($regNo),
+            primaryKey: ['reg_no'=>$regNo]
+        );
+    }
+
     public function editProfile():void
     {
         $userData = [
@@ -99,6 +106,138 @@ abstract class User
         );
     }
 
+
+    /*
+     * params:
+     *      $line(array) : array of strings
+     * !IMPORTANT: follow the order of the keys as in the code when passing as an associative array.
+     * return: array of User objects
+     * description : unwrap csv file line. Break into an associative array.
+     */
+    public static function unwrapData(array $line): array
+    {
+        return [
+            'regNo' => $line[0],
+            'firstName' => $line[1],
+            'lastName' => $line[2],
+            'email' => $line[3],
+            'personalEmail' => $line[4],
+            'contactNo' => $line[5]
+        ];
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ---------------------------Abstract Methods-----------------------------------
+    public abstract function insert();
+    // --------------------------------------------------------------------------------
+
+
+
+    // -------------------------Field validation methods---------------------------------
+    public static function validateName($name): bool
+    {
+        /*
+         * ^: This matches the start of the string.
+         * [a-zA-Z]: This matches any character from a to z and A to Z.
+         * *: preceding character can be matched any number of times, including zero.
+         * $: This matches the end of the string.
+         */
+        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+    }
+
+    public static function validateEmail($email): bool
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function validateRegNo($regNo): bool
+    {
+        /*
+         *  ^: This matches the start of the string.
+         *  \d{4}: Matches any four digits at the start of the string.
+         *  \/: This matches a forward slash.
+         *  .*: This matches any number of any characters (except a newline) after the first forward slash. This is the part of the string that should contain the middle section of the pattern.
+         *  \/: This matches a second forward slash.
+         *  \d{4}: This matches any four digits at the end of the string.
+         *  $: This matches the end of the string.
+         */
+        return preg_match("/^\d{4}\/.*\/\d{4}$/", $regNo);
+    }
+
+    public static function validateContactNo($contactNo): bool
+    {
+        /*
+         * Local numbers: 0xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \d{10}: d matches a digit (equivalent to [0-9]). {10} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        if (preg_match('/^\d{10}$/', $contactNo)) {
+            return true;
+        }
+        /*
+         * International numbers: +94xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \+: This matches a plus sign, which is typically the first character in a phone number with a country code.
+         * \d{11}: d matches a digit (equivalent to [0-9]). {11} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        else if (preg_match('/^\+\d{11}$/', $contactNo)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function validateUserAttributes(
+        $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail=null
+    ): bool
+    {
+        if(
+            // Not null checks
+            strlen($regNo) == 12 && # 20xx/cs/xxxx
+            $firstName !=  '' && $lastName != '' &&
+            $email != ''
+        ) {
+            if (!self::validateName($firstName . $lastName)) {
+                return false;
+            }
+            if (!self::validateEmail($email)) {
+                return false;
+            }
+            if (!self::validateRegNo($regNo)) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if ($contactNo != '') {
+            if (!self::validateContactNo($contactNo)) {
+                return false;
+            }
+        }
+        if ($personalEmail != '') {
+            if (!self::validateEmail($personalEmail)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function validateUserAttrFromArray(array $data): bool
+    {
+        return self::validateUserAttributes(
+            $data['regNo'], $data['firstName'], $data['lastName'],
+            $data['email'], $data['contactNo'], $data['personalEmail']
+        );
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ---------------------------Getters and Setters-----------------------------------
     /**
      * @return string
      */
@@ -258,5 +397,6 @@ abstract class User
     {
         $this->profilePicture = $profilePicture;
     }
+    // --------------------------------------------------------------------------------
 
 }
