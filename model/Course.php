@@ -17,8 +17,6 @@ class Course
         $course = new Course();
         $table = $course->getUserCourses($regNo);
 
-        var_dump($table);
-
         $course->courseCode = $table['course_code'];
         $course->courseName = $table['course_name'];
         $course->optionalFlag = $table['optional_flag'];
@@ -41,19 +39,87 @@ class Course
     {
         $coursesArray = Application::$db->select(
             table: 'StuCourse',
-            columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no'],
-            join: ['Course ON StuCourse.course_code=Course.course_code JOIN LecCourse ON StuCourse.course_code=LecCourse.course_code'],
+            columns: '*' ,
+            // columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no'],
+            join: 'Course ON StuCourse.course_code=Course.course_code JOIN LecCourse ON StuCourse.course_code=LecCourse.course_code',
             where: ['StuCourse.stu_reg_no'=>$regNo],
-            getAsArray: false,
+            limit: 1,
+            // getAsArray: false,
         );
 
-        $courses = Application::$db->fetch($coursesArray);
+        // $courses = Application::$db->fetch($coursesArray);
 
-        $course = Application::$db->rowCount($courses);
+        // $course = Application::$db->rowCount($courses);
 
-        return Application::$db->setEmptyToNullColumns($course);
+        return Application::$db->setEmptyToNullColumns($coursesArray);
     }
-    
+
+    /**
+     * @return string
+     */
+    public function getCourseCode(): string
+    {
+        return $this->courseCode;
+    }
+
+    /**
+     * @param string $courseCode
+     */
+    public function setCourseCode(string $courseCode): void
+    {
+        $this->courseCode = $courseCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCourseName(): string
+    {
+        return $this->courseName;
+    }
+
+    /**
+     * @param string $courseName
+     */
+    public function setCourseName(string $courseName): void
+    {
+        $this->courseName = $courseName;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOptionalFlag(): int
+    {
+        return $this->optionalFlag;
+    }
+
+    /**
+     * @param int $optionalFlag
+     */
+    public function setOptionalFlag(int $optionalFlag): void
+    {
+        $this->optionalFlag = $optionalFlag;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLecRegNo(): string
+    {
+        return $this->lecRegNo;
+    }
+
+    /**
+     * @param string $lecRegNo
+     */
+    public function setLecRegNo(string $lecRegNo): void
+    {
+        $this->lecRegNo = $lecRegNo;
+    }
+
+
+
 
 }
 
