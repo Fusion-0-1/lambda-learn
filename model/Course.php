@@ -39,19 +39,26 @@ class Course
     {
         $coursesArray = Application::$db->select(
             table: 'StuCourse',
-            columns: '*' ,
-            // columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no'],
-            join: 'Course ON StuCourse.course_code=Course.course_code JOIN LecCourse ON StuCourse.course_code=LecCourse.course_code',
+            columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no'],
+            join: [
+                [
+                    'table' =>'Course',
+                    'on' => 'StuCourse.course_code = Course.course_code'
+                ],
+                [
+                    'table' => 'LecCourse',
+                    'on' => 'Course.course_code = LecCourse.course_code'
+                ]
+            ],
             where: ['StuCourse.stu_reg_no'=>$regNo],
-            limit: 1,
-            // getAsArray: false,
+            limit: 1
         );
 
-        // $courses = Application::$db->fetch($coursesArray);
+         $courses = Application::$db->fetch($coursesArray);
 
         // $course = Application::$db->rowCount($courses);
 
-        return Application::$db->setEmptyToNullColumns($coursesArray);
+        return Application::$db->setEmptyToNullColumns($courses);
     }
 
     /**

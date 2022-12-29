@@ -32,14 +32,23 @@ class DbConnection
     }
 
     /*
-     * @param bool $getAsArray: If true, returns the result as an array.
-     *                          If false, returns the result as an object of mysqli_query.
+     * $join = [
+     *  [
+     *       'table' => 'table_name',
+     *      'on' => 'table_name.column_name = table_name.column_name'
+     *  ],
+     * ]
      */
-    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null, $getAsArray=true)
+    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null)
     {
+        if ($columns != '*') {
+            $columns = implode(', ', $columns);
+        }
         $sql = "SELECT $columns FROM $table";
         if ($join != null) {
-            $sql .= " JOIN $join";
+            foreach ($join as $joinTable) {
+                $sql .= " JOIN {$joinTable['table']} ON {$joinTable['on']}";
+            }
         }
         if ($where != null) {
             $sql .= $this->addSQLWhere($where);
@@ -50,18 +59,26 @@ class DbConnection
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        $result = $this->db->query($sql);
-        # TODO: Change below line
-        if (!$getAsArray or $this->rowCount($result) > 1) {
-            return $result;
-        }
-        return $result->fetch_assoc();
+        var_dump($sql);
+        return $this->db->query($sql);
     }
 
-    public function insert($table, $columns, $values): array
+    public function insert($table, $values)
     {
-        $sql = "INSERT INTO $table ($columns) VALUES ($values)";
+        $columns = "(" . implode(", ", array_keys($values)) . ")";
+        $col_values = "('" . implode("','", array_values($values)) . "')";
+        $sql = "INSERT INTO " . $table . $columns . " VALUES " . $col_values;
         return $this->db->query($sql);
+    }
+
+    public function checkExists($table, $primaryKey): bool
+    {
+        $result = $this->select(
+            table: $table,
+            where: $primaryKey,
+            limit: 1
+        );
+        return $this->rowCount($result) > 0;
     }
 
     public function update($table, $columns, $where): bool|\mysqli_result
@@ -106,12 +123,12 @@ class DbConnection
         return $table;
     }
 
-    private function addSQLWhere($where)
+    private function addSQLWhere($where, $operator = 'AND')
     {
         $sql = " WHERE " . array_keys($where)[0] . "='" . array_values($where)[0] . "'";
         array_shift($where);
         foreach ($where as $key => $value) {
-            $sql .= " AND $key = '$value'";
+            $sql .= " $operator $key = '$value'";
         }
         return $sql;
     }

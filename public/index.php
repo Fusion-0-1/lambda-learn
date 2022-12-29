@@ -25,6 +25,7 @@ $app->router->get('/', 'dashboard');
 
 // $app->router->get('/course_overview', 'course_overview');
 $app->router->get('/account_creation', 'account_creation');
+$app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 
 $app->router->get('/course_overview', [CourseController::class, 'course_overview']);
 

@@ -21,7 +21,7 @@ class AuthController extends Controller
             if(User::getUserType($regNo)) {
                 if (User::authenticateUser($regNo, $body['password'])) {
                     if (User::getUserType($regNo) == 'Student') {
-                        $user = new Student($regNo);
+                        $user = Student::fetchStuFromDb($regNo);
                     } else if (User::getUserType($regNo) == 'Lecturer') {
                         $user = new Lecturer($regNo);
                     } else if (User::getUserType($regNo) == 'Admin') {
