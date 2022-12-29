@@ -51,7 +51,8 @@ class DbConnection
             $sql .= " LIMIT $limit";
         }
         $result = $this->db->query($sql);
-        if (!$getAsArray) {
+        # TODO: Change below line
+        if (!$getAsArray or $this->rowCount($result) > 1) {
             return $result;
         }
         return $result->fetch_assoc();

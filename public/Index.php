@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
 use app\controllers\ProfileController;
 use app\core\Application;
@@ -25,6 +26,8 @@ $app->router->get('/account_creation', 'account_creation');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 
 $app->router->get('/course_overview', 'course_overview');
+
+$app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
