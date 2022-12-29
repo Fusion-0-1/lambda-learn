@@ -15,6 +15,87 @@ abstract class User
     protected bool $activeStatus;
     protected string $profilePicture;
 
+    /**
+     * @return string
+     */
+    public function getRegNo(): string
+    {
+        return $this->regNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalEmail(): string
+    {
+        return $this->personalEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactNo(): string
+    {
+        return $this->contactNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogin(): string
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogout(): string
+    {
+        return $this->lastLogout;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActiveStatus(): bool
+    {
+        return $this->activeStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePicture(): string
+    {
+        return $this->profilePicture;
+    }
+
+
     protected function getUserData($regNo): array
     {
         $userType = self::getUserType($regNo);
