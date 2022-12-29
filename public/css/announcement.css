@@ -10,6 +10,7 @@
 }
 
 .topic_container_add{
+    display: grid;
     grid-template-columns: 85% auto;
     padding: 0.5% 2.5%;
 }
@@ -46,11 +47,6 @@ a img{
 
 .btn {
     width: 100px;
-    border: 0;
-    height: 30px;
-    border-radius: 12px;
-    background: #2AB514;
-    color: var(--white);
 }
 
 .add_name {
@@ -84,6 +80,7 @@ a img{
 .container_heading{
     margin: 0;
     background: var(--blue);
+    display: grid;
     grid-template-columns: 60% auto;
     color: var(--white);
     border-radius: inherit;
@@ -117,28 +114,13 @@ a img{
     resize: none;
 }
 
-@media(max-width:1024px) {
-    .course_name{
-        font-size: 1.8rem;
-    }
-    .add_announcement_content{
-        font-size: 1rem;
-    }
-    .topic_container_add{
-        grid-template-columns: 80% auto ;
-    }
-    .container_heading{
-        grid-template-columns: 68% auto;
-        padding: 9px 18px;
-    }
-}
 
 @media(max-width:768px) {
     .announcement_card{
         width: 95%;
     }
     .course_name {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
     .btn{
         width: 80px;
