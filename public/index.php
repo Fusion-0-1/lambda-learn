@@ -3,6 +3,7 @@
 use app\controllers\AuthController;
 use app\controllers\ProfileController;
 use app\core\Application;
+use app\controllers\CourseController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
