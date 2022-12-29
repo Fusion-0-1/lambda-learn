@@ -118,9 +118,6 @@ class Course
         $this->lecRegNo = $lecRegNo;
     }
 
-
-
-
 }
 
 
