@@ -1,39 +1,75 @@
-<link rel="stylesheet" href="announcement.css">
+<link rel="stylesheet" href="css/announcement.css">
 
-<div class="main_card">
-    <div class="course_name">Data Structures and Algorithms - Announcement</div>
-
-    <div class="announcement_card">
-        <div class="container">
-            <div class="heading_content">Lorem ipsum dolor sit amet.</div>
-        </div>
-        <div class="announcement_card_inside">
-            <div class="container_heading">
-                <div class="view_lecture_name">Mr. Nimal Kodikara</div>
-                <div class="date_time">Date & Time</div>
+<div class="main-container border v-center flex-gap responsive-container">
+    <h2 class="text-center course_name">Site Announcements</h2>
+        <div class="announcement_card border">
+            <div class="topic_container_add grid v-center h-justify">
+                <textarea id="heading_textarea" name="heading" placeholder="Add Announcement Heading..."
+                          class="add_headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
+                <button class="btn h-center v-center">Publish</button>
             </div>
-            <div class="announcement_content">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente officia qui accusamus repellendus,
-                dolorem eveniet? Vitae, cum, harum architecto rerum similique velit facilis dolore ad libero quaerat
-                quibusdam incidunt, aliquam praesentium odit nobis sit consectetur totam dolores exercitationem molestias
-                accusamus quisquam. Est, nostrum quos! Ea aut dolores nam quasi assumenda.
-            </div>
-        </div>
-    </div>
-
-
-    <div class="announcement_card">
-        <div class="container">
-            <div class="heading_content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam recusandae eius rerum obcaecati aliquid eos fugit alias perferendis, facilis ullam dolore quo laudantium non quis.</div>
-        </div>
-        <div class="announcement_card_inside">
-            <div class="container_heading">
-                <div class="view_lecture_name">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis suscipit fugiat numquam esse, ea molestiae dolore quod cumque eveniet repudiandae expedita voluptatum officiis quis eum.</div>
-                <div class="date_time">Lorem ipsum dolor sit amet.</div>
-            </div>
-            <div class="announcement_content">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Hic nobis eius aut quod voluptates molestias expedita ipsam iusto praesentium. Quidem et a eos similique provident delectus harum, adipisci officia debitis asperiores illo repellendus sunt! Explicabo officiis velit corrupti, enim nostrum culpa itaque aut non necessitatibus cum magni sequi pariatur? Cum aliquid, dolorum id dolor itaque sunt dolore repellat quia optio praesentium corrupti consequuntur asperiores. Id suscipit quas eveniet magni quae adipisci quo. Tempore consectetur, ducimus iure laudantium repudiandae, mollitia reiciendis consequuntur vitae laboriosam assumenda omnis molestias labore illum placeat. Quos aliquam unde aliquid perspiciatis, ipsum eligendi, voluptatem accusamus voluptatum assumenda, totam velit voluptas iusto itaque? Corporis sed vitae nemo dignissimos nisi dicta, optio minus amet eum ab tempore aperiam iste obcaecati rerum quo facere accusantium explicabo voluptatibus ad. Aliquid quae blanditiis est modi deserunt dolor magnam, iusto nulla suscipit repellat cupiditate quo quasi, autem sit distinctio dolore corrupti dolores odit voluptatum voluptatibus, corporis unde enim commodi reiciendis! Quo reiciendis odio accusamus nisi dignissimos possimus adipisci, deleniti iusto explicabo recusandae dolore enim nam autem nesciunt voluptatibus corporis maxime quam beatae tempora minima laudantium accusantium veritatis voluptates quasi! Ducimus dolore sint saepe, quod accusamus vel nulla similique maiores, inventore aspernatur autem sapiente est labore tenetur odit aut fugit facilis? A obcaecati minima nam officia unde ratione libero laboriosam quidem sint, impedit, soluta consequatur laborum illum aut eos esse ullam perspiciatis non delectus voluptate exercitationem itaque! Harum omnis sed consequuntur iste soluta exercitationem quis, quod, eum magni optio natus praesentium nesciunt quasi ea?
+            <div class="announcement_card_inside border">
+                <div class="container_heading grid h-justify v-center">
+                    <input type="text" name="name" placeholder="Enter Your Name... " class="add_name">
+                    <div class="view_lecture_name_and_date_time text-right">2018-02-21 12:00:00</div>
+                </div>
+                <div  class="add_announcement_content_div">
+                    <textarea id="content_textarea" name="content" placeholder="Add Announcement content...   " class="add_announcement_content text-justify"></textarea>
+                </div>
             </div>
         </div>
-    </div>
+<!---->
+<!---->
+<!--    <div class="announcement_card border">-->
+<!--        <div class="topic_container grid v-center h-justify container_edit_delete" >-->
+<!--            <h4 class="heading_content text-bold text-justify">Lorem ipsum dolor sit amet jsgfj bdkjfhsk bjks mnkhlk akfk nkafk nnsfk kjaf afgajfga bjfj fkh nskhfk skhf.</h4>-->
+<!--                <div class="edit_delete_timeremaining grid v-center">-->
+<!--                    <div class="edit_time"><b>30</b><span> mins left</span></div>-->
+<!--                    <a href="" class="deletebtn"><img src="./images/announcement/Delete.png" alt="Delete image"></a>-->
+<!--                    <a href="" class="editbtn"><img src="./images/announcement/Edit.png" alt="Edit image"></a>-->
+<!--                </div>-->
+<!--        </div>-->
+<!--        <div class="announcement_card_inside border">-->
+<!--            <div class="container_heading grid h-justify v-center">-->
+<!--                <div class="view_lecture_name_and_date_time">Mr. Nimal Kodikara</div>-->
+<!--                <div class="view_lecture_name_and_date_time text-right">2018-02-21 12:00:00</div>-->
+<!--            </div>-->
+<!--            <p class="text-justify">-->
+<!--                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente officia qui accusamus repellendus,-->
+<!--                dolorem eveniet? Vitae, cum, harum architecto rerum similique velit facilis dolore ad libero quaerat-->
+<!--                quibusdam incidunt, aliquam praesentium odit nobis sit consectetur totam dolores exercitationem-->
+<!--                molestias accusamus quisquam. Est, nostrum quos! Ea aut dolores nam quasi assumenda.-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+    <?php foreach ($announcements as $ann) { ?>
+        <div class="announcement_card border">
+            <div class="topic_container grid v-center h-justify container_edit_delete">
+                <h4 class="heading_content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
+            </div>
+            <div class="announcement_card_inside border">
+                <div class="container_heading grid h-justify v-center">
+                    <div class="view_lecture_name_and_date_time">Mr. Nimal Kodikar</div>
+                    <div class="view_lecture_name_and_date_time text-right"><?php echo $ann->getPublishDate()?></div>
+                </div>
+                <p class="text-justify">
+                    <?php echo $ann->getContent()?>
+                </p>
+            </div>
+        </div>
+    <?php } ?>
 </div>
+
+<script type="text/javascript">
+    textarea = document.querySelector("#heading_textarea");
+    textarea.addEventListener('input', autoResize, false);
+
+    textarea = document.querySelector("#content_textarea");
+    textarea.addEventListener('input', autoResize, false);
+
+    function autoResize() {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+    }
+</script>
