@@ -180,6 +180,10 @@ a:active {
     justify-content: space-between;
 }
 
+.h-evenly{
+    justify-content: space-evenly;
+}
+
 .align-stretch{
     align-items: stretch;
 }
@@ -361,6 +365,13 @@ td{
 
 .absolute-position{
     position: absolute;
+}
+
+hr{
+    border: 1px solid var(--heading-blue);
+    border-radius: 6px;
+    background: var(--heading-blue);
+    height: 2px;
 }
 /* --------------------------------------------------- */
 
