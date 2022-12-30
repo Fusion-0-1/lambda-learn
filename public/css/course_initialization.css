@@ -11,4 +11,29 @@
     background-color: var(--blue);
     color: var(--blue-white);
     border: none;
+    width: 100%;
+    padding: 1%;
+    border-radius: 14px;
+}
+
+.input-subtopic::placeholder{
+    color: var(--white);
+}
+
+.container-course-topic{
+    background-color: var(--white);
+    width: 25%;
+    margin: 1.5%;
+    padding: 2%;
+    margin-bottom: 3%;
+    padding-bottom: 10px;
+    border-radius: 13px;
+}
+
+.container-course-sub-topic{
+    background-color: var(--white);
+    width: 100%;
+    padding: 0;
+    padding-bottom: 2%;
+    border-radius: 14px;
 }

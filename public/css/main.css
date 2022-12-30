@@ -127,6 +127,10 @@ body {
 .line-height{
     line-height: 3px;
 }
+
+.remove-space{
+    margin: 2%;
+}
 /* --------------------------------------------------- */
 
 /* ----------------- Link formatting ----------------- */
@@ -308,6 +312,15 @@ td{
     height: 35px;
     border-radius: 10px;
     background-color: var(--green);
+}
+
+.btn-circle{
+    color: var(--white);
+    border: var(--x-dark-blue) 1px solid;
+    background-color: var(--x-dark-blue);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
 }
 /* --------------------------------------------------- */
 

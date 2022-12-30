@@ -17,53 +17,45 @@
         </div>
     </div>
 
-    <div class="border main-container flex v-center flex-gap flex-wrap h-justify">
-        <div class="flex flex-wrap h-justify">
-            <div class="border main-container v-center flex-gap padding-none">
-                <h4>1. String Matching Algorithms</h4>
-                <div class="border main-container v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex" placeholder="Add sub topic"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <button id="save" class="edit-btn edit-btn-text"><i class="fa-solid fa-plus"></i></button>
+    <div class="border main-container flex-gap">
+        <h4>Course Sub Topics</h4><hr><br>
+        <div id="course-topic" class="flex flex-gap flex-wrap h-center">
+            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">
+                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>
+                <div class="border container-course-sub-topic v-center padding-none flex flex-column">
+                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>
+<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
+<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
+                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>
                 </div>
             </div>
-            <div class="border main-container v-center flex-gap padding-none">
-                <h4>1. String Matching Algorithms</h4>
-                <div class="border main-container v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                </div>
-            </div>
-            <div class="border main-container v-center flex-gap padding-none">
-                <h4>1. String Matching Algorithms</h4>
-                <div class="border main-container v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                </div>
-            </div>
-            <div class="border main-container v-center flex-gap padding-none">
-                <h4>1. String Matching Algorithms</h4>
-                <div class="border main-container v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                </div>
-            </div>
-            <div class="border main-container v-center flex-gap padding-none">
-                <h4>1. String Matching Algorithms</h4>
-                <div class="border main-container v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                    <input class="input input-subtopic flex"><br><br>
-                </div>
-            </div>
-        </div>
 
+<!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
+<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
+<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
+<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
+<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
+<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
+<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
+<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
+<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
+<!--                </div>-->
+<!--            </div>-->
+
+<!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
+<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
+<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
+<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
+<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
+<!--                </div>-->
+<!--            </div>-->
+        </div>
         <div class="flex margin-top h-center">
-            <button id="save" class="edit-btn edit-btn-text">Initialize Course Page</button>
+            <button id="save" class="confirm-btn">Initialize course page</button>
         </div>
     </div>
 
