@@ -59,7 +59,6 @@ class DbConnection
         if ($limit != null) {
             $sql .= " LIMIT $limit";
         }
-        var_dump($sql);
         return $this->db->query($sql);
     }
 
