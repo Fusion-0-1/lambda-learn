@@ -10,36 +10,44 @@ class Course
     private string $courseName;
     private int $optionalFlag;
     private string $lecRegNo;
+    private string $lecFirstName;
+    private string $lecLastName;
 
     private function __construct() {}
     
     public static function fetchCourseFromDb(string $regNo) {
-        $course = new Course();
-        $table = $course->getUserCourses($regNo);
+        
+        $table = self::getUserCourses($regNo);
 
+        $course = new Course();
         $course->courseCode = $table['course_code'];
         $course->courseName = $table['course_name'];
         $course->optionalFlag = $table['optional_flag'];
         $course->lecRegNo = $table['lec_reg_no'];
+        $course->lecFirstName = $table['first_name'];
+        $course->lecLastName = $table['last_name'];
 
         return $course;
     }
 
-    public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo) {
+    public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName) {
         $course = new Course();
         $course->courseCode = $courseCode;
         $course->courseName = $courseName;
         $course->optionalFlag = $optionalFlag;
         $course->lecRegNo = $lecRegNo;
+        $course->lecFirstName = $lecFirstName;
+        $course->lecLastName = $lecLastName;
 
         return $course;
     }
 
-    protected function getUserCourses($regNo): array
+    public static function getUserCourses($regNo): array
     {
-        $coursesArray = Application::$db->select(
+        $courses = [];
+        $results = Application::$db->select(
             table: 'StuCourse',
-            columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no'],
+            columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no', 'AcademicStaff.first_name', 'AcademicStaff.last_name'],
             join: [
                 [
                     'table' =>'Course',
@@ -48,17 +56,25 @@ class Course
                 [
                     'table' => 'LecCourse',
                     'on' => 'Course.course_code = LecCourse.course_code'
+                ],
+                [
+                    'table' => 'AcademicStaff',
+                    'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
                 ]
             ],
             where: ['StuCourse.stu_reg_no'=>$regNo],
-            limit: 1
         );
-
-         $courses = Application::$db->fetch($coursesArray);
-
-        // $course = Application::$db->rowCount($courses);
-
-        return Application::$db->setEmptyToNullColumns($courses);
+        while ($course = Application::$db->fetch($results)){
+            $courses[] = self::createNewCourse(
+                $course['course_code'],
+                $course['course_name'],
+                $course['optional_flag'],
+                $course['lec_reg_no'],
+                $course['first_name'],
+                $course['last_name']
+            );
+        }
+        return $courses;
     }
 
     /**
@@ -123,6 +139,38 @@ class Course
     public function setLecRegNo(string $lecRegNo): void
     {
         $this->lecRegNo = $lecRegNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLecFirstName(): string
+    {
+        return $this->lecFirstName;
+    }
+
+    /**
+     * @param string $lecFirstName
+     */
+    public function setLecFirstName(string $lecFirstName): void
+    {
+        $this->lecFirstName = $lecFirstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLecLastName(): string
+    {
+        return $this->lecLastName;
+    }
+
+    /**
+     * @param string $lecFirstName
+     */
+    public function setLecLastName(string $lecLastName): void
+    {
+        $this->lecLastName = $lecLastName;
     }
 
 }

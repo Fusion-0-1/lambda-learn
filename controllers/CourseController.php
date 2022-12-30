@@ -11,8 +11,8 @@ class CourseController extends Controller
     public function displayCourses()
     {
         $user = unserialize($_SESSION['user']);
-        $userRegno = $user->getRegNo();
-        $course = Course::fetchCourseFromDb($userRegno);
-        return $this->render('course_overview', ['course' => $course]);
+        $userRegNo = $user->getRegNo();
+        $courses = ['courses'=>Course::getUserCourses($userRegNo)];
+        return $this->render('course_overview', $courses);
     }
 }
