@@ -21,51 +21,57 @@
         <h4>Course Sub Topics</h4><hr><br>
         <div id="course-topic" class="flex flex-gap flex-wrap h-center">
             <div class="border container-course-topic v-center flex flex-gap v-center flex-column">
-                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>
-                <div class="border container-course-sub-topic v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>
-<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
-<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
-                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>
+                <h4 id="topic-1" class="text-center remove-space">Add new topic...</h4>
+                <div id="subtopic" class="border container-course-sub-topic v-center padding-none flex flex-column">
+                    <input id="sub_topic-1" class="input input-subtopic flex" placeholder="Add new sub topic...">
                 </div>
+                <button id="save" class="btn-circle" onclick="addSubTopic()"><i class="fa-solid fa-plus"></i></button>
             </div>
-
 <!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
-<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
-<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
-<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
-<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
+<!--                <h4 id="topic-1" class="text-center remove-space">1. String Matching Algorithms</h4>-->
+<!--                <div id="subtopic" class="border container-course-sub-topic v-center padding-none flex flex-column">-->
+<!--                    <input id="sub_topic-1" class="input input-subtopic flex" placeholder="Add sub topic here...">-->
 <!--                </div>-->
+<!--                <button id="save" class="btn-circle" onclick="addSubTopic()"><i class="fa-solid fa-plus"></i></button>-->
 <!--            </div>-->
-
 <!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
-<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
-<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
-<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
-<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
+<!--                <h4 id="topic-1" class="text-center remove-space">1. String Matching Algorithms</h4>-->
+<!--                <div id="subtopic" class="border container-course-sub-topic v-center padding-none flex flex-column">-->
+<!--                    <input id="sub_topic-1" class="input input-subtopic flex" placeholder="Add sub topic here...">-->
 <!--                </div>-->
-<!--            </div>-->
-
-<!--            <div class="border container-course-topic v-center flex flex-gap v-center flex-column">-->
-<!--                <h4 class="text-center remove-space">1. String Matching Algorithms</h4>-->
-<!--                <div class="border container-course-sub-topic v-center padding-none flex flex-column">-->
-<!--                    <input class="input input-subtopic flex" placeholder="Add sub topic here..."><br>-->
-<!--                    <button id="save" class="btn-circle"><i class="fa-solid fa-plus"></i></button>-->
-<!--                </div>-->
+<!--                <button id="save" class="btn-circle" onclick="addSubTopic()"><i class="fa-solid fa-plus"></i></button>-->
 <!--            </div>-->
         </div>
         <div class="flex margin-top h-center">
-            <button id="save" class="confirm-btn">Initialize course page</button>
+            <button id="initialize" class="confirm-btn" disabled>Initialize course page</button>
+
+            <div id="modal" class="modal hide" >
+                <div class="warn-modal-content">
+                    <div class="text-center">
+                        <img src="images/warning.png" alt="warning">
+                        <h4>Are You Sure?</h4>
+                        <p>Once you initialize the course page, you cannot add new topics for progress tracking</p>
+                    </div>
+                    <div class="two-button-row  text-right">
+                        <button id="cancel-btn" class="text-bold">Cancel</button>
+                        <button id="initialize-btn" class="text-bold">Initialize</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
 </div>
+
+
 
 <script>
     var count = 1;
+    var subtopic_count = 1;
     var id = document.getElementById("input_topic-"+count);
     id.addEventListener("input", addInput);
     function addInput(){
+        document.getElementById("topic-1").innerHTML = document.getElementById("input_topic-1").value;
+        document.getElementById("initialize").removeAttribute("disabled")
         if(id.value.length !== 0){
             count++;
             var new_input = document.createElement("INPUT");
@@ -77,12 +83,33 @@
             id = document.getElementById("input_topic-"+count);
             id.addEventListener("input", addInput);
         }
-        // var i=1;
-        // for(i=1; i<=10; i++){
-        //     if(document.getElementById("input_topic-"+i).value.length === 0){
-        //         document.getElementById("input_topic-"+(++i)).remove();
-        //         return;
-        //     }
-        // }
+        //TODO: remove input field if empty
+    }
+
+    function addSubTopic(){
+
+        subtopic_count++;
+        var new_subtopic = document.createElement("INPUT");
+        new_subtopic.setAttribute("type", "text");
+        new_subtopic.setAttribute("placeholder", "Add new sub topic...");
+        new_subtopic.setAttribute("class", "input input-subtopic flex width-full");
+        new_subtopic.setAttribute("id", "sub_topic-"+subtopic_count);
+        document.getElementById('subtopic').appendChild(new_subtopic);
+    }
+
+    var modal = document.getElementById("modal");
+    var initialize_btn = document.getElementById("initialize");
+    var cancel_btn = document.getElementById("cancel-btn");
+
+    initialize_btn.onclick = function (){
+        modal.style.display = "block";
+    }
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    }
+    cancel_btn.onclick = function(){
+        modal.style.display = "none";
     }
 </script>
