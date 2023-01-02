@@ -18,11 +18,12 @@ abstract class User
     protected function getUserData($regNo): array
     {
         $userType = self::getUserType($regNo);
-        $table = Application::$db->select(
+        $result = Application::$db->select(
             table: $userType=='Lecturer'? 'AcademicStaff': $userType,
             where: ['reg_no'=>$regNo],
             limit: 1
         );
+        $table = Application::$db->fetch($result);
         return Application::$db->setEmptyToNullColumns($table);
     }
 
@@ -53,10 +54,8 @@ abstract class User
     {
         $result = Application::$db->select(
             table: self::getUserTable($regNo),
-            columns: 'password',
-            where: ['reg_no'=>$regNo],
-            limit: 1,
-            getAsArray: false
+            columns: ['password'],
+            where: ['reg_no'=>$regNo]
         );
         if (Application::$db->rowCount($result) == 1) {
             $table = Application::$db->fetch($result);
@@ -85,12 +84,319 @@ abstract class User
         );
     }
 
-    public function flatten(): array
+    public static function userExists($regNo): bool
     {
-        $array = [];
-        foreach ($this as $key => $value) {
-            $array[$key] = $value;
-        }
-        return $array;
+        return Application::$db->checkExists(
+            table: self::getUserTable($regNo),
+            primaryKey: ['reg_no'=>$regNo]
+        );
     }
+
+    public function editProfile():void
+    {
+        $userData = [
+            'personal_email'=>$this->personalEmail,
+            'contact_no'=>$this->contactNo
+        ];
+
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: $userData,
+            where: ['reg_no'=>$this->regNo]
+        );
+    }
+
+
+    /*
+     * params:
+     *      $line(array) : array of strings
+     * !IMPORTANT: follow the order of the keys as in the code when passing as an associative array.
+     * return: array of User objects
+     * description : unwrap csv file line. Break into an associative array.
+     */
+    public static function unwrapData(array $line): array
+    {
+        return [
+            'regNo' => $line[0],
+            'firstName' => $line[1],
+            'lastName' => $line[2],
+            'email' => $line[3],
+            'personalEmail' => $line[4],
+            'contactNo' => $line[5]
+        ];
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ---------------------------Abstract Methods-----------------------------------
+    public abstract function insert();
+    // --------------------------------------------------------------------------------
+
+
+
+    // -------------------------Field validation methods---------------------------------
+    public static function validateName($name): bool
+    {
+        /*
+         * ^: This matches the start of the string.
+         * [a-zA-Z]: This matches any character from a to z and A to Z.
+         * *: preceding character can be matched any number of times, including zero.
+         * $: This matches the end of the string.
+         */
+        return preg_match("/^[a-zA-Z-' ]*$/",$name);
+    }
+
+    public static function validateEmail($email): bool
+    {
+        return filter_var($email, FILTER_VALIDATE_EMAIL);
+    }
+
+    public static function validateRegNo($regNo): bool
+    {
+        /*
+         *  ^: This matches the start of the string.
+         *  \d{4}: Matches any four digits at the start of the string.
+         *  \/: This matches a forward slash.
+         *  .*: This matches any number of any characters (except a newline) after the first forward slash. This is the part of the string that should contain the middle section of the pattern.
+         *  \/: This matches a second forward slash.
+         *  \d{4}: This matches any four digits at the end of the string.
+         *  $: This matches the end of the string.
+         */
+        return preg_match("/^\d{4}\/.*\/\d{4}$/", $regNo);
+    }
+
+    public static function validateContactNo($contactNo): bool
+    {
+        /*
+         * Local numbers: 0xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \d{10}: d matches a digit (equivalent to [0-9]). {10} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        if (preg_match('/^\d{10}$/', $contactNo)) {
+            return true;
+        }
+        /*
+         * International numbers: +94xxxxxxxxx
+         * ^: This matches the start of the string.
+         * \+: This matches a plus sign, which is typically the first character in a phone number with a country code.
+         * \d{11}: d matches a digit (equivalent to [0-9]). {11} matches the previous token exactly 11 times
+         * $: This matches the end of the string.
+         */
+        else if (preg_match('/^\+\d{11}$/', $contactNo)) {
+            return true;
+        }
+        return false;
+    }
+
+    public static function validateUserAttributes(
+        $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail=null
+    ): bool
+    {
+        if(
+            // Not null checks
+            strlen($regNo) == 12 && # 20xx/cs/xxxx
+            $firstName !=  '' && $lastName != '' &&
+            $email != ''
+        ) {
+            if (!self::validateName($firstName . $lastName)) {
+                return false;
+            }
+            if (!self::validateEmail($email)) {
+                return false;
+            }
+            if (!self::validateRegNo($regNo)) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        if ($contactNo != '') {
+            if (!self::validateContactNo($contactNo)) {
+                return false;
+            }
+        }
+        if ($personalEmail != '') {
+            if (!self::validateEmail($personalEmail)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static function validateUserAttrFromArray(array $data): bool
+    {
+        return self::validateUserAttributes(
+            $data['regNo'], $data['firstName'], $data['lastName'],
+            $data['email'], $data['contactNo'], $data['personalEmail']
+        );
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ---------------------------Getters and Setters-----------------------------------
+    /**
+     * @return string
+     */
+    public function getRegNo(): string
+    {
+        return $this->regNo;
+    }
+
+    /**
+     * @param string $regNo
+     */
+    public function setRegNo(string $regNo): void
+    {
+        $this->regNo = $regNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     */
+    public function setFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     */
+    public function setLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPersonalEmail(): string
+    {
+        return $this->personalEmail;
+    }
+
+    /**
+     * @param string $personalEmail
+     */
+    public function setPersonalEmail(string $personalEmail): void
+    {
+        $this->personalEmail = $personalEmail;
+    }
+
+    /**
+     * @return string
+     */
+    public function getContactNo(): string
+    {
+        return $this->contactNo;
+    }
+
+    /**
+     * @param string $contactNo
+     */
+    public function setContactNo(string $contactNo): void
+    {
+        $this->contactNo = $contactNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogin(): string
+    {
+        return $this->lastLogin;
+    }
+
+    /**
+     * @param string $lastLogin
+     */
+    public function setLastLogin(string $lastLogin): void
+    {
+        $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastLogout(): string
+    {
+        return $this->lastLogout;
+    }
+
+    /**
+     * @param string $lastLogout
+     */
+    public function setLastLogout(string $lastLogout): void
+    {
+        $this->lastLogout = $lastLogout;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActiveStatus(): bool
+    {
+        return $this->activeStatus;
+    }
+
+    /**
+     * @param bool $activeStatus
+     */
+    public function setActiveStatus(bool $activeStatus): void
+    {
+        $this->activeStatus = $activeStatus;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProfilePicture(): string
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * @param string $profilePicture
+     */
+    public function setProfilePicture(string $profilePicture): void
+    {
+        $this->profilePicture = $profilePicture;
+    }
+    // --------------------------------------------------------------------------------
+
 }

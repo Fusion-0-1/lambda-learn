@@ -48,7 +48,7 @@
             <div id="modal" class="modal hide" >
                 <div class="warn-modal-content">
                     <div class="text-center">
-                        <img src="images/warning.png" alt="warning">
+                        <img src="images/primary_icons/warning.png" alt="warning">
                         <h4>Are You Sure?</h4>
                         <p>Once you initialize the course page, you cannot add new topics for progress tracking</p>
                     </div>

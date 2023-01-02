@@ -15,12 +15,16 @@
     --green-bg: #DCEADD;
     --background-white: #F7F7F7;
     --heading-blue: #0D2137;
+    --warn: #85772F;
+    --warn-btn: #FFDD2B;
+    --warn-bg: #F9FFD2;
+    --black: #000;
 }
 
 body {
     background: var(--background-white);
     margin-left: 60px;
-    margin-top: 60px;
+    margin-top: 90px;
     font-family: Roboto, sans-serif;
 }
 /* --------------------------------------------------- */
@@ -30,8 +34,10 @@ body {
 /* --------------- Container formatting --------------- */
 .main-container {
     background-color: var(--white);
-    padding:20px 40px;
+    padding:40px 40px;
     border-radius: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .outer {
@@ -59,8 +65,11 @@ body {
     width: 80%;
 }
 
-.padding-none{
-    padding: 2%;
+@media (max-width: 425px) {
+    .main-container{
+        padding: 20px 20px !important;
+        margin: 10px;
+    }
 }
 
 /* --------------------------------------------------- */
@@ -68,6 +77,51 @@ body {
 
 
 /* ----------------- Text formatting ----------------- */
+h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--heading-blue);
+    margin: 10px 0;
+}
+
+h3 {
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--heading-blue);
+    margin: 1rem 0;
+    text-align: center;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 300;
+    margin: 10px 0 0;
+}
+
+h5 {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 5px 0;
+}
+
+@media (max-width: 425px) {
+    h2 {
+        font-size: 1.5rem;
+    }
+    h3 {
+        font-size: 20px;
+    }
+    h4 {
+        font-size: 15px;
+    }
+    h5 {
+        font-size: 13px;
+    }
+    p {
+        font-size: 12px;
+    }
+}
+
 .heading-color{
     color: var(--heading-blue);
 }
@@ -137,24 +191,30 @@ body {
 a:link {
     color: var(--heading-blue);
 }
-  
+
 a:visited {
     color: var(--ash-green);
 }
-  
+
 a:hover {
     color: var(--blue);
 }
-  
+
 a:active {
     color: var(--blue);
+}
+/* --------------------------------------------------- */
+
+/* ----------------- Grid formatting ----------------- */
+.grid {
+    display: grid;
 }
 /* --------------------------------------------------- */
 
 /* ----------------- Flex formatting ----------------- */
 .flex {
     display: flex;
-} 
+}
 
 .flex-wrap {
     flex-wrap: wrap;
@@ -196,7 +256,7 @@ a:active {
 
 
 /* ----------------- Form formatting ----------------- */
-.dark-btn{    
+.dark-btn, .x-dark-btn{
     /* TODO: Add default with of the input field */
     background-color: var(--x-dark-blue);
     color: var(--white);
@@ -204,9 +264,35 @@ a:active {
     margin-right: auto;
     border-radius: 8px;
     border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.x-dark-btn{
+    min-width: 80%;
+    min-height: 50px;
+    background-color: var(--blue);
+    font-size: medium;
+    margin-top: 15px;
+    overflow: hidden;
+}
+
+.cancel-btn {
+    font-weight: bold;
+    min-height: 50px;
+    color: var(--black);
+    border: var(--white) 1px solid;
+    background-color: var(--white);
+}
+
+.warn-continue-btn {
+    color: var(--black);
+    border: var(--warn-btn) 1px solid;
+    background-color: var(--warn-btn);
+}
+
+.confirm-btn {
+    color: var(--green);
+    border: var(--green) 1px solid;
+    background-color: var(--green-bg);
 }
 
 .input {
@@ -218,6 +304,10 @@ a:active {
     padding-left: 14px;
     padding-right: 14px;
     border-radius: 8px;
+}
+
+button:hover {
+    cursor: pointer;
 }
 /* --------------------------------------------------- */
 
@@ -328,9 +418,8 @@ td{
 
 /* ----------------- Modal Formatting ---------------- */
 .modal {
-    display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     width: 100%;
@@ -340,24 +429,50 @@ td{
 }
 
 .modal-content {
+    background-color: var(--white);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
+    width: 40%;
     border-radius: 15px;
 }
 
-.close {
-    color: var(--heading-blue);
-    float: right;
-    font-size: 28px;
+.warn-modal-content {
+    color: var(--warn);
+    background-color: var(--warn-bg);
+    border: var(--warn) 1px solid;
+}
+
+.modal-content h4 {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
-    color: var(--blue);
-    text-decoration: none;
-    cursor: pointer;
+.modal-content button {
+    min-height: 35px;
+    width: 90px;
+    font-weight: bold;
+}
+
+.modal-content #cancel-btn {
+    border: var(--warn-btn) 2px solid;
+}
+
+.modal-content .two-button-row {
+    gap: 30px;
+}
+
+@media(max-width: 425px) {
+    .modal-content .two-button-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content button {
+        min-height: 30px;
+        width: 70px;
+        font-weight: bold;
+        font-size: 12px;
+    }
 }
 /* --------------------------------------------------- */
 
@@ -385,6 +500,17 @@ hr{
     border-radius: 6px;
     background: var(--heading-blue);
     height: 2px;
+}
+/* --------------------------------------------------- */
+.csv-header-format {
+    font-weight: lighter;
+    border: 1px solid var(--heading-blue);
+    border-radius: 10px;
+    min-height: 40px;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    padding: 10px 0;
 }
 /* --------------------------------------------------- */
 
