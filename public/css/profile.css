@@ -19,6 +19,10 @@
     margin-left: 20px;
 }
 
+.modal {
+    display: none;
+}
+
 .main-container{
     padding-top: 10px;
 }
