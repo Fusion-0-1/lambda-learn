@@ -32,15 +32,24 @@ class DbConnection
     }
 
     /*
-     * @param bool $getAsArray: If true, returns the result as an array.
-     *                          If false, returns the result as an object of mysqli_query.
+     * $join = [
+     *  [
+     *       'table' => 'table_name',
+     *      'on' => 'table_name.column_name = table_name.column_name'
+     *  ],
+     * ]
      */
-    public function select($table, $columns = '*', $where = null, $order = null, $limit = null)
+    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null)
     {
         if ($columns != '*') {
             $columns = implode(', ', $columns);
         }
         $sql = "SELECT $columns FROM $table";
+        if ($join != null) {
+            foreach ($join as $joinTable) {
+                $sql .= " JOIN {$joinTable['table']} ON {$joinTable['on']}";
+            }
+        }
         if ($where != null) {
             $sql .= $this->addSQLWhere($where);
         }
