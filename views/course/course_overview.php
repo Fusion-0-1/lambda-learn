@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="/css/course_overview.css">
+<link rel="stylesheet" href="/css/course/course_overview.css">
 
 <div class="border main-container v-center flex-gap responsive-container">
     <h1 class="main_heading"><b>Course Overview</b></h1>

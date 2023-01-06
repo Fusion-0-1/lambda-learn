@@ -38,8 +38,8 @@ if (!isset($_SESSION['user'])) {
 
     <!-- Fonts -->
     <!-- CSS -->
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/404.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/404.css">
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
@@ -70,7 +70,7 @@ if (!isset($_SESSION['user'])) {
     
     <div class="main-container-404 flex-wrap flex flex-row h-center border inner">
         <div class="secondary-container-img">
-            <img src="images/404.png" alt="404_error">
+            <img src="/images/404.png" alt="404_error">
         </div>
         <div class="secondary-container flex flex-column v-center h-center">
             <div class="heading-color">
