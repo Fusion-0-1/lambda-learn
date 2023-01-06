@@ -4,6 +4,7 @@ use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
 use app\controllers\ProfileController;
 use app\core\Application;
+use app\controllers\CourseController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
@@ -24,7 +25,11 @@ $app = new Application(dirname(__DIR__), $config);
 // Public routes
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
-$app->router->get('/course_overview', 'course/course_overview');
+$app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
+
+$app->router->get('/account_creation', 'account_creation');
+$app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
