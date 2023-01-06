@@ -65,6 +65,10 @@ body {
     width: 80%;
 }
 
+.padding-none{
+    padding: 2%;
+}
+
 @media (max-width: 425px) {
     .main-container{
         padding: 20px 20px !important;
@@ -191,15 +195,15 @@ h5 {
 a:link {
     color: var(--heading-blue);
 }
-
+  
 a:visited {
     color: var(--ash-green);
 }
-
+  
 a:hover {
     color: var(--blue);
 }
-
+  
 a:active {
     color: var(--blue);
 }
@@ -214,7 +218,7 @@ a:active {
 /* ----------------- Flex formatting ----------------- */
 .flex {
     display: flex;
-}
+} 
 
 .flex-wrap {
     flex-wrap: wrap;
@@ -246,6 +250,10 @@ a:active {
 
 .h-evenly{
     justify-content: space-evenly;
+}
+
+.h-end{
+    justify-content: flex-end;
 }
 
 .align-stretch{
@@ -404,14 +412,21 @@ td{
     background-color: var(--green);
 }
 
+button:disabled{
+    background-color: var(--border-white);
+}
+
 .btn-circle{
     color: var(--white);
-    border: var(--x-dark-blue) 1px solid;
+    border: none;
     background-color: var(--x-dark-blue);
     width: 30px;
     height: 30px;
     border-radius: 50%;
 }
+
+/*TODO: change the css of the checkbox*/
+
 /* --------------------------------------------------- */
 
 
@@ -441,6 +456,14 @@ td{
     color: var(--warn);
     background-color: var(--warn-bg);
     border: var(--warn) 1px solid;
+    margin: 15% auto;
+    padding: 20px;
+    width: 40%;
+    border-radius: 15px;
+}
+
+.warn-modal-content h4{
+    margin: 0;
 }
 
 .modal-content h4 {
@@ -455,6 +478,23 @@ td{
 
 .modal-content #cancel-btn {
     border: var(--warn-btn) 2px solid;
+}
+
+.warn-modal-content button{
+    height: 35px;
+    width: 80px;
+    border-radius: 10px;
+    margin-right: 1%;
+}
+
+#cancel-btn{
+    border: var(--warn-btn) !important;
+    background-color: var(--pure-white);
+}
+
+#initialize-btn{
+    border: none;
+    background-color: var(--warn-btn);
 }
 
 .modal-content .two-button-row {
