@@ -115,7 +115,6 @@
                 break;
             }
             else{
-                //DELETING EMPTY SUBTOPIC ELEMENTS
                 document.getElementById("topic-"+topic_id).innerHTML = document.getElementById("input_topic_"+topic_id).value;
             }
         }
@@ -134,7 +133,7 @@
             }
         }
 
-        // DELETING EMPTY sSUBTOPIC ELEMENTS
+        // DELETING EMPTY SUBTOPIC ELEMENTS
         if(document.getElementById("topic-"+topic_id).innerHTML === ''){
             const remove_elements = document.querySelector('#sub_topic_list_'+topic_id);
             while (remove_elements.firstChild) {
