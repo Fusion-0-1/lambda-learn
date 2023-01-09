@@ -3,7 +3,7 @@
 <div class="border main-container v-center flex-gap responsive-container">
     <h3>Dashboard</h3>
     <div class="card">
-
+        <!-- Common cards -->
         <a href="#">
             <div class="cards">
                 <div class="cards_inside">
@@ -24,35 +24,7 @@
         </a>
 
 
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/uploadAttendance.png" alt="kanban board">
-                </div>
-                <div class="card_name">Upload Attendance</div>
-            </div>
-        </a>
-
-
-        <a href="#" >
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/userAccounts.png" alt="userAccounts">
-                </div>
-                <div class="card_name">User Accounts</div>
-            </div>
-        </a>
-
-
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/storage.png" alt="storage_utilization">
-                </div>
-                <div class="card_name">Storage Utilization</div>
-            </div>
-        </a>
-
+    <?php if ($_SESSION['user-role'] != 'Admin') {?>
 
         <a href="#">
             <div class="cards">
@@ -91,5 +63,36 @@
                 <div class="card_name">Kanban Board</div>
             </div>
         </a>
+    <?php } ?>
+
+    <?php if ($_SESSION['user-role'] == 'Admin') {?>
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/uploadAttendance.png" alt="kanban board">
+                </div>
+                <div class="card_name">Upload Attendance</div>
+            </div>
+        </a>
+
+        <a href="#" >
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/userAccounts.png" alt="userAccounts">
+                </div>
+                <div class="card_name">User Accounts</div>
+            </div>
+        </a>
+
+
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/storage.png" alt="storage_utilization">
+                </div>
+                <div class="card_name">Storage Utilization</div>
+            </div>
+        </a>
+    <?php } ?>
     </div>
 </div>

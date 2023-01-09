@@ -2,11 +2,10 @@
 
 namespace app\controllers;
 
-use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
 use app\core\User;
-use app\model\Student;
+use app\model\User\Student;
 
 class AuthController extends Controller
 {
@@ -22,10 +21,17 @@ class AuthController extends Controller
                 if (User::authenticateUser($regNo, $body['password'])) {
                     if (User::getUserType($regNo) == 'Student') {
                         $user = Student::fetchStuFromDb($regNo);
+                        $_SESSION['user-role'] = 'Student';
                     } else if (User::getUserType($regNo) == 'Lecturer') {
                         $user = new Lecturer($regNo);
+                        if ($user->getDegreeProgramCode() == NULL){
+                            $_SESSION['user-role'] = 'Lecturer';
+                        } else {
+                            $_SESSION['user-role'] = 'Coordinator';
+                        }
                     } else if (User::getUserType($regNo) == 'Admin') {
                         $user = new Admin($regNo);
+                        $_SESSION['user-role'] = 'Admin';
                     }
                     $user->setLogin();
                     $_SESSION['user'] = serialize($user);

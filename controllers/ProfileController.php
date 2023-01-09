@@ -5,7 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
-use app\model\Student;
+use app\model\User\Student;
 
 class ProfileController extends Controller
 {

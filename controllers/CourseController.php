@@ -13,6 +13,6 @@ class CourseController extends Controller
         $user = unserialize($_SESSION['user']);
         $userRegNo = $user->getRegNo();
         $courses = ['courses'=>Course::getUserCourses($userRegNo)];
-        return $this->render('course_overview', $courses);
+        return $this->render('course/course_overview', $courses);
     }
 }

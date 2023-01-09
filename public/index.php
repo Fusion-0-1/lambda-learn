@@ -21,24 +21,31 @@ $config = [
 
 $app = new Application(dirname(__DIR__), $config);
 
-$app->router->get('/', 'dashboard');
 
-// $app->router->get('/course_overview', 'course_overview');
+// Public routes
+// -------------------------------------------------------------------------
+$app->router->get('/', 'dashboard');
+$app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
+
 $app->router->get('/account_creation', 'account_creation');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
-
-$app->router->get('/course_overview', [CourseController::class, 'course_overview']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
 
-$app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
-
 $app->router->get('/login', [AuthController::class, 'login']);
 $app->router->post('/login', [AuthController::class, 'login']);
 
 $app->router->get('/logout', [AuthController::class, 'logout']);
+// -------------------------------------------------------------------------
+
+// Admin routes
+// -------------------------------------------------------------------------
+$app->router->get('/account_creation', 'account_creation');
+$app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+// -------------------------------------------------------------------------
+
 
 $app->run();
