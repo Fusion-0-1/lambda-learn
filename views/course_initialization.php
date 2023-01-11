@@ -51,15 +51,28 @@
 
 
 <script>
-
+    /**
+     * getTopicNumberFromID - A function to extract the topic number from a given topic ID
+     *
+     * @param {string} topic_id - The topic ID to extract the number from
+     *
+     * @return {number} - The topic number extracted from the given topic ID
+     */
     function getTopicNumberFromID(topic_id){
         let topic_arr = topic_id.split('_');
         return parseInt(topic_arr[topic_arr.length-1]);
     }
 
+    /**
+     * addTopic - A function that adds a new topic element
+     *
+     * @param topic_element - The topic element which is currently being added/edited
+     */
     function addTopic(topic_element){
         let topic_id = getTopicNumberFromID(topic_element.id);
         let topic_elements = document.getElementById('topic').getElementsByTagName('input');
+
+        // Check if the next topic already exists
         let exists = false;
         for (let i=0; i < topic_elements.length; i++) {
             if (getTopicNumberFromID(topic_elements[i].id) === topic_id + 1) {
@@ -67,6 +80,8 @@
                 break;
             }
         }
+
+        // Create new topic element if it doesn't exist
         let new_input;
         for (let i=0; i < topic_elements.length; i++) {
             if (!exists) {
@@ -81,6 +96,7 @@
                 new_input.setAttribute("onkeyup", "addTopic(this)");
                 document.getElementById('topic').appendChild(new_input);
 
+                // Create new topic container and other related elements (subtopics, heading, buttons)
                 let topic_container = document.createElement('div');
                 topic_container.setAttribute('id', 'sub_topic_list_'+(topic_id + 1));
                 topic_container.classList.add("border", "container-course-topic", "v-center", "flex", "flex-gap", "v-center",
@@ -144,6 +160,12 @@
     }
     let subtopic_count = 1;
 
+
+    /**
+     * addSubTopic - This function is used for adding new subtopics to a parent topic.
+     *
+     *  @param {string} clicked_id - the id of the parent element, the new subtopic input field will be appended to
+     */
     function addSubTopic(clicked_id){
         subtopic_count++;
         let new_subtopic = document.createElement("INPUT");
@@ -154,6 +176,10 @@
         document.getElementById('subtopic-'+clicked_id).appendChild(new_subtopic);
     }
 
+
+    /**
+     * Create a modal to confirm the initialization
+     */
     let modal = document.getElementById("modal");
     let initialize_btn = document.getElementById("initialize");
     let cancel_btn = document.getElementById("cancel-btn");
