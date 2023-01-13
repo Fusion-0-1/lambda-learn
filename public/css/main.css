@@ -65,10 +65,6 @@ body {
     width: 80%;
 }
 
-.padding-none{
-    padding: 2%;
-}
-
 @media (max-width: 425px) {
     .main-container{
         padding: 20px 20px !important;
@@ -186,9 +182,6 @@ h5 {
     line-height: 3px;
 }
 
-.remove-space{
-    margin: 2%;
-}
 /* --------------------------------------------------- */
 
 /* ----------------- Link formatting ----------------- */
@@ -425,8 +418,6 @@ button:disabled{
     border-radius: 50%;
 }
 
-/*TODO: change the css of the checkbox*/
-
 /* --------------------------------------------------- */
 
 
@@ -476,10 +467,6 @@ button:disabled{
     font-weight: bold;
 }
 
-.modal-content #cancel-btn {
-    border: var(--warn-btn) 2px solid;
-}
-
 .warn-modal-content button{
     height: 35px;
     width: 80px;
@@ -487,19 +474,6 @@ button:disabled{
     margin-right: 1%;
 }
 
-#cancel-btn{
-    border: var(--warn-btn) !important;
-    background-color: var(--pure-white);
-}
-
-#initialize-btn{
-    border: none;
-    background-color: var(--warn-btn);
-}
-
-.modal-content .two-button-row {
-    gap: 30px;
-}
 
 @media(max-width: 425px) {
     .modal-content .two-button-row {

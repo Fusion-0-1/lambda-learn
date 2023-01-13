@@ -47,3 +47,25 @@
 .margin-top{
     margin-top: 20px;
 }
+
+#cancel-btn{
+    border: 2px solid var(--warn-btn);
+    background-color: var(--pure-white);
+}
+
+#initialize-btn{
+    background-color: var(--warn-btn);
+    border: 2px solid var(--warn-btn);
+}
+
+.modal-content .two-button-row {
+    gap: 30px;
+}
+
+.padding-none{
+    padding: 2%;
+}
+
+.remove-space{
+    margin: 2%;
+}
