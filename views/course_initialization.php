@@ -63,6 +63,8 @@
         return parseInt(topic_arr[topic_arr.length-1]);
     }
 
+
+
     /**
      * addTopic - A function that adds a new topic element
      *
@@ -159,6 +161,7 @@
     }
 
 
+
     /**
      * addSubTopic - This function is used for adding new subtopics to a parent topic.
      *
@@ -171,6 +174,7 @@
         new_subtopic.setAttribute("class", "input input-subtopic flex width-full");
         document.getElementById('subtopic-'+clicked_id).appendChild(new_subtopic);
     }
+
 
 
     /**

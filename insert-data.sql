@@ -2,7 +2,7 @@
 USE `lambda-learn`;
 
 INSERT INTO Student (reg_no, first_name, last_name, email, personal_email, contact_no, password, index_no, date_joined, degree_program_code) VALUES
-    ("2020/CS/0011", "Dilanga", "Harshani", "2020cs0011@fusion.ac.lk", "aadilanga@gmail.com", "772267962", "20000011@CS", 20000011, "2021-02-24", "CS"),
+    ("2020/CS/0011", "Dilanga", "Harshani", "2020cs0011@fusion.ac.lk", "aadilanga@gmail.com", "772267962", "$2y$10$xBdAZCP3TDyMl2etzDcTxOWHiMJSTjPnV5sdHC6iVef9YQSnr/51.", 20000011, "2021-02-24", "CS"),
     ("2020/CS/0014", "Inuri", "Lavanya", "2020cs0014@fusion.ac.lk", "inurilavanya@gmail.com", "719267365", "$2y$10$Kbc/hlAD4aAKdiJlkHNDAOpkJ5vvJ/j2hRdCkXrC1sJDeUx4yGueq", 20000014, "2021-02-24", "CS"),
     ("2020/CS/0026", "Ramindu", "Walgama", "2020cs0016@fusion.ac.lk", "rrwalgama2@gmail.com", "712028360", "20000026@CS", 20000026, "2021-02-24", "CS"),
     ("2020/CS/0044", "Anjana", "Silva", "2020cs0044@fusion.ac.lk", "anjana1.silva@gmail.com", "720261354", "$2y$10$1vlvhhsYikj7OUF01WPUd.VJSf7CTaCaisBs0KRCjZCix6zYr6rWK", 20000044, "2021-02-24", "CS"),
@@ -11,15 +11,15 @@ INSERT INTO Student (reg_no, first_name, last_name, email, personal_email, conta
     ("2020/IS/0051", "Kavindu", "Fernando", "2020is0051@fusion.ac.lk", "fernandok@gmail.com", "752678334", "21000051@CS", 21000051, "2021-02-24", "IS"),
     ("2020/IS/0075", "Malsha", "Kavindi", "2020is0075@fusion.ac.lk", "malsha.kavi@gmail.com", "782025393", "21000075@CS", 21000075, "2021-02-24", "IS");
 
-INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, password) VALUES
-    ("2014/LC/0034", "Erandi", "Gamage", "2014lc0034@fusion.ac.lk", "772469621", "20140034@LC"),
-    ("2008/LC/0002", "Naresh", "Rajan", "2008lc0002@fusion.ac.lk", "746682736", "20080002@LC"),
-    ("2006/LC/0014", "Janani", "Walpola", "2006lc0014@fusion.ac.lk", "753028364", "20060014@LC"),
-    ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "20180022@LC"),
-    ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "20030004@LC"),
-    ("1999/LC/0008", "Mohomad", "Abdullah", "1999lc0008@fusion.ac.lk", "716934345", "19990008@LC"),        
-    ("2016/LC/0015", "Kamani", "Perera", "2016lc0015@fusion.ac.lk", "752345331", "20160015@LC"),
-    ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC");
+INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, password, position) VALUES
+    ("2014/LC/0034", "Erandi", "Gamage", "2014lc0034@fusion.ac.lk", "772469621", "20140034@LC", "Senior Lecturer"),    
+    ("2008/LC/0002", "Naresh", "Rajan", "2008lc0002@fusion.ac.lk", "746682736", "20080002@LC", "Lecturer"),
+    ("2006/LC/0014", "Janani", "Walpola", "2006lc0014@fusion.ac.lk", "753028364", "20060014@LC", "Lecturer"),
+    ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "20180022@LC", "Professor"),
+    ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "20030004@LC", "Professor"),
+    ("1999/LC/0008", "Mohomad", "Abdullah", "1999lc0008@fusion.ac.lk", "716934345", "19990008@LC", "Senior Lecturer"),        
+    ("2016/LC/0015", "Kamani", "Perera", "2016lc0015@fusion.ac.lk", "752345331", "20160015@LC", "Senior Professor"),
+    ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC", "Lecturer");
 
 UPDATE AcademicStaff SET degree_program_code = "CS" WHERE reg_no = "2003/LC/0004";
 UPDATE AcademicStaff SET degree_program_code = "IS" WHERE reg_no = "1998/LC/0019";
