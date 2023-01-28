@@ -25,6 +25,8 @@ $app = new Application(dirname(__DIR__), $config);
 // Public routes
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
+$app->router->get('/calender', 'calender');
+
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 
 $app->router->get('/account_creation', 'account_creation');
