@@ -1,97 +1,62 @@
-.main_card {
-    max-width: 100%;
-    background: rgb(255, 255, 255);
-    border-radius: 15px;
-    margin: 2%;
-    border: 4px solid #DCE3EA;
-}
-
 .main_heading {
-    text-align: center;
-    padding: 15px;
-    padding-top: 25px;
-    margin: 0%;
-    font-size: 2.1rem;
+    padding: 25px 15px 15px;
+    margin: 0;
 }
-
-.card{
-    margin: 2%;
-}
-
 .cards_heading{
-    display: grid;
-    grid-template-columns: auto  auto auto auto;
-    grid-column-gap: 5%;
-    color: black;
+    grid-template-columns: auto 25% 25% 25%;
+    grid-column-gap: 3%;
+    color: var(--black);
     max-width: 80%;
     margin: auto;
     padding: 1%;
-    font-size: 1.9rem;
-    font-weight: bold;
-    text-align: center;
+    font-size: 1.5rem;
     border-radius: 15px;
 }
-
+.head{
+    font-size: 20px;
+}
 .cards_content{
-    background: #0B2273;
-    color: white;
+    background: var(--blue);
+    color: var(--white);
     font-size: 20px;
-    font-weight: normal;
 }
-
 .cards_content1 {
-    background: #E6ECF2;
+    background: var(--blue-white);
     font-size: 20px;
-    font-weight: normal;
 }
 
-@media(max-width:1080px){
-    .main_heading{
-        font-size: 1.8rem;
-    }
+@media(max-width:768px) {
     .cards_heading{
-        font-size: 1.7rem;
+        max-width: 90%;
     }
-    .cards_content {
-        font-size: 1.2rem;
+    .main_heading{
+        font-size: 28px;
     }
-    .cards_content1 {
-        font-size: 1.2rem;
+    .head{
+        font-size: 18px;
     }
-}
-
-@media(max-width:780px) {
-    .main_heading {
-        font-size: 1.8rem;
+    .cards_content{
+        font-size: 18px;
     }
-
-    .cards_heading {
-        font-size: 1.5rem;
-    }
-
-    .cards_content {
-        font-size: 1.1rem;
-    }
-
-    .cards_content1 {
-        font-size: 1.1rem;
+    .cards_content1{
+        font-size: 18px;
     }
 }
 
-@media(max-width:480px) {
+@media(max-width:425px) {
+    .cards_heading{
+        max-width: 95%;
+    }
     .main_heading {
-        font-size: 1.6rem;
+        font-size: 24px;
     }
-
-    .cards_heading {
-        font-size: 1.1rem;
+    .head{
+        font-size: 16px;
     }
-
     .cards_content {
-        font-size: 0.8rem;
+        font-size: 14px;
     }
-
     .cards_content1 {
-        font-size: 0.8rem;
+        font-size: 14px;
     }
 }
