@@ -15,12 +15,12 @@
 .head{
     font-size: 20px;
 }
-.cards_content{
+.blue_color_cards_data{
     background: var(--blue);
     color: var(--white);
     font-size: 20px;
 }
-.cards_content1 {
+.white_color_cards_data {
     background: var(--blue-white);
     font-size: 20px;
 }
@@ -35,10 +35,10 @@
     .head{
         font-size: 18px;
     }
-    .cards_content{
+    .blue_color_cards_data{
         font-size: 18px;
     }
-    .cards_content1{
+    .white_color_cards_data{
         font-size: 18px;
     }
 }
@@ -53,10 +53,10 @@
     .head{
         font-size: 16px;
     }
-    .cards_content {
+    .blue_color_cards_data {
         font-size: 14px;
     }
-    .cards_content1 {
+    .white_color_cards_data {
         font-size: 14px;
     }
 }
