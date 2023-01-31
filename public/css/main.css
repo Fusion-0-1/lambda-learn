@@ -53,6 +53,10 @@ body {
     border: 3px solid var(--border-white);
 }
 
+.border-radius {
+    border-radius: 20px;
+}
+
 .flex-gap{
     margin: 20px;
 }
@@ -101,6 +105,12 @@ h4 {
 h5 {
     font-size: 17px;
     font-weight: 500;
+    margin: 5px 0;
+}
+
+h6 {
+    font-size: 12px;
+    font-weight: 400;
     margin: 5px 0;
 }
 
@@ -228,6 +238,10 @@ a:active {
     align-items: flex-end;
 }
 
+.item-gap {
+    gap: 20px;
+}
+
 .v-center {
     align-items: center;
 }
@@ -238,6 +252,10 @@ a:active {
 
 .h-justify {
     justify-content: space-between;
+}
+
+.h-flex-end {
+    justify-content: flex-end;
 }
 
 .align-stretch{

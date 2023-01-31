@@ -1,0 +1,74 @@
+.secondary-container {
+    padding: 20px;
+}
+
+.inner-secondary-container {
+    width: 45%;
+    padding: 20px;
+}
+
+.outer-secondary-container {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.progress-bar-outer {
+    background-color: #DCE3EA;
+    height: 10px;
+    margin: 20px 0px;
+    width: 96%;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color:#8BB514 !important;
+}
+
+.student-progress {
+    width: 20%;
+}
+
+.topic-progress {
+    width: 50%;
+}
+
+.progress-value {
+    width: 4%;
+}
+
+.inner-container {
+    /* width: 100%; */
+    padding: 6px 20px;
+    background-color: #0B2273;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.hr {
+    background-color: #0B2273;
+    height: 3px;
+    margin: 10px 0px 30px;
+}
+
+.course-topic {
+    padding: 10px;
+    width: 30%;
+}
+
+.course-sub-topic {
+    padding: 5px 20px;
+    background-color: #0B2273;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+.course-sub-topic-content {
+    /* width: 45%; */
+    padding: 5px 20px 0px;
+    border: 3px solid #DCE3EA;
+    border-top: 0;
+}
+
+.icons {
+    margin-right: 10px;
+}
