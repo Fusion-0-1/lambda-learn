@@ -29,6 +29,8 @@ $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 
+$app->router->get('/submissions', 'submissions');
+
 $app->router->get('/account_creation', 'account_creation');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 

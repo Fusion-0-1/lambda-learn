@@ -1,0 +1,305 @@
+.course_name {
+    padding: 1% 0 1% 0;
+}
+.submissions_card {
+    width: 90%;
+    padding-bottom: 2%;
+    border-radius: 15px;
+    margin: auto auto 40px;
+}
+.topic_container_add{
+    display: grid;
+    grid-template-columns: 85% auto;
+    padding: 0.5% 2.5%;
+}
+.add_headline {
+    border-radius: 5px;
+    border: none;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}
+.topic_container{
+    grid-template-columns: auto auto;
+    padding: 0.5% 2.5%;
+}
+.edit_delete_timeremaining{
+    grid-template-columns: 50% 50%;
+    padding: 0.5% 1%;
+}
+.submissions_card_inside {
+    width: 95%;
+    height: 75%;
+    position: relative;
+    border-radius: 15px;
+    margin: auto;
+    background: var(--white);
+}
+.submissions_card_inside p{
+    padding: 2%;
+    overflow-wrap: break-word;
+    margin: 0;
+}
+.container_heading{
+    margin: 0;
+    background: var(--blue);
+    grid-template-columns: 30% 30% auto;
+    color: var(--white);
+    border-radius: inherit;
+    padding: 10px 20px;
+}
+.add_points_and_marks {
+    border-radius: 5px;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    font-size: 1rem;
+    width: 30%;
+}
+.view_points_and_marks{
+    font-size: 1rem;
+}
+a{
+    padding: 0;
+}
+
+a img{
+    width: 80%;
+}
+.heading_content{
+    margin: 6px;
+    overflow-wrap: break-word;
+}
+.btn {
+    width: 100px;
+}
+.add_submissions_content {
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+    font-size: 1rem;
+    overflow-wrap: break-word;
+}
+.add_submissions_content_div{
+    padding: 1% 2% 1% 2%;
+}
+.submissions{
+    padding: 0 2% 2% 2%;
+}
+.marks_btn{
+    padding: 10px;
+    margin: 5px 5px 5px 10px;
+}
+.sub_container {
+     display: flex;
+     position: relative;
+     padding-right: 35px;
+     cursor: pointer;
+     font-size: 18px;
+     -webkit-user-select: none;
+     -moz-user-select: none;
+     -ms-user-select: none;
+     user-select: none;
+ }
+.sub_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+.checkmark {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 20px;
+    width: 20px;
+    border: var(--green) 3px solid;
+    border-radius: 5px;
+}
+.sub_container input:checked ~ .checkmark {
+    background: var(--white);
+    border: var(--green) 3px solid;
+    border-radius: 5px;
+}
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+.sub_container input:checked ~ .checkmark:after {
+    display: flex;
+}
+.sub_container .checkmark:after {
+    left: 7px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid var(--green);
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+#heading_textarea{
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+#content_textarea{
+    display: block;
+    overflow: hidden;
+    resize: none;
+}
+
+@media(max-width:768px) {
+    .submissions_card{
+        width: 95%;
+    }
+    .course_name {
+        font-size: 1.6rem;
+    }
+    .add_points_and_marks{
+        width: 50%;
+        font-size: 0.85rem;
+    }
+    .view_points_and_marks{
+        font-size: 0.9rem;
+    }
+    .btn{
+        width: 80px;
+        height: 25px;
+        border-radius: 10px;
+    }
+    .add_submissions_content {
+        font-size: 0.9rem;
+    }
+    .container_heading{
+        border-radius: 10px;
+        padding: 7px 14px;
+    }
+    a img{
+        width: 33px;
+        min-width: 33px;
+    }
+    .edit_delete_timeremaining{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        justify-items: center;
+        width: 80px;
+    }
+    .edit_time {
+        grid-column: 1 / span 2;
+        grid-row: 1;
+        font-size: 14px;
+    }
+    .deletebtn{
+        grid-column: 1;
+        grid-row: 2;
+    }
+    .editbtn{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .topic_container_add{
+        grid-template-columns: 80% auto ;
+    }
+    .sub_container{
+        font-size: 0.9rem;
+        padding-right: 22px;
+    }
+    .checkmark{
+        height: 14px;
+        width: 14px;
+    }
+    .sub_container .checkmark:after{
+        left: 4px;
+        top: 1px;
+        width: 3px;
+        height: 7px;
+    }
+    .marks_btn {
+        padding: 8px;
+        margin: 2px 2px 2px 6px;
+    }
+}
+
+@media(max-width:425px) {
+    .course_name{
+        font-size: 1.3rem;
+    }
+    .add_headline {
+        font-size: 0.75rem;
+    }
+    .btn {
+        width: 55px;
+        height: 20px;
+        border-radius: 7px;
+        font-size: 0.7rem;
+    }
+    .add_points_and_marks {
+        width: 90%;
+        font-size: 0.75rem;
+    }
+    .submissions_card{
+        width: 92%;
+        margin-bottom: 20px;
+    }
+    .edit_delete_timeremaining{
+        display: grid;
+        grid-template-columns: 50% 50%;
+    }
+    .edit_time {
+        grid-column: 1 / span 2;
+        grid-row: 1;
+        padding: 5px;
+    }
+    .edit_time span{
+        font-size: 0.75rem;
+    }
+    .container_heading{
+        border-radius: 8px;
+        padding: 6px 8px;
+    }
+    .view_points_and_marks{
+        font-size: 0.75rem;
+    }
+    .submissions_card_inside p{
+        padding: 5%;
+    }
+    .add_submissions_content{
+        font-size: 0.75rem;
+    }
+    .submissions{
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .marks_btn{
+        font-size: 0.75rem;
+        padding: 5px;
+    }
+    .sub_container{
+        font-size: 0.75rem;
+        padding-right: 22px;
+        margin: 10px;
+    }
+    .checkmark{
+        height: 12px;
+        width: 12px;
+    }
+    .sub_container .checkmark:after{
+        left: 4px;
+        top: 0;
+        width: 2px;
+        height: 6px;
+    }
+}
+
+@media(max-width:320px){
+    .main-container{
+        padding: 5px !important;
+        margin: 5px;
+    }
+    .course_name{
+        font-size: 1.1rem;
+    }
+}
