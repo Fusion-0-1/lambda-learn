@@ -6,13 +6,16 @@ use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
 use app\model\User\Student;
+use app\model\Course;
 
 class ProfileController extends Controller
 {
     public function displayProfile()
     {
         $profile = unserialize($_SESSION['user']);
-        return $this->render('profile', ['user'=>$profile]);
+        $courses = Course::getUserCourses($profile->getRegNo());
+        return $this->render('profile', ['user'=>$profile, 'courses'=>$courses]);
+
     }
 
     public function editProfile(Request $request)
@@ -22,7 +25,8 @@ class ProfileController extends Controller
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
         $user->editProfile();
-        return $this->render('profile', ['user'=>$user]);
+        $courses = Course::getUserCourses($user->getRegNo());
+        return $this->render('profile', ['user'=>$user, 'courses'=>$courses]);
     }
 
     // POST request

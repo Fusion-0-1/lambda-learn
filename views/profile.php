@@ -83,42 +83,21 @@
         <div class="flex-wrap">
             <div class="border main-container flex-gap">
                 <!--Login Activity-->
-                <h3>Login Activity</h3>
-                <h4 class="text-normal text-center"><?php echo $user->getLastLogin()?></h4>
-                <h4 class="text-normal text-center"><?php echo $user->getLastLogout()?></h4>
+                <h5>Login Activity</h5><br>
+                <label class="text-normal text-center"><?php echo $user->getLastLogin()?></label><br>
+                <label class="text-normal text-center"><?php echo $user->getLastLogout()?></label>
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
                 <h5>Registered Courses</h5>
                 <table>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Data Structures and Algorithms III</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Rapid Application Development</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Mathematical Methods</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Software Engineering III</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Computer Networks</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Functional Programming</td>
-                    </tr>
-                    <tr>
-                        <td>SCS2201</td>
-                        <td>Programming Language Concepts</td>
-                    </tr>
+                    <?php foreach ($courses as $course) { ?>
+                        <tr>
+                            <td><?php echo $course->getCourseCode()?></td>
+                            <td><?php echo $course->getCourseName()?></td>
+                        </tr>
+                    <?php } ?>
+
                 </table>
 
             </div>
