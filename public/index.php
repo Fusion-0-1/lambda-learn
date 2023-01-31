@@ -30,6 +30,7 @@ $app->router->get('/course_overview', [CourseController::class, 'displayCourses'
 $app->router->get('/submissions', 'submissions');
 
 $app->router->get('/account_creation', 'account_creation');
+$app->router->get('/leaderboard', 'leaderboard');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 
 $app->router->get('/course_initialization', 'course_initialization');
