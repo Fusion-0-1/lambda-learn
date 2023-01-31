@@ -84,8 +84,33 @@
             <div class="border main-container flex-gap">
                 <!--Login Activity-->
                 <h5>Login Activity</h5><br>
-                <label class="text-normal text-center"><?php echo $user->getLastLogin()?></label><br>
-                <label class="text-normal text-center"><?php echo $user->getLastLogout()?></label>
+                <label class="text-normal text-center">
+                    <?php
+                    $utcTime = $user->getLastLogin();
+                    $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
+
+                    $date = new DateTime($utcTime, new DateTimeZone('UTC'));
+                    $date->setTimezone($sriLankanTimezone);
+
+                    $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
+
+                    echo 'Last Login Date : ' . $sriLankanDateAndTime;
+                    ?>
+                </label><br><br>
+
+                <label class="text-normal text-center">
+                    <?php
+                    $utcTime = $user->getLastLogout();
+                    $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
+
+                    $date = new DateTime($utcTime, new DateTimeZone('UTC'));
+                    $date->setTimezone($sriLankanTimezone);
+
+                    $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
+
+                    echo 'Last Logout Date : ' .$sriLankanDateAndTime;
+                    ?>
+                </label>
             </div>
             <div class="border main-container flex-gap">
                 <!--Registered Courses-->
