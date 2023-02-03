@@ -11,7 +11,7 @@
             <div class="progress-bar-outer border-radius">
                 <div class="progress-bar student-progress border-radius"></div>
             </div>
-            <div class="progress-value flex h-flex-end v-center"><h5> 20% </h5></div>
+            <div class="progress-value flex h-flex-end v-center"> 20% </div>
         </div>
         
         <h5> Topic Progress </h5>
@@ -74,7 +74,7 @@
         <div class="secondary-container border border-radius flex flex-column">
             <h5> Course Topics </h5>
             <hr class="hr">
-            <div class="flex flex-row item-gap">
+            <div class="topic-container flex flex-row item-gap">
                 <div class="course-topic border border-radius flex flex-column ">
                     <h5> String Matching Algorithms</h5>
                     <div>

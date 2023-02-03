@@ -69,6 +69,7 @@
 
 .progress-value {
     width: 4%;
+    font-size: 13px;
 }
 
 .topic-progress-label {
@@ -116,4 +117,43 @@
 
 .topic-check {
     accent-color: #8BB514;
+}
+
+@media (max-width: 425px) {
+    .progress-bar-outer {
+        margin: 10px 0px 20px 0px;
+    }
+
+    .progress-value {
+        display: none;
+    }
+
+    .progress-bar-inner {
+        margin: 10px 0px 20px 0px;
+    }
+
+    .topic-progress-label {
+        display: none;
+    }
+
+    .outer-secondary-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .inner-secondary-container {
+        width: 85%;
+    }
+
+    .inner-container {
+        font-size: 12px;
+    }
+    .topic-container {
+        flex-direction: column;
+    }
+
+    .course-topic {
+        width: 90%;
+        height: auto;
+    }
 }
