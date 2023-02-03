@@ -19,6 +19,25 @@
     width: 96%;
 }
 
+.progress-bar-inner {
+    background-color: #DCE3EA;
+    height: 10px;
+    margin: 20px 0px;
+    /* width: 16%; */
+}
+
+#topic1, #topic3, #topic4, #topic5 {
+    width: 16%;
+}
+
+#topic2 {
+    width: 12%;
+}
+
+#topic6 {
+    width: 20%;
+}
+
 .progress-bar {
     height: 10px;
     background-color:#8BB514 !important;
@@ -28,12 +47,32 @@
     width: 20%;
 }
 
-.topic-progress {
+/* .topic-progress {
     width: 50%;
+} */
+
+#topic1-value {
+    width: 80%;
+}
+
+#topic2-value {
+    width: 100%;
+}
+
+#topic3-value {
+    width: 50%;
+}
+
+#topic4-value, #topic5-value, #topic6-value {
+    width: 0%;
 }
 
 .progress-value {
     width: 4%;
+}
+
+.topic-progress-label {
+    font-size: 12px;
 }
 
 .inner-container {
@@ -53,6 +92,8 @@
 .course-topic {
     padding: 10px;
     width: 30%;
+    overflow: auto;
+    height: 300px;
 }
 
 .course-sub-topic {
@@ -71,4 +112,8 @@
 
 .icons {
     margin-right: 10px;
+}
+
+.topic-check {
+    accent-color: #8BB514;
 }
