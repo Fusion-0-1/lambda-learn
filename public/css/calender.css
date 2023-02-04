@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 .main{
     border-radius: inherit;
-    margin: 0 20px;
+    margin: 0 20px 30px 20px;
 }
 .wrapper{
     margin: 0 20px 20px 20px;
@@ -104,3 +104,50 @@ header .icons span:last-child{
     font-size: 20px;
     font-weight: normal;
 }
+
+/*-----------------------time table------------------*/
+
+
+.table_main{
+    min-height: 100vh;
+    grid-template-columns: 16% 16% 16% 16% 16% 16%;
+    grid-template-rows: repeat(10, 1fr);
+    column-gap: 0.8%;
+    padding: 10px;
+}
+
+/*------------------top stage container---------------------*/
+
+.stages-container-row {
+    grid-column: 2 / -1;
+    grid-row: 1 / 2;
+}
+
+.stages {
+    column-gap: 12%;
+    padding: 10px 0;
+}
+
+.stage {
+    color: var(--blue);
+    font-size: 1.25rem;
+}
+
+/*------------------ left timing container -----------------*/
+
+.timing-container-column {
+    grid-column: 1 / 2;
+    grid-row: 2 / -1;
+    padding: 10px 0;
+}
+
+.timings {
+    height: 100%;
+    padding: 0 10px;
+    text-align: center;
+}
+
+.time {
+    color: var(--blue);
+}
+
