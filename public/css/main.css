@@ -238,10 +238,6 @@ a:active {
     align-items: flex-end;
 }
 
-.item-gap {
-    gap: 20px;
-}
-
 .v-center {
     align-items: center;
 }

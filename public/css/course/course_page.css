@@ -23,7 +23,6 @@
     background-color: #DCE3EA;
     height: 10px;
     margin: 20px 0px;
-    /* width: 16%; */
 }
 
 #topic1, #topic3, #topic4, #topic5 {
@@ -117,6 +116,16 @@
 
 .topic-check {
     accent-color: #8BB514;
+}
+
+.hyperlink {
+    font-size: 12px;
+    font-weight: 400;
+    margin: 5px 0;
+}
+
+.item-gap {
+    gap: 20px;
 }
 
 @media (max-width: 425px) {
