@@ -96,7 +96,8 @@ abstract class User
     {
         $userData = [
             'personal_email'=>$this->personalEmail,
-            'contact_no'=>$this->contactNo
+            'contact_no'=>$this->contactNo,
+            'profile_picture'=>$this->profilePicture
         ];
 
         Application::$db->update(

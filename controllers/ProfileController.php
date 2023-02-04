@@ -22,11 +22,34 @@ class ProfileController extends Controller
     {
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
+
+        $userRegNo = str_replace('/', '', $user->getRegNo());
+        $fileName = $_FILES['profile_picture']['name'];
+        $fileTmpName = $_FILES['profile_picture']['tmp_name'];
+
+        $fileExtension = explode('.', $fileName);
+        $fileActualExtension = strtolower(end($fileExtension));
+        $fileNameNew = $userRegNo . "." . $fileActualExtension;
+
+        $filePath = 'images/profile/'.$fileNameNew;
+
+        //Remove previous profile images if exists
+        $wildcardPath = 'images/profile/'.$userRegNo.'.*';
+        array_map('unlink', glob($wildcardPath));
+
+        move_uploaded_file($fileTmpName, $filePath);
+
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
+        $user->setProfilePicture($filePath);
         $user->editProfile();
-        $courses = Course::getUserCourses($user->getRegNo());
-        return $this->render('profile', ['user'=>$user, 'courses'=>$courses]);
+        return $this->render(
+            'profile',
+            [
+                'user'=>$user,
+                'courses'=>Course::getUserCourses($user->getRegNo())
+            ]
+        );
     }
 
     // POST request
