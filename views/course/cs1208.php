@@ -6,17 +6,16 @@
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
-        <h5> Student Progress </h5>
-        <div class="flex flex-row">
-            <div class="progress-bar-outer border-radius">
-                <div class="progress-bar student-progress border-radius"></div>
+            <h5> Student Progress </h5>
+            <div class="flex flex-row">
+                <div class="progress-bar-outer border-radius">
+                    <div class="progress-bar student-progress border-radius"></div>
+                </div>
+                <div class="progress-value flex h-flex-end v-center"><h5> 20% </h5></div>
             </div>
-            <div class="progress-value flex h-flex-end v-center"> 20% </div>
-        </div>
         
-        <h5> Topic Progress </h5>
-        <div class="flex flex-row">
-            <!-- <div class="progress-bar-outer border-radius flex flex-row"> -->
+            <h5> Topic Progress </h5>
+            <div class="flex flex-row">
                 <div class="progress-bar-inner border-radius" id="topic1">
                     <div class="progress-bar border-radius" id="topic1-value"></div>
                     <div class="topic-progress-label"> Topic 1 </div>
@@ -41,9 +40,8 @@
                     <div class="progress-bar border-radius" id="topic6-value"></div>
                     <div class="topic-progress-label"> Topic 6 </div>
                 </div>
-            <!-- </div> -->
-            <div class="progress-value flex h-flex-end v-center"><h5> 35% </h5></div>
-        </div>
+                <div class="progress-value flex h-flex-end v-center"><h5> 35% </h5></div>
+            </div>
         </div>
     </div>
 
@@ -51,7 +49,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
-                <h6> View all</h6>
+                <div class="hyperlink"> View all </div>
             </div>
             <div class="inner-container border-radius"> DSA - Tutorial Session </div>
             <div class="inner-container border-radius"> SCS2201_Rescheduling the lecture on 15/09/2022 </div>
@@ -61,7 +59,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <h6> View all</h6>
+                <div class="hyperlink"> View all </div>
             </div>
             <div class="inner-container border-radius"> Submission 3 - Greedy Alogrothms (Group Projects) </div>
             <div class="inner-container border-radius"> Submission 2 - Greedy Alogorithms </div>
