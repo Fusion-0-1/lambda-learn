@@ -140,13 +140,23 @@
                 <!--Registered Courses-->
                 <h5>Registered Courses</h5>
                 <table>
-                    <?php foreach ($courses as $course) { ?>
+                    <?php
+                    $unique_courses = array();
+                    foreach ($courses as $course) {
+                        $course_code = $course->getCourseCode();
+                        if (!array_key_exists($course_code, $unique_courses)) {
+                            $unique_courses[$course_code] = $course;
+                        }
+                    }
+                    foreach ($unique_courses as $course) {
+                        ?>
                         <tr>
                             <td><?php echo $course->getCourseCode()?></td>
                             <td><?php echo $course->getCourseName()?></td>
                         </tr>
-                    <?php } ?>
-
+                        <?php
+                    }
+                    ?>
                 </table>
 
             </div>
