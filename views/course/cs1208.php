@@ -11,7 +11,7 @@
                 <div class="progress-bar-outer border-radius">
                     <div class="progress-bar student-progress border-radius"></div>
                 </div>
-                <div class="progress-value flex h-flex-end v-center"><h5> 20% </h5></div>
+                <div class="progress-value flex h-end v-center"><h5> 20% </h5></div>
             </div>
         
             <h5> Topic Progress </h5>
@@ -40,7 +40,7 @@
                     <div class="progress-bar border-radius" id="topic6-value"></div>
                     <div class="topic-progress-label"> Topic 6 </div>
                 </div>
-                <div class="progress-value flex h-flex-end v-center"><h5> 35% </h5></div>
+                <div class="progress-value flex h-end v-center"><h5> 35% </h5></div>
             </div>
         </div>
     </div>
