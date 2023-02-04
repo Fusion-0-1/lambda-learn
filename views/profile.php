@@ -9,13 +9,25 @@
 
     </div>
     <div class="flex h-center flex-gap flex-responsive">
-        <form id="profile" action="/profile" method="post" class="border main-container flex-gap">
+        <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="border main-container flex-gap">
             <!-- User details -->
 
             <h5 class="text-center">User Details</h5>
 
-            <img src="images/profile.png" alt="profile" class="profile_img profile_img_center"><br>
+            <div class="flex">
+                <img id="preview" src="<?php
+                $userRegNo = str_replace('/', '', $user->getRegNo());
+                $result = glob("./images/profile/{$userRegNo}.*");
+                    if(sizeof($result) > 0)
+                        $profilePicture = $result[0];
+                    else
+                        $profilePicture = "images/profile.png";
+                    echo $profilePicture;
+                ?>" alt="profile" class="profile_img profile_img_center"><br>
 
+                <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png" onchange="previewImage(this)">
+                <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide"><i class="fa-solid fa-camera"></i></button><br>
+            </div>
 
             <div class="margin-top">
                 <label class="margin-top">Registration Number</label><br>
@@ -52,6 +64,7 @@
                     <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
                 </div>
             </div>
+
             <div class="flex margin-top h-center">
                 <button id="password" type="button" class="edit-btn edit-btn-text width-full">Change Password</button>
                 <button id="edit" type="button" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
@@ -138,6 +151,7 @@
     var span = document.getElementsByClassName("close")[0];
     var btn_edit = document.getElementById("edit");
     var btn_confirm = document.getElementById("btn_confirm");
+    var change_profile_btn = document.getElementById('profile-btn');
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -154,6 +168,7 @@
     btn_edit.onclick = function(){
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
+        change_profile_btn.classList.remove('hide');
         btn_edit.classList.add('hide');
         btn.classList.add('hide');
         btn_confirm.classList.remove('hide');
@@ -165,6 +180,23 @@
         btn_edit.classList.remove('hide');
         document.getElementById('contact').setAttribute('readonly', true);
         document.getElementById('personal_email').setAttribute('readonly', true);
+    }
+
+    change_profile_btn.onclick = function(){
+        document.getElementById("image_upload").click();
+    }
+
+    function previewImage(input) {
+        var preview = document.getElementById("preview");
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (event) {
+                preview.src = event.target.result;
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 
