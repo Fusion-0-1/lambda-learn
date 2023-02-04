@@ -191,6 +191,7 @@ h6 {
 .line-height{
     line-height: 3px;
 }
+
 /* --------------------------------------------------- */
 
 /* ----------------- Link formatting ----------------- */
@@ -250,7 +251,11 @@ a:active {
     justify-content: space-between;
 }
 
-.h-flex-end {
+.h-evenly{
+    justify-content: space-evenly;
+}
+
+.h-end{
     justify-content: flex-end;
 }
 
@@ -409,6 +414,20 @@ td{
     border-radius: 10px;
     background-color: var(--green);
 }
+
+button:disabled{
+    background-color: var(--border-white);
+}
+
+.btn-circle{
+    color: var(--white);
+    border: none;
+    background-color: var(--x-dark-blue);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
 /* --------------------------------------------------- */
 
 
@@ -438,6 +457,14 @@ td{
     color: var(--warn);
     background-color: var(--warn-bg);
     border: var(--warn) 1px solid;
+    margin: 15% auto;
+    padding: 20px;
+    width: 40%;
+    border-radius: 15px;
+}
+
+.warn-modal-content h4{
+    margin: 0;
 }
 
 .modal-content h4 {
@@ -450,13 +477,13 @@ td{
     font-weight: bold;
 }
 
-.modal-content #cancel-btn {
-    border: var(--warn-btn) 2px solid;
+.warn-modal-content button{
+    height: 35px;
+    width: 80px;
+    border-radius: 10px;
+    margin-right: 1%;
 }
 
-.modal-content .two-button-row {
-    gap: 30px;
-}
 
 @media(max-width: 425px) {
     .modal-content .two-button-row {
@@ -490,6 +517,13 @@ td{
 
 .absolute-position{
     position: absolute;
+}
+
+hr{
+    border: 1px solid var(--heading-blue);
+    border-radius: 6px;
+    background: var(--heading-blue);
+    height: 2px;
 }
 /* --------------------------------------------------- */
 .csv-header-format {
