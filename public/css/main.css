@@ -474,7 +474,6 @@ button:disabled{
     margin-right: 1%;
 }
 
-
 @media(max-width: 425px) {
     .modal-content .two-button-row {
         flex-direction: column;
@@ -544,4 +543,42 @@ hr{
 
 
 
+/* -------------- Graphs ------------- */
+.chart > canvas {
+    max-width: 60%;
+    height: auto !important;
+    margin: 60px 0;
+}
+/* --------------------------------------------------- */
+
+
+
+/* -------------- File Upload Container ------------- */
+#file-upload-container {
+    padding: 40px 25px;
+}
+
+#file-upload-container .upload-icon{
+    max-height: 30px;
+    max-width: 30px;
+    height: 10%;
+    width: 10%;
+}
+
+#file-upload-container h4 {
+    margin-top: 25px;
+}
+
+#file-upload-container > p {
+    margin-top: 25px;
+}
+
+#file-upload-container button div {
+    width: 100%;
+}
+
+#file-upload-container button div p {
+    width: 92%;
+}
+/* --------------------------------------------------- */
 
