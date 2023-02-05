@@ -72,27 +72,6 @@
     </div>
 </div>
 <!--  Modals-->
-<?php
-$content =
-'<div class="course_create_form flex flex-row">
-    <label class="flex flex-column">
-        <p>Course Code</p>
-        <input id="input-edit-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
-    </label>
-    <label class="flex flex-column">
-        <p>Course Name</p>
-        <input id="input-edit-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
-    </label>
-</div>';
-$modal_id = "edit-modal";
-$heading = "Course Create";
-$action = "";
-$submit_btn = [
-    'onclick' => "return course_validate(document.getElementById('input-edit-course-code').value)"
-];
-?>
-{{modal%%}}
-
 <div id="edit-modal" class="modal" hidden>
     <div class="modal-content flex flex-column h-center">
             <div class="heading">
@@ -137,13 +116,37 @@ $submit_btn = [
     </div>
 </div>
 
+<div id="warn-modal" class="modal" hidden>
+    <div class="modal-content warn-modal-content">
+        <div class="flex flex-column v-center h-center">
+            <img src="./images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Invalid Course Code</h4>
+            <div>
+                <p>Course code should follow below format,</p>
+                <ul>
+                    <li>Should contain 7 characters.</li>
+                    <li>Should starts with 3 letters (Non-symbolic).</li>
+                    <li>Should ends with 4 digits.</li>
+                </ul>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!--  Scripts  -->
+<script type="text/javascript" src="./js/validation.js"></script>
 <script>
     modal_cancel("edit-modal");
     modal_cancel("delete-modal");
+    modal_cancel("warn-modal");
 
     function course_validate(course_code) {
-        if (course_code.length !== 7) {
-            alert("Course code must be 7 characters long");
+        if (!validate_course_code(course_code)) {
+            const modal = document.getElementById("warn-modal");
+            modal.hidden = false;
             return false;
         }
         return true;

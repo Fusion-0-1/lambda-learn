@@ -18,6 +18,6 @@ class CourseController extends Controller
 
     public function courseCreation()
     {
-        return $this->render('course/course_creation', component: 'modal');
+        return $this->render('course/course_creation');
     }
 }
