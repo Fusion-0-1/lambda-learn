@@ -28,6 +28,7 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 
 $app->router->get('/submissions', 'submissions');
+$app->router->get('/marks_upload', 'marks_upload');
 
 $app->router->get('/account_creation', 'account_creation');
 $app->router->get('/leaderboard', 'leaderboard');
