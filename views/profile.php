@@ -21,11 +21,10 @@
 
     <div class="flex h-justify">
         <div class="border main-container v-center flex-gap flex-responsive responsive-container flex user-details h-center">
+
+            <!-- User details -->
             <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">
-                <!-- User details -->
-
                 <h5 class="text-center">User Details</h5><br>
-
                 <div class="flex flex-wrap v-center h-center">
                     <img id="preview" src="<?php
                     $userRegNo = str_replace('/', '', $user->getRegNo());
@@ -37,32 +36,33 @@
                     echo $profilePicture;
                     ?>" alt="profile" class="profile_img profile_img_center"><br>
 
-                    <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png" onchange="previewImage(this)">
-                    <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide"><i class="fa-solid fa-camera"></i></button><br>
+                    <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png"
+                           onchange="previewImage(this)">
+                    <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide">
+                        <i class="fa-solid fa-camera"></i></button><br>
                 </div>
-
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Registration Number</label>
                     <div class="flex flex-responsive">
-                        <input type="text" value="<?php echo $user->getRegNo()?>" class="input text-right width-full" readonly><br>
+                        <input type="text" value="<?php echo $user->getRegNo()?>" class="input text-right width-full"
+                               readonly><br>
                     </div>
                 </div>
-
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Index Number</label>
                     <div class="flex flex-responsive">
                         <!--                    TODO: Hide index number field for other users-->
-                        <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full" readonly><br>
+                        <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full"
+                               readonly><br>
                     </div>
                 </div>
-
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Email</label>
                     <div class="flex flex-responsive">
-                        <input type="text" id="email" value="<?php echo $user->getEmail()?>" class="input text-right width-full" readonly>
+                        <input type="text" id="email" value="<?php echo $user->getEmail()?>"
+                               class="input text-right width-full" readonly>
                     </div>
                 </div>
-
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Contact Number</label>
@@ -74,21 +74,28 @@
                                class="input text-right width-full" readonly>
                     </div>
                 </div>
-
                 <div class="margin-top">
-                    <div class="flex flex-row h-justify flex-end"><label class="margin-top">Personal Email</label><div class="hide inline" id="edit-icon_2"><i class="fa-solid fa-pen edit-icon"></i></div></div>
+                    <div class="flex flex-row h-justify flex-end">
+                        <label class="margin-top">Personal Email</label>
+                        <div class="hide inline" id="edit-icon_2">
+                            <i class="fa-solid fa-pen edit-icon"></i>
+                        </div>
+                    </div>
                     <div class="flex flex-responsive">
-                        <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
+                        <input type="text" name="personal_email" id="personal_email"
+                               value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
                     </div>
                 </div>
-
                 <div class="flex margin-top-btn h-center">
                     <button id="password" type="button" class="edit-btn edit-btn-text">Change Password</button>
-                    <button id="edit" type="button" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                    <button id="edit" type="button" class="edit-btn edit-btn-icon">
+                        <i class="fa-solid fa-pen"></i>
+                    </button><br>
                     <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
                 </div>
             </form>
 
+            <!--Change password - Modal-->
             <div id="modal" class="modal" >
                 <div class="modal-content">
                     <span class="close">&times;</span>
@@ -111,7 +118,7 @@
             </div>
         </div>
 
-
+        <!--Login Activity-->
         <div class="flex flex-column width-full">
             <div class="border main-container v-center flex-gap responsive-container text-center">
                 <h5 class="text-left">Login Activity</h5><br>
@@ -119,34 +126,26 @@
                     <?php
                     $utcTime = $user->getLastLogin();
                     $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
-
                     $date = new DateTime($utcTime, new DateTimeZone('UTC'));
                     $date->setTimezone($sriLankanTimezone);
-
                     $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
-
                     echo 'Last Login Date : ' . $sriLankanDateAndTime;
                     ?>
                 </label><br><br>
-
                 <label class="text-normal">
                     <?php
                     $utcTime = $user->getLastLogout();
                     $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
-
                     $date = new DateTime($utcTime, new DateTimeZone('UTC'));
                     $date->setTimezone($sriLankanTimezone);
-
                     $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
-
                     echo 'Last Logout Date : ' .$sriLankanDateAndTime;
                     ?>
                 </label><br>
             </div>
 
-
+            <!--Registered Courses-->
             <div class="border main-container v-center flex-gap responsive-container full-height">
-                <!--Registered Courses-->
                 <h5>Registered Courses</h5><br>
                 <table>
                     <?php
@@ -167,12 +166,12 @@
                     }
                     ?>
                 </table>
-
             </div>
         </div>
     </div>
 </div>
 
+<!--Scripts-->
 <script>
     var modal = document.getElementById("modal");
     var btn = document.getElementById("password");
@@ -180,6 +179,7 @@
     var btn_edit = document.getElementById("edit");
     var btn_confirm = document.getElementById("btn_confirm");
     var change_profile_btn = document.getElementById('profile-btn');
+    var preview = document.getElementById("preview");
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -193,6 +193,7 @@
         }
     }
 
+    // Function to enable editing of contact and personal email fields
     btn_edit.onclick = function(){
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
@@ -204,6 +205,7 @@
         btn_confirm.classList.remove('hide');
     }
 
+    // Function to confirm changes to contact and personal email fields
     btn_confirm.onclick = function (){
         btn_confirm.classList.add('hide');
         btn.classList.remove('hide');
@@ -212,19 +214,18 @@
         document.getElementById('personal_email').setAttribute('readonly', true);
     }
 
+    // Function to trigger the image upload input field when the change profile button is clicked
     change_profile_btn.onclick = function(){
         document.getElementById("image_upload").click();
     }
 
+    // Function to preview the selected image before uploading
     function previewImage(input) {
-        var preview = document.getElementById("preview");
         if (input.files && input.files[0]) {
             var reader = new FileReader();
-
             reader.onload = function (event) {
                 preview.src = event.target.result;
             }
-
             reader.readAsDataURL(input.files[0]);
         }
     }
