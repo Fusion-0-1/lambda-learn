@@ -124,7 +124,7 @@
             <div>
                 <p>Course code should follow below format,</p>
                 <ul>
-                    <li>Should contain 7 characters.</li>
+                    <li>Must contain 7 characters.</li>
                     <li>Should starts with 3 letters (Non-symbolic).</li>
                     <li>Should ends with 4 digits.</li>
                 </ul>
