@@ -17,98 +17,105 @@
                 ?>
             </h3>
         </div>
-
     </div>
-    <div class="flex h-center flex-gap flex-responsive">
-        <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="border main-container flex-gap">
-            <!-- User details -->
 
-            <h5 class="text-center">User Details</h5>
+    <div class="flex h-justify">
+        <div class="border main-container v-center flex-gap flex-responsive responsive-container flex user-details h-center">
+            <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">
+                <!-- User details -->
 
-            <div class="flex">
-                <img id="preview" src="<?php
-                $userRegNo = str_replace('/', '', $user->getRegNo());
-                $result = glob("./images/profile/{$userRegNo}.*");
+                <h5 class="text-center">User Details</h5><br>
+
+                <div class="flex flex-wrap v-center h-center">
+                    <img id="preview" src="<?php
+                    $userRegNo = str_replace('/', '', $user->getRegNo());
+                    $result = glob("./images/profile/{$userRegNo}.*");
                     if(sizeof($result) > 0)
                         $profilePicture = $result[0];
                     else
                         $profilePicture = "images/profile.png";
                     echo $profilePicture;
-                ?>" alt="profile" class="profile_img profile_img_center"><br>
+                    ?>" alt="profile" class="profile_img profile_img_center"><br>
 
-                <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png" onchange="previewImage(this)">
-                <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide"><i class="fa-solid fa-camera"></i></button><br>
-            </div>
-
-            <div class="margin-top">
-                <label class="margin-top">Registration Number</label><br>
-                <div class="flex flex-responsive">
-                    <input type="text" value="<?php echo $user->getRegNo()?>" class="input text-right width-full" readonly><br>
+                    <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png" onchange="previewImage(this)">
+                    <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide"><i class="fa-solid fa-camera"></i></button><br>
                 </div>
-            </div>
 
-            <div class="margin-top">
-                <label class="margin-top">Index Number</label> <br>
-                <div class="flex flex-responsive">
-<!--                    TODO: Hide index number field for other users-->
-                    <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full" readonly><br>
-                </div>
-            </div>
-
-            <div class="margin-top">
-                <label class="margin-top">Email</label><br>
-                <div class="flex flex-responsive">
-                    <input type="text" id="email" value="<?php echo $user->getEmail()?>" class="input text-right width-full" readonly>
-                </div>
-            </div>
-
-            <div class="margin-top">
-                <label class="margin-top">Contact Number</label><br>
-                <div class="flex flex-responsive">
-                    <input type="text" name="contact" id="contact" value="<?php echo $user->getContactNo()?>" class="input text-right width-full" readonly>
-                </div>
-            </div>
-
-            <div class="margin-top">
-                <label class="margin-top">Personal Email</label><br>
-                <div class="flex flex-responsive">
-                    <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
-                </div>
-            </div>
-
-            <div class="flex margin-top h-center">
-                <button id="password" type="button" class="edit-btn edit-btn-text width-full">Change Password</button>
-                <button id="edit" type="button" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
-                <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text width-full hide">Confirm</button>
-            </div>
-        </form>
-
-        <div id="modal" class="modal" >
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <form>
-                    <div class="margin-top">
-                        <label>Existing Password</label><br>
-                        <input type="password" name="password" class="input text-right width-full">
+                <div class="margin-top flex flex-column">
+                    <label class="margin-top">Registration Number</label>
+                    <div class="flex flex-responsive">
+                        <input type="text" value="<?php echo $user->getRegNo()?>" class="input text-right width-full" readonly><br>
                     </div>
-                    <div class="margin-top">
-                        <label>New Password</label><br>
-                        <input type="password" name="password" class="input text-right width-full">
+                </div>
+
+                <div class="margin-top flex flex-column">
+                    <label class="margin-top">Index Number</label>
+                    <div class="flex flex-responsive">
+                        <!--                    TODO: Hide index number field for other users-->
+                        <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full" readonly><br>
                     </div>
-                    <div class="margin-top">
-                        <label>Confirm Password</label><br>
-                        <input type="password" name="password" class="input text-right width-full">
+                </div>
+
+                <div class="margin-top flex flex-column">
+                    <label class="margin-top">Email</label>
+                    <div class="flex flex-responsive">
+                        <input type="text" id="email" value="<?php echo $user->getEmail()?>" class="input text-right width-full" readonly>
                     </div>
-                    <button class="flex confirm-btn half-width margin-top h-center v-center flex-responsive">Confirm</button>
-                </form>
+                </div>
+
+                <div class="margin-top">
+                    <div class="flex flex-row h-justify flex-end">
+                        <label class="margin-top">Contact Number</label>
+                        <div class="hide inline" id="edit-icon_1">
+                            <i class="fa-solid fa-pen edit-icon"></i>
+                        </div></div>
+                    <div class="flex flex-responsive">
+                        <input type="text" name="contact" id="contact" value="<?php echo $user->getContactNo()?>"
+                               class="input text-right width-full" readonly>
+                    </div>
+                </div>
+
+                <div class="margin-top">
+                    <div class="flex flex-row h-justify flex-end"><label class="margin-top">Personal Email</label><div class="hide inline" id="edit-icon_2"><i class="fa-solid fa-pen edit-icon"></i></div></div>
+                    <div class="flex flex-responsive">
+                        <input type="text" name="personal_email" id="personal_email" value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
+                    </div>
+                </div>
+
+                <div class="flex margin-top-btn h-center">
+                    <button id="password" type="button" class="edit-btn edit-btn-text">Change Password</button>
+                    <button id="edit" type="button" class="edit-btn edit-btn-icon"><i class="fa-solid fa-pen"></i></button><br>
+                    <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
+                </div>
+            </form>
+
+            <div id="modal" class="modal" >
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <form>
+                        <div class="margin-top">
+                            <label>Existing Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <div class="margin-top">
+                            <label>New Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <div class="margin-top">
+                            <label>Confirm Password</label><br>
+                            <input type="password" name="password" class="input text-right width-full">
+                        </div>
+                        <button class="flex confirm-btn half-width margin-top h-center v-center flex-responsive">Confirm</button>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <div class="flex-wrap">
-            <div class="border main-container flex-gap">
-                <!--Login Activity-->
-                <h5>Login Activity</h5><br>
-                <label class="text-normal text-center">
+
+        <div class="flex flex-column width-full">
+            <div class="border main-container v-center flex-gap responsive-container text-center">
+                <h5 class="text-left">Login Activity</h5><br>
+                <label class="text-normal">
                     <?php
                     $utcTime = $user->getLastLogin();
                     $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
@@ -122,7 +129,7 @@
                     ?>
                 </label><br><br>
 
-                <label class="text-normal text-center">
+                <label class="text-normal">
                     <?php
                     $utcTime = $user->getLastLogout();
                     $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
@@ -134,11 +141,13 @@
 
                     echo 'Last Logout Date : ' .$sriLankanDateAndTime;
                     ?>
-                </label>
+                </label><br>
             </div>
-            <div class="border main-container flex-gap">
+
+
+            <div class="border main-container v-center flex-gap responsive-container full-height">
                 <!--Registered Courses-->
-                <h5>Registered Courses</h5>
+                <h5>Registered Courses</h5><br>
                 <table>
                     <?php
                     $unique_courses = array();
@@ -161,9 +170,7 @@
 
             </div>
         </div>
-
     </div>
-
 </div>
 
 <script>
@@ -189,6 +196,8 @@
     btn_edit.onclick = function(){
         document.getElementById('contact').removeAttribute('readonly');
         document.getElementById('personal_email').removeAttribute('readonly');
+        document.getElementById('edit-icon_1').classList.remove('hide');
+        document.getElementById('edit-icon_2').classList.remove('hide');
         change_profile_btn.classList.remove('hide');
         btn_edit.classList.add('hide');
         btn.classList.add('hide');
