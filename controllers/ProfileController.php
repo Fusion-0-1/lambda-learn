@@ -26,22 +26,25 @@ class ProfileController extends Controller
         $userRegNo = str_replace('/', '', $user->getRegNo());
         $fileName = $_FILES['profile_picture']['name'];
         $fileTmpName = $_FILES['profile_picture']['tmp_name'];
+        if($fileName)
+        {
+            $fileExtension = explode('.', $fileName);
+            $fileActualExtension = strtolower(end($fileExtension));
+            $fileNameNew = $userRegNo . "." . $fileActualExtension;
 
-        $fileExtension = explode('.', $fileName);
-        $fileActualExtension = strtolower(end($fileExtension));
-        $fileNameNew = $userRegNo . "." . $fileActualExtension;
+            $filePath = 'images/profile/' . $fileNameNew;
 
-        $filePath = 'images/profile/'.$fileNameNew;
+            //Remove previous profile images if exists
+            $wildcardPath = 'images/profile/' . $userRegNo . '.*';
+            array_map('unlink', glob($wildcardPath));
 
-        //Remove previous profile images if exists
-        $wildcardPath = 'images/profile/'.$userRegNo.'.*';
-        array_map('unlink', glob($wildcardPath));
-
-        move_uploaded_file($fileTmpName, $filePath);
+            move_uploaded_file($fileTmpName, $filePath);
+            $user->setProfilePicture($filePath);
+        }
 
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
-        $user->setProfilePicture($filePath);
+
         $user->editProfile();
         return $this->render(
             'profile',
