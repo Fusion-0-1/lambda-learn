@@ -26,6 +26,7 @@ $app = new Application(dirname(__DIR__), $config);
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
+$app->router->get('/cs1208', '/course/cs1208');
 
 $app->router->get('/submissions', 'submissions');
 
