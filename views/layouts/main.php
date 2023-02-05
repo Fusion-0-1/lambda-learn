@@ -35,6 +35,8 @@ if (!isset($_SESSION['user'])) {
             property="og:description"
     />
 
+    <!--  Scripts  -->
+    <script type="text/javascript" src="./js/main.js"></script>
 
     <!-- Fonts -->
     <!-- CSS -->
