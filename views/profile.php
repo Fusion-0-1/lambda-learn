@@ -100,19 +100,28 @@
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <form>
-                        <div class="margin-top">
-                            <label>Existing Password</label><br>
-                            <input type="password" name="password" class="input text-right width-full">
+                        <div class="margin-top flex flex-column">
+                            <label class="margin-top">Existing Password</label>
+                            <div class="flex flex-responsive">
+                                <input type="password" name="password" class="input text-right width-full"><br>
+                            </div>
                         </div>
-                        <div class="margin-top">
-                            <label>New Password</label><br>
-                            <input type="password" name="password" class="input text-right width-full">
+                        <div class="margin-top flex flex-column">
+                            <label class="margin-top">New Password</label>
+                            <div class="flex flex-responsive">
+                                <input type="password" name="password" class="input text-right width-full"><br>
+                            </div>
                         </div>
-                        <div class="margin-top">
-                            <label>Confirm Password</label><br>
-                            <input type="password" name="password" class="input text-right width-full">
+                        <div class="margin-top flex flex-column">
+                            <label class="margin-top">Confirm Password</label>
+                            <div class="flex flex-responsive">
+                                <input type="password" name="password" class="input text-right width-full"><br>
+                            </div>
                         </div>
-                        <button class="flex confirm-btn half-width margin-top h-center v-center flex-responsive">Confirm</button>
+                        <div class="flex flex-row h-end">
+                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
+                            <button id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -180,6 +189,9 @@
     var btn_confirm = document.getElementById("btn_confirm");
     var change_profile_btn = document.getElementById('profile-btn');
     var preview = document.getElementById("preview");
+    var cancel_modal = document.getElementById("cancel_modal");
+    var confirm_modal = document.getElementById("confirm_modal");
+
 
     btn.onclick = function (){
         modal.style.display = "block";
@@ -191,6 +203,9 @@
         if (event.target === modal) {
             modal.style.display = "none";
         }
+    }
+    cancel_modal.onclick = function(){
+        modal.style.display = "none";
     }
 
     // Function to enable editing of contact and personal email fields

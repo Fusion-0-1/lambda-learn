@@ -78,6 +78,19 @@ td{
     font-size: x-small;
 }
 
+.btn-cancel{
+    margin-right: 0;
+    margin-left: 0;
+    background-color: var(--white);
+    color: var(--green);
+    border: 3px solid var(--green);
+}
+
+.btn-confirm{
+    margin-right: 0;
+    margin-left: 5%;
+}
+
 @media (max-width: 800px) {
     .flex-responsive{
         flex-direction: column;
