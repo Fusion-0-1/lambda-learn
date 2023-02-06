@@ -26,6 +26,7 @@ $app = new Application(dirname(__DIR__), $config);
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
+$app->router->get('/cs1208', '/course/cs1208');
 
 $app->router->get('/submissions', 'submissions');
 $app->router->get('/marks_upload', 'marks_upload');
@@ -34,6 +35,7 @@ $app->router->get('/account_creation', 'account_creation');
 $app->router->get('/leaderboard', 'leaderboard');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 
+$app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
 $app->router->get('/course_initialization', 'course_initialization');
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);

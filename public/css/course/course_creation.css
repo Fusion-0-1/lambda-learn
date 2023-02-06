@@ -1,0 +1,36 @@
+label, .input {
+    width: 75%;
+}
+
+.course_edit_form_buttons {
+    padding: 20px 0;
+}
+
+.course_create_form {
+    padding-bottom: 30px;
+}
+
+#create_course > .dark-btn {
+    width: 75%;
+    height: 33px;
+}
+
+@media(max-width:767px) {
+    .course_create_form {
+        align-items: center;
+        flex-direction: column;
+    }
+    #create_course {
+        width: 68%;
+    }
+    #create_course > .dark-btn {
+        margin: 16px auto;
+        max-width: 325px;
+    }
+    .grid-table .button-column {
+        display: none;
+    }
+    .grid-table {
+        grid-template-columns: auto;
+    }
+}
