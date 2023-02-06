@@ -10,6 +10,7 @@
     --white: #FCFBFC;
     --pure-white: #FFF;
     --error: #990000;
+    --error-btn: #CE2828;
     --error-bg: #EADCDC;
     --green: #009900;
     --green-bg: #DCEADD;
@@ -21,11 +22,14 @@
     --black: #000;
 }
 
+* {
+    font-family: Roboto, sans-serif;
+}
+
 body {
     background: var(--background-white);
     margin-left: 60px;
     margin-top: 90px;
-    font-family: Roboto, sans-serif;
 }
 /* --------------------------------------------------- */
 
@@ -216,6 +220,23 @@ a:active {
 .grid {
     display: grid;
 }
+
+.grid-table {
+    grid-template-columns: 70% auto;
+}
+.grid-table .text-column, .grid-table .button-column {
+    min-width: min-content;
+    float: left;
+}
+.grid-table .button-column th {
+    height: 49px;
+}
+.grid-table .button-column td {
+    background-color: unset;
+    color: unset;
+    text-align: center;
+}
+
 /* --------------------------------------------------- */
 
 /* ----------------- Flex formatting ----------------- */
@@ -251,7 +272,7 @@ a:active {
     justify-content: space-between;
 }
 
-.h-evenly{
+.h-evenly {
     justify-content: space-evenly;
 }
 
@@ -267,8 +288,7 @@ a:active {
 
 
 /* ----------------- Form formatting ----------------- */
-.dark-btn, .x-dark-btn{
-    /* TODO: Add default with of the input field */
+.dark-btn, .x-dark-btn {
     background-color: var(--x-dark-blue);
     color: var(--white);
     margin-left: auto;
@@ -277,7 +297,7 @@ a:active {
     border: none;
 }
 
-.x-dark-btn{
+.x-dark-btn {
     min-width: 80%;
     min-height: 50px;
     background-color: var(--blue);
@@ -294,6 +314,12 @@ a:active {
     background-color: var(--white);
 }
 
+.btn-border-blue {
+    border: 3px solid var(--x-dark-blue);
+    border-radius: 8px;
+    color: var(--x-dark-blue);
+}
+
 .warn-continue-btn {
     color: var(--black);
     border: var(--warn-btn) 1px solid;
@@ -307,7 +333,6 @@ a:active {
 }
 
 .input {
-    /* TODO: Add default width of the input field */
     height: 25px;
     background-color: var(--blue-white);
     border: 3px solid var(--border-white);
@@ -327,17 +352,18 @@ button:hover {
 /* ---------------- Table formatting ---------------- */
 table {
     width: 100%;
+    border-spacing: 0 12px;
+}
+
+tr {
+    text-align: left;
+    height: 40px;
 }
 
 th {
     background-color: var(--white);
-    color: var(--x-dark-blue);
-}
-
-tr, th {
-    text-align: left;
+    text-align: center;
     height: 40px;
-    padding-bottom:45px;
 }
 
 tr:nth-child(even) > td {
@@ -385,9 +411,9 @@ td{
 }
 
 .error-btn {
-    color: var(--error);
-    border: var(--error) 1px solid;
-    background-color: var(--error-bg);
+    color: var(--white);
+    border: var(--error-btn) 1px solid;
+    background-color: var(--error-btn);
 }
 
 .error-btn-icon, .edit-btn-icon {
@@ -453,17 +479,26 @@ button:disabled{
     border-radius: 15px;
 }
 
-.warn-modal-content {
-    color: var(--warn);
-    background-color: var(--warn-bg);
-    border: var(--warn) 1px solid;
+.warn-modal-content, .error-modal-content {
     margin: 15% auto;
     padding: 20px;
     width: 40%;
     border-radius: 15px;
 }
 
-.warn-modal-content h4{
+.error-modal-content {
+    color: var(--error-btn);
+    background-color: var(--error-bg);
+    border: var(--error) 1px solid;
+}
+
+.warn-modal-content {
+    color: var(--warn);
+    background-color: var(--warn-bg);
+    border: var(--warn) 1px solid;
+}
+
+.warn-modal-content h4, .error-modal-content h4{
     margin: 0;
 }
 
@@ -477,26 +512,19 @@ button:disabled{
     font-weight: bold;
 }
 
-.warn-modal-content button{
+.warn-modal-content button, .error-modal-content button {
     height: 35px;
     width: 80px;
     border-radius: 10px;
-    margin-right: 1%;
 }
 
+.two-button-row {
+    min-width: max-content;
+    width: 100%;
+}
 
-@media(max-width: 425px) {
-    .modal-content .two-button-row {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .modal-content button {
-        min-height: 30px;
-        width: 70px;
-        font-weight: bold;
-        font-size: 12px;
-    }
+.two-button-row button {
+    width: 100px;
 }
 /* --------------------------------------------------- */
 
@@ -525,6 +553,10 @@ hr{
     background: var(--heading-blue);
     height: 2px;
 }
+
+.overflow-x {
+    overflow-x: auto;
+}
 /* --------------------------------------------------- */
 .csv-header-format {
     font-weight: lighter;
@@ -548,6 +580,27 @@ hr{
     }
     body{
         margin-left: 8px;
+    }
+}
+
+/* Standard tablet size */
+@media(min-width: 768px){
+    .two-button-row {
+        width: 60%;
+    }
+}
+/* Standard mobile size large */
+@media(max-width: 425px) {
+    .modal-content .two-button-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content button {
+        min-height: 30px;
+        width: 70px;
+        font-weight: bold;
+        font-size: 12px;
     }
 }
 /* --------------------------------------------------- */

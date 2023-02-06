@@ -15,4 +15,9 @@ class CourseController extends Controller
         $courses = ['courses'=>Course::getUserCourses($userRegNo)];
         return $this->render('course/course_overview', $courses);
     }
+
+    public function courseCreation()
+    {
+        return $this->render('course/course_creation');
+    }
 }
