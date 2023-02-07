@@ -56,40 +56,5 @@
             </div>
         </div>
     </div>
-
-<!--  --------------time table-------------------  -->
-    <div class="main border">
-        <h1 class="h-center flex">Lecture Time Table</h1>
-            <div class="table_main grid">
-                <!-- Days container -->
-                <div class="stages-container-row">
-                    <div class="stages flex v-center h-center text-justify text-bold ">
-                        <div class="stage">Monday</div>
-                        <div class="stage">Tuesday</div>
-                        <div class="stage">Wednesday</div>
-                        <div class="stage">Thursday</div>
-                        <div class="stage">Friday</div>
-                    </div>
-                </div>
-
-                <!-- timing container -->
-                <div class="timing-container-column">
-                    <div class="timings flex flex-column h-justify text-bold text-center text-justify">
-                        <div class="time">08:00 - 09:00</div>
-                        <div class="time">09:00 - 10:00</div>
-                        <div class="time">10:00 - 11:00</div>
-                        <div class="time">11:00 - 12:00</div>
-                        <div class="time">12:00 - 13:00</div>
-                        <div class="time">13:00 - 14:00</div>
-                        <div class="time">14:00 - 15:00</div>
-                        <div class="time">15:00 - 16:00</div>
-                        <div class="time">16:00 - 17:00</div>
-                    </div>
-                </div>
-
-            </div>
-
-    </div>
-
 </div>
 
