@@ -1,14 +1,14 @@
-<?php
-?>
+<link rel="stylesheet" href="css/marks_upload.css">
+
 <div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
-    <form id="file-upload-form" class="border main-container flex flex-column"
+    <form id="file-upload-form" class="main-container border flex flex-column"
           action="" method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <h3 class="page-header">Data Structures and Algorithms submission marks</h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
                 <p id="upload-file-text" onclick='update_existing_stu()'>Upload submission marks csv file here</p>
-                <img class="upload-icon" src="./images/upload.png" alt="upload logo">
+                <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
         </button>
 
@@ -16,8 +16,30 @@
         <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, marks</p>
     </form>
 
-    <div class="chart flex h-center v-center border main-container">
-        <canvas id="myChart"></canvas>
+    <div class="main-container border">
+        <div class="chart flex h-center v-center main-container">
+            <canvas id="myChart"></canvas>
+        </div>
+
+        <div class="download-table overflow-x">
+            <table class="main-container overflow-x">
+                <tr>
+                    <th>Year</th>
+                    <th>Date</th>
+                    <th>Download</th>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>08.10.2022</td>
+                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>08.10.2022</td>
+                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -53,4 +75,11 @@
             }
         }
     });
+
+    // If accessing using Mobile-S (320px) device, then the graph
+    // will not display due to size of the screen width
+    if(window.innerWidth <= 320) {
+        document.getElementsByClassName("chart")[0].innerHTML =
+            "<p>Please Rotate your mobile phone</p>"
+    }
 </script>
