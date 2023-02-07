@@ -28,10 +28,8 @@ class ProfileController extends Controller
         $fileTmpName = $_FILES['profile_picture']['tmp_name'];
         if($fileName)
         {
-            $fileExtension = explode('.', $fileName);
-            $fileActualExtension = strtolower(end($fileExtension));
-            $fileNameNew = $userRegNo . "." . $fileActualExtension;
-
+            $fileExtension = strtolower(explode('.', $fileName)[1]);
+            $fileNameNew = $userRegNo . "." . $fileExtension;
             $filePath = 'images/profile/' . $fileNameNew;
 
             //Remove previous profile images if exists
