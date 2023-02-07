@@ -34,7 +34,7 @@
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
                 <p id="upload-file-text" onclick='update_existing_stu()'>Upload Student Details file here</p>
-                <img class="upload-icon" src="./images/upload.png" alt="upload logo">
+                <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
         </button>
 
