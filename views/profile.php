@@ -3,18 +3,11 @@
 <div class="border main-container v-center flex-gap responsive-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
-            <h2 class="text-center"><?php echo $user->getFirstName()." ".$user->getLastName() ?></h2>
+            <h2 class="text-center"><?php use app\core\User;
+
+                echo $user->getFirstName()." ".$user->getLastName() ?></h2>
             <h3 class="text-center text-normal line-height">
-                <?php
-                $reg_split = explode("/", $user->getRegNo());
-                $position = strtolower($reg_split[1]);
-                if($position === 'cs' or 'is')
-                    echo "Student";
-                elseif ($position === 'lc')
-                    echo "Lecturer";
-                else
-                    echo "Administrator";
-                ?>
+                <?php echo User::getUserType($user->getRegNo()); ?>
             </h3>
         </div>
     </div>
