@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/profile.css">
 
-<div class="border main-container v-center flex-gap responsive-container">
+<div class="border main-container v-center flex-gap responsive_main-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
             <h2 class="text-center"><?php use app\core\User;
@@ -12,8 +12,8 @@
         </div>
     </div>
 
-    <div class="flex h-justify">
-        <div class="border main-container v-center flex-gap flex-responsive responsive-container flex user-details h-center">
+    <div class="flex h-justify flex-responsive">
+        <div class="border main-container v-center flex-gap responsive-container flex user-details h-center">
 
             <!-- User details -->
             <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">
@@ -122,7 +122,7 @@
 
         <!--Login Activity-->
         <div class="flex flex-column width-full">
-            <div class="border main-container v-center flex-gap responsive-container text-center">
+            <div class="border main-container v-center flex-gap text-center">
                 <h5 class="text-left">Login Activity</h5><br>
                 <label class="text-normal">
                     <?php
@@ -147,7 +147,7 @@
             </div>
 
             <!--Registered Courses-->
-            <div class="border main-container v-center flex-gap responsive-container full-height">
+            <div class="border main-container v-center flex-gap full-height">
                 <h5>Registered Courses</h5><br>
                 <table>
                     <?php
