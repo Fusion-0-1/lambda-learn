@@ -342,6 +342,12 @@ a:active {
     border-radius: 8px;
 }
 
+.selector select {
+    height: 30px;
+    border: 3px solid var(--border-white);
+    border-radius: 5px;
+}
+
 button:hover {
     cursor: pointer;
 }
