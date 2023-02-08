@@ -58,13 +58,13 @@
     <div class="border main-container flex flex-column">
         <div class="flex h-center v-center flex-responsive">
             <div>
-                <h2 class="text-center">Kavindu Fernando</h2>
-                <h3 class="text-center text-normal line-height">Student</h3>
+                <h3 class="text-center">Kavindu Fernando</h3>
+                <h4 class="text-center text-normal line-height">Student</h4>
             </div>
         </div>
 
-        <div class="flex h-justify flex-responsive">
-            <div class="border main-container v-center flex-gap responsive-container flex user-details h-center">
+        <div class="flex h-justify flex-responsive margin-top">
+            <div class="border main-container responsive-container flex user-details h-center">
 
                 <!-- User details -->
                 <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">
@@ -123,7 +123,7 @@
                     </div>
                 </form>
 
-                <!--Change password - Modal-->
+                <!--edit profile - Modal-->
                 <div id="modal" class="modal" >
                     <div class="modal-content">
                         <span class="close">&times;</span>
@@ -157,7 +157,7 @@
 
             <!--Login Activity-->
             <div class="flex flex-column width-full">
-                <div class="border main-container v-center flex-gap text-center">
+                <div class="border main-container flex flex-column flex-responsive">
                     <h5 class="text-left">Login Activity</h5><br>
                     <label class="text-normal">Last Login Date : Wednesday, February 08, 2023 | 08:50</label><br><br>
 
@@ -165,7 +165,7 @@
                 </div>
 
                 <!--Registered Courses-->
-                <div class="border main-container v-center flex-gap full-height">
+                <div class="border main-container flex flex-column full-height flex-responsive">
                     <h5>Registered Courses</h5><br>
                     <table>
                         <tr>
