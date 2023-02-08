@@ -3,3 +3,13 @@
     overflow-y: scroll;
     margin-bottom: 25px;
 }
+
+.search-bar-account_creation{
+    width: 350px;
+    height: 35px;
+    padding: 10px;
+    margin-top: 10%;
+    margin-bottom: 10%;
+    border-radius: 12px;
+    color: var(--blue);
+}
