@@ -387,6 +387,12 @@ tr:nth-child(odd) > td {
 td{
     padding: 8px 20px;
 }
+
+@media(max-width: 425px) {
+    table{
+        font-size: 13px;
+    }
+}
 /* --------------------------------------------------- */
 
 
