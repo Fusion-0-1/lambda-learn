@@ -1,0 +1,17 @@
+tr:nth-child(even) > td {
+    background-color: var(--blue);
+    color: var(--blue-white);
+}
+td {
+    text-align: center;
+}
+
+.download-table table {
+    padding-top: 0;
+    margin-top: 0;
+}
+
+.chart {
+    padding-bottom: 0;
+    margin-top: 0;
+}

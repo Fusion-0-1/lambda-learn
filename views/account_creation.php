@@ -27,14 +27,14 @@
     </div>
 </div>
 
-<div id="student-csv-upload" class="border main-container v-center flex-gap responsive-container">
+<div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
     <form id="student-csv-upload-form" class="border main-container flex flex-column" action="/upload_student_csv" method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <h3 class="page-header">Student Accounts</h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
                 <p id="upload-file-text" onclick='update_existing_stu()'>Upload Student Details file here</p>
-                <img class="upload-icon" src="./images/upload.png" alt="upload logo">
+                <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
         </button>
 

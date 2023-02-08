@@ -387,6 +387,12 @@ tr:nth-child(odd) > td {
 td{
     padding: 8px 20px;
 }
+
+@media(max-width: 425px) {
+    table{
+        font-size: 13px;
+    }
+}
 /* --------------------------------------------------- */
 
 
@@ -518,6 +524,20 @@ button:disabled{
     border-radius: 10px;
 }
 
+@media(max-width: 425px) {
+    .modal-content .two-button-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .modal-content button {
+        min-height: 30px;
+        width: 70px;
+        font-weight: bold;
+        font-size: 12px;
+    }
+}
+
 .two-button-row {
     min-width: max-content;
     width: 100%;
@@ -525,6 +545,7 @@ button:disabled{
 
 .two-button-row button {
     width: 100px;
+>>>>>>> main
 }
 /* --------------------------------------------------- */
 
@@ -607,4 +628,51 @@ hr{
 
 
 
+/* -------------- Graphs ------------- */
+.chart > canvas {
+    max-width: 100%;
+    height: auto !important;
+}
+
+@media(max-width: 768px) {
+    .chart > canvas {
+        min-width: 125%;
+    }
+}
+/* --------------------------------------------------- */
+
+
+
+/* -------------- File Upload Container ------------- */
+#file-upload-container {
+    padding: 40px 25px;
+}
+
+#file-upload-container .download-icon,
+#file-upload-container .upload-icon{
+    font-size: 20px;
+}
+
+#file-upload-container h4 {
+    margin-top: 25px;
+}
+
+#file-upload-container > p {
+    margin-top: 25px;
+}
+
+#file-upload-container button div {
+    width: 100%;
+}
+
+#file-upload-container button div p {
+    width: 92%;
+}
+
+@media(max-width: 425px) {
+    #file-upload-container .download-icon, #file-upload-container .upload-icon{
+        font-size: unset;
+    }
+}
+/* --------------------------------------------------- */
 
