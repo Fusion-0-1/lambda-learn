@@ -37,6 +37,7 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
 $app->router->get('/course_initialization', 'course_initialization');
+$app->router->get('/attendance_course_progress', 'attendance_course_progress');
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
