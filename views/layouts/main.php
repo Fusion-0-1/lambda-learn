@@ -90,7 +90,7 @@ if (!isset($_SESSION['user'])) {
     </div>
 
     <div class="v-center flex">
-        <div class="flex elements">
+        <div class="flex elements responsive-hide">
             <div class="flex">
                 <input type="search" class="search-bar input" placeholder="Search" >
             </div>
@@ -98,7 +98,7 @@ if (!isset($_SESSION['user'])) {
                 <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
             </div>
         </div>
-        <div class="elements">
+        <div class="elements responsive-hide">
             <span class="point-border point">
                 <span class="text-bold">1204</span>
                 <span class="text-normal">Points</span>
@@ -108,27 +108,44 @@ if (!isset($_SESSION['user'])) {
             </span>
         </div>
 
-        <div class="elements">
+        <div class="elements responsive-hide">
                 <a href="/profile">Inuri Lavanya</a>
         </div>
 
-        <div class="elements h-center">
+        <div class="elements h-center responsive-hide">
             <img src="/images/profile.png" alt="profile" class="profile-nav">
         </div>
 
-        <div class="elements">
+        <div class="elements responsive-hide">
             <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
         </div>
 
         <div class="elements">
-            <a><i class="fa-solid fa-bars icon"></i></a>
+            <a class="icon" id="hamburger_icon"><i class="fa-solid fa-bars"></i></a>
         </div>
     </div>
+
+    <div id="modal" class="margin-top width-full hide flex flex-column">
+        <div class="border-modal flex"><a class="modal-text">Profile</a></div>
+        <div class="border-modal"><a class="modal-text">Leaderboard</a></div>
+        <div class="border-modal"><a class="modal-text">Logout</a></div>
+    </div>
+
 </div>
+
 
 
 <div class="container">
     {{content}}
 </div>
+
+<script>
+    var hamburger_btn = document.getElementById("hamburger_icon");
+    var modal = document.getElementById("modal");
+    hamburger_btn.onclick = function (){
+        modal.classList.remove("hide");
+    }
+</script>
+
 </body>
 </html>
