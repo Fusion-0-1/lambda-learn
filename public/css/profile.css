@@ -7,12 +7,14 @@
 
 .profile_img_center{
     display: block;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .margin-top{
-    margin-top: 20px;
+    margin-top: 12px;
+}
+
+.margin-top-btn{
+    margin-top: 30px;
 }
 
 .edit-btn-icon{
@@ -21,10 +23,6 @@
 
 .modal {
     display: none;
-}
-
-.main-container{
-    padding-top: 10px;
 }
 
 .modal-content{
@@ -43,6 +41,54 @@
 
 table{
     border-spacing: 0 12px;
+}
+
+.profile-btn{
+    border-radius: 50%;
+    border: 3px solid var(--heading-blue);
+    margin-bottom: -70px;
+    margin-left: -35px;
+    position: relative;
+    margin-right: 0;
+}
+
+.full-height{
+    height:100%
+}
+
+.user-details{
+    width: 40%;
+}
+
+.width-full{
+    width: 100%;
+}
+
+.edit-btn-text{
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+td{
+    padding: 8px 40px;
+}
+
+.edit-icon{
+    margin-bottom: 1vh;
+    font-size: x-small;
+}
+
+.btn-cancel{
+    margin-right: 0;
+    margin-left: 0;
+    background-color: var(--white);
+    color: var(--green);
+    border: 3px solid var(--green);
+}
+
+.btn-confirm{
+    margin-right: 0;
+    margin-left: 5%;
 }
 
 @media (max-width: 800px) {
