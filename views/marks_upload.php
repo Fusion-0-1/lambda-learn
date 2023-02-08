@@ -21,6 +21,7 @@
             <canvas id="myChart"></canvas>
         </div>
 
+        <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
         <div class="download-table overflow-x">
             <table class="main-container overflow-x">
                 <tr>
@@ -34,13 +35,14 @@
                     <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
                 </tr>
                 <tr>
-                    <td>2</td>
-                    <td>08.10.2022</td>
+                    <td>1</td>
+                    <td>08.03.2022</td>
                     <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
                 </tr>
             </table>
         </div>
     </div>
+    <?php }?>
 </div>
 
 
