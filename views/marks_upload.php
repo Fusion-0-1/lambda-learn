@@ -18,7 +18,7 @@
 
     <div class="main-container border">
         <div class="chart flex h-center v-center main-container">
-            <canvas id="myChart"></canvas>
+            <canvas id="course_progress_chart"></canvas>
         </div>
 
         <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
@@ -82,6 +82,6 @@
     // will not display due to size of the screen width
     if(window.innerWidth <= 320) {
         document.getElementsByClassName("chart")[0].innerHTML =
-            "<p>Please Rotate your mobile phone</p>"
+            "<p>Please Rotate your mobile phone and refresh the page.</p>"
     }
 </script>
