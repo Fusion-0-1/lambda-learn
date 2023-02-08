@@ -96,22 +96,23 @@ td{
         flex-direction: column;
         align-items: center;
     }
-    .main-container {
+
+    .responsive_main-container {
         min-width: 400px;
+        margin: auto;
+    }
+
+    .responsive-container{
+        min-width: 370px;
+    }
+
+    .width-full{
+        width: 90%;
     }
 
     .edit-btn-text{
         width: 60%;
         justify-content: center;
-    }
-
-    label{
-        padding-left: 35px;
-    }
-
-    .responsive-container{
-        padding-left: 50px;
-        padding-right: 50px;
     }
 
     .modal-content{
