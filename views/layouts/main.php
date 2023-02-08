@@ -72,10 +72,17 @@ if (!isset($_SESSION['user'])) {
     <title>Lambda - Learn</title>
 </head>
 <body>
-<div class="sidebar flex v-center h-center">
-    <div class="elements">
-        <a href="/"><i class="fa fa-home" aria-hidden="true"></i></a>
-    </div>
+<div class="sidebar flex v-center h-center flex-column">
+        <a href="/"><i class="fa-solid fa-graduation-cap"></i></a>
+        <a href="/"><i class="fa-solid fa-user-check"></i></a>
+        <a href="/"><i class="fa-solid fa-clipboard-list"></i></a>
+        <a href="/"><i class="fa-solid fa-chart-column"></i></a>
+        <a href="/"><i class="fa-solid fa-list-check"></i></a>
+        <a href="/"><i class="fa fa-home"></i></a>
+        <a href="/"><i class="fa-solid fa-scroll"></i></a>
+        <a href="/"><i class="fa-regular fa-calendar-days"></i></a>
+        <a href="/"><i class="fa-solid fa-clipboard-list"></i></a>
+        <a href="/"><i class="fa-solid fa-database"></i></a>
 </div>
 <div class="topbar flex h-justify v-center font">
     <div class="elements">
@@ -111,6 +118,10 @@ if (!isset($_SESSION['user'])) {
 
         <div class="elements">
             <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+        </div>
+
+        <div class="elements">
+            <a><i class="fa-solid fa-bars icon"></i></a>
         </div>
     </div>
 </div>
