@@ -1,4 +1,58 @@
 <link rel="stylesheet" href="css/course/course_page.css">
+<link rel="stylesheet" href="css/submission_popup.css">
+<div class="modal">
+    <div class="popup_card modal-content">
+        <div class="course_name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
+        <div class="course_code flex h-center">SCS 2201</div>
+
+        <div class="submission_topic text-bold">Submission 1 - String Matching</div>
+        <div class="submissions_card_inside">
+            <div class="due_date_div grid h-justify v-center">
+                <div class="due_date_heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_due_date.png">
+                    <div>Due-Date</div>
+                </div>
+                <div class="due_date_contain">Wednesday, September 2, 2022       |   12.00 PM</div>
+            </div>
+            <div class="time_remaning_div grid h-justify v-center">
+                <div class="due_date_heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">
+                    <div>Time remaining</div>
+                </div>
+                <div class="due_date_contain flex h-center">-- --</div>
+            </div>
+
+            <div class="break_line"></div>
+
+            <div class="time_remaning_div grid h-justify v-center">
+                <div class="due_date_heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_granding_status.png">
+                    <div>Grading status</div>
+                </div>
+                <div class="due_date_contain flex h-center">Pending</div>
+            </div>
+            <div class="time_remaning_div grid h-justify v-center">
+                <div class="due_date_heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_file_submission.png">
+                    <div>File submission</div>
+                </div>
+                <div class="due_date_contain flex h-center">StringMatching_01.zip</div>
+            </div>
+            <div class="time_remaning_div grid h-justify v-center">
+                <div class="due_date_heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_submitted_date.png">
+                    <div>Submitted Date</div>
+                </div>
+                <div class="due_date_contain flex h-center submitted_date">Wednesday, September 2, 2022  |  10.01 PM</div>
+            </div>
+            <div class="submit_buttons grid h-center">
+                <div class="edit-btn submission_btn text-center">Add submission</div>
+                <div class="edit-btn submission_btn text-center">Edit submission</div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold">Data Structures and Algorithms</h3>
