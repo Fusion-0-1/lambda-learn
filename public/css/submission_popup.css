@@ -1,0 +1,193 @@
+.popup_card{
+    width: 60%;
+    height: auto;
+    background: var(--blue-white);
+    border-radius: 40px 0 0 40px;
+    padding-bottom: 10%;
+}
+.course_name{
+    font-size: 1.7rem;
+    padding: 50px 20px 0 20px;
+}
+.course_code{
+    font-size: 1.25rem;
+    padding: 5px;
+}
+.submission_topic{
+    margin: 4% 7.5% ;
+    border-bottom: 3px solid var(--black);
+    font-size: 1.2rem;
+}
+.submissions_card_inside{
+    background: var(--white);
+    width: 85%;
+    height: auto;
+    margin: auto;
+    border-radius: 15px;
+    border: 3px solid var(--border-white);
+    padding: 12% 0;
+}
+.due_date_div{
+    padding: 0 6%;
+    grid-template-columns: 40% 57%;
+}
+.due_date_heading{
+    background: var(--blue);
+    padding: 6px 20px;
+    color: var(--white);
+    border-radius: 10px;
+}
+.due_date_heading img{
+    width: 30px;
+    height: 30px;
+    margin-right: 30px;
+}
+.due_date_heading p{
+    margin: 0;
+}
+.due_date_contain{
+    border: 3px solid var(--border-white);
+    padding: 9px 5px;
+    border-radius: 10px;
+}
+.time_remaning_div{
+    padding:  0 6%;
+    grid-template-columns: 40% 57%;
+    margin: 4% 0;
+}
+.break_line{
+    width: 60%;
+    height: 5px;
+    background: var(--black);
+    margin: 25px auto 0 auto;
+}
+.submitted_date{
+    color: var(--green);
+}
+.modal-content{
+    float: right;
+}
+.submit_buttons{
+    grid-template-columns: 30% 30%;
+    grid-column-gap: 5%;
+    margin-top: 6%;
+}
+.submission_btn{
+    padding: 8px 0;
+    border-radius: 8px;
+}
+
+@media(max-width:768px){
+    .popup_card{
+        width: 70%;
+    }
+    .course_name{
+        font-size: 1.5rem;
+    }
+    .submission_topic{
+        font-size: 1.1rem;
+        margin: 4% 5%;
+    }
+    .submissions_card_inside{
+        width: 90%;
+        padding: 12% 0;
+    }
+    .due_date_div{
+        padding: 0 4% 0 4%;
+        grid-template-columns: 35% 62%;
+        font-size: 0.75rem;
+    }
+    .due_date_heading{
+        padding: 6px 10px;
+    }
+    .time_remaning_div{
+        padding:  0 4%;
+        margin: 4% 0;
+        font-size: 0.75rem;
+        grid-template-columns: 35% 62%;
+    }
+    .due_date_heading img{
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+    .break_line{
+        width: 75%;
+        height: 4px;
+    }
+    .submission_btn{
+        font-size: 0.75rem;
+    }
+}
+
+@media(max-width:425px){
+    .popup_card{
+        width: 90%;
+        border-radius: 20px 0 0 20px;
+        float: right;
+    }
+    .course_name{
+        font-size: 1.2rem;
+    }
+    .course_code{
+        font-size: 1rem;
+    }
+    .submission_topic{
+        font-size: 0.9rem;
+        margin: 4% 5%;
+    }
+    .submissions_card_inside{
+        width: 90%;
+        padding: 12% 0;
+    }
+    .due_date_div{
+        padding: 0 4% 0 4%;
+        grid-template-columns: 38% 60%;
+        font-size: 0.75rem;
+    }
+    .due_date_heading{
+        padding: 6px 4px;
+        border-radius: 8px;
+    }
+    .time_remaning_div{
+        padding:  0 4%;
+        margin: 4% 0;
+        font-size: 0.75rem;
+        grid-template-columns: 38% 60%;
+    }
+    .due_date_heading img{
+        width: 20px;
+        height: 20px;
+        margin-right: 5px;
+    }
+    .break_line{
+        width: 75%;
+        height: 4px;
+    }
+    .submit_buttons{
+        grid-template-columns: 32% 32%;
+    }
+    .submission_btn{
+        padding: 8px 0;
+        border-radius: 8px;
+        font-size: 0.75rem;
+    }
+}
+
+@media(max-width:376px){
+    .popup_card{
+        width: 89%;
+    }
+    .due_date_div{
+        font-size: 0.6rem;
+    }
+    .time_remaning_div{
+        font-size: 0.6rem;
+    }
+    .due_date_heading img {
+        margin-right: 1px;
+    }
+    .submission_btn{
+        padding: 5px 0;
+    }
+}
