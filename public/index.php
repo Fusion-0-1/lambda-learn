@@ -29,6 +29,7 @@ $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/cs1208', '/course/cs1208');
+$app->router->get('/kanbanboard', 'kanbanboard');
 
 $app->router->get('/submissions', 'submissions');
 $app->router->get('/marks_upload', 'marks_upload');
