@@ -1,0 +1,122 @@
+.card-container {
+    flex: 1;
+    width: 100%;
+}
+
+.card-list {
+    width: 33%;
+    background-color: #f6f7f8;
+    padding: 10px;
+}
+
+.list-header {
+    padding: 0px 10px;
+    margin-bottom: -10px;
+    color: #0D2137;
+}
+
+.add-card {
+    color: #0b2273;
+}
+
+.card-button {
+    border: none;
+    background-color: inherit;
+    color: #0B2273;
+}
+
+.droppable {
+    flex: 1;
+    height: 20%;
+    overflow: scroll;
+}
+
+.draggable {
+    margin: 20px 0px;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.card-header {
+    background-color: #0B2273;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: move;
+}
+
+.card-header-modal {
+    width: 100%;
+}
+
+.card-body {
+    padding: 5px 20px;
+    word-wrap: break-word;
+}
+
+.card-body-modal {
+    width: 100%;
+}
+
+.card-footer {
+    padding: 6px 20px;
+    border-radius: 15px;
+    border-top: 0;
+}
+
+.card-deadline {
+    flex: 6;
+    border: none;
+}
+
+.card-options {
+    flex: 1.2;
+    color: #0B2273;
+}
+
+.item-gap {
+    gap: 20px;
+}
+
+.modal {
+    display: none;
+}
+
+.card-add-modal {
+    width: 40%;
+    padding: 10px;
+    margin: 15% auto;
+    background-color: #ffffff;
+}
+
+input[value="To Do"] {
+    accent-color: #ff0000;
+}
+
+input[value="In Progress"] {
+    accent-color: #b36e15;
+}
+
+input[value="Done"] {
+    accent-color: #2ba512;
+}
+
+.card-save-container {
+    padding-top: 3px;
+}
+
+.card-save, .modal-cancel {
+    background-color: #0B2273;
+    color: #ffffff;
+    padding: 6px 40px;
+}
+
+@media (max-width: 425px) {
+    .card-container {
+        flex-direction: column;
+    }
+
+    .card-list {
+        width: auto;
+    }
+}

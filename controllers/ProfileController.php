@@ -13,7 +13,7 @@ class ProfileController extends Controller
     public function displayProfile()
     {
         $profile = unserialize($_SESSION['user']);
-        $courses = Course::getUserCourses($profile->getRegNo());
+        $courses = Course::getUserCourses($profile);
         return $this->render('profile', ['user'=>$profile, 'courses'=>$courses]);
 
     }
@@ -48,7 +48,7 @@ class ProfileController extends Controller
             'profile',
             [
                 'user'=>$user,
-                'courses'=>Course::getUserCourses($user->getRegNo())
+                'courses'=>Course::getUserCourses($user)
             ]
         );
     }

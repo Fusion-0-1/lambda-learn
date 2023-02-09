@@ -19,7 +19,6 @@ CREATE TABLE Student (
     index_no INT NOT NULL,
     date_joined DATETIME NOT NULL,
     degree_program_code VARCHAR(5) NOT NULL,
-    position VARCHAR(20) NOT NULL,
     CONSTRAINT PK_Student PRIMARY KEY (reg_no)
 );
 
@@ -37,6 +36,7 @@ CREATE TABLE AcademicStaff (
     active_status BOOLEAN,
     profile_picture VARCHAR(100),
     degree_program_code VARCHAR(5),
+    position VARCHAR(20) NOT NULL,
     CONSTRAINT PK_AcademicStaff PRIMARY KEY (reg_no)
 );
 
