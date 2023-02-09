@@ -59,5 +59,11 @@ $app->router->get('/account_creation', 'account_creation');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 // -------------------------------------------------------------------------
 
+// Coordinator routes
+// -------------------------------------------------------------------------
+$app->router->get('/assign_users_to_courses', 'assign_users_to_courses');
+// -------------------------------------------------------------------------
+
+
 
 $app->run();
