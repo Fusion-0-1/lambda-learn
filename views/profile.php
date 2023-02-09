@@ -17,7 +17,9 @@
 
             <!-- User details -->
             <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">
+
                 <h5 class="text-center">User Details</h5><br>
+
                 <div class="flex flex-wrap v-center h-center">
                     <img id="preview" src="<?php
                     $userRegNo = str_replace('/', '', $user->getRegNo());
@@ -34,6 +36,7 @@
                     <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide">
                         <i class="fa-solid fa-camera"></i></button><br>
                 </div>
+
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Registration Number</label>
                     <div class="flex flex-responsive">
@@ -41,14 +44,19 @@
                                readonly><br>
                     </div>
                 </div>
-                <div class="margin-top flex flex-column">
-                    <label class="margin-top">Index Number</label>
-                    <div class="flex flex-responsive">
-                        <!--                    TODO: Hide index number field for other users-->
-                        <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full"
-                               readonly><br>
+
+                <?php
+                if ($_SESSION['user-role'] == 'Student') {?>
+                    <div class="margin-top flex flex-column">
+                        <label class="margin-top">Index Number</label>
+                        <div class="flex flex-responsive">
+                            <!--                    TODO: Hide index number field for other users-->
+                            <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full"
+                                   readonly><br>
+                        </div>
                     </div>
-                </div>
+                <?php }?>
+
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Email</label>
                     <div class="flex flex-responsive">
@@ -56,29 +64,38 @@
                                class="input text-right width-full" readonly>
                     </div>
                 </div>
+
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Contact Number</label>
                         <div class="hide inline" id="edit-icon_1">
                             <i class="fa-solid fa-pen edit-icon"></i>
-                        </div></div>
+                        </div>
+                    </div>
                     <div class="flex flex-responsive">
                         <input type="text" name="contact" id="contact" value="<?php echo $user->getContactNo()?>"
                                class="input text-right width-full" readonly>
                     </div>
                 </div>
-                <div class="margin-top">
-                    <div class="flex flex-row h-justify flex-end">
-                        <label class="margin-top">Personal Email</label>
-                        <div class="hide inline" id="edit-icon_2">
-                            <i class="fa-solid fa-pen edit-icon"></i>
+
+
+                <?php
+                if ($_SESSION['user-role'] == 'Student') {?>
+                    <div class="margin-top">
+                        <div class="flex flex-row h-justify flex-end">
+                            <label class="margin-top">Personal Email</label>
+                            <div class="hide inline" id="edit-icon_2">
+                                <i class="fa-solid fa-pen edit-icon"></i>
+                            </div>
+                        </div>
+                        <div class="flex flex-responsive">
+                            <input type="text" name="personal_email" id="personal_email"
+                                   value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
                         </div>
                     </div>
-                    <div class="flex flex-responsive">
-                        <input type="text" name="personal_email" id="personal_email"
-                               value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
-                    </div>
-                </div>
+                <?php }?>
+
+
                 <div class="flex margin-top-btn h-center">
                     <button id="password" type="button" class="edit-btn edit-btn-text">Change Password</button>
                     <button id="edit" type="button" class="edit-btn edit-btn-icon">
@@ -86,7 +103,9 @@
                     </button><br>
                     <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
                 </div>
+
             </form>
+
 
             <!--Change password - Modal-->
             <div id="modal" class="modal" >
@@ -120,6 +139,7 @@
             </div>
         </div>
 
+
         <!--Login Activity-->
         <div class="flex flex-column width-full">
             <div class="border main-container v-center flex-gap text-center">
@@ -146,29 +166,36 @@
                 </label><br>
             </div>
 
-            <!--Registered Courses-->
-            <div class="border main-container v-center flex-gap full-height">
-                <h5>Registered Courses</h5><br>
-                <table>
-                    <?php
-                    $unique_courses = array();
-                    foreach ($courses as $course) {
-                        $course_code = $course->getCourseCode();
-                        if (!array_key_exists($course_code, $unique_courses)) {
-                            $unique_courses[$course_code] = $course;
-                        }
-                    }
-                    foreach ($unique_courses as $course) {
-                        ?>
-                        <tr>
-                            <td><?php echo $course->getCourseCode()?></td>
-                            <td><?php echo $course->getCourseName()?></td>
-                        </tr>
+
+<!--Registered Courses-->
+            <?php
+            if ($_SESSION['user-role'] == 'Student') {?>
+                <div class="border main-container v-center flex-gap full-height">
+                    <h5>Registered Courses</h5><br>
+                    <table>
                         <?php
-                    }
-                    ?>
-                </table>
-            </div>
+                        $unique_courses = array();
+                        foreach ($courses as $course) {
+                            $course_code = $course->getCourseCode();
+                            if (!array_key_exists($course_code, $unique_courses)) {
+                                $unique_courses[$course_code] = $course;
+                            }
+                        }
+                        foreach ($unique_courses as $course) {
+                            ?>
+                            <tr>
+                                <td><?php echo $course->getCourseCode()?></td>
+                                <td><?php echo $course->getCourseName()?></td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+                </div>
+            <?php }?>
+
+
+
         </div>
     </div>
 </div>
