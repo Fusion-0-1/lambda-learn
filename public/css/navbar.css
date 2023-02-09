@@ -1,4 +1,4 @@
-.sidebar, .topbar {
+#sidebar, .topbar {
     position: fixed;
     top: 0;
     left: 0;
@@ -6,7 +6,7 @@
     box-shadow: 4px 4px 18px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar {
+#sidebar {
     width: 50px;
     height: 100%;
     z-index: 2;
@@ -22,8 +22,8 @@
     display: none;
 }
 
-a {
-    padding: 13px;
+a{
+    padding: 13px !important;
     text-decoration: none;
     margin: 0 !important;
 }
@@ -103,7 +103,7 @@ a:visited{
     margin-bottom: 0;
 }
 
-.sidenav-element{
+#sidenav-element{
     height: 25px;
 }
 
@@ -123,7 +123,7 @@ a:visited{
         display: none;
     }
 
-    .sidebar{
+    #sidebar{
         display: none;
     }
 
@@ -148,7 +148,7 @@ a:visited{
         text-align: left;
     }
 
-    .sidebar{
+    #sidebar{
         background: var(--pure-white);
         position: fixed;
         top: auto;

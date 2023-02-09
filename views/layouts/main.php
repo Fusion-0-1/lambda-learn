@@ -72,16 +72,31 @@ if (!isset($_SESSION['user'])) {
     <title>Lambda - Learn</title>
 </head>
 <body>
-<div class="sidebar responsive-sidebar responsive-icons flex v-center h-center flex-column">
-        <a href="/"><img src="images/dashboard/courseOverview.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/userAccounts.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/attendanceReport.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/reports.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/kanbanBoard.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/homePage.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/announcement.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/calendar.svg" class="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/storage.svg" class="sidenav-element"></a>
+<div class="responsive-sidebar responsive-icons flex v-center h-center flex-column" id="sidebar">
+    <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
+        <a href="/"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
+    <?php }
+        if ($_SESSION['user-role'] == 'Coordinator') {?>
+            <a href="/"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
+    <?php }
+        if ($_SESSION['user-role'] == 'Admin') {?>
+        <a href="/"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
+    <?php }
+    if ($_SESSION['user-role'] == 'Coordinator') {?>
+    <a href="/"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
+    <?php }?>
+    <a href="/"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
+
+    <a href="/"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
+    <?php if ($_SESSION['user-role'] == 'Admin') {?>
+        <a href="/"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
+    <?php }
+    if ($_SESSION['user-role'] != 'Admin') {?>
+        <a href="/"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
+    <?php }?>
+
 </div>
 <div class="topbar flex h-justify v-center font">
     <div class="elements">
@@ -108,7 +123,12 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <div class="elements responsive-hide">
-                <a href="/profile">Inuri Lavanya</a>
+                <a href="/profile">
+                    <?php
+                        $profile = unserialize($_SESSION['user']);
+                        echo $profile->getFirstName()." ".$profile->getLastName();
+                    ?>
+                </a>
         </div>
 
         <div class="elements h-center responsive-hide">
@@ -116,7 +136,7 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <div class="elements responsive-hide">
-            <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            <a href="/logout"><img src="images/dashboard/Logout.svg" id="sidenav-element"></i></a>
         </div>
 
         <div class="elements">
@@ -125,9 +145,9 @@ if (!isset($_SESSION['user'])) {
     </div>
 
     <div id="modal_navbar" class=" hide flex flex-column">
-        <div class="border-modal"><a class="modal-text">Profile</a></div>
-        <div class="border-modal"><a class="modal-text">Leaderboard</a></div>
-        <div class="border-modal"><a class="modal-text">Logout</a></div>
+        <div class="border-modal"><a href="/profile" class="modal-text"><img src="images/dashboard/userAccounts.svg" id="sidenav-element">Profile</a></div>
+        <div class="border-modal"><a class="modal-text"><img src="images/dashboard/leaderBoard.svg" id="sidenav-element">Leaderboard</a></div>
+        <div class="border-modal"><a href="/logout" class="modal-text"><img src="images/dashboard/Logout.svg" id="sidenav-element">Logout</a></div>
     </div>
 
 </div>
