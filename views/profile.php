@@ -4,7 +4,6 @@
     <div class="flex h-center v-center flex-responsive">
         <div>
             <h2 class="text-center"><?php use app\core\User;
-
                 echo $user->getFirstName()." ".$user->getLastName() ?></h2>
             <h3 class="text-center text-normal line-height">
                 <?php echo User::getUserType($user->getRegNo()); ?>
@@ -169,7 +168,7 @@
 
 <!--Registered Courses-->
             <?php
-            if ($_SESSION['user-role'] == 'Student') {?>
+            if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
                 <div class="border main-container v-center flex-gap full-height">
                     <h5>Registered Courses</h5><br>
                     <table>
