@@ -1,98 +1,192 @@
 <link rel="stylesheet" href="css/dashboard.css">
 
-<div class="border main-container v-center flex-gap responsive-container">
+<div id="primary_dashboard" class="border main-container v-center flex-gap responsive-container">
     <h3>Dashboard</h3>
     <div class="card">
         <!-- Common cards -->
-        <a href="#">
+        <a href="/calender">
             <div class="cards">
                 <div class="cards_inside">
-                    <img src="./images/dashboard/calendar.png" alt="announcement">
+                    <img src="./images/dashboard/calendar.svg" alt="Calendar">
                 </div>
                 <div class="card_name">Calendar</div>
             </div>
         </a>
 
 
-        <a href="#">
+        <a href="/site_announcement">
             <div class="cards">
                 <div class="cards_inside cards_inside_announcement">
-                    <img src="./images/dashboard/announcement.png" alt="calender">
+                    <img src="./images/dashboard/announcement.svg" alt="Announcement">
                 </div>
                 <div class="card_name">Announcement</div>
             </div>
         </a>
 
 
-    <?php if ($_SESSION['user-role'] != 'Admin') {?>
-
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/courses.png" alt="courses">
+        <?php if ($_SESSION['user-role'] == 'Student') {?>
+            <a href="/leaderboard">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/leaderBoard.svg" alt="Leader Board">
+                    </div>
+                    <div class="card_name">Leader Board</div>
                 </div>
-                <div class="card_name">Courses</div>
-            </div>
-        </a>
+            </a>
+        <?php } ?>
 
 
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/reports.png" alt="reports">
+        <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
+            <a href="/attendance_course_progress">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/reports.svg" alt="Reports">
+                    </div>
+                    <div class="card_name">Reports</div>
                 </div>
-                <div class="card_name">Reports</div>
-            </div>
-        </a>
+            </a>
+        <?php } ?>
 
 
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/leaderBoard.png" alt="leaderBoard">
+        <?php if ($_SESSION['user-role'] == 'Admin') {?>
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/attendanceReport.svg" alt="Upload Attendance">
+                    </div>
+                    <div class="card_name">Upload Attendance</div>
                 </div>
-                <div class="card_name">Leader Board</div>
-            </div>
-        </a>
+            </a>
 
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/kanbanboard.png" alt="leaderBoard">
+            <a onclick="displayAdminDashboard()">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/userAccounts.svg" alt="User Accounts">
+                    </div>
+                    <div class="card_name">User Accounts</div>
                 </div>
-                <div class="card_name">Kanban Board</div>
-            </div>
-        </a>
-    <?php } ?>
+            </a>
 
-    <?php if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/uploadAttendance.png" alt="kanban board">
+
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/storage.svg" alt="Storage Utilization">
+                    </div>
+                    <div class="card_name">Storage Utilization</div>
                 </div>
-                <div class="card_name">Upload Attendance</div>
-            </div>
-        </a>
+            </a>
+        <?php } ?>
 
-        <a href="#" >
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/userAccounts.png" alt="userAccounts">
+        <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
+            <a href="#">
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/kanbanBoard.svg" alt="Kanban Board">
+                    </div>
+                    <div class="card_name">Kanban Board</div>
                 </div>
-                <div class="card_name">User Accounts</div>
-            </div>
-        </a>
+            </a>
+        <?php } ?>
 
+        <?php if ($_SESSION['user-role'] != 'Admin') {?>
 
-        <a href="#">
-            <div class="cards">
-                <div class="cards_inside">
-                    <img src="./images/dashboard/storage.png" alt="storage_utilization">
+            <a <?php if($_SESSION['user-role'] != 'Coordinator') echo 'href="/course_overview"';
+            else echo 'onclick=displayCoordinatorDashboard()'?>>
+                <div class="cards">
+                    <div class="cards_inside">
+                        <img src="./images/dashboard/<?php
+                        if($_SESSION['user-role'] != 'Coordinator') echo 'courses.svg';
+                        else echo 'courseOverview.svg'?>"
+                             alt="Courses">
+                    </div>
+                    <div class="card_name">Courses</div>
                 </div>
-                <div class="card_name">Storage Utilization</div>
-            </div>
-        </a>
-    <?php } ?>
+            </a>
+        <?php } ?>
     </div>
 </div>
+
+
+<!-------- Coordinator secondary dashboard, i.e. Courses Dashboard -------->
+<div id="coordinator_dashboard_2" class="border main-container v-center flex-gap responsive-container" hidden>
+    <h3>Courses</h3>
+    <div class="card">
+        <a href="/course_creation">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/createSettings.svg" alt="Create Course">
+                </div>
+                <div class="card_name">Create Course</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/assignUsers.svg" alt="Assign Users">
+                </div>
+                <div class="card_name">Assign Users</div>
+            </div>
+        </a>
+        <a href="/course_overview">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/courseOverview.svg" alt="Course Overview">
+                </div>
+                <div class="card_name">Course Overview</div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-------- Admin secondary dashboard, i.e. Accounts Dashboard -------->
+<div id="admin_dashboard_2" class="border main-container v-center flex-gap responsive-container" hidden>
+    <h3>Accounts</h3>
+    <div class="card">
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/studentAccount.svg" alt="Student Account">
+                </div>
+                <div class="card_name">Student Account</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/lecturerAccount.svg" alt="Lecturer Account">
+                </div>
+                <div class="card_name">Lecturer Account</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/coordinatorAccount.svg" alt="Coordinator Account">
+                </div>
+                <div class="card_name">Coordinator Account</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="cards">
+                <div class="cards_inside">
+                    <img src="./images/dashboard/administratorAccount.svg" alt="Administrator Account">
+                </div>
+                <div class="card_name">Administrator Account</div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<script>
+    function displayCoordinatorDashboard() {
+        document.getElementById('primary_dashboard').hidden = true;
+        document.getElementById('coordinator_dashboard_2').hidden = false;
+    }
+    function displayAdminDashboard() {
+        document.getElementById('primary_dashboard').hidden = true;
+        document.getElementById('admin_dashboard_2').hidden = false;
+    }
+</script>

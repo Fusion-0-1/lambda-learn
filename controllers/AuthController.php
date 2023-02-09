@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
 use app\core\User;
+use app\model\User\Admin;
+use app\model\User\Lecturer;
 use app\model\User\Student;
 
 class AuthController extends Controller
@@ -23,14 +25,14 @@ class AuthController extends Controller
                         $user = Student::fetchStuFromDb($regNo);
                         $_SESSION['user-role'] = 'Student';
                     } else if (User::getUserType($regNo) == 'Lecturer') {
-                        $user = new Lecturer($regNo);
-                        if ($user->getDegreeProgramCode() == NULL){
+                        $user = Lecturer::fetchLecFromDb($regNo);
+                        if (!$user->isCoordinator()){
                             $_SESSION['user-role'] = 'Lecturer';
                         } else {
                             $_SESSION['user-role'] = 'Coordinator';
                         }
                     } else if (User::getUserType($regNo) == 'Admin') {
-                        $user = new Admin($regNo);
+                        $user = Admin::fetchAdminFromDb($regNo);
                         $_SESSION['user-role'] = 'Admin';
                     }
                     $user->setLogin();

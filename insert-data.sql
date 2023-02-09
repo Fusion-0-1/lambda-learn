@@ -16,7 +16,7 @@ INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, pas
     ("2008/LC/0002", "Naresh", "Rajan", "2008lc0002@fusion.ac.lk", "746682736", "20080002@LC", "Lecturer"),
     ("2006/LC/0014", "Janani", "Walpola", "2006lc0014@fusion.ac.lk", "753028364", "20060014@LC", "Lecturer"),
     ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "20180022@LC", "Professor"),
-    ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "20030004@LC", "Professor"),
+    ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "$2y$10$eMkJfs5mM7MMFS3fLpv/peLGCcjEQiFBdIF9cGJdqZH9Ta/F1I6ou", "Professor"),
     ("1999/LC/0008", "Mohomad", "Abdullah", "1999lc0008@fusion.ac.lk", "716934345", "19990008@LC", "Senior Lecturer"),        
     ("2016/LC/0015", "Kamani", "Perera", "2016lc0015@fusion.ac.lk", "752345331", "20160015@LC", "Senior Professor"),
     ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC", "Lecturer");
@@ -25,7 +25,8 @@ UPDATE AcademicStaff SET degree_program_code = "CS" WHERE reg_no = "2003/LC/0004
 UPDATE AcademicStaff SET degree_program_code = "IS" WHERE reg_no = "1998/LC/0019";
 
 INSERT INTO Admin (reg_no, first_name, last_name, email, contact_no, password) VALUES
-    ("2018/AD/0012", "Suraj", "Pathirana", "2018ad0012@fusion.ac.lk", "716469634", "20180012@AD"),       
+    ("2020/AD/0026", "Ramindu", "Walgama", "2020ad0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG"),
+    ("2018/AD/0012", "Suraj", "Pathirana", "2018ad0012@fusion.ac.lk", "716469634", "20180012@AD"),
     ("2011/AD/0007", "Pathum", "Perera", "2011ad0007@fusion.ac.lk", "754533541", "20110007@AD"),
     ("2009/AD/0005", "Sisira", "Fernando", "2009ad0005@fusion.ac.lk", "777264452", "20090005@AD");
 
