@@ -21,7 +21,7 @@
 
     <div class="main-container border">
 
-        <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
+        <?php if ($_SESSION['user-role'] == 'Admin') {?>
         <div>
             <table class="download-table">
                 <tr>
