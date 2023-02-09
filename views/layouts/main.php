@@ -72,21 +72,20 @@ if (!isset($_SESSION['user'])) {
     <title>Lambda - Learn</title>
 </head>
 <body>
-<div class="sidebar flex v-center h-center flex-column">
-        <a href="/"><i class="fa-solid fa-graduation-cap"></i></a>
-        <a href="/"><i class="fa-solid fa-user-check"></i></a>
-        <a href="/"><i class="fa-solid fa-clipboard-list"></i></a>
-        <a href="/"><i class="fa-solid fa-chart-column"></i></a>
-        <a href="/"><i class="fa-solid fa-list-check"></i></a>
-        <a href="/"><i class="fa fa-home"></i></a>
-        <a href="/"><i class="fa-solid fa-scroll"></i></a>
-        <a href="/"><i class="fa-regular fa-calendar-days"></i></a>
-        <a href="/"><i class="fa-solid fa-clipboard-list"></i></a>
-        <a href="/"><i class="fa-solid fa-database"></i></a>
+<div class="sidebar responsive-sidebar responsive-icons flex v-center h-center flex-column">
+        <a href="/"><img src="images/dashboard/courseOverview.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/userAccounts.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/attendanceReport.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/reports.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/kanbanBoard.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/homePage.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/announcement.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/calendar.svg" class="sidenav-element"></a>
+        <a href="/"><img src="images/dashboard/storage.svg" class="sidenav-element"></a>
 </div>
 <div class="topbar flex h-justify v-center font">
     <div class="elements">
-        <img src="/images/logo.png" alt="logo" class="logo">
+        <img src="/images/logo_without_team_name.svg" alt="logo" class="logo flex flex-wrap">
     </div>
 
     <div class="v-center flex">
@@ -125,8 +124,8 @@ if (!isset($_SESSION['user'])) {
         </div>
     </div>
 
-    <div id="modal" class="margin-top width-full hide flex flex-column">
-        <div class="border-modal flex"><a class="modal-text">Profile</a></div>
+    <div id="modal_navbar" class=" hide flex flex-column">
+        <div class="border-modal"><a class="modal-text">Profile</a></div>
         <div class="border-modal"><a class="modal-text">Leaderboard</a></div>
         <div class="border-modal"><a class="modal-text">Logout</a></div>
     </div>
@@ -141,9 +140,9 @@ if (!isset($_SESSION['user'])) {
 
 <script>
     var hamburger_btn = document.getElementById("hamburger_icon");
-    var modal = document.getElementById("modal");
+    var modal_nav = document.getElementById("modal_navbar");
     hamburger_btn.onclick = function (){
-        modal.classList.remove("hide");
+        modal_nav.classList.remove("hide");
     }
 </script>
 

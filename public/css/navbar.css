@@ -23,10 +23,9 @@
 }
 
 a {
-    display: block;
-    color: var(--heading-blue);
     padding: 13px;
     text-decoration: none;
+    margin: 0 !important;
 }
 
 a:visited{
@@ -38,7 +37,7 @@ a:visited{
 }
 
 .logo{
-    height: 46px;
+    height: 30px;
     margin-left: 50px;
 }
 
@@ -82,28 +81,30 @@ a:visited{
     margin-left: -50px;
 }
 
-#modal {
+#modal_navbar {
     position: absolute;
     background-color: var(--blue-white);
-    left: 0;
+    left: auto;
     right: 0;
     top: 0;
-}
-
-.width-full{
-    width: 100%;
+    margin-top: 50px;
+    width: 50%;
 }
 
 .border-modal{
-    margin: 10px;
+    margin: 2% 3%;
     border: none;
-    border-radius: 10px;
+    border-radius: 8logpx;
     padding: 3%;
     background-color: var(--white);
 }
 
 .modal-text{
     margin-bottom: 0;
+}
+
+.sidenav-element{
+    height: 25px;
 }
 
 @media screen and (max-width: 1000px) {
@@ -145,6 +146,21 @@ a:visited{
         float: none;
         display: block;
         text-align: left;
+    }
+
+    .sidebar{
+        background: var(--pure-white);
+        position: fixed;
+        top: auto;
+        bottom: 0 !important;
+        height: 50px;
+        width: 100%;
+        display: flex;
+    }
+
+    .responsive-icons{
+        display: flex;
+        flex-direction: row;
     }
 }
 
