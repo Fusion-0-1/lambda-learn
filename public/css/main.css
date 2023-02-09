@@ -280,6 +280,10 @@ a:active {
     justify-content: flex-end;
 }
 
+.h-around {
+    justify-content: space-around;
+}
+
 .align-stretch{
     align-items: stretch;
 }
