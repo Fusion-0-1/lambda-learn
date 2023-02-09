@@ -3,6 +3,8 @@
 namespace app\model;
 
 use app\core\Application;
+use app\core\User;
+use app\model\User\Lecturer;
 
 class Course
 {
@@ -14,21 +16,6 @@ class Course
     private string $lecLastName;
 
     private function __construct() {}
-    
-    public static function fetchCourseFromDb(string $regNo) {
-        
-        $table = self::getUserCourses($regNo);
-
-        $course = new Course();
-        $course->courseCode = $table['course_code'];
-        $course->courseName = $table['course_name'];
-        $course->optionalFlag = $table['optional_flag'];
-        $course->lecRegNo = $table['lec_reg_no'];
-        $course->lecFirstName = $table['first_name'];
-        $course->lecLastName = $table['last_name'];
-
-        return $course;
-    }
 
     public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName) {
         $course = new Course();
@@ -42,28 +29,75 @@ class Course
         return $course;
     }
 
-    public static function getUserCourses($regNo): array
+    private static function getUserTable(User $user){
+        $type = $user::getUserType($user->getRegNo());
+        if ($type == 'Student') {
+            return 'StuCourse';
+        } else if ($type == 'Lecturer') {
+            return $user->isCoordinator() ? 'Course' : 'LecCourse';
+        }
+    }
+
+    public static function getUserCourses(User $user): array
     {
         $courses = [];
-        $results = Application::$db->select(
-            table: 'StuCourse',
-            columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no', 'AcademicStaff.first_name', 'AcademicStaff.last_name'],
-            join: [
-                [
-                    'table' =>'Course',
-                    'on' => 'StuCourse.course_code = Course.course_code'
+        $table = Course::getUserTable($user);
+        if ($table == 'Course') {
+            $results = Application::$db->select(
+                table: $table,
+                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
+                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                join: [
+                    [
+                        'table' => 'AcademicStaff',
+                        'on' => 'AcademicStaff.reg_no = Course.cord_reg_no'
+                    ],
+                    [
+                        'table' => 'LecCourse',
+                        'on' => 'Course.course_code = LecCourse.course_code'
+                    ]
                 ],
-                [
-                    'table' => 'LecCourse',
-                    'on' => 'Course.course_code = LecCourse.course_code'
+                where: ['Course.cord_reg_no'=>$user->getRegNo()],
+            );
+        } elseif ($table == 'LecCourse'){
+            $results = Application::$db->select(
+                table: $table,
+                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
+                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                join: [
+                    [
+                        'table' => 'AcademicStaff',
+                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
+                    ],
+                    [
+                        'table' => 'Course',
+                        'on' => 'LecCourse.course_code = Course.course_code'
+                    ]
                 ],
-                [
-                    'table' => 'AcademicStaff',
-                    'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
-                ]
-            ],
-            where: ['StuCourse.stu_reg_no'=>$regNo],
-        );
+                where: ['LecCourse.lec_reg_no'=>$user->getRegNo()],
+            );
+        } else {
+            $results = Application::$db->select(
+                table: $table,
+                columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag',
+                    'LecCourse.lec_reg_no', 'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                join: [
+                    [
+                        'table' => 'Course',
+                        'on' => 'StuCourse.course_code = Course.course_code'
+                    ],
+                    [
+                        'table' => 'LecCourse',
+                        'on' => 'Course.course_code = LecCourse.course_code'
+                    ],
+                    [
+                        'table' => 'AcademicStaff',
+                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
+                    ]
+                ],
+                where: ['StuCourse.stu_reg_no' => $user->getRegNo()],
+            );
+        }
         while ($course = Application::$db->fetch($results)){
             $courses[] = self::createNewCourse(
                 $course['course_code'],
