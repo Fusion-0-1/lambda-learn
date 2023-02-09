@@ -28,7 +28,7 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
-$app->router->get('/cs1208', '/course/cs1208');
+$app->router->get('/cs2003', '/course/cs2003');
 
 $app->router->get('/submissions', 'submissions');
 $app->router->get('/marks_upload', 'marks_upload');
