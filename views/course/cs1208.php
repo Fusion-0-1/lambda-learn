@@ -60,14 +60,15 @@
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
-            <h5> Student Progress </h5>
+            <?php if ($_SESSION['user-role'] == 'Student') {?>
+                <h5> Student Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-outer border-radius">
                     <div class="progress-bar student-progress border-radius"></div>
                 </div>
                 <div class="progress-value flex h-end v-center"><h5> 20% </h5></div>
             </div>
-        
+            <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-inner border-radius" id="topic1">
