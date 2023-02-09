@@ -10,8 +10,8 @@
 }
 
 .list-header {
-    padding: 0px 20px;
-    /* margin-bottom: 20px; */
+    padding: 0px 10px;
+    margin-bottom: -10px;
     color: #0D2137;
 }
 
@@ -29,7 +29,6 @@
     flex: 1;
     height: 20%;
     overflow: scroll;
-    /* padding: 0px 20px; */
 }
 
 .draggable {
@@ -39,7 +38,6 @@
 }
 
 .card-header {
-    /* width: 100%; */
     background-color: #0B2273;
     color: #ffffff;
     padding: 10px 20px;
@@ -52,9 +50,12 @@
 }
 
 .card-body {
-    /* width: 100%; */
     padding: 5px 20px;
     word-wrap: break-word;
+}
+
+.card-body-modal {
+    width: 100%;
 }
 
 .card-footer {
@@ -75,6 +76,10 @@
 
 .item-gap {
     gap: 20px;
+}
+
+.modal {
+    display: none;
 }
 
 .card-add-modal {
@@ -107,40 +112,11 @@ input[value="Done"] {
 }
 
 @media (max-width: 425px) {
-    .progress-bar-outer {
-        margin: 10px 0px 20px 0px;
-    }
-
-    .progress-value {
-        display: none;
-    }
-
-    .progress-bar-inner {
-        margin: 10px 0px 20px 0px;
-    }
-
-    .topic-progress-label {
-        display: none;
-    }
-
-    .outer-secondary-container {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .inner-secondary-container {
-        width: 85%;
-    }
-
-    .inner-container {
-        font-size: 12px;
-    }
-    .topic-container {
+    .card-container {
         flex-direction: column;
     }
 
-    .course-topic {
-        width: 90%;
-        height: auto;
+    .card-list {
+        width: auto;
     }
 }

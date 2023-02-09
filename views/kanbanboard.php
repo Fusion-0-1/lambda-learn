@@ -5,10 +5,10 @@
     <h3 class="text-bold"> Kanban Board </h3>    
 
     <div class="modal" id="card-add-modal">
-            <div class="card-add-modal border border-radius">
+            <div class="card-add-modal border border-radius flex flex-column">
                 <form action="#" method="POST">
-                    <div><input type="text" name="card-header card-header-modal" id="card-header-modal" class="card-header border border-radius" placeholder="Card Title" required></div>
-                    <div><textarea name="card-body" class="card-body border border-radius" placeholder="Card Content"></textarea></div>
+                    <div class="flex"><input type="text" name="card-header" id="card-header-modal" class="card-header  card-header-modal border border-radius" placeholder="Card Title" required></div>
+                    <div class="flex"><textarea name="card-body" class="card-body card-body-modal border border-radius" placeholder="Card Content"></textarea></div>
                     <div class="card-footer border border-radius flex flex-row h-justify v-center">
                         <div class="card-deadline-label">
                             <label>Deadline :</label>
@@ -112,7 +112,7 @@
         <div class="card-list border border-radius flex flex-column">
             <div class="list-header flex h-justify v-center">
                     <h5> In Progress</h5>
-                    <div class="add-card"><button class="card-button" id="card-add-todo"><span class="fa fa-plus-square"></span></button></div>
+                    <div class="add-card"><button class="card-button" id="card-add-inprogress"><span class="fa fa-plus-square"></span></button></div>
             </div>
             
             <div class="droppable">
@@ -192,7 +192,7 @@
         <div class="card-list border border-radius flex flex-column">
             <div class="list-header flex h-justify v-center">
                     <h5> Done </h5>
-                    <div class="add-card"><button class="card-button" id="card-add-todo"><span class="fa fa-plus-square"></span></button></div>
+                    <div class="add-card"><button class="card-button" id="card-add-done"><span class="fa fa-plus-square"></span></button></div>
             </div>
             
             <div class="droppable">
