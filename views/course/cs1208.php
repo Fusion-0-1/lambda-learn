@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
-<div class="modal">
+<div class="modal hide">
     <div class="popup_card modal-content">
         <div class="course_name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
         <div class="course_code flex h-center">SCS 2201</div>
@@ -103,7 +103,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
-                <div class="hyperlink"> View all </div>
+                <a href="/site_announcement" class="hyperlink"> View all </a>
             </div>
             <div class="inner-container border-radius"> DSA - Tutorial Session </div>
             <div class="inner-container border-radius"> SCS2201_Rescheduling the lecture on 15/09/2022 </div>
