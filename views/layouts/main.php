@@ -77,22 +77,28 @@ if (!isset($_SESSION['user'])) {
         <a href="/"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
         <a href="/"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
     <?php }
-        if ($_SESSION['user-role'] == 'Coordinator') {?>
+
+    if ($_SESSION['user-role'] == 'Coordinator') {?>
             <a href="/"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
     <?php }
-        if ($_SESSION['user-role'] == 'Admin') {?>
+
+    if ($_SESSION['user-role'] == 'Admin') {?>
         <a href="/"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
         <a href="/"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
     <?php }
+
     if ($_SESSION['user-role'] == 'Coordinator') {?>
     <a href="/"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
-    <?php }?>
-    <a href="/"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
 
+    <?php }?>
+
+    <a href="/"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
     <a href="/"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
+
     <?php if ($_SESSION['user-role'] == 'Admin') {?>
         <a href="/"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
     <?php }
+
     if ($_SESSION['user-role'] != 'Admin') {?>
         <a href="/"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
     <?php }?>
@@ -112,6 +118,8 @@ if (!isset($_SESSION['user'])) {
                 <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
             </div>
         </div>
+        <?php
+        if ($_SESSION['user-role'] == 'Student') {?>
         <div class="elements responsive-hide">
             <span class="point-border point">
                 <span class="text-bold">1204</span>
@@ -121,6 +129,8 @@ if (!isset($_SESSION['user'])) {
                 5
             </span>
         </div>
+        <?php }?>
+
 
         <div class="elements responsive-hide">
                 <a href="/profile">
