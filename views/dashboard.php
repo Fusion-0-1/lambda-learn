@@ -144,7 +144,7 @@
 <div id="admin_dashboard_2" class="border main-container v-center flex-gap responsive-container" hidden>
     <h3>Accounts</h3>
     <div class="card">
-        <a href="#">
+        <a href="/account_creation">
             <div class="cards">
                 <div class="cards_inside">
                     <img src="./images/dashboard/studentAccount.svg" alt="Student Account">
@@ -152,7 +152,7 @@
                 <div class="card_name">Student Account</div>
             </div>
         </a>
-        <a href="#">
+        <a href="/account_creation">
             <div class="cards">
                 <div class="cards_inside">
                     <img src="./images/dashboard/lecturerAccount.svg" alt="Lecturer Account">
@@ -160,7 +160,7 @@
                 <div class="card_name">Lecturer Account</div>
             </div>
         </a>
-        <a href="#">
+        <a href="/account_creation">
             <div class="cards">
                 <div class="cards_inside">
                     <img src="./images/dashboard/coordinatorAccount.svg" alt="Coordinator Account">
@@ -168,7 +168,7 @@
                 <div class="card_name">Coordinator Account</div>
             </div>
         </a>
-        <a href="#">
+        <a href="/account_creation">
             <div class="cards">
                 <div class="cards_inside">
                     <img src="./images/dashboard/administratorAccount.svg" alt="Administrator Account">
