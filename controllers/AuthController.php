@@ -38,10 +38,14 @@ class AuthController extends Controller
                     $user->setLogin();
                     $_SESSION['user'] = serialize($user);
                     $_SESSION['last_activity'] = time();
-                    return $this->render('dashboard');
+                    header('Location: /');
+                    exit;
                 }
             }
-            return $this->renderOnlyView('login', ['error' => 'Invalid credentials']);
+            return $this->renderOnlyView(
+                view: 'login',
+                params: ['error' => 'Invalid credentials']
+            );
         }
     }
 

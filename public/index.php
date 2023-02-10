@@ -2,6 +2,8 @@
 
 use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
+use app\controllers\Kanbanboard;
+use app\controllers\LeaderboardController;
 use app\controllers\ProfileController;
 use app\core\Application;
 use app\controllers\CourseController;
@@ -28,21 +30,19 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
-$app->router->get('/cs2003', '/course/cs2003');
-$app->router->get('/kanbanboard', 'kanbanboard');
+$app->router->get('/cs2003', [CourseController::class, 'displayCourse']);
+$app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 $app->router->get('/attendance_upload', 'attendance_upload');
 $app->router->get('/utilization', 'utilization');
 
-$app->router->get('/submissions', 'submissions');
-$app->router->get('/marks_upload', 'marks_upload');
+$app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
+$app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
 
-$app->router->get('/account_creation', 'account_creation');
-$app->router->get('/leaderboard', 'leaderboard');
-$app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+$app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
-$app->router->get('/course_initialization', 'course_initialization');
-$app->router->get('/attendance_course_progress', 'attendance_course_progress');
+$app->router->get('/course_initialization', [CourseController::class, 'courseInitialization']);
+$app->router->get('/attendance_course_progress', [CourseController::class, 'displayCoordinatorCharts']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
@@ -57,13 +57,13 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 
 // Admin routes
 // -------------------------------------------------------------------------
-$app->router->get('/account_creation', 'account_creation');
+$app->router->get('/account_creation', [ProfileController::class, 'displayAccountCreation']);
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 // -------------------------------------------------------------------------
 
 // Coordinator routes
 // -------------------------------------------------------------------------
-$app->router->get('/assign_users_to_courses', 'assign_users_to_courses');
+$app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
 // -------------------------------------------------------------------------
 
 

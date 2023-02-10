@@ -79,7 +79,7 @@
         <?php } ?>
 
         <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
-            <a href="#">
+            <a href="/kanbanboard">
                 <div class="cards">
                     <div class="cards_inside">
                         <img src="./images/dashboard/kanbanBoard.svg" alt="Kanban Board">

@@ -12,11 +12,57 @@ class CourseController extends Controller
     {
         $user = unserialize($_SESSION['user']);
         $courses = ['courses'=>Course::getUserCourses($user)];
-        return $this->render('course/course_overview', $courses);
+        return $this->render(
+            view: 'course/course_overview',
+            allowedRoles: ['Lecturer', 'Student', 'Coordinator'],
+            params: $courses
+        );
     }
 
+    public function displayCourse()
+    {
+        return $this->render(
+            view: '/course/cs1208',
+            allowedRoles: ['Lecturer', 'Student']
+        );
+    }
+
+    public function displayAllSubmissions()
+    {
+        return $this->render(
+            view: '/submissions',
+            allowedRoles: ['Lecturer']
+        );
+    }
+
+    public function displayCourseMarkUpload()
+    {
+        return $this->render(
+            view: '/marks_upload',
+            allowedRoles: ['Lecturer', 'Coordinator']
+        );
+    }
+
+    public function courseInitialization()
+    {
+        return $this->render(
+            view: '/course_initialization',
+            allowedRoles: ['Lecturer']
+        );
+    }
     public function courseCreation()
     {
-        return $this->render('course/course_creation');
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator']
+        );
+    }
+
+    public function displayAssignUsersToCourses()
+    {
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator']
+        );
     }
 }
