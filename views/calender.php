@@ -36,21 +36,21 @@
                     <div class="date">January 4 2023</div>
                 </div>
                 <div class="cards_heading cards_content flex h-justify v-center">
-                    <div class="rank">Calender Task 1</div>
-                    <div class="student_name">8:30</div>
+                    <div class="rank">CS 2003 Assignment 1</div>
+                    <div class="student_name">08:30</div>
                 </div>
 
                 <div class="cards_heading cards_content1 flex h-justify v-center">
-                    <div class="rank">Calender Task 2</div>
+                    <div class="rank">CS 2001 Labsheet 4</div>
                     <div class="student_name">09:30</div>
                 </div>
                 <div class="cards_heading cards_content flex h-justify v-center">
-                    <div class="rank">Calender Task 3</div>
+                    <div class="rank">CS 2002 Tutorial</div>
                     <div class="student_name">10:30</div>
                 </div>
 
                 <div class="cards_heading cards_content1 flex h-justify v-center">
-                    <div class="rank">Calender Task 4</div>
+                    <div class="rank">CS 2004 Online Quiz</div>
                     <div class="student_name">11:30</div>
                 </div>
             </div>
