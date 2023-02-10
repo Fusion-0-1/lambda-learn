@@ -14,7 +14,10 @@ class ProfileController extends Controller
     {
         $profile = unserialize($_SESSION['user']);
         $courses = Course::getUserCourses($profile);
-        return $this->render('profile', ['user'=>$profile, 'courses'=>$courses]);
+        return $this->render(
+            view: 'profile',
+            params: ['user'=>$profile, 'courses'=>$courses]
+        );
 
     }
 
@@ -45,11 +48,20 @@ class ProfileController extends Controller
 
         $user->editProfile();
         return $this->render(
-            'profile',
-            [
+            view: 'profile',
+            params: [
                 'user'=>$user,
                 'courses'=>Course::getUserCourses($user)
             ]
+        );
+    }
+
+
+    public function displayAccountCreation()
+    {
+        return $this->render(
+            view: '/account_creation',
+            allowedRoles: ['Admin']
         );
     }
 

@@ -47,7 +47,7 @@
                         <input type="checkbox" checked="checked">
                         <span class="checkmark"></span>
                     </label>
-                    <button class="marks_btn dark-btn">Upload Marks</button>
+                    <button class="marks_btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
                     <button class="marks_btn dark-btn">Download All Submissions</button>
                 </div>
             </div>

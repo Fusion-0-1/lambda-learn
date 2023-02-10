@@ -61,7 +61,6 @@
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
-
         <?php if ($_SESSION['user-role'] == 'Student') {?>
             <h5> Student Progress </h5>
             <div class="flex flex-row">
@@ -71,7 +70,6 @@
                 <div class="progress-value flex h-end v-center"><h5> 20% </h5></div>
             </div>
         <?php } ?>
-        
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-inner border-radius" id="topic1">
@@ -117,7 +115,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <div class="hyperlink"> View all </div>
+                <a href="/submissions" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>
