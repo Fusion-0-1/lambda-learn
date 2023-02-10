@@ -73,35 +73,35 @@ if (!isset($_SESSION['user'])) {
 </head>
 <body>
 <div class="responsive-sidebar responsive-icons flex v-center h-center flex-column" id="sidebar">
+
     <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
-        <a href="/"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
+        <a href="/course_overview"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
+        <a href="/kanbanboard"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Coordinator') {?>
-            <a href="/"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
+            <a href="/course_overview"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="/"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
+        <a href="/" class="hide"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
+        <a href="/attendance_upload"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Coordinator') {?>
-    <a href="/"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
+    <a href="/attendance_course_progress"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
 
     <?php }?>
 
     <a href="/"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
-    <a href="/"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
+    <a href="/site_announcement"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
 
     <?php if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="/"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
-    <?php }
-
-    if ($_SESSION['user-role'] != 'Admin') {?>
-        <a href="/"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
+        <a href="/utilization"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
     <?php }?>
+
+        <a href="/calender"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
+
 
 </div>
 <div class="topbar flex h-justify v-center font">
@@ -120,7 +120,7 @@ if (!isset($_SESSION['user'])) {
         </div>
         <?php
         if ($_SESSION['user-role'] == 'Student') {?>
-        <div class="elements responsive-hide">
+        <a href="/leaderboard"><div class="elements responsive-hide">
             <span class="point-border point">
                 <span class="text-bold">1204</span>
                 <span class="text-normal">Points</span>
@@ -128,7 +128,7 @@ if (!isset($_SESSION['user'])) {
             <span class="point-border rank text-bold">
                 5
             </span>
-        </div>
+            </div></a>
         <?php }?>
 
 
