@@ -5,6 +5,7 @@ use app\controllers\AuthController;
 use app\controllers\Kanbanboard;
 use app\controllers\LeaderboardController;
 use app\controllers\ProfileController;
+use app\controllers\SummaryViewController;
 use app\core\Application;
 use app\controllers\CourseController;
 
@@ -42,7 +43,7 @@ $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderb
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
 $app->router->get('/course_initialization', [CourseController::class, 'courseInitialization']);
-$app->router->get('/attendance_course_progress', [CourseController::class, 'displayCoordinatorCharts']);
+$app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
