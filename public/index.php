@@ -30,6 +30,8 @@ $app->router->get('/calender', 'calender');
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/cs1208', '/course/cs1208');
 $app->router->get('/kanbanboard', 'kanbanboard');
+$app->router->get('/attendance_upload', 'attendance_upload');
+$app->router->get('/utilization', 'utilization');
 
 $app->router->get('/submissions', 'submissions');
 $app->router->get('/marks_upload', 'marks_upload');
@@ -58,6 +60,12 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 $app->router->get('/account_creation', 'account_creation');
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 // -------------------------------------------------------------------------
+
+// Coordinator routes
+// -------------------------------------------------------------------------
+$app->router->get('/assign_users_to_courses', 'assign_users_to_courses');
+// -------------------------------------------------------------------------
+
 
 
 $app->run();
