@@ -1,0 +1,33 @@
+#assign_students{
+    margin-left: 0 !important;
+}
+
+#assign_lecturers{
+    margin-right: 0 !important;
+}
+
+.half-width{
+    width: 50%;
+}
+
+label{
+    margin-left: 2%;
+}
+
+.flex-gap{
+    margin: 10px;
+}
+
+.input{
+    height: 30px;
+}
+
+.edit-btn-text{
+    background-color: var(--x-dark-blue);
+    border: none;
+    width: 50%;
+    color: var(--pure-white);
+    margin-left: auto;
+    margin-right: auto;
+}
+}
