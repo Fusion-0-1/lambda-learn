@@ -11,7 +11,7 @@ class AnnouncementController extends Controller
     {
         $announcements = ['announcements'=>SiteAnnouncement::getSiteAnnouncements()];
         return $this->render(
-            view: 'leaderboard',
+            view: 'announcement',
             params: $announcements
         );
     }

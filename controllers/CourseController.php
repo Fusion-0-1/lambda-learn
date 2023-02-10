@@ -22,7 +22,7 @@ class CourseController extends Controller
     public function displayCourse()
     {
         return $this->render(
-            view: '/course/cs1208',
+            view: '/course/cs2003',
             allowedRoles: ['Lecturer', 'Student']
         );
     }
