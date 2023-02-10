@@ -4,7 +4,7 @@
     <div class="popup_card modal-content">
         <span class="close">&times;</span>
         <div class="course_name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
-        <div class="course_code flex h-center">SCS 2201</div>
+        <div class="course_code flex h-center">CS 2003</div>
 
         <div class="submission_topic text-bold">Submission 1 - String Matching</div>
         <div class="submissions_card_inside">
@@ -56,11 +56,12 @@
 </div>
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
-    <h3 class="text-bold">Data Structures and Algorithms</h3>
-    <h3>CS 2208</h3>
+    <h3 class="text-bold">Data Structures and Algorithms III</h3>
+    <h3>CS 2003</h3>
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
+        <?php if ($_SESSION['user-role'] == 'Student') {?>
             <h5> Student Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-outer border-radius">
@@ -68,7 +69,7 @@
                 </div>
                 <div class="progress-value flex h-end v-center"><h5> 20% </h5></div>
             </div>
-        
+        <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-inner border-radius" id="topic1">
@@ -114,7 +115,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <div class="hyperlink"> View all </div>
+                <a href="/submissions" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>

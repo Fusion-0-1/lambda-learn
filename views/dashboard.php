@@ -49,7 +49,7 @@
 
 
         <?php if ($_SESSION['user-role'] == 'Admin') {?>
-            <a href="#">
+            <a href="/attendance_upload">
                 <div class="cards">
                     <div class="cards_inside">
                         <img src="./images/dashboard/attendanceReport.svg" alt="Upload Attendance">
@@ -68,7 +68,7 @@
             </a>
 
 
-            <a href="#">
+            <a href="/utilization">
                 <div class="cards">
                     <div class="cards_inside">
                         <img src="./images/dashboard/storage.svg" alt="Storage Utilization">
@@ -79,7 +79,7 @@
         <?php } ?>
 
         <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
-            <a href="#">
+            <a href="/kanbanboard">
                 <div class="cards">
                     <div class="cards_inside">
                         <img src="./images/dashboard/kanbanBoard.svg" alt="Kanban Board">
@@ -120,7 +120,7 @@
                 <div class="card_name">Create Course</div>
             </div>
         </a>
-        <a href="#">
+        <a href="/assign_users_to_courses">
             <div class="cards">
                 <div class="cards_inside">
                     <img src="./images/dashboard/assignUsers.svg" alt="Assign Users">
