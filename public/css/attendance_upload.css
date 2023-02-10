@@ -1,0 +1,14 @@
+.download-table {
+    padding: 0px 15%;
+}
+
+tr {
+    text-align: center;
+    height: 40px;
+}
+
+.upload-input {
+    background-color: #0B2273;
+    color: white;
+    width: 100px;
+}
