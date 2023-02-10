@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
-<div class="modal hide">
+<div class="modal hide" id="modal_submission">
     <div class="popup_card modal-content">
+        <span class="close">&times;</span>
         <div class="course_name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
         <div class="course_code flex h-center">SCS 2201</div>
 
@@ -105,9 +106,9 @@
                 <h5> Announcements </h5>
                 <a href="/site_announcement" class="hyperlink"> View all </a>
             </div>
-            <div class="inner-container border-radius"> DSA - Tutorial Session </div>
-            <div class="inner-container border-radius"> SCS2201_Rescheduling the lecture on 15/09/2022 </div>
-            <div class="inner-container border-radius"> Assignment 1 Details - String Matching </div>
+            <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>
+            <button class="inner-container border-radius text-left"> SCS2201_Rescheduling the lecture on 15/09/2022 </button>
+            <button class="inner-container border-radius text-left"> Assignment 1 Details - String Matching </button>
         </div>
 
         <div class="inner-secondary-container border border-radius flex flex-column">
@@ -115,9 +116,9 @@
                 <h5> Submissions </h5>
                 <div class="hyperlink"> View all </div>
             </div>
-            <div class="inner-container border-radius"> Submission 3 - Greedy Alogrothms (Group Projects) </div>
-            <div class="inner-container border-radius"> Submission 2 - Greedy Alogorithms </div>
-            <div class="inner-container border-radius"> Submission 1 - String Matching </div>
+            <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
+            <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>
+            <button class="inner-container border-radius text-left"> Submission 1 - String Matching </button>
         </div>
 
     </div>
@@ -211,5 +212,21 @@
             </div>
         </div>
     </div>
-    
+    <script>
+        var modal_submission = document.getElementById("modal_submission");
+        var btn = document.getElementById("submission1");
+        var span = document.getElementsByClassName("close")[0];
+
+        btn.onclick = function() {
+            modal_submission.style.display = "block";
+        }
+        span.onclick = function() {
+            modal_submission.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal_submission) {
+                modal_submission.style.display = "none";
+            }
+        }
+    </script>
 </div>
