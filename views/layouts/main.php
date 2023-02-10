@@ -85,7 +85,7 @@ if (!isset($_SESSION['user'])) {
 
     if ($_SESSION['user-role'] == 'Admin') {?>
         <a href="/" class="hide"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
-        <a href="/"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
+        <a href="/attendance_upload"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Coordinator') {?>
@@ -97,7 +97,7 @@ if (!isset($_SESSION['user'])) {
     <a href="/site_announcement"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
 
     <?php if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="/"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
+        <a href="/utilization"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
     <?php }?>
 
         <a href="/calender"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
