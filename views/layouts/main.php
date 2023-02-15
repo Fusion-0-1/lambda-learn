@@ -71,45 +71,51 @@ if (!isset($_SESSION['user'])) {
 
     <title>Lambda - Learn</title>
 </head>
-<body>
-<div class="responsive-sidebar responsive-icons flex v-center h-center flex-column" id="sidebar">
 
+<body>
+<div class="responsive-icons flex v-center h-center flex-column" id="sidebar">
+
+<!--Side Navbar-->
     <?php if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
-        <a href="/course_overview"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
-        <a href="/kanbanboard"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
+        <a href="/course_overview" class="nav-link-bottom"><img src="images/dashboard/courses.svg" id="sidenav-element"></a>
+        <a href="/kanbanboard" class="nav-link-bottom"><img src="images/dashboard/kanbanBoard.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Coordinator') {?>
-            <a href="/course_overview"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
+            <a href="/course_overview" class="nav-link-bottom"><img src="images/dashboard/courseOverview.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="/" class="hide"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
-        <a href="/attendance_upload"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
+        <a href="/" class="hide nav-link-bottom"><img src="images/dashboard/userAccounts.svg" id="sidenav-element"></a>
+        <a href="/attendance_upload"  class="nav-link-bottom"><img src="images/dashboard/attendanceReport.svg" id="sidenav-element"></a>
     <?php }
 
     if ($_SESSION['user-role'] == 'Coordinator') {?>
-    <a href="/attendance_course_progress"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
+    <a href="/attendance_course_progress" class="nav-link-bottom"><img src="images/dashboard/reports.svg" id="sidenav-element"></a>
 
     <?php }?>
 
-    <a href="/"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
-    <a href="/site_announcement"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
+    <a href="/" class="nav-link-bottom"><img src="images/dashboard/homePage.svg" id="sidenav-element"></a>
+    <a href="/site_announcement" class="nav-link-bottom"><img src="images/dashboard/announcement.svg" id="sidenav-element"></a>
 
     <?php if ($_SESSION['user-role'] == 'Admin') {?>
-        <a href="/utilization"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
+        <a href="/utilization" class="nav-link-bottom"><img src="images/dashboard/storage.svg" id="sidenav-element"></a>
     <?php }?>
 
-        <a href="/calender"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
-
-
+        <a href="/calender" class="nav-link-bottom"><img src="images/dashboard/calendar.svg" id="sidenav-element"></a>
 </div>
+
+
+<!--Top Navbar-->
 <div class="topbar flex h-justify v-center font">
+
+<!--Logo-->
     <div class="elements">
         <img src="/images/logo_without_team_name.svg" alt="logo" class="logo flex flex-wrap">
     </div>
 
-    <div class="v-center flex">
+<!--Search bar-->
+    <div div class="v-center flex">
         <div class="flex elements responsive-hide">
             <div class="flex">
                 <input type="search" class="search-bar input" placeholder="Search" >
@@ -118,9 +124,15 @@ if (!isset($_SESSION['user'])) {
                 <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>
             </div>
         </div>
+    </div>
+
+
+    <div class="v-center flex">
+
+<!--Leaderboard points-->
         <?php
         if ($_SESSION['user-role'] == 'Student') {?>
-        <a href="/leaderboard"><div class="elements responsive-hide">
+        <a href="/leaderboard" class="nav-link"><div class="elements responsive-hide">
             <span class="point-border point">
                 <span class="text-bold">1204</span>
                 <span class="text-normal">Points</span>
@@ -131,9 +143,9 @@ if (!isset($_SESSION['user'])) {
             </div></a>
         <?php }?>
 
-
+<!--User name-->
         <div class="elements responsive-hide">
-                <a href="/profile">
+                <a href="/profile" class="nav-link"  id="name">
                     <?php
                         $profile = unserialize($_SESSION['user']);
                         echo $profile->getFirstName()." ".$profile->getLastName();
@@ -141,23 +153,47 @@ if (!isset($_SESSION['user'])) {
                 </a>
         </div>
 
+<!--Profile image-->
         <div class="elements h-center responsive-hide">
-            <img src="/images/profile.png" alt="profile" class="profile-nav">
+            <a href="/profile"><img src="/images/profile.png" alt="profile" class="profile-nav flex"></a>
         </div>
 
+<!--Logout-->
         <div class="elements responsive-hide">
-            <a href="/logout"><img src="images/dashboard/Logout.svg" id="sidenav-element"></i></a>
+            <a href="/logout" class="nav-link"><img src="images/dashboard/Logout.svg" id="sidenav-element"></i></a>
         </div>
 
+<!--Dropdown menu icon-->
         <div class="elements">
-            <a class="icon" id="hamburger_icon"><i class="fa-solid fa-bars"></i></a>
+            <a class="icon" id="hamburger_icon" class="nav-link"><i class="fa-solid fa-bars"></i></a>
         </div>
     </div>
 
+
+<!--Dropdown menu-->
     <div id="modal_navbar" class=" hide flex flex-column">
-        <div class="border-modal"><a href="/profile" class="modal-text"><img src="images/dashboard/userAccounts.svg" id="sidenav-element">Profile</a></div>
-        <div class="border-modal"><a class="modal-text"><img src="images/dashboard/leaderBoard.svg" id="sidenav-element">Leaderboard</a></div>
-        <div class="border-modal"><a href="/logout" class="modal-text"><img src="images/dashboard/Logout.svg" id="sidenav-element">Logout</a></div>
+        <div class="border-modal inline v-center">
+            <a href="/profile" class="modal-text nav-link flex">
+                <img src="images/dashboard/userAccounts.svg" id="sidenav-element">
+            </a>
+            <a href="/profile" class="modal-text nav-link flex">Profile</a>
+        </div>
+
+        <?php if ($_SESSION['user-role'] == 'Student') {?>
+            <div class="border-modal inline v-center">
+                <a href="/leaderboard" class="modal-text nav-link flex">
+                    <img src="images/dashboard/leaderBoard.svg" id="sidenav-element">
+                </a>
+                <a href="/leaderboard" class="modal-text nav-link flex">Leaderboard</a>
+            </div>
+        <?php }?>
+
+        <div class="border-modal inline v-center">
+            <a href="/logout" class="modal-text nav-link flex">
+                <img src="images/dashboard/Logout.svg" id="sidenav-element">
+            </a>
+            <a href="/logout" class="modal-text nav-link flex">Logout</a>
+        </div>
     </div>
 
 </div>
@@ -169,10 +205,17 @@ if (!isset($_SESSION['user'])) {
 </div>
 
 <script>
-    var hamburger_btn = document.getElementById("hamburger_icon");
-    var modal_nav = document.getElementById("modal_navbar");
+    const hamburger_btn = document.getElementById("hamburger_icon");
+    const modal_nav = document.getElementById("modal_navbar");
+
     hamburger_btn.onclick = function (){
         modal_nav.classList.remove("hide");
+    }
+
+    window.onclick = function(event) {
+        if (event.target === modal_nav) {
+            modal_nav.classList.add("hide");
+        }
     }
 </script>
 
