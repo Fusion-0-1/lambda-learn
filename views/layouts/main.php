@@ -142,7 +142,13 @@ if (!isset($_SESSION['user'])) {
         </div>
 
         <div class="elements h-center responsive-hide">
-            <img src="/images/profile.png" alt="profile" class="profile-nav">
+            <img src="<?php
+            $profile = unserialize($_SESSION['user']);
+            if($profile->getProfilePicture()=="")
+                echo "images/profile.png";
+            else
+                echo $profile->getProfilePicture();
+            ?>" alt="profile" class="profile-nav">
         </div>
 
         <div class="elements responsive-hide">
