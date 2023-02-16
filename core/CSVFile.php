@@ -20,6 +20,12 @@ class CSVFile
         $this->filetype = $file['type'];
     }
 
+
+    /**
+     * @description Read the CSV file and unwrapped the columns data
+     * @param $constructor
+     * @return array|bool
+     */
     public function readUserCSV($constructor): array|bool
     {
         $valid = [];

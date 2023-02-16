@@ -69,18 +69,19 @@ class ProfileController extends Controller
     public function uploadCSV(Request $request)
     {
         $file = new CSVFile($request->getFile());
-        $catergorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
+        $categorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
 
-        if ($catergorizedData != false) {
-            foreach ($catergorizedData['valid'] as $student) {
+        if ($categorizedData != false) {
+            foreach ($categorizedData['valid'] as $student) {
                 $student->insert();
             }
-            if (count($catergorizedData['update']) > 0 or count($catergorizedData['invalid']) > 0) {
+            if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(
-                    'account_creation',
-                    [
-                        'updatedUsers' => $catergorizedData['update'],
-                        'invalidUsersRegNo' => $catergorizedData['invalid']
+                    view: 'account_creation',
+                    allowedRoles: ['Admin'],
+                    params: [
+                        'updatedUsers' => $categorizedData['update'],
+                        'invalidUsersRegNo' => $categorizedData['invalid']
                     ]
                 );
             }
