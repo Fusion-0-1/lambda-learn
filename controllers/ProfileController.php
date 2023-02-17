@@ -13,12 +13,20 @@ class ProfileController extends Controller
     public function displayProfile()
     {
         $profile = unserialize($_SESSION['user']);
-        $courses = Course::getUserCourses($profile);
-        return $this->render(
-            view: 'profile',
-            params: ['user'=>$profile, 'courses'=>$courses]
-        );
 
+        if($_SESSION['user-role'] !== 'Admin'){
+            $courses = Course::getUserCourses($profile);
+            return $this->render(
+                view: 'profile',
+                params: ['user'=>$profile, 'courses'=>$courses]
+            );
+        }
+        else{
+            return $this->render(
+                view: 'profile',
+                params: ['user'=>$profile]
+            );
+        }
     }
 
     public function editProfile(Request $request)
