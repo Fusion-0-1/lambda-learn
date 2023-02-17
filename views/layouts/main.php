@@ -155,13 +155,15 @@ if (!isset($_SESSION['user'])) {
 
 <!--Profile image-->
         <div class="elements h-center responsive-hide">
-            <img src="<?php
-            $profile = unserialize($_SESSION['user']);
-            if($profile->getProfilePicture()=="")
-                echo "images/profile.png";
-            else
-                echo $profile->getProfilePicture();
-            ?>" alt="profile" class="profile-nav">
+            <a href="/profile">
+                <img src="<?php
+                $profile = unserialize($_SESSION['user']);
+                if($profile->getProfilePicture()=="")
+                    echo "images/profile.png";
+                else
+                    echo $profile->getProfilePicture();
+                ?>" alt="profile" class="profile-nav">
+            </a>
         </div>
 
 <!--Logout-->
