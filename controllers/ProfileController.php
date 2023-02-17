@@ -55,13 +55,25 @@ class ProfileController extends Controller
         $user->setPersonalEmail($body['personal_email']);
 
         $user->editProfile();
-        return $this->render(
-            view: 'profile',
-            params: [
-                'user'=>$user,
-                'courses'=>Course::getUserCourses($user)
-            ]
-        );
+
+        if($_SESSION['user-role'] !== 'Admin'){
+            return $this->render(
+                view: 'profile',
+                params: [
+                    'user'=>$user,
+                    'courses'=>Course::getUserCourses($user)
+                ]
+            );
+        }
+        else{
+            return $this->render(
+                view: 'profile',
+                params: [
+                    'user'=>$user
+                ]
+            );
+        }
+
     }
 
 
