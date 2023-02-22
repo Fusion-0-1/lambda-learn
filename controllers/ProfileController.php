@@ -14,19 +14,15 @@ class ProfileController extends Controller
     {
         $profile = unserialize($_SESSION['user']);
 
+        $params = ['user'=>$profile];
+
         if($_SESSION['user-role'] !== 'Admin'){
-            $courses = Course::getUserCourses($profile);
-            return $this->render(
-                view: 'profile',
-                params: ['user'=>$profile, 'courses'=>$courses]
-            );
+            $params['courses'] = Course::getUserCourses($profile);
         }
-        else{
-            return $this->render(
-                view: 'profile',
-                params: ['user'=>$profile]
-            );
-        }
+        return $this->render(
+            view: 'profile',
+            params: $params
+        );
     }
 
     public function editProfile(Request $request)
@@ -50,30 +46,20 @@ class ProfileController extends Controller
             move_uploaded_file($fileTmpName, $filePath);
             $user->setProfilePicture($filePath);
         }
-
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
 
         $user->editProfile();
 
-        if($_SESSION['user-role'] !== 'Admin'){
-            return $this->render(
-                view: 'profile',
-                params: [
-                    'user'=>$user,
-                    'courses'=>Course::getUserCourses($user)
-                ]
-            );
-        }
-        else{
-            return $this->render(
-                view: 'profile',
-                params: [
-                    'user'=>$user
-                ]
-            );
-        }
+        $params = ['user'=>$user];
 
+        if($_SESSION['user-role'] !== 'Admin'){
+            $params['courses'] = Course::getUserCourses($user);
+        }
+        return $this->render(
+            view: 'profile',
+            params: $params
+            );
     }
 
 
