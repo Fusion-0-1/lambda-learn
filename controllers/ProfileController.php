@@ -13,12 +13,18 @@ class ProfileController extends Controller
     public function displayProfile()
     {
         $profile = unserialize($_SESSION['user']);
-        $courses = Course::getUserCourses($profile);
+        $params = ['user'=>$profile];
+        if($_SESSION['user-role'] == 'Admin'){
+            return $this->render(
+                view: 'admin_profile',
+                params: $params
+            );
+        }
+        $params['courses'] = Course::getUserCourses($profile);
         return $this->render(
             view: 'profile',
-            params: ['user'=>$profile, 'courses'=>$courses]
+            params: $params
         );
-
     }
 
     public function editProfile(Request $request)
@@ -42,17 +48,22 @@ class ProfileController extends Controller
             move_uploaded_file($fileTmpName, $filePath);
             $user->setProfilePicture($filePath);
         }
-
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
 
         $user->editProfile();
+
+        $params = ['user'=>$user];
+        if($_SESSION['user-role'] == 'Admin'){
+            return $this->render(
+                view: 'admin_profile',
+                params: $params
+            );
+        }
+        $params['courses'] = Course::getUserCourses($user);
         return $this->render(
             view: 'profile',
-            params: [
-                'user'=>$user,
-                'courses'=>Course::getUserCourses($user)
-            ]
+            params: $params
         );
     }
 
