@@ -2,48 +2,93 @@
 <!--<link rel="stylesheet" href="css/profile.css">-->
 
 
-<!-- TODO 1: Create invalid user modal and error prompt
-    TODO 2: Update user continue click implementation
--->
-
-<div id="warn-modal" class="modal" <?php if(!isset($updatedUsers)) echo "hidden";?>>
-    <div class="modal-content warn-modal-content">
+<?php if(isset($updatedUsers) || isset($invalidUsersRegNo)){ ?>
+<div id="error-modal" class="modal">
+    <div class="modal-content error-modal-content">
         <div class="flex flex-column v-center h-center">
-            <img src="./images/primary_icons/warning.svg">
-            <h4 id="delete-warning">Do you want to update existing students?</h4>
-            <p>Following student are already registered. Would you like to continue?</p>
+            <img src="./images/primary_icons/error.svg">
+            <h4 id="delete-warning">Invalid Data!</h4>
+            <p>Below registration numbers are <?php
+                if (sizeof($updatedUsers) > 0){
+                    echo "already in the database.";
+                } else if (sizeof($invalidUsersRegNo) > 0) {
+                    echo "invalid. Registration number should follow the format: 20XX/AA/XXX. AA = CS or IS, 
+                    (Eg: 2018/CS/001)";
+                }
+            ?>
+            </p>
             <p id="stu-id-list" class="text-center">
                 <?php
                 $print = '';
-                foreach ($updatedUsers as $student) {
-                    $print .= $student->getRegNo() . ", ";
+                if (sizeof($updatedUsers) > 0){
+                    foreach ($updatedUsers as $student) {
+                        $print .= $student->getRegNo() . ", ";
+                    }
+                } elseif (sizeof($invalidUsersRegNo) > 0) {
+                    foreach ($invalidUsersRegNo as $student) {
+                        $print .= $student . ", ";
+                    }
                 }
                 echo substr($print, 0, -2);
                 ?>
             </p>
-            <section class="flex flex-row two-button-row">
-                <button id="cancel-btn" class="dark-btn cancel-btn">Cancel</button>
-                <button id="continue-btn" class="dark-btn warn-continue-btn">Continue</button>
-            </section>
+            <button id="continue-btn" class="cancel-btn dark-btn error-btn">OK</button>
         </div>
     </div>
 </div>
-
+<?php } ?>
 <div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
     <form id="student-csv-upload-form" class="border main-container flex flex-column" action="/upload_student_csv"
           method="post" enctype="multipart/form-data">
-        <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
-        <h3 class="page-header">Student Accounts</h3>
+        <input id="file-input-field" type="file" name="file" accept=".csv" hidden>
+        <input type="text" name="type" value="<?php echo $type?>" hidden>
+        <h3 class="page-header">
+            <?php
+            if($type == 'Student') {
+                echo "Student Accounts";
+            } elseif ($type == 'Lecturer') {
+                echo "Lecturer Accounts";
+            } elseif ($type == 'Coordinator') {
+                echo "Coordinator Accounts";
+            } elseif ($type == 'Admin') {
+                echo "Admin Accounts";
+            }
+            ?>
+        </h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
-                <p id="upload-file-text" onclick='upload_stu_csv()'>Upload Student Details file here</p>
+                <p id="upload-file-text" onclick='upload_stu_csv()'>Upload
+                    <?php
+                    if($type == 'Student') {
+                        echo "Student Accounts";
+                    } elseif ($type == 'Lecturer') {
+                        echo "Lecturer Accounts";
+                    } elseif ($type == 'Coordinator') {
+                        echo "Coordinator Accounts";
+                    } elseif ($type == 'Admin') {
+                        echo "Admin Accounts";
+                    }
+                    ?>
+                    Details file here</p>
                 <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
         </button>
 
         <h4 class="csv-header-text">CSV Header Columns Format:</h4>
-        <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, index_no, first_name,
-            last_name, degree_program_code, date_joined respectively</p>
+        <p class="csv-header-format flex v-center h-center">
+            <?php
+            if($type == 'Student') {
+                echo "The CSV file should include reg_no, index_no, first_name,
+                last_name, degree_program_code, date_joined respectively";
+            } elseif ($type == 'Lecturer') {
+                echo "Lecturer Accounts";
+            } elseif ($type == 'Coordinator') {
+                echo "Coordinator Accounts";
+            } elseif ($type == 'Admin') {
+                echo "Admin Accounts";
+            }
+            ?>
+        </p>
     </form>
 
 <!--    <!--Search bar-->-->
@@ -190,7 +235,7 @@
 </div>
 
 <script>
-    modal_cancel("warn-modal");
+    modal_cancel("error-modal");
 
     function upload_stu_csv() {
         let input = document.getElementById('file-input-field');
@@ -204,39 +249,22 @@
         input.click();
     }
 
-    function modal_update_continue(modal_id) {
-        const modal = document.getElementById(modal_id);
-        // click cancel button to close
-        const continue_btn = modal.getElementsByClassName('continue-btn')[0];
-        continue_btn.onclick = function () {
-            modal.hidden = true;
-
-        };
-
-        // click outside the modal to close
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.hidden = true;
-            }
-        });
-    }
-
-    var modal = document.getElementById("modal");
-    var btn = document.getElementById("edit_profile");
-    var span = document.getElementsByClassName("close")[0];
-
-    btn.onclick = function (){
-        modal.style.display = "block";
-    }
-    span.onclick = function (){
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-    cancel_modal.onclick = function(){
-        modal.style.display = "none";
-    }
+    // var modal = document.getElementById("modal");
+    // var btn = document.getElementById("edit_profile");
+    // var span = document.getElementsByClassName("close")[0];
+    //
+    // btn.onclick = function (){
+    //     modal.style.display = "block";
+    // }
+    // span.onclick = function (){
+    //     modal.style.display = "none";
+    // }
+    // window.onclick = function(event) {
+    //     if (event.target === modal) {
+    //         modal.style.display = "none";
+    //     }
+    // }
+    // cancel_modal.onclick = function(){
+    //     modal.style.display = "none";
+    // }
 </script>
