@@ -45,15 +45,14 @@
                 </div>
 
                 <?php
-                if ($_SESSION['user-role'] == 'Student') {?>
-                    <div class="margin-top flex flex-column">
-                        <label class="margin-top">Index Number</label>
-                        <div class="flex flex-responsive">
-                            <!--                    TODO: Hide index number field for other users-->
-                            <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full"
-                                   readonly><br>
+                    if ($_SESSION['user-role'] == 'Student') {?>
+                        <div class="margin-top flex flex-column">
+                            <label class="margin-top">Index Number</label>
+                            <div class="flex flex-responsive">
+                                <input type="text" value="<?php echo $user->getIndexNo()?>" class="input text-right width-full"
+                                       readonly><br>
+                            </div>
                         </div>
-                    </div>
                 <?php }?>
 
                 <div class="margin-top flex flex-column">
@@ -77,23 +76,18 @@
                     </div>
                 </div>
 
-
-                <?php
-                if ($_SESSION['user-role'] == 'Student') {?>
-                    <div class="margin-top">
-                        <div class="flex flex-row h-justify flex-end">
-                            <label class="margin-top">Personal Email</label>
-                            <div class="hide inline" id="edit-icon_2">
-                                <i class="fa-solid fa-pen edit-icon"></i>
-                            </div>
-                        </div>
-                        <div class="flex flex-responsive">
-                            <input type="text" name="personal_email" id="personal_email"
-                                   value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
+                <div class="margin-top">
+                    <div class="flex flex-row h-justify flex-end">
+                        <label class="margin-top">Personal Email</label>
+                        <div class="hide inline" id="edit-icon_2">
+                            <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                     </div>
-                <?php }?>
-
+                    <div class="flex flex-responsive">
+                        <input type="text" name="personal_email" id="personal_email"
+                               value="<?php echo $user->getPersonalEmail()?>" class="input text-right width-full" readonly>
+                    </div>
+                </div>
 
                 <div class="flex margin-top-btn h-center">
                     <button id="password" type="button" class="edit-btn edit-btn-text">Change Password</button>
@@ -102,7 +96,6 @@
                     </button><br>
                     <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
                 </div>
-
             </form>
 
 
@@ -168,7 +161,7 @@
 
 <!--Registered Courses-->
             <?php
-            if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer') {?>
+            if ($_SESSION['user-role'] == 'Student' or $_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') {?>
                 <div class="border main-container v-center flex-gap full-height">
                     <h5>Registered Courses</h5><br>
                     <table>
@@ -192,9 +185,6 @@
                     </table>
                 </div>
             <?php }?>
-
-
-
         </div>
     </div>
 </div>
