@@ -1,6 +1,10 @@
 <link rel="stylesheet" href="css/account_creation.css">
 <!--<link rel="stylesheet" href="css/profile.css">-->
 
+<!--Success message model on the bottom right to display accounts created successfully-->
+<div id="mssg-modal" class="success-mssg text-justify">
+    <p>Students Accounts created successfully.</p>
+</div>
 
 <?php if(isset($updatedUsers) || isset($invalidUsersRegNo)){ ?>
 <div id="error-modal" class="modal">

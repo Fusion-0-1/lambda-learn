@@ -557,6 +557,67 @@ button:disabled{
     width: 100px;
 }
 /* --------------------------------------------------- */
+/* --------------Success Message Modal---------------- */
+#mssg-modal {
+    padding: 0 25px;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10;
+    min-width: 300px;
+    width: 400px;
+    border-radius: 10px;
+
+    visibility: hidden;
+    animation: 10s fadeIn;
+    animation-iteration-count: 1;
+}
+
+.success-mssg {
+    color: var(--green);
+    background-color: var(--green-bg);
+    border: var(--green) 1px solid;
+}
+
+.warn-mssg {
+    color: var(--warn);
+    background-color: var(--warn-bg);
+    border: var(--warn) 1px solid;
+}
+
+.error-mssg {
+    color: var(--error);
+    background-color: var(--error-bg);
+    border: var(--error) 1px solid;
+}
+
+@media (max-width: 600px) {
+    #mssg-modal {
+        width: 85%;
+        min-width: 1vw;
+        padding: 0 10px;
+        bottom: 75px;
+        right: 15px;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        visibility: visible;
+    }
+    25% {
+        opacity: 1;
+    }
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+/* --------------------------------------------------- */
 
 
 
