@@ -20,6 +20,15 @@ class CSVFile
         $this->filetype = $file['type'];
     }
 
+
+    /**
+     * @description Read the CSV file and unwrapped the columns data. This will categorize data into
+     * valid, update and invalid data. Update array contains the students who are existing in the database,
+     * invalid array contains students index numbers which students have incorrect data (one or more attributes of the
+     * student is invalid).
+     * @param $constructor
+     * @return array|bool
+     */
     public function readUserCSV($constructor): array|bool
     {
         $valid = [];

@@ -51,7 +51,7 @@ class ProfileController extends Controller
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
 
-        $user->editProfile();
+        $user->updateProfile();
 
         $params = ['user'=>$user];
         if($_SESSION['user-role'] == 'Admin'){
@@ -61,6 +61,7 @@ class ProfileController extends Controller
             );
         }
         $params['courses'] = Course::getUserCourses($user);
+
         return $this->render(
             view: 'profile',
             params: $params
@@ -68,11 +69,13 @@ class ProfileController extends Controller
     }
 
 
-    public function displayAccountCreation()
+    public function displayAccountCreation(Request $request)
     {
+        $body = $request->getBody();
         return $this->render(
             view: '/account_creation',
-            allowedRoles: ['Admin']
+            allowedRoles: ['Admin'],
+            params: $body
         );
     }
 
@@ -80,22 +83,30 @@ class ProfileController extends Controller
     public function uploadCSV(Request $request)
     {
         $file = new CSVFile($request->getFile());
-        $catergorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
+        $body = $request->getBody();
+        $categorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
 
-        if ($catergorizedData != false) {
-            foreach ($catergorizedData['valid'] as $student) {
-                $student->insert();
-            }
-            if (count($catergorizedData['update']) > 0 or count($catergorizedData['invalid']) > 0) {
+        if ($categorizedData != false) {
+            if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(
-                    'account_creation',
-                    [
-                        'updatedUsers' => $catergorizedData['update'],
-                        'invalidUsersRegNo' => $catergorizedData['invalid']
+                    view: 'account_creation',
+                    allowedRoles: ['Admin'],
+                    params: [
+                        'updatedUsers' => $categorizedData['update'],
+                        'invalidUsersRegNo' => $categorizedData['invalid'],
+                        'type' => $body['type']
                     ]
                 );
             }
+            foreach ($categorizedData['valid'] as $user) {
+                $user->insert();
+            }
         }
-        header("Location: /account_creation");
+        $body['success_mssg'] = true;
+        return $this->render(
+            view: 'account_creation',
+            allowedRoles: ['Admin'],
+            params: $body
+        );
     }
 }
