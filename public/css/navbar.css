@@ -22,10 +22,14 @@
     display: none;
 }
 
-a{
-    padding: 13px !important;
+.nav-link{
+    padding: 10px;
     text-decoration: none;
     margin: 0 !important;
+}
+
+.nav-link-bottom{
+   padding:30% 5%;
 }
 
 a:visited{
@@ -94,7 +98,7 @@ a:visited{
 .border-modal{
     margin: 2% 3%;
     border: none;
-    border-radius: 8logpx;
+    border-radius: 8px;
     padding: 3%;
     background-color: var(--white);
 }
@@ -107,13 +111,17 @@ a:visited{
     height: 25px;
 }
 
+#hamburger_icon{
+    padding:0 30px;
+}
+
 @media screen and (max-width: 1000px) {
     .search-bar{
         width: 150px;
     }
 
     .elements{
-        padding: 0px 5px;
+        padding: 0px 4px !important;
     }
 }
 
@@ -142,10 +150,10 @@ a:visited{
         top: 0;
     }
 
-    .topnav.responsive a {
+    .topnav .responsive .nav-link {
         float: none;
         display: block;
-        text-align: left;
+        text-align: center;
     }
 
     #sidebar{
@@ -161,6 +169,17 @@ a:visited{
     .responsive-icons{
         display: flex;
         flex-direction: row;
+    }
+}
+
+@media screen and (max-width: 700px){
+    #name{
+        display: none;
+        padding: 1px;
+    }
+
+    .elements{
+        padding: 5px !important;
     }
 }
 
