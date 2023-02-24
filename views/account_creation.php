@@ -2,9 +2,11 @@
 <!--<link rel="stylesheet" href="css/profile.css">-->
 
 <!--Success message model on the bottom right to display accounts created successfully-->
+<?php if(isset($success_mssg)) { ?>
 <div id="mssg-modal" class="success-mssg text-justify">
     <p>Students Accounts created successfully.</p>
 </div>
+<?php } ?>
 
 <?php if(isset($updatedUsers) || isset($invalidUsersRegNo)){ ?>
 <div id="error-modal" class="modal">
@@ -82,8 +84,8 @@
         <p class="csv-header-format flex v-center h-center">
             <?php
             if($type == 'Student') {
-                echo "The CSV file should include reg_no, index_no, first_name,
-                last_name, degree_program_code, date_joined respectively";
+                echo "The CSV file should include reg_no, first_name, last_name,
+                email, personalEmail, contact_no respectively";
             } elseif ($type == 'Lecturer') {
                 echo "Lecturer Accounts";
             } elseif ($type == 'Coordinator') {
@@ -239,7 +241,9 @@
 </div>
 
 <script>
-    modal_cancel("error-modal");
+    <?php if(isset($updatedUsers) || isset($invalidUsersRegNo)){ ?>
+        modal_cancel("error-modal");
+    <?php } ?>
 
     function upload_stu_csv() {
         let input = document.getElementById('file-input-field');

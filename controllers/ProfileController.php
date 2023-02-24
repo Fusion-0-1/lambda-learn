@@ -46,7 +46,7 @@ class ProfileController extends Controller
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
 
-        $user->editProfile();
+        $user->updateProfile();
         return $this->render(
             view: 'profile',
             params: [
@@ -57,11 +57,13 @@ class ProfileController extends Controller
     }
 
 
-    public function displayAccountCreation()
+    public function displayAccountCreation(Request $request)
     {
+        $body = $request->getBody();
         return $this->render(
             view: '/account_creation',
-            allowedRoles: ['Admin']
+            allowedRoles: ['Admin'],
+            params: $body
         );
     }
 
@@ -69,23 +71,30 @@ class ProfileController extends Controller
     public function uploadCSV(Request $request)
     {
         $file = new CSVFile($request->getFile());
+        $body = $request->getBody();
         $categorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
 
         if ($categorizedData != false) {
-            foreach ($categorizedData['valid'] as $student) {
-                $student->insert();
-            }
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(
                     view: 'account_creation',
                     allowedRoles: ['Admin'],
                     params: [
                         'updatedUsers' => $categorizedData['update'],
-                        'invalidUsersRegNo' => $categorizedData['invalid']
+                        'invalidUsersRegNo' => $categorizedData['invalid'],
+                        'type' => $body['type']
                     ]
                 );
             }
+            foreach ($categorizedData['valid'] as $user) {
+                $user->insert();
+            }
         }
-        header("Location: /account_creation");
+        $body['success_mssg'] = true;
+        return $this->render(
+            view: 'account_creation',
+            allowedRoles: ['Admin'],
+            params: $body
+        );
     }
 }
