@@ -123,12 +123,12 @@ abstract class User
     public static function unwrapData(array $line): array
     {
         return [
-            'regNo' => $line[0],
-            'firstName' => $line[1],
-            'lastName' => $line[2],
-            'email' => $line[3],
-            'personalEmail' => $line[4],
-            'contactNo' => $line[5]
+            'regNo' =>trim($line[0]),
+            'firstName' => trim($line[1]),
+            'lastName' => trim($line[2]),
+            'email' => trim($line[3]),
+            'personalEmail' => trim($line[4]),
+            'contactNo' => trim($line[5])
         ];
     }
     // --------------------------------------------------------------------------------
