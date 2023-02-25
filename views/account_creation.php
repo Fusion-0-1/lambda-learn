@@ -1,10 +1,22 @@
 <link rel="stylesheet" href="css/account_creation.css">
 <!--<link rel="stylesheet" href="css/profile.css">-->
-
+<?php
+function printType($type){
+    if($type == 'Student') {
+        echo "Student Accounts";
+    } elseif ($type == 'Lecturer') {
+        echo "Lecturer Accounts";
+    } elseif ($type == 'Coordinator') {
+        echo "Coordinator Accounts";
+    } elseif ($type == 'Admin') {
+        echo "Admin Accounts";
+    }
+}
+?>
 <!--Success message model on the bottom right to display accounts created successfully-->
 <?php if(isset($success_mssg)) { ?>
 <div id="mssg-modal" class="success-mssg text-justify">
-    <p>Students Accounts created successfully.</p>
+    <p><?php printType($type); ?> created successfully.</p>
 </div>
 <?php } ?>
 
@@ -18,8 +30,17 @@
                 if (sizeof($updatedUsers) > 0){
                     echo "already in the database.";
                 } else if (sizeof($invalidUsersRegNo) > 0) {
-                    echo "invalid. Registration number should follow the format: 20XX/AA/XXX. AA = CS or IS, 
-                    (Eg: 2018/CS/001)";
+                    echo "invalid. CSV must follow the given format and all should be valid.
+                     Registration number should follow the format: 20XX/AA/XXX.";
+                    if ($type == 'Student') {
+                        echo "AA = CS or IS, (Eg: 2018/CS/001)";
+                    } elseif ($type == 'Lecturer') {
+                        echo "AA = LC (Eg: 2018/LC/001)";
+                    } elseif ($type == 'Coordinator') {
+                        echo "AA = LC, (Eg: 2018/LC/001)";
+                    } elseif ($type == 'Admin') {
+                        echo "AA = AD, (Eg: 2018/AD/001)";
+                    }
                 }
             ?>
             </p>
@@ -49,32 +70,12 @@
         <input id="file-input-field" type="file" name="file" accept=".csv" hidden>
         <input type="text" name="type" value="<?php echo $type?>" hidden>
         <h3 class="page-header">
-            <?php
-            if($type == 'Student') {
-                echo "Student Accounts";
-            } elseif ($type == 'Lecturer') {
-                echo "Lecturer Accounts";
-            } elseif ($type == 'Coordinator') {
-                echo "Coordinator Accounts";
-            } elseif ($type == 'Admin') {
-                echo "Admin Accounts";
-            }
-            ?>
+            <?php printType($type); ?>
         </h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
                 <p id="upload-file-text" onclick='upload_stu_csv()'>Upload
-                    <?php
-                    if($type == 'Student') {
-                        echo "Student Accounts";
-                    } elseif ($type == 'Lecturer') {
-                        echo "Lecturer Accounts";
-                    } elseif ($type == 'Coordinator') {
-                        echo "Coordinator Accounts";
-                    } elseif ($type == 'Admin') {
-                        echo "Admin Accounts";
-                    }
-                    ?>
+                    <?php printType($type); ?>
                     Details file here</p>
                 <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
@@ -97,147 +98,6 @@
         </p>
     </form>
 
-<!--    <!--Search bar-->-->
-<!--    <div class="flex h-center">-->
-<!--        <div class="flex">-->
-<!--            <input type="search" class="search-bar-account_creation input" placeholder="Search" >-->
-<!--        </div>-->
-<!--        <div class="flex v-center">-->
-<!--            <span><button class="btn-search"><i class="fa-solid fa-magnifying-glass"></i></button></span>-->
-<!--        </div>-->
-<!--    </div>-->
-<!---->
-<!--    <!--Display profile-->-->
-<!--    <div class="border main-container flex flex-column">-->
-<!--        <div class="flex h-center v-center flex-responsive">-->
-<!--            <div>-->
-<!--                <h3 class="text-center">Kavindu Fernando</h3>-->
-<!--                <h4 class="text-center text-normal line-height">Student</h4>-->
-<!--            </div>-->
-<!--        </div>-->
-<!---->
-<!--        <div class="flex h-justify flex-responsive margin-top">-->
-<!--            <div class="border main-container responsive-container flex user-details h-center">-->
-<!---->
-<!--                <!-- User details -->-->
-<!--                <form id="profile" action="/profile" method="post" enctype="multipart/form-data" class="width-full">-->
-<!--                    <h5 class="text-center">User Details</h5><br>-->
-<!--                    <div class="flex flex-wrap v-center h-center">-->
-<!--                        <img id="preview" src="images/profile.png" alt="profile" class="profile_img profile_img_center"><br>-->
-<!--                    </div>-->
-<!--                    <div class="margin-top flex flex-column">-->
-<!--                        <label class="margin-top">Registration Number</label>-->
-<!--                        <div class="flex flex-responsive">-->
-<!--                            <input type="text" value="2020/IS/0051" class="input text-right width-full"-->
-<!--                                   readonly><br>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="margin-top flex flex-column">-->
-<!--                        <label class="margin-top">Index Number</label>-->
-<!--                        <div class="flex flex-responsive">-->
-<!--                            <input type="text" value="21000051" class="input text-right width-full"-->
-<!--                                   readonly><br>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="margin-top flex flex-column">-->
-<!--                        <label class="margin-top">Email</label>-->
-<!--                        <div class="flex flex-responsive">-->
-<!--                            <input type="text" id="email" value="2020is0051@fusion.ac.lk"-->
-<!--                                   class="input text-right width-full" readonly>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="margin-top">-->
-<!--                        <div class="flex flex-row h-justify flex-end">-->
-<!--                            <label class="margin-top">Contact Number</label>-->
-<!--                            <div class="hide inline" id="edit-icon_1">-->
-<!--                                <i class="fa-solid fa-pen edit-icon"></i>-->
-<!--                            </div></div>-->
-<!--                        <div class="flex flex-responsive">-->
-<!--                            <input type="text" name="contact" id="contact" value="752678334"-->
-<!--                                   class="input text-right width-full" readonly>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="margin-top">-->
-<!--                        <div class="flex flex-row h-justify flex-end">-->
-<!--                            <label class="margin-top">Personal Email</label>-->
-<!--                            <div class="hide inline" id="edit-icon_2">-->
-<!--                                <i class="fa-solid fa-pen edit-icon"></i>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="flex flex-responsive">-->
-<!--                            <input type="text" name="personal_email" id="personal_email"-->
-<!--                                   value="fernandok@gmail.com" class="input text-right width-full" readonly>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="flex margin-top-btn h-center">-->
-<!--                        <button id="edit_profile" type="button" class="edit-btn edit-btn-text">-->
-<!--                            Edit profile&nbsp;&nbsp;<i class="fa-solid fa-pen"></i>-->
-<!--                        </button>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!---->
-<!--                <!--edit profile - Modal-->-->
-<!--                <div id="modal" class="modal" >-->
-<!--                    <div class="modal-content">-->
-<!--                        <span class="close">&times;</span>-->
-<!--                        <form>-->
-<!--                            <div class="margin-top flex flex-column">-->
-<!--                                <label class="margin-top">Email</label>-->
-<!--                                <div class="flex flex-responsive">-->
-<!--                                    <input type="text" name="email" class="input text-right width-full" value="2020is0051@fusion.ac.lk"><br>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="margin-top flex flex-column">-->
-<!--                                <label class="margin-top">Contact Number</label>-->
-<!--                                <div class="flex flex-responsive">-->
-<!--                                    <input type="text" name="contact_number" class="input text-right width-full" value="752678334"><br>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="margin-top flex flex-column">-->
-<!--                                <label class="margin-top">Personal Email</label>-->
-<!--                                <div class="flex flex-responsive">-->
-<!--                                    <input type="text" name="personal_email" class="input text-right width-full" value="fernandok@gmail.com"><br>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="flex flex-row h-end">-->
-<!--                                <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>-->
-<!--                                <button id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!---->
-<!--            <!--Login Activity-->-->
-<!--            <div class="flex flex-column width-full">-->
-<!--                <div class="border main-container flex flex-column flex-responsive">-->
-<!--                    <h5 class="text-left">Login Activity</h5><br>-->
-<!--                    <label class="text-normal">Last Login Date : Wednesday, February 08, 2023 | 08:50</label><br><br>-->
-<!---->
-<!--                    <label class="text-normal">Last Login Date : Wednesday, February 08, 2023 | 08:50</label><br>-->
-<!--                </div>-->
-<!---->
-<!--                <!--Registered Courses-->-->
-<!--                <div class="border main-container flex flex-column full-height flex-responsive">-->
-<!--                    <h5>Registered Courses</h5><br>-->
-<!--                    <table>-->
-<!--                        <tr>-->
-<!--                            <td>IS 2001</td>-->
-<!--                            <td>Programming using C</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>IS 2002</td>-->
-<!--                            <td>Rapid Application Development</td>-->
-<!--                        </tr>-->
-<!--                        <tr>-->
-<!--                            <td>IS 2003</td>-->
-<!--                            <td>Laboratory II</td>-->
-<!--                        </tr>-->
-<!--                    </table>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </div>
 
 <script>
@@ -257,22 +117,4 @@
         input.click();
     }
 
-    // var modal = document.getElementById("modal");
-    // var btn = document.getElementById("edit_profile");
-    // var span = document.getElementsByClassName("close")[0];
-    //
-    // btn.onclick = function (){
-    //     modal.style.display = "block";
-    // }
-    // span.onclick = function (){
-    //     modal.style.display = "none";
-    // }
-    // window.onclick = function(event) {
-    //     if (event.target === modal) {
-    //         modal.style.display = "none";
-    //     }
-    // }
-    // cancel_modal.onclick = function(){
-    //     modal.style.display = "none";
-    // }
 </script>
