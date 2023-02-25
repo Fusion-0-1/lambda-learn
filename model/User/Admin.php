@@ -28,6 +28,19 @@ class Admin extends User
 
         return $admin;
     }
+
+    public static function createNewAdmin($data)
+    {
+        $admin = new Admin();
+        $admin->regNo = $data['regNo'];
+        $admin->firstName = $data['firstName'];
+        $admin->lastName = $data['lastName'];
+        $admin->email = $data['email'];
+        $admin->personalEmail = $data['personalEmail'];
+        $admin->contactNo = $data['contactNo'];
+
+        return $admin;
+    }
     // --------------------------------------------------------------------------------
 
 

@@ -31,6 +31,20 @@ class Lecturer extends User
 
         return $lecturer;
     }
+
+    public static function createNewLecturer($data)
+    {
+        $lecturer = new Lecturer();
+        $lecturer->regNo = $data['regNo'];
+        $lecturer->firstName = $data['firstName'];
+        $lecturer->lastName = $data['lastName'];
+        $lecturer->email = $data['email'];
+        $lecturer->personalEmail = $data['personalEmail'];
+        $lecturer->contactNo = $data['contactNo'];
+        $lecturer->degreeProgramCode = $data['degreeProgramCode'] ?? '';
+
+        return $lecturer;
+    }
     // --------------------------------------------------------------------------------
 
 
@@ -50,7 +64,7 @@ class Lecturer extends User
                 'last_logout' => $this->lastLogout ?? date('Y-m-d H:i:s', time()),
                 'active_status' => $this->activeStatus ?? 0,
                 'profile_picture' => $this->profilePicture ?? '',
-                'degree_program_code' => $this->degreeProgramCode,
+                'degree_program_code' => $this->degreeProgramCode ?? '',
                 'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
             ]
         );

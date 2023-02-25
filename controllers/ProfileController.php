@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
+use app\model\User\Admin;
+use app\model\User\Lecturer;
 use app\model\User\Student;
 use app\model\Course;
 
@@ -84,8 +86,17 @@ class ProfileController extends Controller
     {
         $file = new CSVFile($request->getFile());
         $body = $request->getBody();
-        $categorizedData = $file->readUserCSV([Student::class, 'createNewStudent']);
+        $type = $body['type'];
+        $readCSVParams = [];
+        if ($type == 'Student') {
+            $readCSVParams = [Student::class, 'createNewStudent'];
+        } elseif ($type == 'Lecturer') {
+            $readCSVParams = [Lecturer::class, 'createNewLecturer'];
+        } elseif ($type == 'Admin') {
+            $readCSVParams = [Admin::class, 'createNewAdmin'];
+        }
 
+        $categorizedData = $file->readUserCSV($readCSVParams);
         if ($categorizedData != false) {
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(
@@ -94,7 +105,7 @@ class ProfileController extends Controller
                     params: [
                         'updatedUsers' => $categorizedData['update'],
                         'invalidUsersRegNo' => $categorizedData['invalid'],
-                        'type' => $body['type']
+                        'type' => $type
                     ]
                 );
             }
