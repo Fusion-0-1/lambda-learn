@@ -26,8 +26,9 @@ class SiteAnnouncement extends Announcement
 
         return $siteAnnouncement;
     }
-    public static function createNewAnn(string $heading, string $content, string $publishDate,
-                                        $adminRegNo, $cordRegNo, int $announcementId=null){
+    public static function createNewAnn(string $heading, string $content, string $publishDate='',
+                                        $adminRegNo='', $cordRegNo='', int $announcementId=null){
+
 
         $announcement = new SiteAnnouncement();
         if ($announcementId != null){
@@ -49,7 +50,8 @@ class SiteAnnouncement extends Announcement
     {
         $siteAnnouncements = [];
         $results = Application::$db->select(
-            table: 'SiteAnnouncement'
+            table: 'SiteAnnouncement',
+            order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
              $siteAnnouncements[] = self::createNewAnn(
@@ -61,6 +63,7 @@ class SiteAnnouncement extends Announcement
                  (int)$ann['announcement_id'],
              );
         }
+
         return $siteAnnouncements;
     }
 
@@ -68,12 +71,13 @@ class SiteAnnouncement extends Announcement
 
     public function insert()
     {
+        var_dump($this->publishDate);
         Application::$db->insert(
             table: 'SiteAnnouncement',
             values: [
                 'heading' => $this->heading,
                 'content' => $this->content,
-                'publish_date' =>$this->publishDate ?? date('Y-m-d H:i:s', time()),
+                'publish_date' => $this->publishDate ?: date('Y-m-d H:i:s'),
                 'admin_reg_no' => $this->adminRegNo ?? '',
                 'cord_reg_no' => $this->cordRegNo ?? ''
             ]
