@@ -3,13 +3,12 @@
 <div class="main-container border v-center flex-gap responsive-container">
     <h2 class="text-center course_name">Site Announcements</h2>
     <?php if ($_SESSION['user-role'] == 'Admin' or $_SESSION['user-role'] == 'Coordinator') {?>
-        <form method="post" action="test" class="announcement_card border">
+        <form method="post" action="/site_announcement" class="announcement_card border">
             <div class="topic_container_add grid v-center h-justify">
                 <textarea id="heading_textarea" name="heading" placeholder="Add Announcement Heading..."
                           class="add_headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
 
                 <button class="btn confirm-btn h-center v-center">Publish</button>
-<!--<form method="post" action='test'>-->
             </div>
             <div class="announcement_card_inside border">
                 <div class="container_heading grid h-justify v-center">
