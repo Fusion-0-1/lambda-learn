@@ -40,3 +40,46 @@ function validate_non_special_character_text(text) {
     const re = new RegExp("[a-zA-Z0-9]");
     return re.test(text);
 }
+
+/**
+ * @return - boolean
+ * @description
+ * Returns `true` if the email address is valid
+ * return `false` otherwise.
+ * @example
+ * "example@example.com" - true
+ * "invalid-email@" - false
+ * @param {string} email - The email address to validate.
+ */
+function validate_email(email){
+    /*
+    ^ matches the beginning of the string
+    ^\s@]+ matches one or more characters that are not whitespace or the "@" symbol
+    @ matches the "@" symbol.
+    [^\s@]+ matches one or more characters that are not whitespace or the "@" symbol
+    \. matches a "." character
+    $ the end of the string.
+     */
+    const re = new  RegExp("^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$");
+    return re.test(email);
+}
+
+/**
+ * @param contact - the phone number to validate
+ * @returns - boolean
+ * @description
+ * Returns `true` if the phone number is valid
+ * return `false` otherwise.
+ * @example
+ * "0715674327" - true
+ * "05D5357543we" - false
+ */
+function validate_contact(contact){
+    /*
+    \d matches any digit
+    {10} specifies that exactly 10 digits should be matched
+    $ matches the end of the string
+     */
+    const re = "^\d{10}$";
+    return re.test(contact);
+}
