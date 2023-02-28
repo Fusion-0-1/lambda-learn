@@ -62,13 +62,6 @@
     }
 </script>
 
-<script>
-    function startTimer() {
-        setTimeout(function() {
-            document.getElementById("editbtn").style.display = "none";
-        }, 30000); // 30 seconds
-    }
-</script>
 
 
 
