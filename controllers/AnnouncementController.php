@@ -16,18 +16,25 @@ class AnnouncementController extends Controller
             params: $announcements
         );
     }
+
     public function createAnnouncements(Request $request)
     {
         $body = $request->getBody();
-//        ['heading' -> 'adsada', 'key' -> value]
-        // $body['heading']
-      $site_announcement = SiteAnnouncement::createNewAnn($body['heading','content']);
-          $site_announcement.insert();
-        return $this->render(
-            view: 'announcement',
-            params: $announcements
-        );
+        $profile = unserialize($_SESSION['user']);
+        if ($_SESSION['user-role'] == 'Coordinator') {
+            $site_announcement = SiteAnnouncement::createNewAnn(
+                heading: $body['heading'],
+                content: $body['content'],
+                cordRegNo: $profile->getRegNo()
+            );
+        } else if ($_SESSION['user-role'] == 'Admin') {
+            $site_announcement = SiteAnnouncement::createNewAnn(
+                heading: $body['heading'],
+                content: $body['content'],
+                adminRegNo: $profile->getRegNo()
+            );
+        }
+        $site_announcement->insert();
+        header("Location: /site_announcement");
     }
-
-
 }
