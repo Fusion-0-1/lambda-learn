@@ -187,9 +187,32 @@
             <?php }?>
         </div>
     </div>
+
+</div>
+
+<div id="warn-modal" class="modal">
+    <div id="warn_msg_email" class="modal-content warn-modal-content" hidden>
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Invalid Email</h4>
+            <div>
+                <p>Email should follow below format,</p>
+                <ul>
+                    <li>Must contain one or more non-whitespace characters</li>
+                    <li>Cannot start or end with a period</li>
+                    <li>One or more non-whitespace characters separated by a period (.)</li>
+                    <li>Cannot start or end with a period</li>
+                </ul>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
 </div>
 
 <!--Scripts-->
+<script type="text/javascript" src="js/validation.js"></script>
 <script>
     var modal = document.getElementById("modal");
     var btn = document.getElementById("password");
