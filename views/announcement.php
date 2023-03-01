@@ -8,7 +8,7 @@
                 <textarea id="heading_textarea" name="heading" placeholder="Add Announcement Heading..."
                           class="add_headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
 
-                <button id="publishbtn" onclick="startTimer()" class="btn confirm-btn h-center v-center">Publish</button>
+                <button id="publishbtn" class="btn confirm-btn h-center v-center">Publish</button>
             </div>
             <div class="announcement_card_inside border">
                 <div class="container_heading grid h-justify v-center">
@@ -61,11 +61,3 @@
         this.style.height = this.scrollHeight + 'px';
     }
 </script>
-
-
-
-
-
-
-
-
