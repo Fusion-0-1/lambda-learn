@@ -67,6 +67,7 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
 // -------------------------------------------------------------------------
 
+$app->router->post('/site_announcement', [AnnouncementController::class, 'createAnnouncements']);
 
 
 $app->run();
