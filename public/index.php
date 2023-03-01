@@ -47,6 +47,7 @@ $app->router->get('/attendance_course_progress', [SummaryViewController::class, 
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
 
+
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
 

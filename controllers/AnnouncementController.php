@@ -5,6 +5,8 @@ namespace app\controllers;
 use app\core\Controller;
 use app\model\SiteAnnouncement;
 
+
+
 class AnnouncementController extends Controller
 {
     public function displaySiteAnnouncements()
@@ -15,4 +17,5 @@ class AnnouncementController extends Controller
             params: $announcements
         );
     }
+
 }
