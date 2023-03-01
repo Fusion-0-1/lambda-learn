@@ -71,7 +71,6 @@ class SiteAnnouncement extends Announcement
 
     public function insert()
     {
-        date_default_timezone_set('Asia/Colombo');
         Application::$db->insert(
             table: 'SiteAnnouncement',
             values: [

@@ -39,7 +39,17 @@
             <div class="announcement_card_inside border">
                 <div class="container_heading grid h-justify v-center">
                     <div class="view_lecture_name_and_date_time">Mr. Nimal Kodikar</div>
-                    <div class="view_lecture_name_and_date_time text-right"><?php echo $ann->getPublishDate()?></div>
+                    <div class="view_lecture_name_and_date_time text-right">
+                        <?php
+                            $utcTime = $ann->getPublishDate();
+                            $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
+                            $date = new DateTime($utcTime, new DateTimeZone('UTC'));
+                            $date->setTimezone($sriLankanTimezone);
+                            $date->modify('-1 hour');
+                            $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
+                            echo $sriLankanDateAndTime;
+                        ?>
+                    </div>
                 </div>
                 <p class="text-justify">
                     <?php echo $ann->getContent()?>
