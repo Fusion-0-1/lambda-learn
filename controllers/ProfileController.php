@@ -5,10 +5,12 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
+use app\core\User;
 use app\model\User\Admin;
 use app\model\User\Lecturer;
 use app\model\User\Student;
 use app\model\Course;
+use MongoDB\Driver\Session;
 
 class ProfileController extends Controller
 {
@@ -33,27 +35,37 @@ class ProfileController extends Controller
     {
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
+        $regNo = $user->getRegNo();
+        if(isset($body['password'])){
+            $newPassword = $body['new_password'];
+            $confirmPassword = $body['confirm_password'];
+            if (User::authenticateUser($regNo, $body['password']) and
+                $newPassword == $confirmPassword)
+            {
+                $user->updatePassword($newPassword);
+            }
+        } else {
+            $userRegNo = str_replace('/', '', $user->getRegNo());
+            $fileName = $_FILES['profile_picture']['name'];
+            $fileTmpName = $_FILES['profile_picture']['tmp_name'];
+            if($fileName)
+            {
+                $fileExtension = strtolower(explode('.', $fileName)[1]);
+                $fileNameNew = $userRegNo . "." . $fileExtension;
+                $filePath = 'images/profile/' . $fileNameNew;
 
-        $userRegNo = str_replace('/', '', $user->getRegNo());
-        $fileName = $_FILES['profile_picture']['name'];
-        $fileTmpName = $_FILES['profile_picture']['tmp_name'];
-        if($fileName)
-        {
-            $fileExtension = strtolower(explode('.', $fileName)[1]);
-            $fileNameNew = $userRegNo . "." . $fileExtension;
-            $filePath = 'images/profile/' . $fileNameNew;
+                //Remove previous profile images if exists
+                $wildcardPath = 'images/profile/' . $userRegNo . '.*';
+                array_map('unlink', glob($wildcardPath));
 
-            //Remove previous profile images if exists
-            $wildcardPath = 'images/profile/' . $userRegNo . '.*';
-            array_map('unlink', glob($wildcardPath));
+                move_uploaded_file($fileTmpName, $filePath);
+                $user->setProfilePicture($filePath);
+            }
+            $user->setContactNo($body['contact']);
+            $user->setPersonalEmail($body['personal_email']);
 
-            move_uploaded_file($fileTmpName, $filePath);
-            $user->setProfilePicture($filePath);
+            $user->updateProfile();
         }
-        $user->setContactNo($body['contact']);
-        $user->setPersonalEmail($body['personal_email']);
-
-        $user->updateProfile();
 
         $params = ['user'=>$user];
         if($_SESSION['user-role'] == 'Admin'){
