@@ -112,6 +112,15 @@ abstract class User
         );
     }
 
+    public function updatePassword($newPassword){
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: ['password' => $hashedPassword],
+            where: ['reg_no' => $this->regNo]
+        );
+    }
+
 
     /*
      * params:
