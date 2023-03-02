@@ -103,7 +103,7 @@
             <div id="modal" class="modal" >
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <form>
+                    <form action="/profile" method="post">
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
                             <div class="flex flex-responsive">
@@ -113,18 +113,18 @@
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">New Password</label>
                             <div class="flex flex-responsive">
-                                <input type="password" name="password" class="input text-right width-full"><br>
+                                <input type="password" name="new_password" class="input text-right width-full"><br>
                             </div>
                         </div>
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Confirm Password</label>
                             <div class="flex flex-responsive">
-                                <input type="password" name="password" class="input text-right width-full"><br>
+                                <input type="password" name="confirm_password" class="input text-right width-full"><br>
                             </div>
                         </div>
                         <div class="flex flex-row h-end">
                             <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
-                            <button id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
+                            <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>
                 </div>
