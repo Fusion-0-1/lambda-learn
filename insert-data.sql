@@ -4,7 +4,7 @@ USE `lambda-learn`;
 INSERT INTO Student (reg_no, first_name, last_name, email, personal_email, contact_no, password, index_no, date_joined, degree_program_code) VALUES
     ("2020/CS/0011", "Dilanga", "Harshani", "2020cs0011@fusion.ac.lk", "aadilanga@gmail.com", "772267962", "$2y$10$xBdAZCP3TDyMl2etzDcTxOWHiMJSTjPnV5sdHC6iVef9YQSnr/51.", 20000011, "2021-02-24", "CS"),
     ("2020/CS/0014", "Inuri", "Lavanya", "2020cs0014@fusion.ac.lk", "inurilavanya@gmail.com", "719267365", "$2y$10$Kbc/hlAD4aAKdiJlkHNDAOpkJ5vvJ/j2hRdCkXrC1sJDeUx4yGueq", 20000014, "2021-02-24", "CS"),
-    ("2020/CS/0026", "Ramindu", "Walgama", "2020cs0016@fusion.ac.lk", "rrwalgama2@gmail.com", "712028360", "20000026@CS", 20000026, "2021-02-24", "CS"),
+    ("2020/CS/0026", "Ramindu", "Walgama", "2020cs0016@fusion.ac.lk", "rrwalgama2@gmail.com", "712028360", "$2y$10$OY8lGr87I3XZ9XxJq7LpwOP5PNOmA7OaFMKy424tSIr8Hi7duDYdy", 20000026, "2021-02-24", "CS"),
     ("2020/CS/0044", "Anjana", "Silva", "2020cs0044@fusion.ac.lk", "anjana1.silva@gmail.com", "720261354", "$2y$10$1vlvhhsYikj7OUF01WPUd.VJSf7CTaCaisBs0KRCjZCix6zYr6rWK", 20000044, "2021-02-24", "CS"),
     ("2020/IS/0016", "Ravin", "Dias", "2020is0016@fusion.ac.lk", "naravindias2510@gmail.com", "762349367", "21000016@CS", 21000016, "2021-02-24", "IS"),
     ("2020/IS/0032", "Aruni", "Samara", "2020is0032@fusion.ac.lk", "aruniisamaraa@gmail.com", "742934349", "21000032@CS", 21000032, "2021-02-24", "IS"),        
@@ -12,13 +12,14 @@ INSERT INTO Student (reg_no, first_name, last_name, email, personal_email, conta
     ("2020/IS/0075", "Malsha", "Kavindi", "2020is0075@fusion.ac.lk", "malsha.kavi@gmail.com", "782025393", "21000075@CS", 21000075, "2021-02-24", "IS");
 
 INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, password, position) VALUES
-    ("2014/LC/0034", "Erandi", "Gamage", "2014lc0034@fusion.ac.lk", "772469621", "20140034@LC", "Senior Lecturer"),    
+    ("2014/LC/0034", "Erandi", "Gamage", "2014lc0034@fusion.ac.lk", "772469621", "$2y$10$fJJYYm4dcPVD6u/3aPgbP.0A2fx7u8E39j9NdBxaAi8AGOBz/RoHq", "Senior Lecturer"),    
     ("2008/LC/0002", "Naresh", "Rajan", "2008lc0002@fusion.ac.lk", "746682736", "20080002@LC", "Lecturer"),
     ("2006/LC/0014", "Janani", "Walpola", "2006lc0014@fusion.ac.lk", "753028364", "20060014@LC", "Lecturer"),
     ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "20180022@LC", "Professor"),
     ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "$2y$10$eMkJfs5mM7MMFS3fLpv/peLGCcjEQiFBdIF9cGJdqZH9Ta/F1I6ou", "Professor"),
     ("1999/LC/0008", "Mohomad", "Abdullah", "1999lc0008@fusion.ac.lk", "716934345", "19990008@LC", "Senior Lecturer"),        
     ("2016/LC/0015", "Kamani", "Perera", "2016lc0015@fusion.ac.lk", "752345331", "20160015@LC", "Senior Professor"),
+    ("2020/LC/0026", "Ramindu", "Walgama", "2020lc0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG", "Senior Professor"),
     ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC", "Lecturer");
 
 UPDATE AcademicStaff SET degree_program_code = "CS" WHERE reg_no = "2003/LC/0004";
@@ -304,16 +305,6 @@ INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, cour
     ("Lecture Recordings", "New lecture recordings are uploaded to the course page for extra knowledge", "2022-11-22", "1999/LC/0008", "IS 2001"),
     ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2002"),
     ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2003");
-
-INSERT INTO PerformanceHistory (record_date, cpu_usage, ram_usage, storage_usage, concurrent_users) VALUES
-    ("2022-10-01 10:00:00", "75%", "63%", "126.4GB", "56"),
-    ("2022-10-15 20:00:00", "41%", "34%", "126.8GB", "16"),
-    ("2022-11-01 08:00:00", "88%", "76%", "127GB", "126"),
-    ("2022-11-15 12:00:00", "70%", "68%", "127.2GB", "61");
-
-INSERT INTO AdminReport (title, report_date, record_date) VALUES
-    ("Performance Report Oct II", "2022-10-30", "2022-10-15 20:00:00"),
-    ("Performance Report Nov I", "2022-11-24", "2022-11-01 08:00:00");
 
 INSERT INTO AttendanceReport (title, report_date, course_code) VALUES
     ("Attendance CS 2001 25/11", "2022-11-26", "CS 2001"),
