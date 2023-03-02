@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ../.env
+
 OS=$(/bin/bash ../scripts/os.bash)
 
 while [ true ]
@@ -19,15 +21,12 @@ do
         TOP=$(top -l 1 -s 0 | head -n 10)
         
         MEM=$(echo $TOP | grep "PhysMem:")
-        # USED_MEM=$(echo $MEM | sed 's/PhysMem: \([0-9]*\)G used.*/\1G/')
         TOTAL_MEM=$(sysctl -n hw.memsize)
         TOTAL_MEM=$((TOTAL_MEM/1024**2))
         UNUSED_MEM=$(echo $MEM | awk '{print $8}' | cut -d'G' -f1)
         USED_MEM=$((TOTAL_MEM - UNUSED_MEM))
 
         CPU=$(echo $TOP | grep -o 'CPU usage: [0-9]\+.[0-9]\+%' | awk '{print $3}' | cut -d'%' -f1)
-        # echo "CPU: $(echo $TOP | grep -o "CPU usage: [0-9]\+%")"
-        # echo "$TOP" | grep -o 'CPU usage: [0-9]\+.[0-9]\+%' | awk '{print $3}' | cut -d'%' -f1
 
         PROC_COUNT=$(echo $TOP | grep "Processes:" | awk '{print $2}')
         PROC_RUNNING=$(echo $TOP | grep "Processes:" | awk '{print $4}')
@@ -56,14 +55,11 @@ do
         echo "OS not supported"
         exit 1
     fi
+    
+    mysql --user=$DB_USER --password=$DB_PASS $DB_NAME  << EOF
+    INSERT INTO PerformanceHistory (cpu_usage, total_memory, used_memory, unused_memory, process_count, process_running, process_sleeping)
+    VALUES ($CPU, $TOTAL_MEM, $USED_MEM, $UNUSED_MEM, $PROC_COUNT, $PROC_RUNNING, $PROC_SLEEPING); 
+EOF
 
-    # echo "USED MEM: $USED_MEM"
-    # echo "UNUSED MEM: $UNUSED_MEM"
-    # echo "TOTAL MEM: $TOTAL_MEM"
-    # echo "CPU: $CPU"
-    # echo "PROC COUNT: $PROC_COUNT"
-    # echo "PROC RUNNING: $PROC_RUNNING"
-    # echo "PROC SLEEPING: $PROC_SLEEPING"
-
-    sleep 1
+    sleep 300
 done
