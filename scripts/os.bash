@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Get OS - Returns Mac, Linux, Windows(Cygwin/MinGw) or UNKNOWN
 unameOut="$(uname -s)"
 case "${unameOut}" in
     Linux*)     machine=Linux;;
