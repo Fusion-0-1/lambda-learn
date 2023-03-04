@@ -2,7 +2,7 @@
 <script src="js/kanbanboard.js" defer></script>
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
-    <h3 class="text-bold"> Kanban Board </h3>    
+    <h3> Kanban Board </h3>    
 
     <div class="modal" id="card-add-modal">
             <div class="card-add-modal border border-radius flex flex-column">

@@ -2,28 +2,28 @@ label, .input {
     width: 75%;
 }
 
-.course_edit_form_buttons {
+.course-edit-form-buttons {
     padding: 20px 0;
 }
 
-.course_create_form {
+.course-create-form {
     padding-bottom: 30px;
 }
 
-#create_course > .dark-btn {
+#create-course > .dark-btn {
     width: 75%;
     height: 33px;
 }
 
 @media(max-width:767px) {
-    .course_create_form {
+    .course-create-form {
         align-items: center;
         flex-direction: column;
     }
-    #create_course {
+    #create-course {
         width: 68%;
     }
-    #create_course > .dark-btn {
+    #create-course > .dark-btn {
         margin: 16px auto;
         max-width: 325px;
     }

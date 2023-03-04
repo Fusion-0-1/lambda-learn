@@ -4,7 +4,7 @@
     <form id="file-upload-form" class="main-container border flex flex-column"
           action="" method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
-        <h3 class="page-header">Data Structures and Algorithms Submission Marks</h3>
+        <h3>Data Structures and Algorithms Submission Marks</h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
                 <p id="upload-file-text" onclick='update_existing_stu()'>Upload submission marks csv file here</p>

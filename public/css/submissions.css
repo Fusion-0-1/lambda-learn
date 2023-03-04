@@ -1,32 +1,30 @@
-.course_name {
-    padding: 1% 0 1% 0;
-}
-.submissions_card {
+
+.submissions-card {
     width: 90%;
     padding-bottom: 2%;
     border-radius: 15px;
     margin: auto auto 40px;
 }
-.topic_container_add{
+.topic-container-add{
     display: grid;
     grid-template-columns: 85% auto;
     padding: 0.5% 2.5%;
 }
-.add_headline {
+.add-headline {
     border-radius: 5px;
     border: none;
     font-size: 1rem;
     overflow-wrap: break-word;
 }
-.topic_container{
+.topic-container{
     grid-template-columns: auto auto;
     padding: 0.5% 2.5%;
 }
-.edit_delete_timeremaining{
+.edit-delete-timeremaining{
     grid-template-columns: 50% 50%;
     padding: 0.5% 1%;
 }
-.submissions_card_inside {
+.submissions-card-inside {
     width: 95%;
     height: 75%;
     position: relative;
@@ -34,12 +32,12 @@
     margin: auto;
     background: var(--white);
 }
-.submissions_card_inside p{
+.submissions-card-inside p{
     padding: 2%;
     overflow-wrap: break-word;
     margin: 0;
 }
-.container_heading{
+.container-heading{
     margin: 0;
     background: var(--blue);
     grid-template-columns: 30% 30% auto;
@@ -47,7 +45,7 @@
     border-radius: inherit;
     padding: 10px 20px;
 }
-.add_points_and_marks {
+.add-points-and-marks {
     border-radius: 5px;
     background: var(--blue);
     color: var(--white);
@@ -55,41 +53,43 @@
     font-size: 1rem;
     width: 30%;
 }
-.view_points_and_marks{
+.view-points-and-marks{
     font-size: 1rem;
 }
-a{
+
+.link{
     padding: 0;
 }
 
-a img{
+.link img{
     width: 80%;
 }
-.heading_content{
+
+.heading-content{
     margin: 6px;
     overflow-wrap: break-word;
 }
 .btn {
     width: 100px;
 }
-.add_submissions_content {
+.add-submissions-content {
     border-radius: 5px;
     border: none;
     width: 100%;
     font-size: 1rem;
     overflow-wrap: break-word;
 }
-.add_submissions_content_div{
+.add-submissions-content-div{
     padding: 1% 2% 1% 2%;
 }
 .submissions{
     padding: 0 2% 2% 2%;
 }
-.marks_btn{
+.marks-btn{
     padding: 10px;
     margin: 5px 5px 5px 10px;
 }
-.sub_container {
+.sub-container {
      display: flex;
      position: relative;
      padding-right: 35px;
@@ -100,7 +100,7 @@ a img{
      -ms-user-select: none;
      user-select: none;
  }
-.sub_container input {
+.sub-container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -116,7 +116,7 @@ a img{
     border: var(--green) 3px solid;
     border-radius: 5px;
 }
-.sub_container input:checked ~ .checkmark {
+.sub-container input:checked ~ .checkmark {
     background: var(--white);
     border: var(--green) 3px solid;
     border-radius: 5px;
@@ -126,10 +126,10 @@ a img{
     position: absolute;
     display: none;
 }
-.sub_container input:checked ~ .checkmark:after {
+.sub-container input:checked ~ .checkmark:after {
     display: flex;
 }
-.sub_container .checkmark:after {
+.sub-container .checkmark:after {
     left: 7px;
     top: 2px;
     width: 5px;
@@ -152,17 +152,17 @@ a img{
 }
 
 @media(max-width:768px) {
-    .submissions_card{
+    .submissions-card{
         width: 95%;
     }
     .course_name {
         font-size: 1.6rem;
     }
-    .add_points_and_marks{
+    .add-points-and-marks{
         width: 50%;
         font-size: 0.85rem;
     }
-    .view_points_and_marks{
+    .view-points-and-marks{
         font-size: 0.9rem;
     }
     .btn{
@@ -170,10 +170,10 @@ a img{
         height: 25px;
         border-radius: 10px;
     }
-    .add_submissions_content {
+    .add-submissions-content {
         font-size: 0.9rem;
     }
-    .container_heading{
+    .container-heading{
         border-radius: 10px;
         padding: 7px 14px;
     }
@@ -181,13 +181,13 @@ a img{
         width: 33px;
         min-width: 33px;
     }
-    .edit_delete_timeremaining{
+    .topic-container{
         display: grid;
         grid-template-columns: 50% 50%;
         justify-items: center;
         width: 80px;
     }
-    .edit_time {
+    .edit-time {
         grid-column: 1 / span 2;
         grid-row: 1;
         font-size: 14px;
@@ -200,10 +200,10 @@ a img{
         grid-column: 2;
         grid-row: 2;
     }
-    .topic_container_add{
+    .topic-container-add{
         grid-template-columns: 80% auto ;
     }
-    .sub_container{
+    .sub-container{
         font-size: 0.9rem;
         padding-right: 22px;
     }
@@ -211,13 +211,13 @@ a img{
         height: 14px;
         width: 14px;
     }
-    .sub_container .checkmark:after{
+    .sub-container .checkmark:after{
         left: 4px;
         top: 1px;
         width: 3px;
         height: 7px;
     }
-    .marks_btn {
+    .marks-btn {
         padding: 8px;
         margin: 2px 2px 2px 6px;
     }
@@ -227,7 +227,7 @@ a img{
     .course_name{
         font-size: 1.3rem;
     }
-    .add_headline {
+    .add-headline {
         font-size: 0.75rem;
     }
     .btn {
@@ -236,48 +236,48 @@ a img{
         border-radius: 7px;
         font-size: 0.7rem;
     }
-    .add_points_and_marks {
+    .add-points-and-marks {
         width: 90%;
         font-size: 0.75rem;
     }
-    .submissions_card{
+    .submissions-card{
         width: 92%;
         margin-bottom: 20px;
     }
-    .edit_delete_timeremaining{
+    .topic-container{
         display: grid;
         grid-template-columns: 50% 50%;
     }
-    .edit_time {
+    .edit-time {
         grid-column: 1 / span 2;
         grid-row: 1;
         padding: 5px;
     }
-    .edit_time span{
+    .edit-time span{
         font-size: 0.75rem;
     }
-    .container_heading{
+    .container-heading{
         border-radius: 8px;
         padding: 6px 8px;
     }
-    .view_points_and_marks{
+    .view-points-and-marks{
         font-size: 0.75rem;
     }
-    .submissions_card_inside p{
+    .submissions-card-inside p{
         padding: 5%;
     }
-    .add_submissions_content{
+    .add-submissions-content{
         font-size: 0.75rem;
     }
     .submissions{
         align-items: flex-start;
         flex-direction: column;
     }
-    .marks_btn{
+    .marks-btn{
         font-size: 0.75rem;
         padding: 5px;
     }
-    .sub_container{
+    .sub-container{
         font-size: 0.75rem;
         padding-right: 22px;
         margin: 10px;
@@ -286,7 +286,7 @@ a img{
         height: 12px;
         width: 12px;
     }
-    .sub_container .checkmark:after{
+    .sub-container .checkmark:after{
         left: 4px;
         top: 0;
         width: 2px;

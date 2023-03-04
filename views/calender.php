@@ -4,7 +4,7 @@
 
 <div class="main-container border v-center flex-gap responsive-container">
     <div class="main border">
-        <h1 class="text-center">Calender</h1>
+        <h3>Calender</h3>
         <div class="flex h-justify">
 
             <div class="wrapper">
@@ -31,28 +31,27 @@
             </div>
 
             <div class="card">
-                <div class="cards_heading flex h-justify" >
-                    <div class="week_days">Tuesday</div>
-                    <div class="date">January 4 2023</div>
-                </div>
-                <div class="cards_heading cards_content flex h-justify v-center">
-                    <div class="rank">CS 2003 Assignment 1</div>
-                    <div class="student_name">08:30</div>
-                </div>
-
-                <div class="cards_heading cards_content1 flex h-justify v-center">
-                    <div class="rank">CS 2001 Labsheet 4</div>
-                    <div class="student_name">09:30</div>
-                </div>
-                <div class="cards_heading cards_content flex h-justify v-center">
-                    <div class="rank">CS 2002 Tutorial</div>
-                    <div class="student_name">10:30</div>
-                </div>
-
-                <div class="cards_heading cards_content1 flex h-justify v-center">
-                    <div class="rank">CS 2004 Online Quiz</div>
-                    <div class="student_name">11:30</div>
-                </div>
+                <table>
+                    <tr>
+                        <th class="task-heading"> Tuesday </th>
+                        <th class="task-date"> January 4 2023 </th>
+                    </tr>
+                    <tr>
+                        <td class="task-content"> CS 2003 Assignment 1 </td>
+                        <td class="task-time"> 08:30 </td>
+                    </tr>
+                    <tr>
+                        <td class="task-content"> CS 2001 Labsheet 4 </td>
+                        <td class="task-time"> 09:30 </td>
+                    </tr>
+                    <tr>
+                        <td class="task-content"> CS 2002 Tutorial </td>
+                        <td class="task-time"> 10:30 </td>
+                    </tr>
+                    <tr>
+                        <td class="task-content"> CS 2004 Online Quiz </td>
+                        <td class="task-time"> 11:30 </td>
+                    </tr>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
         <div class="heading">
             <h3>Course Create</h3>
         </div>
-        <form action="" method="GET" class="course_create_form flex flex-row">
+        <form action="" method="GET" class="course-create-form flex flex-row">
             <label class="flex flex-column">
                 <p>Course Code</p>
                 <input id="input-create-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
@@ -15,7 +15,7 @@
                 <p>Course Name</p>
                 <input id="input-create-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
             </label>
-            <label class="flex flex-column h-end" id="create_course">
+            <label class="flex flex-column h-end" id="create-course">
                 <button class="dark-btn" type="submit" onclick="return course_validate(document.getElementById('input-create-course-code').value)" name="create">Create</button>
             </label>
         </form>
@@ -78,7 +78,7 @@
                 <h3>Course Create</h3>
             </div>
         <form action="" method="GET">
-            <div class="course_create_form flex flex-row">
+            <div class="course-create-form flex flex-row">
                 <label class="flex flex-column">
                     <p>Course Code</p>
                     <input id="input-edit-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>

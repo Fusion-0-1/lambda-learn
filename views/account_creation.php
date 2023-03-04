@@ -69,7 +69,7 @@ function printType($type){
           method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" accept=".csv" hidden>
         <input type="text" name="type" value="<?php echo $type?>" hidden>
-        <h3 class="page-header">
+        <h3>
             <?php printType($type); ?>
         </h3>
         <button type="button" class="x-dark-btn">

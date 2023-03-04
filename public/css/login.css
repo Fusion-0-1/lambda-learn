@@ -8,7 +8,7 @@ body{
     }
 }
 
-.login_container {
+.login-container {
     margin-top: 0 !important;
     overflow: hidden;
 }
@@ -22,21 +22,21 @@ body{
     height: 35px;
 }
 
-.background_image_container {
+.background-image-container {
     width: 50%;
 }
 
-.background_image_container > img {
+.background-image-container > img {
     width: 100%;
 }
 
-.login_container_logo {
+.login-container-logo {
     width: 40%;
     margin-left: auto;
     margin-right: auto;
 }
 
-.login_container_logo > img {
+.login-container-logo > img {
     width: 100%;
 }
 

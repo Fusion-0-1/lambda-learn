@@ -1,11 +1,11 @@
-.profile_img{
+.profile-img{
     width: 120PX;
     height: 120PX;
     border-radius: 50%;
     border: 3px solid var(--heading-blue);
 }
 
-.profile_img_center{
+.profile-img-center{
     display: block;
 }
 
