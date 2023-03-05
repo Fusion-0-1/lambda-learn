@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="css/submissions.css">
 
 <div class="main-container border v-center flex-gap responsive-container">
-    <h2 class="text-center course_name">Data Structures and Algorithms - Submissions</h2>
+    <h2 class="text-center course_name"><?php echo $course_code?></h2>
         <div class="submissions_card border">
             <div class="topic_container_add grid v-center h-justify">
                     <textarea id="heading_textarea" name="heading" placeholder="Type your submission topic..."
@@ -21,9 +21,10 @@
             </div>
         </div>
 
+    <?php foreach ($submissions as $sub) { ?>
         <div class="submissions_card border">
             <div class="topic_container grid v-center h-justify container_edit_delete" >
-                <h4 class="heading_content text-bold text-justify">Assignment 01 - String Matching</h4>
+                <h4 class="heading_content text-bold text-justify"><?php echo $sub->getTopic()?></h4>
                     <div class="edit_delete_timeremaining grid v-center">
                         <a href="" class="deletebtn"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
                         <a href="" class="editbtn"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
@@ -32,15 +33,12 @@
 
             <div class="submissions_card_inside border">
                 <div class="container_heading grid h-justify v-center">
-                    <div class="view_points_and_marks">Marks Allocated:- 10</div>
-                    <div class="view_points_and_marks">Points Allocated:- 50</div>
-                    <div class="view_points_and_marks text-right">Thursday 27 October 2022 11:24 AM</div>
+                    <div class="view_points_and_marks">Marks Allocated:- <?php echo $sub->getAllocatedMark()?></div>
+                    <div class="view_points_and_marks">Points Allocated:- <?php echo $sub->getAllocatedPoint()?></div>
+                    <div class="view_points_and_marks text-right"><?php echo $sub->getDueDate()?></div>
                 </div>
                 <p class="text-justify view_points_and_marks">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente officia qui accusamus repellendus,
-                    dolorem eveniet? Vitae, cum, harum architecto rerum similique velit facilis dolore ad libero quaerat
-                    quibusdam incidunt, aliquam praesentium odit nobis sit consectetur totam dolores exercitationem
-                    molestias accusamus quisquam. Est, nostrum quos! Ea aut dolores nam quasi assumenda.
+                    <?php echo $sub->getDescription()?>
                 </p>
                 <div class="submissions flex v-center">
                     <label class="sub_container">Visibility :
@@ -52,6 +50,7 @@
                 </div>
             </div>
         </div>
+    <?php } ?>
 </div>
 
 <script type="text/javascript">
