@@ -34,14 +34,12 @@ class submission
 
     }
 
-    public static function getSubmission(): array
+    public static function getSubmission($course_code): array
     {
         $assignmentSubmissions = [];
-        var_dump([getBody()]);
         $results = Application::$db->select(
             table: 'coursesubmission',
-
-//            where: ['course_code' => getCourseCode()],
+            where: ['course_code' => $course_code],
             order: 'submission_id DESC'
 
         );
@@ -58,7 +56,6 @@ class submission
             );
 
         }
-        //var_dump($assignmentSubmissions);
         return $assignmentSubmissions;
     }
 
