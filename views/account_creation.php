@@ -83,18 +83,8 @@ function printType($type){
 
         <h4 class="csv-header-text">CSV Header Columns Format:</h4>
         <p class="csv-header-format flex v-center h-center">
-            <?php
-            if($type == 'Student') {
-                echo "The CSV file should include reg_no, first_name, last_name,
-                email, personalEmail, contact_no respectively";
-            } elseif ($type == 'Lecturer') {
-                echo "Lecturer Accounts";
-            } elseif ($type == 'Coordinator') {
-                echo "Coordinator Accounts";
-            } elseif ($type == 'Admin') {
-                echo "Admin Accounts";
-            }
-            ?>
+            The CSV file should include reg_no, first_name, last_name,
+            email, personalEmail, contact_no respectively
         </p>
     </form>
 
