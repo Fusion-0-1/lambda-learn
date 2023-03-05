@@ -116,7 +116,8 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <a href="/submissions" class="hyperlink"> View all </a>
+                <!-- TODO: Add course code here-->
+                <a href="/submissions?course_code=<?php echo ('CS 2001')?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>
