@@ -46,6 +46,11 @@ $app->router->get('/course_initialization', [CourseController::class, 'courseIni
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
+$app->router->get('/course_announcement', [AnnouncementController::class, 'displayCourseAnnouncements']);
+
+$app->router->post('/site_announcement', [AnnouncementController::class, 'createSiteAnnouncements']);
+$app->router->post('/course_announcement', [AnnouncementController::class, 'createCourseAnnouncements']);
+
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
@@ -67,7 +72,6 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
 // -------------------------------------------------------------------------
 
-$app->router->post('/site_announcement', [AnnouncementController::class, 'createAnnouncements']);
 
 
 $app->run();

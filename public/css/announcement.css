@@ -99,13 +99,13 @@
     margin: 0;
 }
 
-#heading-textarea{
+#heading_textarea{
     display: block;
     overflow: hidden;
     resize: none;
 }
 
-#content-textarea{
+#content_textarea{
     display: block;
     overflow: hidden;
     resize: none;

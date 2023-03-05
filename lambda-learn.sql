@@ -156,9 +156,7 @@ CREATE TABLE SiteAnnouncement (
     publish_date DATETIME NOT NULL,
     admin_reg_no VARCHAR(12),
     cord_reg_no VARCHAR(12),
-    CONSTRAINT PK_SiteAnnouncement PRIMARY KEY (announcement_id),
-    CONSTRAINT FK_SiteAnnouncement_Admin FOREIGN KEY (admin_reg_no) REFERENCES Admin(reg_no),
-    CONSTRAINT FK_SiteAnnouncement_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
+    CONSTRAINT PK_SiteAnnouncement PRIMARY KEY (announcement_id)
 );
  
 DROP TABLE IF EXISTS CourseAnnouncement;
