@@ -105,6 +105,7 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
+                <!-- TODO: Add course code here-->
                 <a href="/course_announcement?course_code=<?php echo ('CS 2001')?> " class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>

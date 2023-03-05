@@ -9,10 +9,7 @@ class CourseAnnouncement extends Announcement
     private string $lecRegNo;
     private string $courseCode;
 
-    private function __construct()
-    {
-
-    }
+    private function __construct(){}
     public static function fetchAnnFromDb(int $id){
         $courseAnnouncement = new CourseAnnouncement();
         $table = self::getCourseAnnouncementData($id);
@@ -23,15 +20,10 @@ class CourseAnnouncement extends Announcement
         $courseAnnouncement->publishDate = $table['publish_date'];
         $courseAnnouncement->lecRegNo = $table['lec_reg_no'];
         $courseAnnouncement->courseCode = $table['course_code'];
-
         return $courseAnnouncement;
-
     }
 
-    public static function createNewAnn(string $heading, string $content,
-                                               string $lecRegNo, string $courseCode, int $announcementId=null, string $publishDate=''){
-
-
+    public static function createNewAnn(string $heading, string $content, string $lecRegNo, string $courseCode, int $announcementId=null, string $publishDate=''){
         $announcement = new CourseAnnouncement();
         if ($announcementId != null){
             $announcement->announcementId = $announcementId;
@@ -45,7 +37,7 @@ class CourseAnnouncement extends Announcement
         return $announcement;
     }
 
-    //--------------------Display Site-announcement------------------------------
+    //--------------------Display Course-announcement------------------------------
 
     private static function getCourseAnnouncementData($id): array
     {
@@ -74,7 +66,7 @@ class CourseAnnouncement extends Announcement
         return $courseAnnouncements;
     }
 
-    //---------------Insert SiteAnnouncement------------------
+    //---------------Insert CourseAnnouncement------------------
 
     public function CourseAnnouncementInsert()
     {

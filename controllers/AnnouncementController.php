@@ -27,7 +27,6 @@ class AnnouncementController extends Controller
         return $this->render(
             view: 'course/course_announcement',
             params: $params
-
         );
     }
 

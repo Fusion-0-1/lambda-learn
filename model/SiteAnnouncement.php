@@ -17,15 +17,14 @@ class SiteAnnouncement extends Announcement
     public static function fetchAnnFromDb(int $id){
         $siteAnnouncement = new SiteAnnouncement();
         $table = self::getSiteAnnouncementData($id);
+        $siteAnnouncement->announcementId = $table['announcement_id'];
+        $siteAnnouncement->heading = $table['heading'];
+        $siteAnnouncement->content = $table['content'];
+        $siteAnnouncement->publishDate = $table['publish_date'];
+        $siteAnnouncement->adminRegNo = $table['admin_reg_no'];
+        $siteAnnouncement->cordRegNo = $table['cord_reg_no'];
 
-            $siteAnnouncement->announcementId = $table['announcement_id'];
-            $siteAnnouncement->heading = $table['heading'];
-            $siteAnnouncement->content = $table['content'];
-            $siteAnnouncement->publishDate = $table['publish_date'];
-            $siteAnnouncement->adminRegNo = $table['admin_reg_no'];
-            $siteAnnouncement->cordRegNo = $table['cord_reg_no'];
-
-            return $siteAnnouncement;
+        return $siteAnnouncement;
     }
     public static function createNewAnn(string $heading, string $content, string $publishDate='',
                                         $adminRegNo='', $cordRegNo='', int $announcementId=null){
@@ -49,7 +48,6 @@ class SiteAnnouncement extends Announcement
         return parent::getAnnouncementData($id,'SiteAnnouncement');
     }
 
-
     public static function getSiteAnnouncements(): array
     {
         $siteAnnouncements = [];
@@ -67,7 +65,6 @@ class SiteAnnouncement extends Announcement
                  (int)$ann['announcement_id'],
              );
         }
-
         return $siteAnnouncements;
     }
 
@@ -86,7 +83,6 @@ class SiteAnnouncement extends Announcement
             ]
         );
     }
-
 
     /**
      * @return string
