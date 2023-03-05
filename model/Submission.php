@@ -31,7 +31,6 @@ class submission
         $submission->visibility = $visibility;
 
         return $submission;
-
     }
 
     public static function getSubmission($course_code): array
@@ -41,7 +40,6 @@ class submission
             table: 'coursesubmission',
             where: ['course_code' => $course_code],
             order: 'submission_id DESC'
-
         );
         while ($sub = Application::$db->fetch($results)){
             $assignmentSubmissions[] = self::createNewSubmission(
@@ -122,6 +120,4 @@ class submission
     {
         return $this->visibility;
     }
-
-
 }
