@@ -23,7 +23,7 @@ class AnnouncementController extends Controller
     {
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
-        $params['announcements'] = CourseAnnouncement::getCourseAnnouncements();
+        $params['announcements'] = CourseAnnouncement::getCourseAnnouncements($params['course_code']);
         return $this->render(
             view: 'course/course_announcement',
             params: $params
