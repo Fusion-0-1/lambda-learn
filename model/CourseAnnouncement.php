@@ -52,11 +52,12 @@ class CourseAnnouncement extends Announcement
         return parent::getAnnouncementData($id,'courseannouncement');
     }
 
-    public static function getCourseAnnouncements(): array
+    public static function getCourseAnnouncements($course_code): array
     {
         $courseAnnouncements = [];
         $results = Application::$db->select(
             table: 'courseannouncement',
+            where: ['course_code' => $course_code],
             order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
