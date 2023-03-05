@@ -35,7 +35,14 @@ do
 
         PROC_COUNT=$(echo $TOP | grep "Processes:" | awk '{print $2}') # awk will get the 2nd column, which is the process count
         PROC_RUNNING=$(echo $TOP | grep "Processes:" | awk '{print $4}') # awk will get the 4th column, which is the process running
-        PROC_SLEEPING=$(echo $TOP | grep "Processes:" | awk '{print $6}') # awk will get the 6th column, which is the process sleeping
+        # awk will first select substring upto ` threads` and then get the number of columns
+        no_columns=$(echo $TOP | grep "Processes:" | awk -F ' threads' '{ print $1 " threads" }' | awk -F" " "{ print NF }") 
+
+        if [ $no_columns -eq 9 ]; then
+            PROC_SLEEPING=$(echo $TOP | grep "Processes:" | awk '{print $6}') # awk will get the 6th column, which is the process sleeping
+        else
+            PROC_SLEEPING=$(echo $TOP | grep "Processes:" | awk '{print $8}') # awk will get the 7th column, which is the process sleeping
+        fi
 
     # if the OS is Linux, run the Linux commands
     elif [ "$OS" == "Linux" ]; then
