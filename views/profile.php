@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="css/profile.css">
+<script src="js/profile.js" defer></script>
+<script src="js/validation.js" defer></script>
 
 <div class="border main-container v-center flex-gap responsive_main-container">
     <div class="flex h-center v-center flex-responsive">
@@ -30,9 +32,9 @@
                     echo $profilePicture;
                     ?>" alt="profile" class="profile_img profile_img_center"><br>
 
-                    <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png"
-                           onchange="previewImage(this)">
-                    <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide">
+                    <input type="file" id="image_upload" name="profile_picture" accept=".jpg, .jpeg, .png"
+                           onchange="previewImage(this)" hidden>
+                    <button type="button" id= "profile-btn" class="edit-btn edit-btn-icon profile-btn hide">
                         <i class="fa-solid fa-camera"></i></button><br>
                 </div>
 
@@ -66,7 +68,7 @@
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Contact Number</label>
-                        <div class="hide inline" id="edit-icon_1">
+                        <div class="inline hide" id="edit-icon_1">
                             <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                     </div>
@@ -79,7 +81,7 @@
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Personal Email</label>
-                        <div class="hide inline" id="edit-icon_2">
+                        <div class="inline hide" id="edit-icon_2">
                             <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                     </div>
@@ -94,15 +96,13 @@
                     <button id="edit" type="button" class="edit-btn edit-btn-icon">
                         <i class="fa-solid fa-pen"></i>
                     </button><br>
-                    <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
+                    <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text" hidden>Confirm</button>
                 </div>
             </form>
-
 
             <!--Change password - Modal-->
             <div id="modal" class="modal" hidden>
                 <div class="modal-content">
-                    <span class="close">&times;</span>
                     <form>
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
@@ -123,14 +123,13 @@
                             </div>
                         </div>
                         <div class="flex flex-row h-end">
-                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
+                            <button id="cancel_modal" class="flex cancel-btn confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
                             <button id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
 
         <!--Login Activity-->
         <div class="flex flex-column width-full">
@@ -157,7 +156,6 @@
                     ?>
                 </label><br>
             </div>
-
 
 <!--Registered Courses-->
             <?php
@@ -190,19 +188,13 @@
 
 </div>
 
-<div id="warn-modal" class="modal hide" >
+<div id="warn-modal" class="modal" hidden>
     <div id="warn_msg_email" class="modal-content warn-modal-content" >
         <div class="flex flex-column v-center h-center">
             <img src="images/primary_icons/warning.svg">
-            <h4 id="delete-warning">Invalid Email</h4>
+            <h4 id="delete-warning">Invalid Email or contact number</h4>
             <div>
-                <p>Email should follow below format,</p>
-                <ul>
-                    <li>Must contain one or more non-whitespace characters</li>
-                    <li>Cannot start or end with a period</li>
-                    <li>One or more non-whitespace characters separated by a period (.)</li>
-                    <li>Cannot start or end with a period</li>
-                </ul>
+                <p>Please check whether the format of the email address or the contact number is correct</p>
             </div>
             <section class="flex flex-row two-button-row">
                 <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
@@ -211,95 +203,4 @@
     </div>
 </div>
 
-<!--Scripts-->
-<script type="text/javascript" src="js/validation.js"></script>
-<script>
-    var modal = document.getElementById("modal");
-    var btn = document.getElementById("password");
-    var span = document.getElementsByClassName("close")[0];
-    var btn_edit = document.getElementById("edit");
-    var btn_confirm = document.getElementById("btn_confirm");
-    var change_profile_btn = document.getElementById('profile-btn');
-    var preview = document.getElementById("preview");
-    var cancel_modal = document.getElementById("cancel_modal");
-    var confirm_modal = document.getElementById("confirm_modal");
-
-
-    btn.onclick = function (){
-        modal.style.display = "block";
-        modal.hidden = false;
-    }
-    span.onclick = function (){
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-    cancel_modal.onclick = function(){
-        modal.style.display = "none";
-    }
-
-    // Function to enable editing of contact and personal email fields
-    btn_edit.onclick = function(){
-        document.getElementById('contact').removeAttribute('readonly');
-        document.getElementById('personal_email').removeAttribute('readonly');
-        document.getElementById('edit-icon_1').classList.remove('hide');
-        document.getElementById('edit-icon_2').classList.remove('hide');
-        change_profile_btn.classList.remove('hide');
-        btn_edit.classList.add('hide');
-        btn.classList.add('hide');
-        btn_confirm.classList.remove('hide');
-    }
-
-    document.getElementById('continue-btn').onclick = function (){
-        btn_confirm.classList.add('hide');
-        btn.classList.remove('hide');
-        btn_edit.classList.remove('hide');
-        document.getElementById('contact').setAttribute('readonly', true);
-        document.getElementById('personal_email').setAttribute('readonly', true);
-    }
-
-    // Function to confirm changes to contact and personal email fields
-    btn_confirm.onclick = function () {
-        if (profile_validate( document.getElementById('contact').value,document.getElementById('personal_email').value)){
-            btn_confirm.classList.add('hide');
-            btn.classList.remove('hide');
-            btn_edit.classList.remove('hide');
-            document.getElementById('contact').setAttribute('readonly', true);
-            document.getElementById('personal_email').setAttribute('readonly', true);
-        }
-        else{
-            document.getElementById('warn-modal').style.display = "block";
-            document.getElementById('warn-modal').hidden = false;
-        }
-    }
-
-    // Function to trigger the image upload input field when the change profile button is clicked
-    change_profile_btn.onclick = function(){
-        document.getElementById("image_upload").click();
-    }
-
-    // Function to preview the selected image before uploading
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                preview.src = event.target.result;
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function profile_validate(contact, email){
-        if (!validate_contact(contact)) {
-            return false;
-        }
-        if (!validate_email(email)) {
-            return false;
-        }
-        return true;
-    }
-</script>
 
