@@ -80,6 +80,6 @@ function validate_contact(contact){
     {10} specifies that exactly 10 digits should be matched
     $ matches the end of the string
      */
-    const re = new RegExp("^\d{10}$");
+    const re = new RegExp("^\\d{10}$");
     return re.test(contact);
 }
