@@ -9,14 +9,14 @@ class SiteAnnouncement extends Announcement
     private string $adminRegNo;
     private string $cordRegNo;
 
+
     private function __construct()
     {
 
     }
     public static function fetchAnnFromDb(int $id){
-        $table = self::getSiteAnnouncementData($id);
-
         $siteAnnouncement = new SiteAnnouncement();
+        $table = self::getSiteAnnouncementData($id);
         $siteAnnouncement->announcementId = $table['announcement_id'];
         $siteAnnouncement->heading = $table['heading'];
         $siteAnnouncement->content = $table['content'];
@@ -42,10 +42,12 @@ class SiteAnnouncement extends Announcement
 
         return $announcement;
     }
+    //--------------------Display Site-announcement------------------------------
     private static function getSiteAnnouncementData($id): array
     {
         return parent::getAnnouncementData($id,'SiteAnnouncement');
     }
+
     public static function getSiteAnnouncements(): array
     {
         $siteAnnouncements = [];
@@ -63,13 +65,12 @@ class SiteAnnouncement extends Announcement
                  (int)$ann['announcement_id'],
              );
         }
-
         return $siteAnnouncements;
     }
 
     //---------------Insert SiteAnnouncement------------------
 
-    public function insert()
+    public function SiteAnnouncementInsert()
     {
         Application::$db->insert(
             table: 'SiteAnnouncement',
