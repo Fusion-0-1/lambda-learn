@@ -110,7 +110,7 @@
             <div id="modal" class="modal" >
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <form action="/profile" method="post">
+                    <form action="/profile" method="post" name="change_password" onsubmit="return isValid()">
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
                             <div class="flex flex-responsive">
@@ -128,6 +128,9 @@
                             <div class="flex flex-responsive">
                                 <input type="password" name="confirm_password" class="input text-right width-full"><br>
                             </div>
+                        </div>
+                        <div id="error" class="error-message">
+                            <?php if (isset($error)) echo $error; ?>
                         </div>
                         <div class="flex flex-row h-end">
                             <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
@@ -258,6 +261,21 @@
                 preview.src = event.target.result;
             }
             reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function isValid(){
+        try{
+            if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
+                return true
+            }
+            else{
+                throw 'Make sure your passwords match';
+            }
+        }
+        catch (e){
+            document.getElementById("error").innerHTML=("Make sure your passwords match");
+            return false;
         }
     }
 </script>
