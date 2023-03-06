@@ -2,7 +2,7 @@
 
 <div class="border main-container v-center flex-gap responsive-container">
 
-    <h3 class="page-header"> Utilization Reports </h3>
+    <h3> Utilization Reports </h3>
 
         <?php if ($_SESSION['user-role'] == 'Admin') {?>
         <div>

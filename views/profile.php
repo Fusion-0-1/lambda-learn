@@ -28,7 +28,7 @@
                     else
                         $profilePicture = "images/profile.png";
                     echo $profilePicture;
-                    ?>" alt="profile" class="profile_img profile_img_center"><br>
+                    ?>" alt="profile" class="profile-img profile-img-center"><br>
 
                     <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png"
                            onchange="previewImage(this)">

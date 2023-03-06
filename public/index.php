@@ -31,7 +31,7 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
-$app->router->get('/cs2003', [CourseController::class, 'displayCourse']);
+$app->router->get('/course_page', [CourseController::class, 'displayCourse']);
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 $app->router->get('/attendance_upload', 'attendance_upload');
 $app->router->get('/utilization', 'utilization');
