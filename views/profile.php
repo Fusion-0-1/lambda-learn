@@ -275,12 +275,10 @@
         try{
             if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
                 return true
-            }
-            else{
+            } else {
                 throw 'Make sure your passwords match';
             }
-        }
-        catch (e){
+        } catch (e){
             document.getElementById("error").innerHTML=("Make sure your passwords match");
             return false;
         }

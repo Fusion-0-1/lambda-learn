@@ -10,7 +10,6 @@ use app\model\User\Admin;
 use app\model\User\Lecturer;
 use app\model\User\Student;
 use app\model\Course;
-use MongoDB\Driver\Session;
 
 class ProfileController extends Controller
 {
@@ -71,25 +70,25 @@ class ProfileController extends Controller
                 $user->updateProfile();
                 $data_updated = true;
             }
-
         }
         $params = ['user'=>$user];
         if($data_updated){
             $params['success_mssg'] = true;
-        }
-        else{
+        } else{
             $params['error'] = true;
         }
 
         if($_SESSION['user-role'] == 'Admin'){
             return $this->render(
                 view: 'admin_profile',
+                allowedRoles: ['Admin'],
                 params: $params
             );
         }
         $params['courses'] = Course::getUserCourses($user);
         return $this->render(
             view: 'profile',
+            allowedRoles: ['Student', 'Lecturer', 'Coordinator'],
             params: $params
         );
     }
