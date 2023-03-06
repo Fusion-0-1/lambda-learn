@@ -36,6 +36,8 @@ class ProfileController extends Controller
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getRegNo();
+        $data_updated = false;
+
         if(isset($body['password'])){
             $newPassword = $body['new_password'];
             $confirmPassword = $body['confirm_password'];
@@ -43,6 +45,7 @@ class ProfileController extends Controller
                 $newPassword == $confirmPassword)
             {
                 $user->updatePassword($newPassword);
+                $data_updated = true;
             }
         } else {
             $userRegNo = str_replace('/', '', $user->getRegNo());
@@ -60,26 +63,36 @@ class ProfileController extends Controller
 
                 move_uploaded_file($fileTmpName, $filePath);
                 $user->setProfilePicture($filePath);
+                $data_updated = true;
             }
-            $user->setContactNo($body['contact']);
-            $user->setPersonalEmail($body['personal_email']);
+            if(User::validateContactNo($body['contact']) and User::validateEmail($body['personal_email'])){
+                $user->setContactNo($body['contact']);
+                $user->setPersonalEmail($body['personal_email']);
+                $user->updateProfile();
+                $data_updated = true;
+            }
 
-            $user->updateProfile();
         }
-
-        $params = ['user'=>$user];
-        if($_SESSION['user-role'] == 'Admin'){
+        if($data_updated){
+            $params = ['user'=>$user];
+            if($_SESSION['user-role'] == 'Admin'){
+                $params['success_mssg'] = true;
+                return $this->render(
+                    view: 'admin_profile',
+                    params: $params
+                );
+            }
+            $params['courses'] = Course::getUserCourses($user);
+            $params['success_mssg'] = true;
             return $this->render(
-                view: 'admin_profile',
+                view: 'profile',
                 params: $params
             );
         }
-        $params['courses'] = Course::getUserCourses($user);
-
-        return $this->render(
-            view: 'profile',
-            params: $params
-        );
+        else{
+            header('Location: profile');
+            exit();
+        }
     }
 
 
