@@ -1,5 +1,12 @@
 <link rel="stylesheet" href="css/profile.css">
 
+<!--Success message model on the bottom right -->
+<?php if(isset($success_mssg)) { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Data updated successfully.</p>
+    </div>
+<?php } ?>
+
 <div class="border main-container v-center flex-gap responsive_main-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
