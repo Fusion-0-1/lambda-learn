@@ -100,7 +100,7 @@
 
 
             <!--Change password - Modal-->
-            <div id="modal" class="modal" >
+            <div id="modal" class="modal" hidden>
                 <div class="modal-content">
                     <span class="close">&times;</span>
                     <form>
@@ -190,8 +190,8 @@
 
 </div>
 
-<div id="warn-modal" class="modal">
-    <div id="warn_msg_email" class="modal-content warn-modal-content" hidden>
+<div id="warn-modal" class="modal hide" >
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
         <div class="flex flex-column v-center h-center">
             <img src="images/primary_icons/warning.svg">
             <h4 id="delete-warning">Invalid Email</h4>
@@ -227,6 +227,7 @@
 
     btn.onclick = function (){
         modal.style.display = "block";
+        modal.hidden = false;
     }
     span.onclick = function (){
         modal.style.display = "none";
@@ -252,13 +253,27 @@
         btn_confirm.classList.remove('hide');
     }
 
-    // Function to confirm changes to contact and personal email fields
-    btn_confirm.onclick = function (){
+    document.getElementById('continue-btn').onclick = function (){
         btn_confirm.classList.add('hide');
         btn.classList.remove('hide');
         btn_edit.classList.remove('hide');
         document.getElementById('contact').setAttribute('readonly', true);
         document.getElementById('personal_email').setAttribute('readonly', true);
+    }
+
+    // Function to confirm changes to contact and personal email fields
+    btn_confirm.onclick = function () {
+        if (profile_validate( document.getElementById('contact').value,document.getElementById('personal_email').value)){
+            btn_confirm.classList.add('hide');
+            btn.classList.remove('hide');
+            btn_edit.classList.remove('hide');
+            document.getElementById('contact').setAttribute('readonly', true);
+            document.getElementById('personal_email').setAttribute('readonly', true);
+        }
+        else{
+            document.getElementById('warn-modal').style.display = "block";
+            document.getElementById('warn-modal').hidden = false;
+        }
     }
 
     // Function to trigger the image upload input field when the change profile button is clicked
@@ -275,6 +290,16 @@
             }
             reader.readAsDataURL(input.files[0]);
         }
+    }
+
+    function profile_validate(contact, email){
+        if (!validate_contact(contact)) {
+            return false;
+        }
+        if (!validate_email(email)) {
+            return false;
+        }
+        return true;
     }
 </script>
 
