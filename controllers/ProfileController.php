@@ -73,26 +73,25 @@ class ProfileController extends Controller
             }
 
         }
+        $params = ['user'=>$user];
         if($data_updated){
-            $params = ['user'=>$user];
-            if($_SESSION['user-role'] == 'Admin'){
-                $params['success_mssg'] = true;
-                return $this->render(
-                    view: 'admin_profile',
-                    params: $params
-                );
-            }
-            $params['courses'] = Course::getUserCourses($user);
             $params['success_mssg'] = true;
+        }
+        else{
+            $params['error'] = true;
+        }
+
+        if($_SESSION['user-role'] == 'Admin'){
             return $this->render(
-                view: 'profile',
+                view: 'admin_profile',
                 params: $params
             );
         }
-        else{
-            header('Location: profile');
-            exit();
-        }
+        $params['courses'] = Course::getUserCourses($user);
+        return $this->render(
+            view: 'profile',
+            params: $params
+        );
     }
 
 

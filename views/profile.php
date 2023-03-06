@@ -7,6 +7,13 @@
     </div>
 <?php } ?>
 
+<!--Success message model on the bottom right to display accounts created successfully-->
+<?php if(isset($error)) { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>Failed to update data.</p>
+    </div>
+<?php } ?>
+
 <div class="border main-container v-center flex-gap responsive_main-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
