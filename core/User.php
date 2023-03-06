@@ -97,9 +97,6 @@ abstract class User
     public function updateProfile():void
     {
         $userData = [
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'email' => $this->email,
             'personal_email' => $this->personalEmail,
             'contact_no' => $this->contactNo,
             'profile_picture' => $this->profilePicture
