@@ -5,48 +5,52 @@
     <h3>Data Structures and Algorithms III</h3>
     <h4 class="text-center text-normal">SCS2201</h4>
 
-    <div class="border main-container v-center flex-gap">
-        <h4>Course Topics</h4><hr><br>
-        <div class="flex flex-wrap h-justify">
-            <div id="topic" class="flex flex-wrap h-evenly flex-gap">
-                <input id="input_topic_1" class="input input-topic flex flex-gap" placeholder="Add new topic" onkeyup="addTopic(this)">
-            </div>
-        </div>
-        <div class="flex margin-top h-center">
-            <button id="save" class="edit-btn edit-btn-text hide">Save</button>
-        </div>
-    </div>
-
-    <div class="border main-container flex-gap">
-        <h4>Course Sub Topics</h4><hr><br>
-        <div id="course-topic" class="flex flex-gap flex-wrap h-center">
-            <div id="sub_topic_list_1" class="border container-course-topic v-center flex flex-gap v-center flex-column">
-                <h5 id="topic-1" class="text-center remove-space">Add new topic...</h5>
-                <div id="subtopic-1" class="border container-course-sub-topic v-center padding-none flex flex-column">
-                    <input class="input input-subtopic flex" placeholder="Add new sub topic...">
-                </div>
-                <button id="1" class="btn-circle" onclick="addSubTopic(this.id)" disabled><i class="fa-solid fa-plus"></i></button>
-            </div>
-        </div>
-        <div class="flex margin-top h-center">
-            <button id="initialize" class="confirm-btn" disabled>Initialize course page</button>
-
-            <div id="modal" class="modal hide" >
-                <div class="warn-modal-content">
-                    <div class="text-center">
-                        <img src="images/primary_icons/warning.svg" alt="warning">
-                        <h4>Are You Sure?</h4>
-                        <p>Once you initialize the course page, you cannot add new topics for progress tracking</p>
-                    </div>
-                    <div class="two-button-row  text-right">
-                        <button id="cancel-btn" class="text-bold">Cancel</button>
-                        <button id="initialize-btn" class="text-bold">Initialize</button>
-                    </div>
+    <form method="post">
+        <div class="border main-container v-center flex-gap">
+            <h4>Course Topics</h4><hr><br>
+            <div class="flex flex-wrap h-justify">
+                <div id="topic" class="flex flex-wrap h-evenly flex-gap">
+                    <input id="input_topic_1" class="input input-topic flex flex-gap" placeholder="Add new topic" onkeyup="addTopic(this)">
                 </div>
             </div>
+            <div class="flex margin-top h-center">
+                <button id="save" class="edit-btn edit-btn-text hide">Save</button>
+            </div>
         </div>
-    </div>
+
+        <div class="border main-container flex-gap">
+            <h4>Course Sub Topics</h4><hr><br>
+            <div id="course-topic" class="flex flex-gap flex-wrap h-center">
+                <div id="sub_topic_list_1" class="border container-course-topic v-center flex flex-gap v-center flex-column">
+                    <h5 id="topic-1" class="text-center remove-space">Add new topic...</h5>
+                    <div id="subtopic-1" class="border container-course-sub-topic v-center padding-none flex flex-column">
+                        <input class="input input-subtopic flex" placeholder="Add new sub topic...">
+                    </div>
+                    <button id="1" type="button" class="btn-circle" onclick="addSubTopic(this.id)" disabled><i class="fa-solid fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="flex margin-top h-center">
+                <button id="initialize" class="confirm-btn" disabled>Initialize course page</button>
+
+                <div id="modal" class="modal hide" >
+                    <div class="warn-modal-content">
+                        <div class="text-center">
+                            <img src="images/primary_icons/warning.svg" alt="warning">
+                            <h4>Are You Sure?</h4>
+                            <p>Once you initialize the course page, you cannot add new topics for progress tracking</p>
+                        </div>
+                        <div class="two-button-row  text-right">
+                            <button id="cancel-btn" class="text-bold">Cancel</button>
+                            <button id="initialize-btn" class="text-bold">Initialize</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
+
+
 
 
 
@@ -62,8 +66,6 @@
         let topic_arr = topic_id.split('_');
         return parseInt(topic_arr[topic_arr.length-1]);
     }
-
-
 
     /**
      * addTopic - A function that adds a new topic element
@@ -87,9 +89,11 @@
         let new_input;
         for (let i=0; i < topic_elements.length; i++) {
             if (!exists) {
+                //enable editing the subtopic elements once start typing on the topic input fields
                 document.getElementById("initialize").removeAttribute("disabled");
                 document.getElementById(""+(topic_id)).removeAttribute("disabled");
 
+                //create new input fields to add course topics
                 new_input = document.createElement("INPUT");
                 new_input.setAttribute("type", "text");
                 new_input.setAttribute("placeholder", "Add new topic");
@@ -98,7 +102,7 @@
                 new_input.setAttribute("onkeyup", "addTopic(this)");
                 document.getElementById('topic').appendChild(new_input);
 
-                // Create new topic container and other related elements (subtopics, heading, buttons)
+                // Create new sub-topic container and other related elements (subtopics, heading, buttons)
                 let topic_container = document.createElement('div');
                 topic_container.setAttribute('id', 'sub_topic_list_'+(topic_id + 1));
                 topic_container.classList.add("border", "container-course-topic", "v-center", "flex", "flex-gap", "v-center",
@@ -120,10 +124,11 @@
 
                 let add_button = document.createElement("button");
                 add_button.setAttribute("id", ""+(topic_id+1));
+                add_button.setAttribute("type", "button");
                 add_button.disabled = true;
                 add_button.classList.add("class", "btn-circle", "fa-solid", "fa-plus");
 
-                add_button.onclick = function(){ return addSubTopic(this.id)};
+                add_button.onclick = function(){return addSubTopic(this.id)};
 
                 topic_container.appendChild(heading);
                 subtopic_container.appendChild(input);
@@ -168,11 +173,22 @@
      *  @param {string} clicked_id - the id of the parent element, the new subtopic input field will be appended to
      */
     function addSubTopic(clicked_id){
-        let new_subtopic = document.createElement("INPUT");
-        new_subtopic.setAttribute("type", "text");
-        new_subtopic.setAttribute("placeholder", "Add new sub topic...");
-        new_subtopic.setAttribute("class", "input input-subtopic flex width-full");
-        document.getElementById('subtopic-'+clicked_id).appendChild(new_subtopic);
+        // let new_subtopic = document.createElement("INPUT");
+        // new_subtopic.setAttribute("type", "text");
+        // new_subtopic.setAttribute("placeholder", "Add new sub topic...");
+        // new_subtopic.setAttribute("class", "input input-subtopic flex width-full");
+        // document.getElementById('subtopic-'+clicked_id).appendChild(new_subtopic);
+        const subtopicContainer = document.getElementById('subtopic-' + clicked_id);
+        const lastInput = subtopicContainer.lastElementChild;
+
+        // Check if the last input is empty before adding a new input
+        if (lastInput.value.trim() !== '') {
+            const newSubtopic = document.createElement('input');
+            newSubtopic.type = 'text';
+            newSubtopic.placeholder = 'Add new sub topic...';
+            newSubtopic.className = 'input input-subtopic flex width-full';
+            subtopicContainer.appendChild(newSubtopic);
+        }
     }
 
 
