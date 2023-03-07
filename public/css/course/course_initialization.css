@@ -17,7 +17,8 @@
 }
 
 .input-subtopic::placeholder{
-    color: var(--white);
+    color: var(--ash);
+    font-weight: bold;
 }
 
 .container-course-topic{
@@ -50,12 +51,12 @@
 
 #cancel-btn{
     border: 2px solid var(--warn-btn);
-    background-color: var(--pure-white);
+    margin-right: 10px;
 }
 
 #initialize-btn{
-    background-color: var(--warn-btn);
-    border: 2px solid var(--warn-btn);
+   min-height: 50px;
+    margin-left: 10px;
 }
 
 .modal-content .two-button-row {
@@ -68,4 +69,8 @@
 
 .remove-space{
     margin: 2%;
+}
+
+input[type='checkbox']{
+    accent-color: var(--green);
 }
