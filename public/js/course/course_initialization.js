@@ -49,13 +49,20 @@ function addTopic(topic_element){
             // Create new sub-topic container and other related elements (subtopics, heading, buttons)
             let topic_container = document.createElement('div');
             topic_container.setAttribute('id', 'sub_topic_list_'+(topic_id + 1));
-            topic_container.classList.add("border", "container-course-topic", "v-center", "flex", "flex-gap", "v-center",
+            topic_container.classList.add("border","container-course-topic", "v-center", "flex", "flex-gap", "v-center",
                 "flex-column");
 
+            let heading_container = document.createElement('div');
+            heading_container.classList.add("flex","flex-row", "v-center")
             let heading = document.createElement('h5');
             heading.innerText = "Topic..."
             heading.setAttribute("id", "topic-"+(topic_id+1));
             heading.classList.add("text-center", "remove-space");
+
+            let check_box = document.createElement('input');
+            check_box.setAttribute('type', 'checkbox');
+            check_box.setAttribute('id', 'check_box-'+(topic_id+1));
+
 
             let subtopic_container = document.createElement('div');
             subtopic_container.setAttribute("id", "subtopic-"+(topic_id+1));
@@ -74,15 +81,18 @@ function addTopic(topic_element){
 
             add_button.onclick = function(){return addSubTopic(this.id)};
 
-            topic_container.appendChild(heading);
+            topic_container.appendChild(heading_container);
+            heading_container.appendChild(heading);
+            heading_container.appendChild(check_box);
+
             subtopic_container.appendChild(input);
             topic_container.appendChild(subtopic_container);
             topic_container.appendChild(add_button);
             document.getElementById("course-topic").appendChild(topic_container);
             break;
-        }
-        else{
-            document.getElementById("topic-"+topic_id).innerHTML = document.getElementById("input_topic_"+topic_id).value;
+        } else {
+            document.getElementById("topic-"+topic_id).innerHTML
+                = document.getElementById("input_topic_"+topic_id).value;
         }
     }
 
@@ -130,7 +140,6 @@ function addSubTopic(clicked_id){
  */
 let modal = document.getElementById("modal");
 let initialize_btn = document.getElementById("initialize");
-let cancel_btn = document.getElementById("cancel-btn");
 
 initialize_btn.onclick = function (){
     modal.hidden = false;
