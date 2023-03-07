@@ -144,24 +144,20 @@
         // deleting empty fields from the topic inputs
         topic_elements = document.getElementById('topic').getElementsByTagName('input');
         let empty_fields = [];
+        let empty_subtopic_fields = [];
         for (let i=0; i < topic_elements.length; i++) {
             if (topic_elements[i].value === "") {
+                let topic_number = getTopicNumberFromID(topic_elements[i].id);
+                let sub_topics = document.getElementById("sub_topic_list_"+topic_number);
+                empty_subtopic_fields.push(sub_topics);
                 empty_fields.push(topic_elements[i]);
             }
         }
         if (empty_fields.length > 1) {
             for (let i = 0; i < empty_fields.length-1; i++) {
                 empty_fields[i].remove();
+                empty_subtopic_fields[i].remove();
             }
-        }
-
-        // deleting empty subtopic elements
-        if(document.getElementById("topic-"+topic_id).innerHTML === ''){
-            const remove_elements = document.querySelector('#sub_topic_list_'+topic_id);
-            while (remove_elements.firstChild) {
-                remove_elements.removeChild(remove_elements.firstChild);
-            }
-            document.getElementById('sub_topic_list_'+topic_id).remove();
         }
     }
 
@@ -173,11 +169,6 @@
      *  @param {string} clicked_id - the id of the parent element, the new subtopic input field will be appended to
      */
     function addSubTopic(clicked_id){
-        // let new_subtopic = document.createElement("INPUT");
-        // new_subtopic.setAttribute("type", "text");
-        // new_subtopic.setAttribute("placeholder", "Add new sub topic...");
-        // new_subtopic.setAttribute("class", "input input-subtopic flex width-full");
-        // document.getElementById('subtopic-'+clicked_id).appendChild(new_subtopic);
         const subtopicContainer = document.getElementById('subtopic-' + clicked_id);
         const lastInput = subtopicContainer.lastElementChild;
 
