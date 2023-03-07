@@ -1,9 +1,7 @@
 modal_cancel("modal");
 /**
- * getTopicNumberFromID - A function to extract the topic number from a given topic ID
- *
+ * @description - A function to extract the topic number from a given topic ID
  * @param {string} topic_id - The topic ID to extract the number from
- *
  * @return {number} - The topic number extracted from the given topic ID
  */
 function getTopicNumberFromID(topic_id){
@@ -12,8 +10,7 @@ function getTopicNumberFromID(topic_id){
 }
 
 /**
- * addTopic - A function that adds a new topic element
- *
+ * @description - A function that adds a new topic element
  * @param topic_element - The topic element which is currently being added/edited
  */
 function addTopic(topic_element){
@@ -117,8 +114,7 @@ function addTopic(topic_element){
 }
 
 /**
- * addSubTopic - This function is used for adding new subtopics to a parent topic.
- *
+ *  @description  - This function is used for adding new subtopics to a parent topic.
  *  @param {string} clicked_id - the id of the parent element, the new subtopic input field will be appended to
  */
 function addSubTopic(clicked_id){
