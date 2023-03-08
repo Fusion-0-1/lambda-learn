@@ -97,9 +97,6 @@ abstract class User
     public function updateProfile():void
     {
         $userData = [
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'email' => $this->email,
             'personal_email' => $this->personalEmail,
             'contact_no' => $this->contactNo,
             'profile_picture' => $this->profilePicture
@@ -109,6 +106,15 @@ abstract class User
             table: self::getUserTable($this->regNo),
             columns: $userData,
             where: ['reg_no'=>$this->regNo]
+        );
+    }
+
+    public function updatePassword($newPassword){
+        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
+        Application::$db->update(
+            table: self::getUserTable($this->regNo),
+            columns: ['password' => $hashedPassword],
+            where: ['reg_no' => $this->regNo]
         );
     }
 

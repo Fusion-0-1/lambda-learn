@@ -1,5 +1,19 @@
 <link rel="stylesheet" href="css/profile.css">
 
+<!--Success message-->
+<?php if(isset($success_mssg)) { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Data updated successfully.</p>
+    </div>
+<?php } ?>
+
+<!--Error message-->
+<?php if(isset($error)) { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>Failed to update data.</p>
+    </div>
+<?php } ?>
+
 <div class="border main-container v-center flex-gap responsive_main-container">
     <div class="flex h-center v-center flex-responsive">
         <div>
@@ -103,7 +117,7 @@
             <div id="modal" class="modal" >
                 <div class="modal-content">
                     <span class="close">&times;</span>
-                    <form>
+                    <form action="/profile" method="post" name="change_password" onsubmit="return isValid()">
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
                             <div class="flex flex-responsive">
@@ -113,18 +127,21 @@
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">New Password</label>
                             <div class="flex flex-responsive">
-                                <input type="password" name="password" class="input text-right width-full"><br>
+                                <input type="password" name="new_password" class="input text-right width-full"><br>
                             </div>
                         </div>
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Confirm Password</label>
                             <div class="flex flex-responsive">
-                                <input type="password" name="password" class="input text-right width-full"><br>
+                                <input type="password" name="confirm_password" class="input text-right width-full"><br>
                             </div>
+                        </div>
+                        <div id="error" class="error-message">
+                            <?php if (isset($error)) echo $error; ?>
                         </div>
                         <div class="flex flex-row h-end">
                             <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
-                            <button id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
+                            <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>
                 </div>
@@ -251,6 +268,19 @@
                 preview.src = event.target.result;
             }
             reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function isValid(){
+        try{
+            if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
+                return true
+            } else {
+                throw 'Make sure your passwords match';
+            }
+        } catch (e){
+            document.getElementById("error").innerHTML=("Make sure your passwords match");
+            return false;
         }
     }
 </script>
