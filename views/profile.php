@@ -3,16 +3,17 @@
 <script src="js/validation.js" defer></script>
 
 <!--Success message-->
-<?php if(isset($success_mssg)) { ?>
-    <div id="mssg-modal" class="success-mssg text-justify">
-        <p>Data updated successfully.</p>
-    </div>
-<?php } ?>
-
-<!--Error message-->
-<?php if(isset($error)) { ?>
-    <div id="mssg-modal" class="error-mssg text-justify">
-        <p>Failed to update data.</p>
+<?php
+if(isset($mssg)) { ?>
+    <div id="mssg-modal" class="<?php if ($mssg == 'ERROR') echo "error-mssg"; else echo "success-mssg";?> text-justify">
+        <p><?php
+        if ($mssg == 'ERROR') {
+            echo "Invalid password.";
+        } else {
+            echo $mssg . " updated successfully.";
+        }
+        ?>
+        </p>
     </div>
 <?php } ?>
 
