@@ -1,44 +1,41 @@
-.course_name {
-    padding: 1% 0 1% 0;
-}
 
-.announcement_card {
+.announcement-card {
     width: 90%;
     padding-bottom: 2%;
     border-radius: 15px;
     margin: auto auto 40px;
 }
 
-.topic_container_add{
+.topic-container-add{
     display: grid;
     grid-template-columns: 85% auto;
     padding: 0.5% 2.5%;
 }
 
-.topic_container{
+.topic-container{
     grid-template-columns: auto auto;
     padding: 0.5% 2.5%;
 }
 
-.edit_delete_timeremaining{
+.edit-delete-timeremaining{
     grid-template-columns: 60% 20% 20%;
     padding: 0.5% 1%;
 }
 
-a{
+.link {
     padding: 0;
 }
 
-a img{
+.link img{
     width: 80%;
 }
 
-.heading_content{
+.heading-content{
     margin: 6px;
     overflow-wrap: break-word;
 }
 
-.add_headline {
+.add-headline {
     border-radius: 5px;
     border: none;
     font-size: 1rem;
@@ -49,7 +46,7 @@ a img{
     width: 100px;
 }
 
-.add_name {
+.add-name {
     border-radius: 5px;
     background: var(--blue);
     color: var(--white);
@@ -57,7 +54,7 @@ a img{
     font-size: 1rem;
 }
 
-.add_announcement_content {
+.add-announcement-content {
     border-radius: 5px;
     border: none;
     width: 100%;
@@ -65,19 +62,19 @@ a img{
     overflow-wrap: break-word;
 }
 
-.edit_time{
+.edit-time{
     font-size: 1rem;
 }
 
-.view_lecture_name_and_date_time{
+.view-lecture-name-and-datetime{
     font-size: 1rem;
 }
 
-.add_announcement_content_div{
+.add-announcement-content-div{
     padding: 1% 2% 1% 2%;
 }
 
-.container_heading{
+.container-heading{
     margin: 0;
     background: var(--blue);
     display: grid;
@@ -87,7 +84,7 @@ a img{
     padding: 10px 20px;
 }
 
-.announcement_card_inside {
+.announcement-card-inside {
     width: 95%;
     height: 75%;
     position: relative;
@@ -96,7 +93,7 @@ a img{
     background: var(--white);
 }
 
-.announcement_card_inside p{
+.announcement-card-inside p{
     padding: 2%;
     overflow-wrap: break-word;
     margin: 0;
@@ -116,10 +113,10 @@ a img{
 
 
 @media(max-width:768px) {
-    .announcement_card{
+    .announcement-card{
         width: 95%;
     }
-    .course_name {
+    .course-name {
         font-size: 1.8rem;
     }
     .btn{
@@ -127,10 +124,10 @@ a img{
         height: 25px;
         border-radius: 10px;
     }
-    .add_announcement_content {
+    .add-announcement-content {
         font-size: 1rem;
     }
-    .container_heading{
+    .container-heading{
         border-radius: 10px;
         padding: 7px 14px;
     }
@@ -138,13 +135,13 @@ a img{
         width: 33px;
         min-width: 33px;
     }
-    .edit_delete_timeremaining{
+    .edit-delete-timeremaining{
         display: grid;
         grid-template-columns: 50% 50%;
         justify-items: center;
         width: 80px;
     }
-    .edit_time {
+    .edit-time {
         grid-column: 1 / span 2;
         grid-row: 1;
         font-size: 14px;
@@ -157,13 +154,13 @@ a img{
         grid-column: 2;
         grid-row: 2;
     }
-    .topic_container_add{
+    .topic-container-add{
         grid-template-columns: 80% auto ;
     }
 }
 
 @media(max-width:426px) {
-    .add_headline {
+    .add-headline {
         font-size: 0.75rem;
     }
     .btn {
@@ -172,40 +169,40 @@ a img{
         border-radius: 7px;
         font-size: 0.7rem;
     }
-    .add_name {
+    .add-name {
         width: 90%;
         font-size: 0.75rem;
     }
-    .announcement_card{
+    .announcement-card{
         width: 92%;
         margin-bottom: 20px;
     }
 
-    .edit_delete_timeremaining{
+    .edit-delete-timeremaining{
         display: grid;
         grid-template-columns: 50% 50%;
     }
 
-    .edit_time {
+    .edit-time {
         grid-column: 1 / span 2;
         grid-row: 1;
         padding: 5px;
     }
 
-    .edit_time span{
+    .edit-time span{
         font-size: 0.75rem;
     }
 
-    .container_heading{
+    .container-heading{
         border-radius: 8px;
         padding: 6px 8px;
     }
 
-    .view_lecture_name_and_date_time{
+    .view-lecture-name-and-datetime{
         font-size: 0.75rem;
     }
 
-    .announcement_card_inside p{
+    .announcement-card-inside p{
         padding: 5%;
     }
 }

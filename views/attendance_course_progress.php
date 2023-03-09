@@ -2,7 +2,7 @@
 
 <div class="main-container border">
     <div class="flex flex-row h-center">
-        <h3 class="page-header">Student Attendance</h3>
+        <h3>Student Attendance</h3>
         <div class="selector flex flex-row v-center">
             <p>Academic Year : </p>
             <select>

@@ -64,3 +64,16 @@ function previewImage(input) {
 function profile_validate(contact, email){
     return validate_contact(contact) && validate_email(email);
 }
+
+function isValid(){
+    try{
+        if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
+            return true
+        } else {
+            throw 'Make sure your passwords match';
+        }
+    } catch (e){
+        document.getElementById("error").innerHTML=("Make sure your passwords match");
+        return false;
+    }
+}

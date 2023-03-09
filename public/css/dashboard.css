@@ -2,7 +2,7 @@ a {
     cursor: pointer;
 }
 
-.main_heading {
+ .main-heading {
     text-align: center;
     padding: 0px;
     font-size: 2.1rem;
@@ -27,12 +27,12 @@ a {
     color: white;
 }
 
-a {
+.link {
     text-decoration: none;
     margin: 0% 0% 5% 0%;
 }
 
-.cards_inside {
+.cards-inside {
     background: #E6ECF2;
     width: 80%;
     height: 75%;
@@ -42,17 +42,17 @@ a {
     color: black;
 }
 
-.cards_inside_announcement > img{
+.cards-inside-announcement > img{
     margin-top: 50px;
 }
 
-.card_name{
+.card-name{
     font-size: 1.375rem;
     font-weight: bold;
     margin-top: 5%;
 }
 
-.cards_inside img {
+.cards-inside img {
     width: 45%;
     margin: auto;
     margin-top: 15%;
@@ -113,10 +113,10 @@ a {
         column-gap: 5%;
         row-gap: 1.5%;
     }
-    .main_heading {
+    .main-heading {
         font-size: 1.5rem;
     }
-    .main_card {
+    .main-card {
         margin: 1%;
     }
     .cards {
@@ -131,10 +131,10 @@ a {
         column-gap: 5%;
         row-gap: 1.5%;
     }
-    .main_heading {
+    .main-heading {
         font-size: 1.5rem;
     }
-    .main_card {
+    .main-card {
         margin: 1%;
     }
     .cards {

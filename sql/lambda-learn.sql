@@ -156,9 +156,7 @@ CREATE TABLE SiteAnnouncement (
     publish_date DATETIME NOT NULL,
     admin_reg_no VARCHAR(12),
     cord_reg_no VARCHAR(12),
-    CONSTRAINT PK_SiteAnnouncement PRIMARY KEY (announcement_id),
-    CONSTRAINT FK_SiteAnnouncement_Admin FOREIGN KEY (admin_reg_no) REFERENCES Admin(reg_no),
-    CONSTRAINT FK_SiteAnnouncement_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
+    CONSTRAINT PK_SiteAnnouncement PRIMARY KEY (announcement_id)
 );
  
 DROP TABLE IF EXISTS CourseAnnouncement;
@@ -176,11 +174,15 @@ CREATE TABLE CourseAnnouncement (
  
 DROP TABLE IF EXISTS PerformanceHistory;
 CREATE TABLE PerformanceHistory (
-    record_date DATETIME NOT NULL,
-    cpu_usage VARCHAR(6),
-    ram_usage VARCHAR(6),
-    storage_usage VARCHAR(10),
-    concurrent_users VARCHAR(6),
+    record_date DATETIME DEFAULT CURRENT_TIMESTAMP
+                ON UPDATE CURRENT_TIMESTAMP,
+    cpu_usage INT,
+    total_memory INT, 
+    used_memory INT, 
+    unused_memory INT, 
+    process_count INT, 
+    process_running INT, 
+    process_sleeping INT,
     CONSTRAINT PK_PerformanceHistory PRIMARY KEY (record_date)
 );
  

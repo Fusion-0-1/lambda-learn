@@ -2,7 +2,7 @@
 
 <div class="border main-container v-center flex-gap">
 
-    <h3 class="text-center">Data Structures and Algorithms III</h3>
+    <h3>Data Structures and Algorithms III</h3>
     <h4 class="text-center text-normal">SCS2201</h4>
 
     <div class="border main-container v-center flex-gap">

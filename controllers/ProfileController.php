@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
+use app\core\User;
 use app\model\User\Admin;
 use app\model\User\Lecturer;
 use app\model\User\Student;
@@ -33,22 +34,42 @@ class ProfileController extends Controller
     {
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
+        $regNo = $user->getRegNo();
+        $data_updated = false;
 
-        $userRegNo = str_replace('/', '', $user->getRegNo());
-        $fileName = $_FILES['profile_picture']['name'];
-        $fileTmpName = $_FILES['profile_picture']['tmp_name'];
-        if($fileName)
-        {
-            $fileExtension = strtolower(explode('.', $fileName)[1]);
-            $fileNameNew = $userRegNo . "." . $fileExtension;
-            $filePath = 'images/profile/' . $fileNameNew;
+        if(isset($body['password'])){
+            $newPassword = $body['new_password'];
+            $confirmPassword = $body['confirm_password'];
+            if (User::authenticateUser($regNo, $body['password']) and
+                $newPassword == $confirmPassword)
+            {
+                $user->updatePassword($newPassword);
+                $data_updated = true;
+            }
+        } else {
+            $userRegNo = str_replace('/', '', $user->getRegNo());
+            $fileName = $_FILES['profile_picture']['name'];
+            $fileTmpName = $_FILES['profile_picture']['tmp_name'];
+            if($fileName)
+            {
+                $fileExtension = strtolower(explode('.', $fileName)[1]);
+                $fileNameNew = $userRegNo . "." . $fileExtension;
+                $filePath = 'images/profile/' . $fileNameNew;
 
-            //Remove previous profile images if exists
-            $wildcardPath = 'images/profile/' . $userRegNo . '.*';
-            array_map('unlink', glob($wildcardPath));
+                //Remove previous profile images if exists
+                $wildcardPath = 'images/profile/' . $userRegNo . '.*';
+                array_map('unlink', glob($wildcardPath));
 
-            move_uploaded_file($fileTmpName, $filePath);
-            $user->setProfilePicture($filePath);
+                move_uploaded_file($fileTmpName, $filePath);
+                $user->setProfilePicture($filePath);
+                $data_updated = true;
+            }
+            if(User::validateContactNo($body['contact']) and User::validateEmail($body['personal_email'])){
+                $user->setContactNo($body['contact']);
+                $user->setPersonalEmail($body['personal_email']);
+                $user->updateProfile();
+                $data_updated = true;
+            }
         }
         $user->setContactNo($body['contact']);
         $user->setPersonalEmail($body['personal_email']);
@@ -57,16 +78,23 @@ class ProfileController extends Controller
         $_SESSION['user'] = serialize($user);
 
         $params = ['user'=>$user];
+        if($data_updated){
+            $params['success_mssg'] = true;
+        } else{
+            $params['error'] = true;
+        }
+
         if($_SESSION['user-role'] == 'Admin'){
             return $this->render(
                 view: 'admin_profile',
+                allowedRoles: ['Admin'],
                 params: $params
             );
         }
         $params['courses'] = Course::getUserCourses($user);
-
         return $this->render(
             view: 'profile',
+            allowedRoles: ['Student', 'Lecturer', 'Coordinator'],
             params: $params
         );
     }

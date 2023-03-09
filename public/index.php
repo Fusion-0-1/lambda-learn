@@ -31,7 +31,7 @@ $app->router->get('/', 'dashboard');
 $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
-$app->router->get('/cs2003', [CourseController::class, 'displayCourse']);
+$app->router->get('/course_page', [CourseController::class, 'displayCourse']);
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 $app->router->get('/attendance_upload', 'attendance_upload');
 $app->router->get('/utilization', 'utilization');
@@ -46,6 +46,11 @@ $app->router->get('/course_initialization', [CourseController::class, 'courseIni
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
+$app->router->get('/course_announcement', [AnnouncementController::class, 'displayCourseAnnouncements']);
+
+$app->router->post('/site_announcement', [AnnouncementController::class, 'createSiteAnnouncements']);
+$app->router->post('/course_announcement', [AnnouncementController::class, 'createCourseAnnouncements']);
+
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);

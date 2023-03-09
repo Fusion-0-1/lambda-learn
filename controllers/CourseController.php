@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
 use app\model\Course;
+use app\model\submission;
 
 class CourseController extends Controller
 {
@@ -22,16 +23,20 @@ class CourseController extends Controller
     public function displayCourse()
     {
         return $this->render(
-            view: '/course/cs2003',
+            view: '/course/course_page',
             allowedRoles: ['Lecturer', 'Student']
         );
     }
 
-    public function displayAllSubmissions()
+    public function displayAllSubmissions(Request $request)
     {
+        $body = $request->getBody();
+        $params['course_code'] = $body['course_code'];
+        $params['submissions'] = submission::getSubmission($params['course_code']);
         return $this->render(
             view: '/submissions',
-            allowedRoles: ['Lecturer']
+            allowedRoles: ['Lecturer'],
+            params:  $params
         );
     }
 
