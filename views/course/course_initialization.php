@@ -11,7 +11,8 @@
             <h4>Course Topics</h4><hr><br>
             <div class="flex flex-wrap h-justify">
                 <div id="topic" class="flex flex-wrap h-evenly flex-gap">
-                    <input id="input_topic_1" class="input input-topic flex flex-gap" placeholder="Add new topic" onkeyup="addTopic(this)">
+                    <input id="input_topic_1" class="input input-topic flex flex-gap" placeholder="Add new topic"
+                           onkeyup="addTopic(this)">
                 </div>
             </div>
 <!--            <div class="flex margin-top h-center">-->
@@ -21,16 +22,24 @@
 
         <div class="border main-container flex-gap">
             <h4>Course Sub Topics</h4><hr><br>
+            <p class="csv-header-format flex v-center h-center">
+                The topics should be ticked in order to add the relevant topic for progress tracking. If the topic is not being ticked, It will not be considered for progress tracking.
+            </p>
             <div id="course-topic" class="flex flex-gap flex-wrap h-center">
-                <div id="sub_topic_list_1" class="border container-course-topic v-center flex flex-gap v-center flex-column">
+                <div id="sub_topic_list_1" class="border container-course-topic v-center flex flex-gap v-center
+                 flex-column">
                     <div class="flex flex-row v-center">
                         <h5 id="topic-1" class="text-center remove-space">Topic...</h5>
                         <input type="checkbox" id="check_box-1">
                     </div>
-                    <div id="subtopic-1" class="border container-course-sub-topic v-center padding-none flex flex-column">
-                        <input class="input input-subtopic flex" placeholder="Add new sub topic...">
+                    <div id="subtopic-1" class="border container-course-sub-topic v-center padding-none flex
+                    flex-column">
+                        <input class="input input-subtopic flex" placeholder="Add new sub topic..."
+                               onkeyup="removeIfEmpty(this)">
                     </div>
-                    <button id="1" type="button" class="btn-circle" onclick="addSubTopic(this.id)" disabled><i class="fa-solid fa-plus"></i></button>
+                    <button id="1" type="button" class="btn-circle" onclick="addSubTopic(this.id)" disabled>
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
                 </div>
             </div>
             <div class="flex margin-top h-center">
