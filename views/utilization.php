@@ -2,55 +2,69 @@
 
 <div class="border main-container v-center flex-gap responsive-container">
 
-    <h3> Utilization Reports </h3>
+    <h3> Utilization Graphs </h3>
 
         <?php if ($_SESSION['user-role'] == 'Admin') {?>
 
-        <div class="flex flex-row">
-            <div class="chart cpu_line_chart main-container">
-                <canvas id="cpu_line_chart"></canvas>
+        <div class="flex flex-column">
+            <div class="flex flex-row">
+                <div class="chart cpu_line_chart main-container">
+                    <canvas id="cpu_line_chart"></canvas>
+                </div>
+                <div class="chart process_count_chart main-container">
+                    <canvas id="process_count_chart"></canvas>
+                </div>
             </div>
-            <div class="chart attendance_chart main-container">
-                <canvas id="attendance_chart"></canvas>
+            <div class="chart memory_chart main-container">
+                <canvas id="memory_chart"></canvas>
             </div>
         </div>
 
-        <div>
-            <table class="download-table">
-                <tr>
-                    <th>Report No</th>
-                    <th>Date</th>
-                    <th>Download</th>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>30.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>23.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>16.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>09.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>02.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-            </table>
-        </div>
+<!--        <div>-->
+<!--            <table class="download-table">-->
+<!--                <tr>-->
+<!--                    <th>Report No</th>-->
+<!--                    <th>Date</th>-->
+<!--                    <th>Download</th>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>5</td>-->
+<!--                    <td>30.01.2023</td>-->
+<!--                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>4</td>-->
+<!--                    <td>23.01.2023</td>-->
+<!--                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>3</td>-->
+<!--                    <td>16.01.2023</td>-->
+<!--                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>2</td>-->
+<!--                    <td>09.01.2023</td>-->
+<!--                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>-->
+<!--                </tr>-->
+<!--                <tr>-->
+<!--                    <td>1</td>-->
+<!--                    <td>02.01.2023</td>-->
+<!--                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>-->
+<!--                </tr>-->
+<!--            </table>-->
+<!--        </div>-->
 
         <script>
+            // If accessing using Mobile-S (320px) device, then the graph
+            // will not display due to size of the screen width
+            if(window.innerWidth < 1024) {
+                var charts=document.getElementsByClassName("chart");
+                for (let i = 0; i < charts.length; i++)
+                    charts[i].innerHTML =
+                        "<p>Chart is too large. Cannot display in current view.</p>"
+            }
+
             // json encode php array. i.e. convert php array to json array
             <?php
             $recordDate = json_encode(array_reverse($performanceData['recordDate']));
@@ -71,7 +85,7 @@
             echo "var process_sleeping_arr = ". $processSleeping . ";\n";
             ?>
 
-            // ----------------- Course Progress Chart -----------------
+            // ----------------- CPU Usage Chart -----------------
             var ctx = document.getElementById("cpu_line_chart").getContext('2d');
             var cpu_line_chart = new Chart(ctx, {
                 type: 'line',
@@ -88,6 +102,10 @@
                     }]
                 },
                 options: {
+                    title: {
+                        display: true,
+                        text: 'CPU Usage'
+                    },
                     responsive: true,
                     maintainAspectRatio: true,
                     interaction: {
@@ -106,65 +124,56 @@
                         xAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: "Date"
+                                labelString: "Time"
                             }
                         }],
                     }
                 }
             });
-            var randomDataset = function(){
-                var data = [];
-                for (var i = 0; i < 22; i++) {
-                    data.push(Math.floor(Math.random() * (700 - 200 + 1) + 200));
-                }
-                return data;
-            }
 
 
-            // ----------------- Course Progress Chart -----------------
-            var ctx = document.getElementById("attendance_chart").getContext('2d');
-            var attendance_chart = new Chart(ctx, {
+
+            // ----------------- Process Count Chart -----------------
+            var ctx = document.getElementById("process_count_chart").getContext('2d');
+            var process_count_chart = new Chart(ctx, {
                 type: 'line',
                 data: {
                     labels: record_date_arr,
                     datasets: [{
-                        label: 'Process Count',
+                        label: 'Processes',
                         fill: false,
                         data: process_count_arr,
                         borderColor: 'rgb(255, 99, 132)',
                         pointRadius: 0,
                         borderWidth: 2.3,
-                        cubicInterpolationMode: 'monotone',
                     }, {
-                        label: 'Process Running',
+                        label: 'Processes Running',
                         fill: false,
                         data: process_running_arr,
                         borderColor: 'rgb(54, 162, 235)',
                         pointRadius: 0,
                         borderWidth: 2.3,
-                        cubicInterpolationMode: 'monotone',
                     }, {
-                        label: 'Process Sleeping',
+                        label: 'Processes Sleeping',
                         fill: false,
                         data: process_sleeping_arr,
                         borderColor: 'rgb(75, 192, 192)',
                         pointRadius: 0,
                         borderWidth: 2.3,
-                        cubicInterpolationMode: 'monotone',
                     }]
                 },
                 options: {
+                    title: {
+                        display: true,
+                        text: 'Process Count'
+                    },
                     responsive: true,
                     maintainAspectRatio: true,
                     scales: {
                         yAxes: [{
-                            ticks: {
-                                max: 700,
-                                beginAtZero: true
-                            },
                             scaleLabel: {
                                 display: true,
-                                labelString: "Number of Students Present"
+                                labelString: "Process Count"
                             },
                             grid: {
                                 drawOnChartArea: false, // only want the grid lines for one axis to show up
@@ -173,7 +182,64 @@
                         xAxes: [{
                             scaleLabel: {
                                 display: true,
-                                labelString: "Days of the month"
+                                labelString: "Time"
+                            }
+                        }],
+                    }
+                }
+            });
+
+
+            // ----------------- Memory Usage Chart -----------------
+            var ctx = document.getElementById("memory_chart").getContext('2d');
+            var memory_chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: record_date_arr,
+                    datasets: [{
+                        label: 'Total Memory',
+                        fill: false,
+                        data: total_memory_arr,
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                    }, {
+                        label: 'Unused Memory',
+                        data: unused_memory_arr,
+                        borderColor: 'rgb(75, 192, 192)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                        backgroundColor: 'rgb(75, 192, 192, 0.2)',
+                    }, {
+                        label: 'Used Memory',
+                        data: used_memory_arr,
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                        backgroundColor: 'rgb(54, 162, 235, 0.2)',
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'Memory Usage'
+                    },
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        yAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Memory Usage (MB)"
+                            },
+                            grid: {
+                                drawOnChartArea: false, // only want the grid lines for one axis to show up
+                            },
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Time"
                             }
                         }],
                     }

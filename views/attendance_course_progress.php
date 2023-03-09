@@ -187,7 +187,7 @@
     });
 
 
-    // If accessing using Mobile-S (320px) device, then the graph
+    // If accessing using tablet (768px) device, then the graph
     // will not display due to size of the screen width
     if(window.innerWidth < 768) {
         document.getElementsByClassName("chart")[0].innerHTML =
