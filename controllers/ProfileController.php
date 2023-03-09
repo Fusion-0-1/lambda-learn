@@ -35,8 +35,10 @@ class ProfileController extends Controller
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getRegNo();
-        $data_updated = false;
+        $params['mssg'] = 'ERROR';
+//        var_dump($params['mssg']);
 
+        // Update password
         if(isset($body['password'])){
             $newPassword = $body['new_password'];
             $confirmPassword = $body['confirm_password'];
@@ -44,8 +46,9 @@ class ProfileController extends Controller
                 $newPassword == $confirmPassword)
             {
                 $user->updatePassword($newPassword);
-                $data_updated = true;
+                $params['mssg'] = 'Password';
             }
+        // Edit profile
         } else {
             $userRegNo = str_replace('/', '', $user->getRegNo());
             $fileName = $_FILES['profile_picture']['name'];
@@ -62,22 +65,19 @@ class ProfileController extends Controller
 
                 move_uploaded_file($fileTmpName, $filePath);
                 $user->setProfilePicture($filePath);
-                $data_updated = true;
+
+                $_SESSION['user'] = serialize($user);
+                $params['mssg'] = 'Profile picture';
             }
             if(User::validateContactNo($body['contact']) and User::validateEmail($body['personal_email'])){
                 $user->setContactNo($body['contact']);
                 $user->setPersonalEmail($body['personal_email']);
-                $user->updateProfile();
-                $data_updated = true;
+                $params['mssg'] = 'Profile';
             }
-        }
-        $params = ['user'=>$user];
-        if($data_updated){
-            $params['success_mssg'] = true;
-        } else{
-            $params['error'] = true;
+            $user->updateProfile();
         }
 
+        $params['user'] = $user;
         if($_SESSION['user-role'] == 'Admin'){
             return $this->render(
                 view: 'admin_profile',

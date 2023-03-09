@@ -1,16 +1,19 @@
 <link rel="stylesheet" href="css/profile.css">
+<script src="js/profile.js" defer></script>
+<script src="js/validation.js" defer></script>
 
 <!--Success message-->
-<?php if(isset($success_mssg)) { ?>
-    <div id="mssg-modal" class="success-mssg text-justify">
-        <p>Data updated successfully.</p>
-    </div>
-<?php } ?>
-
-<!--Error message-->
-<?php if(isset($error)) { ?>
-    <div id="mssg-modal" class="error-mssg text-justify">
-        <p>Failed to update data.</p>
+<?php
+if(isset($mssg)) { ?>
+    <div id="mssg-modal" class="<?php if ($mssg == 'ERROR') echo "error-mssg"; else echo "success-mssg";?> text-justify">
+        <p><?php
+        if ($mssg == 'ERROR') {
+            echo "Invalid password.";
+        } else {
+            echo $mssg . " updated successfully.";
+        }
+        ?>
+        </p>
     </div>
 <?php } ?>
 
@@ -44,9 +47,9 @@
                     echo $profilePicture;
                     ?>" alt="profile" class="profile-img profile-img-center"><br>
 
-                    <input type="file" id="image_upload" class="hide" name="profile_picture" accept=".jpg, .jpeg, .png"
-                           onchange="previewImage(this)">
-                    <button type="button" id= "profile-btn"class="edit-btn edit-btn-icon profile-btn hide">
+                    <input type="file" id="image_upload" name="profile_picture" accept=".jpg, .jpeg, .png"
+                           onchange="previewImage(this)" hidden>
+                    <button type="button" id= "profile-btn" class="edit-btn edit-btn-icon profile-btn hide">
                         <i class="fa-solid fa-camera"></i></button><br>
                 </div>
 
@@ -80,7 +83,7 @@
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Contact Number</label>
-                        <div class="hide inline" id="edit-icon_1">
+                        <div class="inline hide" id="edit-icon_1">
                             <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                     </div>
@@ -93,7 +96,7 @@
                 <div class="margin-top">
                     <div class="flex flex-row h-justify flex-end">
                         <label class="margin-top">Personal Email</label>
-                        <div class="hide inline" id="edit-icon_2">
+                        <div class="inline hide" id="edit-icon_2">
                             <i class="fa-solid fa-pen edit-icon"></i>
                         </div>
                     </div>
@@ -108,15 +111,13 @@
                     <button id="edit" type="button" class="edit-btn edit-btn-icon">
                         <i class="fa-solid fa-pen"></i>
                     </button><br>
-                    <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text hide">Confirm</button>
+                    <button id="btn_confirm" type="submit" class="confirm-btn edit-btn-text" hidden>Confirm</button>
                 </div>
             </form>
 
-
             <!--Change password - Modal-->
-            <div id="modal" class="modal" >
+            <div id="modal" class="modal" hidden>
                 <div class="modal-content">
-                    <span class="close">&times;</span>
                     <form action="/profile" method="post" name="change_password" onsubmit="return isValid()">
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
@@ -140,14 +141,13 @@
                             <?php if (isset($error)) echo $error; ?>
                         </div>
                         <div class="flex flex-row h-end">
-                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
+                            <button type="button" id="cancel_modal" class="flex half-width margin-top h-center v-center flex-responsive cancel-btn btn-border-green">Cancel</button>
                             <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
 
         <!--Login Activity-->
         <div class="flex flex-column width-full">
@@ -174,7 +174,6 @@
                     ?>
                 </label><br>
             </div>
-
 
 <!--Registered Courses-->
             <?php
@@ -204,84 +203,22 @@
             <?php }?>
         </div>
     </div>
+
 </div>
 
-<!--Scripts-->
-<script>
-    var modal = document.getElementById("modal");
-    var btn = document.getElementById("password");
-    var span = document.getElementsByClassName("close")[0];
-    var btn_edit = document.getElementById("edit");
-    var btn_confirm = document.getElementById("btn_confirm");
-    var change_profile_btn = document.getElementById('profile-btn');
-    var preview = document.getElementById("preview");
-    var cancel_modal = document.getElementById("cancel_modal");
-    var confirm_modal = document.getElementById("confirm_modal");
+<div id="warn-modal" class="modal" hidden>
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Invalid Email or contact number</h4>
+            <div>
+                <p>Please check whether the format of the email address or the contact number is correct</p>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
+</div>
 
-
-    btn.onclick = function (){
-        modal.style.display = "block";
-    }
-    span.onclick = function (){
-        modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.style.display = "none";
-        }
-    }
-    cancel_modal.onclick = function(){
-        modal.style.display = "none";
-    }
-
-    // Function to enable editing of contact and personal email fields
-    btn_edit.onclick = function(){
-        document.getElementById('contact').removeAttribute('readonly');
-        document.getElementById('personal_email').removeAttribute('readonly');
-        document.getElementById('edit-icon_1').classList.remove('hide');
-        document.getElementById('edit-icon_2').classList.remove('hide');
-        change_profile_btn.classList.remove('hide');
-        btn_edit.classList.add('hide');
-        btn.classList.add('hide');
-        btn_confirm.classList.remove('hide');
-    }
-
-    // Function to confirm changes to contact and personal email fields
-    btn_confirm.onclick = function (){
-        btn_confirm.classList.add('hide');
-        btn.classList.remove('hide');
-        btn_edit.classList.remove('hide');
-        document.getElementById('contact').setAttribute('readonly', true);
-        document.getElementById('personal_email').setAttribute('readonly', true);
-    }
-
-    // Function to trigger the image upload input field when the change profile button is clicked
-    change_profile_btn.onclick = function(){
-        document.getElementById("image_upload").click();
-    }
-
-    // Function to preview the selected image before uploading
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                preview.src = event.target.result;
-            }
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-
-    function isValid(){
-        try{
-            if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
-                return true
-            } else {
-                throw 'Make sure your passwords match';
-            }
-        } catch (e){
-            document.getElementById("error").innerHTML=("Make sure your passwords match");
-            return false;
-        }
-    }
-</script>
 

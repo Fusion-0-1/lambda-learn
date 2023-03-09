@@ -21,10 +21,6 @@
     margin-left: 20px;
 }
 
-.modal {
-    display: none;
-}
-
 .modal-content{
     width: 25%;
     background-color: var(--white);

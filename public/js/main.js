@@ -9,6 +9,7 @@ function modal_cancel(modal_id) {
     const modal = document.getElementById(modal_id);
     // click cancel button to close
     const cancel_btn = modal.getElementsByClassName('cancel-btn')[0];
+    console.log(cancel_btn);
     cancel_btn.onclick = function () {
         modal.hidden = true;
     };
