@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="css/attendance_upload.css">
+<link rel="stylesheet" href="css/utilization.css">
 
 <div class="border main-container v-center flex-gap responsive-container">
 
@@ -6,9 +6,12 @@
 
         <?php if ($_SESSION['user-role'] == 'Admin') {?>
 
-        <div class="flex flex-column">
-            <div class="chart">
+        <div class="flex flex-row">
+            <div class="chart cpu_line_chart main-container">
                 <canvas id="cpu_line_chart"></canvas>
+            </div>
+            <div class="chart attendance_chart main-container">
+                <canvas id="attendance_chart"></canvas>
             </div>
         </div>
 
@@ -87,6 +90,9 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: true,
+                    interaction: {
+                        intersect: false,
+                    },
                     scales: {
                         yAxes: [{
                             scaleLabel: {
@@ -101,6 +107,73 @@
                             scaleLabel: {
                                 display: true,
                                 labelString: "Date"
+                            }
+                        }],
+                    }
+                }
+            });
+            var randomDataset = function(){
+                var data = [];
+                for (var i = 0; i < 22; i++) {
+                    data.push(Math.floor(Math.random() * (700 - 200 + 1) + 200));
+                }
+                return data;
+            }
+
+
+            // ----------------- Course Progress Chart -----------------
+            var ctx = document.getElementById("attendance_chart").getContext('2d');
+            var attendance_chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: record_date_arr,
+                    datasets: [{
+                        label: 'Process Count',
+                        fill: false,
+                        data: process_count_arr,
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                        cubicInterpolationMode: 'monotone',
+                    }, {
+                        label: 'Process Running',
+                        fill: false,
+                        data: process_running_arr,
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                        cubicInterpolationMode: 'monotone',
+                    }, {
+                        label: 'Process Sleeping',
+                        fill: false,
+                        data: process_sleeping_arr,
+                        borderColor: 'rgb(75, 192, 192)',
+                        pointRadius: 0,
+                        borderWidth: 2.3,
+                        cubicInterpolationMode: 'monotone',
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 700,
+                                beginAtZero: true
+                            },
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Number of Students Present"
+                            },
+                            grid: {
+                                drawOnChartArea: false, // only want the grid lines for one axis to show up
+                            },
+                        }],
+                        xAxes: [{
+                            scaleLabel: {
+                                display: true,
+                                labelString: "Days of the month"
                             }
                         }],
                     }
