@@ -34,7 +34,7 @@ $app->router->get('/course_overview', [CourseController::class, 'displayCourses'
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 $app->router->get('/attendance_upload', 'attendance_upload');
-$app->router->get('/utilization', 'utilization');
+$app->router->get('/utilization', [SummaryViewController::class, 'displayUtilizationReport']);
 
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
 $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
