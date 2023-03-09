@@ -141,7 +141,7 @@
                             <?php if (isset($error)) echo $error; ?>
                         </div>
                         <div class="flex flex-row h-end">
-                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-cancel">Cancel</button>
+                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive cancel-btn">Cancel</button>
                             <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>
