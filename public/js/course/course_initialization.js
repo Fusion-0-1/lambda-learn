@@ -16,7 +16,6 @@ function getTopicNumberFromID(topic_id){
 function addTopic(topic_element){
     let topic_id = getTopicNumberFromID(topic_element.id);
     let topic_elements = document.getElementById('topic').getElementsByTagName('input');
-
     // Check if the next topic already exists
     let exists = false;
     for (let i=0; i < topic_elements.length; i++) {
@@ -25,7 +24,6 @@ function addTopic(topic_element){
             break;
         }
     }
-
     // Create new topic element if it doesn't exist
     let new_input;
     for (let i=0; i < topic_elements.length; i++) {
@@ -56,6 +54,7 @@ function addTopic(topic_element){
             heading.setAttribute("id", "topic-"+(topic_id+1));
             heading.classList.add("text-center", "remove-space");
 
+            //checkbox
             let check_box = document.createElement('input');
             check_box.setAttribute('type', 'checkbox');
             check_box.setAttribute('id', 'check_box-'+(topic_id+1));
@@ -67,9 +66,11 @@ function addTopic(topic_element){
                 "flex-column");
 
             let input = document.createElement("input");
+            input.onkeyup = function(){return removeIfEmpty(this)};
             input.classList.add("input", "input-subtopic", "flex");
             input.setAttribute("placeholder", "Add new sub topic...");
 
+            //Create the add button
             let add_button = document.createElement("button");
             add_button.setAttribute("id", ""+(topic_id+1));
             add_button.setAttribute("type", "button");
@@ -92,7 +93,6 @@ function addTopic(topic_element){
                 = document.getElementById("input_topic_"+topic_id).value;
         }
     }
-
     // deleting empty fields from the topic inputs
     topic_elements = document.getElementById('topic').getElementsByTagName('input');
     let empty_fields = [];
@@ -120,14 +120,26 @@ function addTopic(topic_element){
 function addSubTopic(clicked_id){
     const subtopicContainer = document.getElementById('subtopic-' + clicked_id);
     const lastInput = subtopicContainer.lastElementChild;
-
     // Check if the last input is empty before adding a new input
     if (lastInput.value.trim() !== '') {
         const newSubtopic = document.createElement('input');
+        newSubtopic.onkeyup = function(){return removeIfEmpty(this)};
         newSubtopic.type = 'text';
         newSubtopic.placeholder = 'Add new sub topic...';
         newSubtopic.className = 'input input-subtopic flex width-full';
         subtopicContainer.appendChild(newSubtopic);
+    }
+}
+
+/**
+ * @Description - Removes the input element if its value is empty.
+ * @param {HTMLInputElement} input - The input element to check and remove if empty.
+ * */
+function removeIfEmpty(input){
+    if(input.value === ""){
+        if(input.parentElement.children.length>1){
+            input.remove();
+        }
     }
 }
 
