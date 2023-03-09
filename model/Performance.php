@@ -2,9 +2,11 @@
 
 namespace app\model;
 
+use app\core\Application;
+
 class Performance
 {
-    private int $recordDate;
+    private string $recordDate;
     private int $cpuUsage;
     private int $totalMemory;
     private int $usedMemory;
@@ -52,22 +54,93 @@ class Performance
                 $sub['process_sleeping'],
             );
         }
-        var_dump($performance);
         return $performance;
     }
 
     public static function splitData($performanceData){
-        $performance = [];
-        foreach ($performanceData as $performance){
-            $performance['recordDate'] += $performance->recordDate;
-            $performance['cpuUsage'] += $performance->cpuUsage;
-            $performance['totalMemory'] += $performance->totalMemory;
-            $performance['usedMemory'] += $performance->usedMemory;
-            $performance['unusedMemory'] += $performance->unusedMemory;
-            $performance['processCount'] += $performance->processCount;
-            $performance['processRunning'] += $performance->processRunning;
-            $performance['processSleeping'] += $performance->processSleeping;
+        $performance = [        'recordDate' => [],
+            'cpuUsage' => [],
+            'totalMemory' => [],
+            'usedMemory' => [],
+            'unusedMemory' => [],
+            'processCount' => [],
+            'processRunning' => [],
+            'processSleeping' => []
+        ];
+        foreach ($performanceData as $performanceRecord){
+            $performance['recordDate'][] = $performanceRecord->getRecordDate();
+            $performance['cpuUsage'][] = $performanceRecord->getCpuUsage();
+            $performance['totalMemory'][] = $performanceRecord->getTotalMemory();
+            $performance['usedMemory'][] = $performanceRecord->getUsedMemory();
+            $performance['unusedMemory'][] = $performanceRecord->getUnusedMemory();
+            $performance['processCount'][] = $performanceRecord->getProcessCount();
+            $performance['processRunning'][] = $performanceRecord->getProcessRunning();
+            $performance['processSleeping'][] = $performanceRecord->getProcessSleeping();
         }
         return $performance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRecordDate(): string
+    {
+        return $this->recordDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCpuUsage(): int
+    {
+        return $this->cpuUsage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalMemory(): int
+    {
+        return $this->totalMemory;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUsedMemory(): int
+    {
+        return $this->usedMemory;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUnusedMemory(): int
+    {
+        return $this->unusedMemory;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessCount(): int
+    {
+        return $this->processCount;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessRunning(): int
+    {
+        return $this->processRunning;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProcessSleeping(): int
+    {
+        return $this->processSleeping;
     }
 }
