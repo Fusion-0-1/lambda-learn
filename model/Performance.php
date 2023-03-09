@@ -68,7 +68,8 @@ class Performance
             'processSleeping' => []
         ];
         foreach ($performanceData as $performanceRecord){
-            $performance['recordDate'][] = $performanceRecord->getRecordDate();
+            $date = explode(' ', $performanceRecord->getRecordDate());
+            $performance['recordDate'][] = substr($date[1], 0, 5);
             $performance['cpuUsage'][] = $performanceRecord->getCpuUsage();
             $performance['totalMemory'][] = $performanceRecord->getTotalMemory();
             $performance['usedMemory'][] = $performanceRecord->getUsedMemory();
