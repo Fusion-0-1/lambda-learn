@@ -117,7 +117,6 @@
             <!--Change password - Modal-->
             <div id="modal" class="modal" hidden>
                 <div class="modal-content">
-                    <span class="close">&times;</span>
                     <form action="/profile" method="post" name="change_password" onsubmit="return isValid()">
                         <div class="margin-top flex flex-column">
                             <label class="margin-top">Existing Password</label>
@@ -141,7 +140,7 @@
                             <?php if (isset($error)) echo $error; ?>
                         </div>
                         <div class="flex flex-row h-end">
-                            <button id="cancel_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive cancel-btn">Cancel</button>
+                            <button id="cancel_modal" class="flex half-width margin-top h-center v-center flex-responsive cancel-btn btn-border-green">Cancel</button>
                             <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
                         </div>
                     </form>

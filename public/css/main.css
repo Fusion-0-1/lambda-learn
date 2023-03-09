@@ -324,6 +324,12 @@ a:active {
     color: var(--x-dark-blue);
 }
 
+.btn-border-green {
+    border: 3px solid var(--green);
+    border-radius: 8px;
+    color: var(--green);
+}
+
 .warn-continue-btn {
     color: var(--black);
     border: var(--warn-btn) 1px solid;
