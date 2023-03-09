@@ -54,6 +54,7 @@ class ProfileController extends Controller
         $user->setPersonalEmail($body['personal_email']);
 
         $user->updateProfile();
+        $_SESSION['user'] = serialize($user);
 
         $params = ['user'=>$user];
         if($_SESSION['user-role'] == 'Admin'){
