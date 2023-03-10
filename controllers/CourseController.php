@@ -51,7 +51,7 @@ class CourseController extends Controller
     public function courseInitialization()
     {
         return $this->render(
-            view: '/course_initialization',
+            view: 'course/course_initialization',
             allowedRoles: ['Lecturer']
         );
     }
