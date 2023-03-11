@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\Application;
 use app\core\User;
+use app\core\Request;
 use app\model\User\Lecturer;
 
 class Course
@@ -14,10 +15,11 @@ class Course
     private string $lecRegNo;
     private string $lecFirstName;
     private string $lecLastName;
+    private array $courseTopics = [];
 
     private function __construct() {}
 
-    public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName) {
+    public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName, $courseTopics = []): Course {
         $course = new Course();
         $course->courseCode = $courseCode;
         $course->courseName = $courseName;
@@ -25,6 +27,7 @@ class Course
         $course->lecRegNo = $lecRegNo;
         $course->lecFirstName = $lecFirstName;
         $course->lecLastName = $lecLastName;
+        $course->courseTopics = $courseTopics;
 
         return $course;
     }
@@ -110,6 +113,31 @@ class Course
         }
         return $courses;
     }
+
+    public static function getCourse($courseCode): array
+    {
+        $courseDetails = [];
+        $results = Application::$db->select(
+                table: 'Course',
+                columns: ['course_code', 'course_name'],
+                where: ['course_code' => $courseCode]
+            );
+//        var_dump($results);
+        while ($course = Application::$db->fetch($results)){
+            $courseDetails[] = self::createNewCourse(
+                $course['course_code'],
+                $course['course_name'],
+                $course['optional_flag'],
+                $course['lec_reg_no'],
+                $course['first_name'],
+                $course['last_name'],
+                CourseTopic::getCourseTopics($course['course_code'])
+            );
+        }
+        return $courseDetails;
+    }
+
+    // ---------------------------Getters and Setters-----------------------------------
 
     /**
      * @return string
@@ -205,6 +233,224 @@ class Course
     public function setLecLastName(string $lecLastName): void
     {
         $this->lecLastName = $lecLastName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTopics(): array
+    {
+        return $this->courseTopics;
+    }
+
+    /**
+     * @param array $courseTopics
+     */
+    public function setTopics(array $courseTopics): void
+    {
+        $this->courseTopics = $courseTopics;
+    }
+
+};
+
+class CourseTopic {
+    private string $courseCode;
+    private string $topicId;
+    private string $topicName;
+    private array $subTopics = [];
+
+    public function __construct() {}
+    public static function createNewTopic($topicId, $topicName, $subTopics = []): CourseTopic
+    {
+        $topic = new CourseTopic();
+        $topic->topicId = $topicId;
+        $topic->topicName = $topicName;
+        $subTopics->subTopics = $subTopics;
+
+        return $topic;
+    }
+
+    public static function getCourseTopics($courseCode): array
+    {
+        $topics = [];
+        $results = Application::$db->select(
+            table: 'CourseTopic',
+            columns: ['topic_id', 'topic', 'course_code'],
+            where: ['course_code' => $courseCode],
+        );
+        while ($topic = Application::$db->fetch($results)){
+            $topics[] = self::createNewTopic(
+                $topic['topic_id'],
+                $topic['topic'],
+                CourseSubTopic::getCourseSubTopics($topic['topic_id'], $topic['course_code'])
+            );
+        }
+        return $topics;
+    }
+
+    // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @return string
+     */
+    public function getCourseCode(): string
+    {
+        return $this->courseCode;
+    }
+
+    /**
+     * @param string $courseCode
+     */
+    public function setCourseCode(string $courseCode): void
+    {
+        $this->courseCode = $courseCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopicId(): string
+    {
+        return $this->topicId;
+    }
+
+    /**
+     * @param string $topicId
+     */
+    public function setTopicId(string $topicId): void
+    {
+        $this->topicId = $topicId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopicName(): string
+    {
+        return $this->topicName;
+    }
+
+    /**
+     * @param string $topicName
+     */
+    public function setTopicName(string $topicName): void
+    {
+        $this->topicName = $topicName;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubTopics(): array
+    {
+        return $this->subTopics;
+    }
+
+    /**
+     * @param array $subTopics
+     */
+    public function setSubTopics(array $subTopics): void
+    {
+        $this->subTopics = $subTopics;
+    }
+}
+
+class CourseSubTopic {
+    private string $courseCode;
+    private string $topicId;
+    private string $subTopicId;
+    private string $subTopicName;
+
+    public function __construct() {}
+
+    public static function createNewSubTopic($subTopicId, $subTopicName) {
+        $subTopic = new CourseSubTopic();
+        $subTopic->subTopicId = $subTopicId;
+        $subTopic->subTopicName = $subTopicName;
+
+        return $subTopic;
+    }
+
+    public static function getCourseSubTopics($topicId, $courseCode): array {
+        $subTopics = [];
+        $results = Application::$db->select(
+            table: 'CourseSubTopic',
+            columns: ['sub_topic_id', 'sub_topic'],
+            where: ['course_code' => $courseCode, 'topic_id' => $topicId],
+        );
+        while ($subTopic = Application::$db->fetch($results)){
+            $subTopics[] = self::createNewSubTopic(
+                $subTopic['sub_topic_id'],
+                $subTopic['sub_topic']
+            );
+        }
+        return $subTopics;
+    }
+
+    // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @return string
+     */
+    public function getCourseCode(): string
+    {
+        return $this->courseCode;
+    }
+
+    /**
+     * @param string $courseCode
+     */
+    public function setCourseCode(string $courseCode): void
+    {
+        $this->courseCode = $courseCode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTopicId(): string
+    {
+        return $this->topicId;
+    }
+
+    /**
+     * @param string $topicId
+     */
+    public function setTopicId(string $topicId): void
+    {
+        $this->topicId = $topicId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubTopicId(): string
+    {
+        return $this->subTopicId;
+    }
+
+    /**
+     * @param string $subTopicId
+     */
+    public function setSubTopicId(string $subTopicId): void
+    {
+        $this->subTopicId = $subTopicId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubTopicName(): string
+    {
+        return $this->subTopicName;
+    }
+
+    /**
+     * @param string $subTopicName
+     */
+    public function setSubTopicName(string $subTopicName): void
+    {
+        $this->subTopicName = $subTopicName;
     }
 
 }
