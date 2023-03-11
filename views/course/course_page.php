@@ -1,10 +1,5 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
-<?php
-use app\model\Course;
-use app\model\CourseTopic;
-use app\model\CourseSubTopic;
-?>
 
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
