@@ -58,6 +58,7 @@
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold">Data Structures and Algorithms III</h3>
     <h3>CS 2003</h3>
+    <?php var_dump($course);?>
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
@@ -131,6 +132,7 @@
             <h5> Course Topics </h5>
             <hr class="hr">
             <div class="topic-container flex flex-row item-gap">
+                <?php foreach ($course as $courseTopic)?>
                 <div class="course-topic border border-radius flex flex-column ">
                     <h5> String Matching Algorithms</h5>
                     <div>
