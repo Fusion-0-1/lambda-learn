@@ -5,7 +5,7 @@
     <div class="card">
 
         <?php foreach ($courses as $course) { ?>
-            <a <?php if ($_SESSION['user-role'] != 'Coordinator') { echo 'href="/course_page"';} ?> class="link">
+            <a <?php if ($_SESSION['user-role'] != 'Coordinator') { echo 'href="/course_page?course_code='.$course->getCourseCode().'"';} ?> class="link">
                 <div class="cards">
                     <div class="cards-inside">
                         <div class="course-name"><?php echo $course->getCourseName()?></div>

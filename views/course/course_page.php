@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
+
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
         <span class="close">&times;</span>
@@ -56,8 +57,8 @@
 </div>
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
-    <h3 class="text-bold">Data Structures and Algorithms III</h3>
-    <h3>CS 2003</h3>
+    <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
+    <h3><?php echo $course->getCourseCode()?></h3>
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
@@ -131,87 +132,25 @@
             <h5> Course Topics </h5>
             <hr class="hr">
             <div class="topic-container flex flex-row item-gap">
-                <div class="course-topic border border-radius flex flex-column ">
-                    <h5> String Matching Algorithms</h5>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 1.2 KMP & Rabin-Karp Algorithms </h5>
-                            <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" checked class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> KMP String Matching Algorithm </p>
-                            <p><span class="icons fas fa-atom"></span> Rabin Karp Algorithm </p>
-                            <p><span class="icons fas fa-atom"></span> KMP & Rabin-Karp Algorithms </p>
-                        </div>
+                <?php foreach ($course->getTopics() as $courseTopic) {?>
+                    <div class="course-topic border border-radius flex flex-column ">
+                        <h5> <?php echo $courseTopic->getTopicId().". ".$courseTopic->getTopicName()?> </h5>
+                            <?php foreach ($courseTopic->getSubTopics() as $courseSubTopic) {?>
+                                <div>
+                                    <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
+                                        <h5> <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?> </h5>
+                                        <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" checked class="topic-check">
+                                    </div>
+                                    <div class="course-sub-topic-content border-radius">
+                                        <!--TODO: Retrieve recordings and lecture notes from the database-->
+                                        <p><span class="icons fas fa-atom"></span> Sample Recording 1 </p>
+                                        <p><span class="icons fas fa-atom"></span> Sample Recording 2 </p>
+                                        <p><span class="icons fas fa-atom"></span> Sample Lecture Note </p>
+                                    </div>
+                                </div>
+                            <?php } ?>
                     </div>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 1.1 Naive String Matching </h5>
-                            <input type="checkbox" name="cs1208-1.1" id="cs1208-1.1" checked class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> Naive String Matching Algorithms </p>
-                            <p><span class="icons fas fa-atom"></span> Naive String Matching Part I</p>
-                            <p><span class="icons fas fa-atom"></span> Naive String Matching Part II</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="course-topic border border-radius flex flex-column">
-                    <h5> Linear Programming </h5>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 2.2 Simplex Method </h5>
-                            <input type="checkbox" name="cs1208-2.2" id="cs1208-2.2" checked class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> Simplex Method </p>
-                            <p><span class="icons fas fa-atom"></span> Simplex Method Rec </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 2.1 Graphical Method  </h5>
-                            <input type="checkbox" name="cs1208-2.1" id="cs1208-2.1" checked class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> Graphical Method </p>
-                            <p><span class="icons fas fa-atom"></span> Linear Prog. - Graphical Method </p>
-                        </div>
-                    </div>  
-                </div>
-                <div class="course-topic border border-radius flex flex-column">
-                    <h5> Greedy Algorithms </h5>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 3.3 Coin Change Problem </h5>
-                            <input type="checkbox" name="cs1208-3.3" id="cs1208-3.3" class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> Coin Change Problem </p>
-                            <p><span class="icons fas fa-atom"></span> Coin Change Problem </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 3.2 Scheduling Problem </h5>
-                            <input type="checkbox" name="cs1208-3.2" id="cs1208-3.2" class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> Scheduling Problem </p>
-                            <p><span class="icons fas fa-atom"></span> Scheduling Algorithms </p>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                            <h5> 3.1 Knapsack Problem </h5>
-                            <input type="checkbox" name="cs1208-3.1" id="cs1208-3.1" class="topic-check">
-                        </div>
-                        <div class="course-sub-topic-content border-radius">
-                            <p><span class="icons fas fa-atom"></span> 0/1 & Fractional Knapsack </p>
-                            <p><span class="icons fas fa-atom"></span> Knapsack Problem </p>
-                        </div>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>
