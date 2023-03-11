@@ -3,8 +3,8 @@
 
 <div class="border main-container v-center flex-gap">
 
-    <h3>Data Structures and Algorithms III</h3>
-    <h4 class="text-center text-normal">SCS2201</h4>
+    <h3><?php echo $course->getCourseName()?></h3>
+    <h4 class="text-center text-normal"><?php echo $course->getCourseCode()?></h4>
 
     <form method="post">
         <div class="border main-container v-center flex-gap">
