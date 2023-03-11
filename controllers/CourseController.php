@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\core\Controller;
 use app\core\Request;
 use app\model\Course;
+use app\model\CourseTopic;
 use app\model\submission;
 
 class CourseController extends Controller
@@ -25,11 +26,20 @@ class CourseController extends Controller
         $body = $request->getBody();
         $courseCode = $body['course_code'];
         $params['course'] = Course::getCourse($courseCode);
-        return $this->render(
-            view: '/course/course_page',
-            allowedRoles: ['Lecturer', 'Student'],
-            params: $params
-        );
+        $topics = CourseTopic::getCourseTopics($courseCode);
+        if(empty($topics) and $_SESSION['user-role'] == 'Lecturer'){
+            return $this->render(
+                view: '/course/course_initialization',
+                allowedRoles: ['Lecturer'],
+                params: $params
+            );
+        } else {
+            return $this->render(
+                view: '/course/course_page',
+                allowedRoles: ['Lecturer', 'Student'],
+                params: $params
+            );
+        }
     }
 
     public function displayAllSubmissions(Request $request)
