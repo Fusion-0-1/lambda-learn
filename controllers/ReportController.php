@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\Request;
 
 class ReportController extends Controller
 {
@@ -12,5 +13,14 @@ class ReportController extends Controller
             view: '/utilization',
             allowedRoles: ['Admin']
         );
+    }
+
+    public function uploadAttendance(Request $request){
+        if ($request->isGet()){
+            return $this->render(
+                view: '/attendance_upload',
+                allowedRoles: ['Admin']
+            );
+        }
     }
 }
