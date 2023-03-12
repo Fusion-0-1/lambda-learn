@@ -3,14 +3,15 @@
 <div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
     <form id="file-upload-form" class="main-container border flex flex-column"
           action="" method="post" enctype="multipart/form-data">
-        <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <h3> Upload Attendance </h3>
+        <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex h-around v-center">
-                <p> Report No </p>
-                <input type="text" name="report_no" id="report_no" class="upload-input border-radius">
+                <p> Report </p>
+                <input type="text" name="report_no" id="report_no"
+                       class="upload-input border-radius text-center" value="TEST">
                 <p> Date </p>
-                <input type="text" name="date" id="date" class="upload-input border-radius">
+                <input type="date" name="date" id="date-picker" class="upload-input border-radius text-center">
                 <p><i class="fa fa-upload upload-icon" aria-hidden="true"></i></p>
             </div>
         </button>
@@ -59,3 +60,20 @@
     </div>
     <?php }?>
 </div>
+
+
+<script>
+    document.getElementById('date-picker').valueAsDate = new Date();
+
+    function upload_stu_csv() {
+        let input = document.getElementById('file-input-field');
+        input.onchange = e => {
+            let file = Array.from(input.files);
+            document.getElementById('upload-file-text').innerText = 'File Name: ' + file[0]['name'];
+            document.getElementsByClassName('upload-icon')[0].addEventListener('click', function () {
+                document.getElementById('student-csv-upload-form').submit();
+            });
+        }
+        input.click();
+    }
+</script>
