@@ -269,4 +269,13 @@ CREATE TABLE StuCourseSubmission (
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
 );
- 
+
+DROP TABLE IF EXISTS CourseAttendance;
+CREATE TABLE CourseAttendance (
+    attendance_date DATETIME,
+    course_code VARCHAR(8),
+    attendance_count INT NOT NULL,
+    CONSTRAINT PK_CourseAttendance PRIMARY KEY (attendance_date, course_code),
+    CONSTRAINT FK_CourseAttendance_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
+);
+
