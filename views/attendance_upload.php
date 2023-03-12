@@ -8,8 +8,8 @@
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex h-around v-center">
                 <p> Report </p>
-                <input type="text" name="report_no" id="report_no"
-                       class="upload-input border-radius text-center" value="TEST">
+                <input type="text" name="report_no" id="report_name" onclick="upload_attendance_csv()"
+                       class="upload-input border-radius text-center" value="Upload">
                 <p> Date </p>
                 <input type="date" name="date" id="date-picker" class="upload-input border-radius text-center">
                 <p><i class="fa fa-upload upload-icon" aria-hidden="true"></i></p>
@@ -65,13 +65,13 @@
 <script>
     document.getElementById('date-picker').valueAsDate = new Date();
 
-    function upload_stu_csv() {
+    function upload_attendance_csv() {
         let input = document.getElementById('file-input-field');
         input.onchange = e => {
             let file = Array.from(input.files);
-            document.getElementById('upload-file-text').innerText = 'File Name: ' + file[0]['name'];
+            document.getElementById('report_name').value = file[0]['name'];
             document.getElementsByClassName('upload-icon')[0].addEventListener('click', function () {
-                document.getElementById('student-csv-upload-form').submit();
+                document.getElementById('file-upload-form').submit();
             });
         }
         input.click();
