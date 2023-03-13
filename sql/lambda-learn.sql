@@ -116,7 +116,7 @@ CREATE TABLE CourseSubmission (
     description VARCHAR(300),
     allocated_mark INT,
     allocated_point INT,
-    due_date DATETIME NOT NULL,
+    due_date DATETIME,
     visibility BOOLEAN,
     CONSTRAINT PK_CourseSubmission PRIMARY KEY (course_code, submission_id),
     CONSTRAINT FK_CourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
@@ -268,14 +268,5 @@ CREATE TABLE StuCourseSubmission (
     CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
-);
-
-DROP TABLE IF EXISTS CourseAttendance;
-CREATE TABLE CourseAttendance (
-    attendance_date DATETIME,
-    course_code VARCHAR(8),
-    attendance_count INT NOT NULL,
-    CONSTRAINT PK_CourseAttendance PRIMARY KEY (attendance_date, course_code),
-    CONSTRAINT FK_CourseAttendance_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
 );
 
