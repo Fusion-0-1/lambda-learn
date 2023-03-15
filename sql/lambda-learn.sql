@@ -117,6 +117,7 @@ CREATE TABLE CourseSubmission (
     allocated_mark INT,
     allocated_point INT,
     due_date DATETIME NOT NULL,
+
     visibility BOOLEAN,
     CONSTRAINT PK_CourseSubmission PRIMARY KEY (course_code, submission_id),
     CONSTRAINT FK_CourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
