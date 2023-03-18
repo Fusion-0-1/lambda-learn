@@ -1,8 +1,44 @@
 <link rel="stylesheet" href="css/attendance_upload.css">
 
+<!--Success message model on the bottom right to display attendance updated successfully-->
+<?php if(isset($success_mssg)) { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Attendance updated successfully.</p>
+    </div>
+<?php } ?>
+<?php if(isset($errors)){ ?>
+    <div id="error-modal" class="modal">
+        <div class="modal-content error-modal-content">
+            <div class="flex flex-column v-center h-center">
+                <img src="./images/primary_icons/error.svg">
+                <h4 id="delete-warning">Invalid Data!</h4>
+                <?php if (sizeof($errors) > 0) { ?>
+                    <p>Below registration numbers are invalid. CSV must follow the given format and all should be valid.
+                        Registration number should follow the format: 20XX/AA/XXX.
+                    </p>
+                    <p id="stu-id-list" class="text-center">
+                        <?php
+                        $print = '';
+                        foreach ($errors as $student) {
+                            $print .= $student . ", ";
+                        }
+                        echo substr($print, 0, -2);
+                        ?>
+                    </p>
+                <?php } else { ?>
+                    <p>Course code is invalid. CSV must follow the given format and all should be valid.
+                        Course code should follow the format: AA XXX. Example: CS 2001
+                    </p>
+                <?php } ?>
+                <button id="continue-btn" class="cancel-btn dark-btn error-btn">OK</button>
+            </div>
+        </div>
+    </div>
+<?php } ?>
+
 <div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
     <form id="file-upload-form" class="main-container border flex flex-column"
-          action="" method="post" enctype="multipart/form-data">
+          action="/attendance_upload" method="post" enctype="multipart/form-data">
         <h3> Upload Attendance </h3>
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <button type="button" class="x-dark-btn">
@@ -63,6 +99,10 @@
 
 
 <script>
+    <?php if(isset($errors)){ ?>
+    modal_cancel("error-modal");
+    <?php } ?>
+
     document.getElementById('date-picker').valueAsDate = new Date();
 
     function upload_attendance_csv() {
