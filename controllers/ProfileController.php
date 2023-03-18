@@ -36,7 +36,6 @@ class ProfileController extends Controller
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getRegNo();
         $params['mssg'] = 'ERROR';
-//        var_dump($params['mssg']);
 
         // Update password
         if(isset($body['password'])){
