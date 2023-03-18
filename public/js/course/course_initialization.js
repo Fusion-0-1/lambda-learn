@@ -1,4 +1,6 @@
 modal_cancel("modal");
+let topic_fields = [];
+
 /**
  * @description - A function to extract the topic number from a given topic ID
  * @param {string} topic_id - The topic ID to extract the number from
@@ -28,9 +30,6 @@ function addTopic(topic_element){
     let new_input;
     for (let i=0; i < topic_elements.length; i++) {
         if (!exists) {
-            //enable editing the subtopic elements once start typing on the topic input fields
-            document.getElementById("initialize").removeAttribute("disabled");
-            document.getElementById(""+(topic_id)).removeAttribute("disabled");
 
             //create new input fields to add course topics
             new_input = document.createElement("INPUT");
@@ -38,79 +37,33 @@ function addTopic(topic_element){
             new_input.setAttribute("placeholder", "Add new topic");
             new_input.setAttribute("class", "input input-topic flex flex-gap");
             new_input.setAttribute("id", "input_topic_" + (topic_id + 1));
+            new_input.setAttribute("name", "topics[]");
             new_input.setAttribute("onkeyup", "addTopic(this)");
             document.getElementById('topic').appendChild(new_input);
-
-            // Create new sub-topic container and other related elements (subtopics, heading, buttons)
-            let topic_container = document.createElement('div');
-            topic_container.setAttribute('id', 'sub_topic_list_'+(topic_id + 1));
-            topic_container.classList.add("border","container-course-topic", "v-center", "flex", "flex-gap", "v-center",
-                "flex-column");
-
-            let heading_container = document.createElement('div');
-            heading_container.classList.add("flex","flex-row", "v-center")
-            let heading = document.createElement('h5');
-            heading.innerText = "Topic..."
-            heading.setAttribute("id", "topic-"+(topic_id+1));
-            heading.classList.add("text-center", "remove-space");
-
-            //checkbox
-            let check_box = document.createElement('input');
-            check_box.setAttribute('type', 'checkbox');
-            check_box.setAttribute('id', 'check_box-'+(topic_id+1));
-
-
-            let subtopic_container = document.createElement('div');
-            subtopic_container.setAttribute("id", "subtopic-"+(topic_id+1));
-            subtopic_container.classList.add("border", "container-course-sub-topic", "v-center", "padding-none", "flex",
-                "flex-column");
-
-            let input = document.createElement("input");
-            input.onkeyup = function(){return removeIfEmpty(this)};
-            input.classList.add("input", "input-subtopic", "flex");
-            input.setAttribute("placeholder", "Add new sub topic...");
-
-            //Create the add button
-            let add_button = document.createElement("button");
-            add_button.setAttribute("id", ""+(topic_id+1));
-            add_button.setAttribute("type", "button");
-            add_button.disabled = true;
-            add_button.classList.add("class", "btn-circle", "fa-solid", "fa-plus");
-
-            add_button.onclick = function(){return addSubTopic(this.id)};
-
-            topic_container.appendChild(heading_container);
-            heading_container.appendChild(heading);
-            heading_container.appendChild(check_box);
-
-            subtopic_container.appendChild(input);
-            topic_container.appendChild(subtopic_container);
-            topic_container.appendChild(add_button);
-            document.getElementById("course-topic").appendChild(topic_container);
             break;
-        } else {
-            document.getElementById("topic-"+topic_id).innerHTML
-                = document.getElementById("input_topic_"+topic_id).value;
         }
     }
     // deleting empty fields from the topic inputs
     topic_elements = document.getElementById('topic').getElementsByTagName('input');
     let empty_fields = [];
-    let empty_subtopic_fields = [];
+    let nonempty_topics = [];
     for (let i=0; i < topic_elements.length; i++) {
         if (topic_elements[i].value === "") {
-            let topic_number = getTopicNumberFromID(topic_elements[i].id);
-            let sub_topics = document.getElementById("sub_topic_list_"+topic_number);
-            empty_subtopic_fields.push(sub_topics);
             empty_fields.push(topic_elements[i]);
         }
+        else {
+            nonempty_topics.push(topic_elements[i]);
+        }
     }
+    topic_fields = nonempty_topics;
+
+    console.log(topic_fields)
     if (empty_fields.length > 1) {
         for (let i = 0; i < empty_fields.length-1; i++) {
             empty_fields[i].remove();
-            empty_subtopic_fields[i].remove();
         }
     }
+
 }
 
 /**
@@ -127,6 +80,10 @@ function addSubTopic(clicked_id){
         newSubtopic.type = 'text';
         newSubtopic.placeholder = 'Add new sub topic...';
         newSubtopic.className = 'input input-subtopic flex width-full';
+        //TODO
+        newSubtopic.setAttribute('name', 'subtopic['+(clicked_id)+'][]');
+        // newSubtopic.name", "subtopics!!subtopic-"+(clicked_id-1));
+
         subtopicContainer.appendChild(newSubtopic);
     }
 }
@@ -140,6 +97,63 @@ function removeIfEmpty(input){
         if(input.parentElement.children.length>1){
             input.remove();
         }
+    }
+}
+
+function createSubtopics(){
+    for(let i=0; i<topic_fields.length; i++){
+        //enable editing the subtopic elements once start typing on the topic input fields
+        document.getElementById("initialize").removeAttribute("disabled");
+        document.getElementById("save").disabled = 'true';
+
+        let topic_container = document.createElement('div');
+        topic_container.setAttribute('id', 'sub_topic_list_'+(i));
+        topic_container.classList.add("border","container-course-topic", "v-center", "flex", "flex-gap", "v-center",
+            "flex-column");
+
+        let heading_container = document.createElement('div');
+        heading_container.classList.add("flex","flex-row", "v-center")
+        let heading = document.createElement('h5');
+        heading.innerText = "Topic..."
+        heading.setAttribute("id", "topic-"+(i));
+        heading.classList.add("text-center", "remove-space");
+
+        //checkbox
+        let check_box = document.createElement('input');
+        check_box.setAttribute('type', 'checkbox');
+        check_box.setAttribute('id', 'check_box-'+(i));
+
+
+        let subtopic_container = document.createElement('div');
+        subtopic_container.setAttribute("id", "subtopic-"+(i));
+        subtopic_container.classList.add("border", "container-course-sub-topic", "v-center", "padding-none", "flex",
+            "flex-column");
+
+        let input = document.createElement("input");
+        input.onkeyup = function(){return removeIfEmpty(this)};
+        input.classList.add("input", "input-subtopic", "flex");
+        input.setAttribute("placeholder", "Add new sub topic...");
+        input.setAttribute('name', 'subtopic['+(i)+'][]');
+
+        //Create the add button
+        let add_button = document.createElement("button");
+        add_button.setAttribute("id", ""+(i));
+        add_button.setAttribute("type", "button");
+        add_button.classList.add("class", "btn-circle", "fa-solid", "fa-plus");
+
+        add_button.onclick = function(){return addSubTopic(this.id)};
+
+        topic_container.appendChild(heading_container);
+        heading_container.appendChild(heading);
+        heading_container.appendChild(check_box);
+
+        subtopic_container.appendChild(input);
+        topic_container.appendChild(subtopic_container);
+        topic_container.appendChild(add_button);
+        document.getElementById("course-topic").appendChild(topic_container);
+
+        document.getElementById("topic-"+i).innerHTML
+                = document.getElementById('topic').getElementsByTagName('input')[i].value;
     }
 }
 
