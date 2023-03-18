@@ -46,18 +46,20 @@ class CourseSubTopic {
         foreach ($topicsArray as $index => $topic) {
             $subTopicId = 1;
             foreach ($subTopicsArray[$index] as $subTopic) {
-                $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
-                Application::$db->insert(
-                    table: 'CourseSubTopic',
-                    values: [
-                        'course_code' => $courseCode,
-                        'topic_id' => $topicId,
-                        'sub_topic_id' => $subTopicIdFormatted,
-                        'sub_topic' => $subTopic,
-                        'is_being_tracked' => 1,
-                        'lec_reg_no' => $lec_reg_no
-                    ]
-                );
+                if($subTopic != ''){
+                    $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
+                    Application::$db->insert(
+                        table: 'CourseSubTopic',
+                        values: [
+                            'course_code' => $courseCode,
+                            'topic_id' => $topicId,
+                            'sub_topic_id' => $subTopicIdFormatted,
+                            'sub_topic' => $subTopic,
+                            'is_being_tracked' => 1,
+                            'lec_reg_no' => $lec_reg_no
+                        ]
+                    );
+                }
                 $subTopicId++;
             }
             $topicId++;
