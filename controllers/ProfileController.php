@@ -119,7 +119,7 @@ class ProfileController extends Controller
             $readCSVParams = [Admin::class, 'createNewAdmin'];
         }
 
-        $categorizedData = $file->readUserCSV($readCSVParams);
+        $categorizedData = $file->readCSV(constructor: $readCSVParams, readUserData: true);
         if ($categorizedData != false) {
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(
