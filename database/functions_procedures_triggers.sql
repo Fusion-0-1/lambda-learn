@@ -9,9 +9,9 @@ CREATE TRIGGER createCourseAttendanceSubmission
     END;
 DELIMITER ;
 
-DROP TRIGGER IF EXISTS createStuCourseAttendanceSubmission;
+DROP TRIGGER IF EXISTS createCourseSubmToStuCourseAttendSubm;
 DELIMITER $$
-CREATE TRIGGER createStuCourseAttendanceSubmission
+CREATE TRIGGER createCourseSubmToStuCourseAttendSubm
     AFTER INSERT ON CourseSubmission
     FOR EACH ROW
 BEGIN
@@ -33,6 +33,16 @@ BEGIN
         VALUES (stu_reg_no_, NEW.course_code, 'A001', 0, 'Done');
     END LOOP;
     CLOSE get_stu_reg_no;
+END;
+
+DROP TRIGGER IF EXISTS createStuToStuCourseAttendSubm;
+DELIMITER $$
+CREATE TRIGGER createStuToStuCourseAttendSubm
+    AFTER INSERT ON StuCourse
+    FOR EACH ROW
+BEGIN
+    INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
+    VALUES (NEW.stu_reg_no, NEW.course_code, 'A001', 0, 'Done');
 END;
 
 -- DROP FUNCTION IF EXISTS validateRegNoInSiteAnnouncement;
