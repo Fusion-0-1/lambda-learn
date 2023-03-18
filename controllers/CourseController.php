@@ -4,9 +4,12 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Request;
+use app\core\User;
 use app\model\Course;
+use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\submission;
+use Couchbase\IndexNotFoundException;
 
 class CourseController extends Controller
 {
@@ -42,6 +45,10 @@ class CourseController extends Controller
         }
     }
 
+    public function updateProgressBar(Request $request){
+
+    }
+
     public function displayAllSubmissions(Request $request)
     {
         $body = $request->getBody();
@@ -62,13 +69,39 @@ class CourseController extends Controller
         );
     }
 
-    public function courseInitialization()
+    public function courseInitialization(Request $request)
     {
+        $lec_reg_no = unserialize($_SESSION['user'])->getRegNo();
+        $body = $_POST;
+
+//        $body = $request->getBody();
+//        $body['subtopic-1'];
+//        $body['subtopic-2'];
+//        try {
+//            $suptopic[] = $body['subtopic-3'];
+//        } catch (IndexNotFoundException) {
+//            break;
+//        }
+        $courseCode = $_GET['course_code'];
+
+        $topicsArray = $body['topics'];
+        $subTopicsArray = $body['subtopic'];
+
+        $courseSubTopics = new CourseSubTopic();
+        $courseTopics = new CourseTopic();
+
+        $courseTopics->insertCourseTopics($courseCode, $topicsArray);
+        $courseSubTopics->insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray);
+
+
+        $params['course'] = Course::getCourse($courseCode);
         return $this->render(
-            view: 'course/course_initialization',
-            allowedRoles: ['Lecturer']
+            view: 'course/course_page',
+            allowedRoles: ['Lecturer'],
+            params:$params
         );
     }
+
     public function courseCreation()
     {
         return $this->render(
