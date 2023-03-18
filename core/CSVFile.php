@@ -103,7 +103,6 @@ class CSVFile
         $invalid = [];
         $header = fgetcsv($csvFile); # contains the column names
         array_shift($header); # Header first element is "Index". So, remove it.
-//        var_dump($header);
         for ($i = 0; $i < count($header); $i++) {
             $header[$i] = trim($header[$i]);
             if (!Course::checkExists($header[$i])) {
@@ -120,7 +119,6 @@ class CSVFile
                 $invalid[] = $regNo;
             }
         }
-//        var_dump($invalid);
         return $invalid;
     }
 }
