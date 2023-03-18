@@ -26,17 +26,20 @@ class CourseTopic {
     {
         $topicId = 1;
         foreach ($topicsArray as $topic) {
-            Application::$db->insert(
-                table: 'CourseTopic',
-                values: [
-                    'course_code' => $courseCode,
-                    'topic_id' => $topicId,
-                    'topic' => $topic
-                ]
-            );
-            $topicId++;
+            if($topic != ''){
+                Application::$db->insert(
+                    table: 'CourseTopic',
+                    values: [
+                        'course_code' => $courseCode,
+                        'topic_id' => $topicId,
+                        'topic' => $topic
+                    ]
+                );
+                $topicId++;
+            } else {
+                break;
+            }
         }
-
     }
 
     public static function getCourseTopics($courseCode): array
