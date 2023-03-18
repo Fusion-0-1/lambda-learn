@@ -15,6 +15,9 @@ class Course
     private string $lecFirstName;
     private string $lecLastName;
 
+
+
+    // -------------------------------Constructors---------------------------------------
     private function __construct() {}
 
     public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName) {
@@ -28,7 +31,11 @@ class Course
 
         return $course;
     }
+    // --------------------------------------------------------------------------------
 
+
+
+    // -----------------------------Basic Methods-------------------------------------
     private static function getUserTable(User $user){
         $type = $user::getUserType($user->getRegNo());
         if ($type == 'Student') {
@@ -111,6 +118,14 @@ class Course
         return $courses;
     }
 
+    public static function checkExists($course)
+    {
+        return Application::$db->checkExists('Course', ['course_code' => $course]);
+    }
+    // --------------------------------------------------------------------------------
+
+
+    // ---------------------------Getters and Setters-----------------------------------
     /**
      * @return string
      */
@@ -206,6 +221,7 @@ class Course
     {
         $this->lecLastName = $lecLastName;
     }
+    // --------------------------------------------------------------------------------
 
 }
 
