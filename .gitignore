@@ -7,7 +7,7 @@
 .env
 composer.lock
 /CSV Files/User Uploads/
-/public/images/profile/
+/public/User Uploads/
 
 # Mac OS
 .DS_Store
