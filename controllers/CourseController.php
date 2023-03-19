@@ -73,25 +73,20 @@ class CourseController extends Controller
     {
         $lec_reg_no = unserialize($_SESSION['user'])->getRegNo();
         $body = $_POST;
-
-//        $body = $request->getBody();
-//        $body['subtopic-1'];
-//        $body['subtopic-2'];
-//        try {
-//            $suptopic[] = $body['subtopic-3'];
-//        } catch (IndexNotFoundException) {
-//            break;
-//        }
-        $courseCode = $_GET['course_code'];
-
         $topicsArray = $body['topics'];
         $subTopicsArray = $body['subtopic'];
+
+        for ($i = 0; $i<count($topicsArray); $i++) {
+            $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
+        }
+
+        $courseCode = $_POST['course_code'];
 
         $courseSubTopics = new CourseSubTopic();
         $courseTopics = new CourseTopic();
 
         $courseTopics->insertCourseTopics($courseCode, $topicsArray);
-        $courseSubTopics->insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray);
+        $courseSubTopics->insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray, $checkboxes);
 
 
         $params['course'] = Course::getCourse($courseCode);
