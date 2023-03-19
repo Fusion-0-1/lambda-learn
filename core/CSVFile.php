@@ -16,6 +16,48 @@ class CSVFile
         'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain'
     ];
 
+
+    // -------------------------------Constructors---------------------------------------
+    public function __construct($file)
+    {
+        $this->filename = $file['name'];
+        $this->filepath = $file['tmp_name'];
+        $this->filetype = $file['type'];
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // -----------------------------Basic Methods-------------------------------------
+    public static function getAttendanceReports()
+    {
+        $csvFiles = [];
+        $results = Application::$db->select(
+            table: 'AttendanceReport',
+            order: 'report_date DESC'
+        );
+        while ($record = Application::$db->fetch($results)){
+            $csvFiles[] = $record;
+        }
+        return $csvFiles;
+    }
+
+    public function insertAttendanceReport($path, $date): void
+    {
+        Application::$db->insert(
+            table: 'AttendanceReport',
+            values: [
+                'title' => $this->filename,
+                'report_date' => $date,
+                'path' => $path
+            ]
+        );
+    }
+    // --------------------------------------------------------------------------------
+
+
+
+    // ----------------------------Custom Methods--------------------------------------
     /**
      * @description Read the CSV file
      * two functionalities wrapped into this function.
@@ -58,12 +100,15 @@ class CSVFile
                             $location = $location . '_valid.csv';
                         }
                     } elseif ($updateAttendance) { // Student attendance file naming
+                        $date = explode('_', $location);
                         if (count($output) > 0) {
                             $location = $location . '_invalid.csv';
                         } else {
                             $location = $location . '_valid.csv';
                         }
+                        $this->insertAttendanceReport($location, end($date));
                     }
+
                     move_uploaded_file($this->filepath, $location);
                 }
             } else {
@@ -71,14 +116,6 @@ class CSVFile
             }
         }
         return $output;
-    }
-
-
-    public function __construct($file)
-    {
-        $this->filename = $file['name'];
-        $this->filepath = $file['tmp_name'];
-        $this->filetype = $file['type'];
     }
 
 
@@ -143,13 +180,17 @@ class CSVFile
         }
         return $invalid;
     }
+    // --------------------------------------------------------------------------------
 
+
+
+    // ---------------------------Getters and Setters-----------------------------------
     /**
      * @return string
      */
     public function getFilename(): string
     {
-        return $this->filename;
+        return substr($this->filename, 0, strpos($this->filename, '.'));
     }
 
     /**
@@ -167,4 +208,5 @@ class CSVFile
     {
         return $this->filetype;
     }
+    // --------------------------------------------------------------------------------
 }
