@@ -119,12 +119,11 @@ abstract class User
     }
 
 
-    /*
-     * params:
-     *      $line(array) : array of strings
+    /**
+     * @param array $line: array of strings
      * !IMPORTANT: follow the order of the keys as in the code when passing as an associative array.
-     * return: array of User objects
-     * description : unwrap csv file line. Break into an associative array.
+     * @return array : array of User objects
+     * @description : unwrap csv file line. Break into an associative array.
      */
     public static function unwrapData(array $line): array
     {

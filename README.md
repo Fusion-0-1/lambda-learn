@@ -23,7 +23,8 @@ DB_PORT="<port>" % default 8889 on MAMP
 
 ### 4. Database
 4.1. Import the database from `./database/lambda-learn.sql`. <br>
-4.2. Import triggers/functions and procedures from `./database/functions_procedures_triggers.sql`. <br>
+4.2. Import triggers/functions and procedures from `./database/functions_procedures_triggers.sql`. If all the triggers/
+functions/procedures not inserted automatically, please insert manually by copying and pasting the script.<br>
 4.3. Import data from `./database/insert-data.sql`.
 
 ### 5. Start the server

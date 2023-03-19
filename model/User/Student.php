@@ -100,11 +100,8 @@ class Student extends User
 
     public function updateAllCoursesAttendance($courses, $attendance)
     {
-//        var_dump($courses);
-//        var_dump($attendance);
         for ($i = 0; $i < count($courses); $i++) {
             if (trim($attendance[$i]) == '1') {
-                var_dump($courses[$i]);
                 $this->updateCourseAttendance($courses[$i]);
             }
         }

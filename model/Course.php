@@ -125,10 +125,7 @@ class Course
     {
         return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
-    // --------------------------------------------------------------------------------
 
-
-    // ---------------------------Getters and Setters-----------------------------------
     public static function getCourse($courseCode): Course
     {
         $results = Application::$db->select(

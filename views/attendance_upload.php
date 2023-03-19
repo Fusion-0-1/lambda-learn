@@ -13,8 +13,9 @@
                 <img src="./images/primary_icons/error.svg">
                 <h4 id="delete-warning">Invalid Data!</h4>
                 <?php if (sizeof($errors) > 0) { ?>
-                    <p>Below registration numbers are invalid. CSV must follow the given format and all should be valid.
-                        Registration number should follow the format: 20XX/AA/XXX.
+                    <p>Below registration numbers/course codes are invalid. CSV must follow the given format and all
+                        should be valid i.e. should be existed in the system. Registration number should follow the
+                        format: 20XX/AA/XXX. Course code should follow the format: AA XXX. Example: CS 2001.
                     </p>
                     <p id="stu-id-list" class="text-center">
                         <?php
@@ -63,34 +64,23 @@
             <table class="download-table">
                 <tr>
                     <th>Report No</th>
+                    <th>File Name</th>
                     <th>Date</th>
                     <th>Download</th>
                 </tr>
-                <tr>
-                    <td>5</td>
-                    <td>30.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>23.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>16.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>09.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>02.01.2023</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
+                <?php
+                foreach ($csvFiles as $file) {
+                    echo "<tr>";
+                        echo "<td>" . $file['report_id'] . "</td>";
+                        echo "<td>" . $file['title'] . "</td>";
+                        echo "<td>" . $file['report_date'] . "</td>";
+                        echo "<td><a href='" . $file['path'] . "' target='blank'
+                                    <i class=\"fa fa-download download-icon\" aria-hidden=\"true\"></i>
+                                    </a>
+                                    </td>";
+                    echo "</tr>";
+                }
+                ?>
             </table>
         </div>
     </div>

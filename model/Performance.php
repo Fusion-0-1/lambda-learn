@@ -42,16 +42,16 @@ class Performance
             order: 'record_date DESC',
             limit: $limit
         );
-        while ($sub = Application::$db->fetch($results)){
+        while ($record = Application::$db->fetch($results)){
             $performance[] = self::createNewPerformance(
-                $sub['record_date'],
-                $sub['cpu_usage'],
-                $sub['total_memory'],
-                $sub['used_memory'],
-                $sub['unused_memory'],
-                $sub['process_count'],
-                $sub['process_running'],
-                $sub['process_sleeping'],
+                $record['record_date'],
+                $record['cpu_usage'],
+                $record['total_memory'],
+                $record['used_memory'],
+                $record['unused_memory'],
+                $record['process_count'],
+                $record['process_running'],
+                $record['process_sleeping'],
             );
         }
         return $performance;

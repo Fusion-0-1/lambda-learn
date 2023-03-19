@@ -160,14 +160,6 @@
                 <div class="card-name">Lecturer Account</div>
             </div>
         </a>
-        <a href="/account_creation?type=Coordinator" class="link">
-            <div class="cards">
-                <div class="cards-inside">
-                    <img src="./images/dashboard/coordinatorAccount.svg" alt="Coordinator Account">
-                </div>
-                <div class="card-name">Coordinator Account</div>
-            </div>
-        </a>
         <a href="/account_creation?type=Admin" class="link">
             <div class="cards">
                 <div class="cards-inside">
