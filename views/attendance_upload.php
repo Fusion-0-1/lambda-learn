@@ -13,8 +13,9 @@
                 <img src="./images/primary_icons/error.svg">
                 <h4 id="delete-warning">Invalid Data!</h4>
                 <?php if (sizeof($errors) > 0) { ?>
-                    <p>Below registration numbers are invalid. CSV must follow the given format and all should be valid.
-                        Registration number should follow the format: 20XX/AA/XXX.
+                    <p>Below registration numbers/course codes are invalid. CSV must follow the given format and all
+                        should be valid i.e. should be existed in the system. Registration number should follow the
+                        format: 20XX/AA/XXX. Course code should follow the format: AA XXX. Example: CS 2001.
                     </p>
                     <p id="stu-id-list" class="text-center">
                         <?php
