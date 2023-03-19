@@ -1,12 +1,13 @@
 <link rel="stylesheet" href="css/submissions.css">
 
-<div class="main-container border v-center flex-gap responsive-container">
+<div id="file-upload-container" class="main-container border v-center flex-gap responsive-container">
     <h3><?php echo $course_code?></h3>
+    <form id="add-attachment" class="flex flex-column">
         <div class="submissions-card border">
             <div class="topic-container-add grid v-center h-justify">
                     <textarea id="heading_textarea" name="heading" placeholder="Type your submission topic..."
                               class="add-headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
-                <button class="btn confirm-btn h-center v-center">Upload</button>
+                <button class="btn confirm-btn h-center v-center" onclick="upload_submission()">Upload</button>
             </div>
 
             <div class="submissions-card-inside border">
@@ -19,7 +20,10 @@
                     <textarea id="content_textarea" name="content" placeholder="Type your announcement here ..." class="add-submissions-content text-justify"></textarea>
                 </div>
             </div>
+            <input id="file-input-field" type="file" name="file" hidden>
+            <button type="submit"  class="attach-btn dark-btn flex-end" id="upload-file-text">Add Attachments</button>
         </div>
+    </form>
 
     <?php foreach ($submissions as $sub) { ?>
         <div class="submissions-card border">
@@ -32,7 +36,7 @@
             </div>
 
             <div class="submissions-card-inside border">
-                <div class="container-heading grid h-justify v-center">>
+                <div class="container-heading grid h-justify v-center">
                     <div class="view-points-and-marks">Marks Allocated:- <?php echo $sub->getAllocatedMark()?></div>
                     <div class="view-points-and-marks">Points Allocated:- <?php echo $sub->getAllocatedPoint()?></div>
                     <div class="view-points-and-marks text-right"><?php echo $sub->getDueDate()?></div>
@@ -65,4 +69,12 @@
         this.style.height = 'auto';
         this.style.height = this.scrollHeight + 'px';
     }
+
+    async function upload_submission(){
+        let formData = new FormData();
+        formData.append("file",file-input-field.files[0]);
+        await fetch('/submission.php',{method: "POST", body: formData});
+    }
+
+
 </script>

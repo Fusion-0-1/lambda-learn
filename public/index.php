@@ -38,6 +38,8 @@ $app->router->get('/utilization', [SummaryViewController::class, 'displayUtiliza
 
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
 $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
+$app->router->post('/upload-submission', [ProfileController::class, 'CreateSubmission']);
+
 
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
