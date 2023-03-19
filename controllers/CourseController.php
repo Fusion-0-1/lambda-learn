@@ -9,7 +9,6 @@ use app\model\Course;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\submission;
-use Couchbase\IndexNotFoundException;
 
 class CourseController extends Controller
 {
