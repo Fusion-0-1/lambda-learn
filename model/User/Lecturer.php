@@ -8,6 +8,7 @@ use app\core\User;
 class Lecturer extends User
 {
     private string $degreeProgramCode;
+    private string $position;
 
     // -------------------------------Constructors---------------------------------------
     private function __construct() {}
@@ -28,6 +29,7 @@ class Lecturer extends User
         $lecturer->activeStatus = $table['active_status'];
         $lecturer->profilePicture = $table['profile_picture'];
         $lecturer->degreeProgramCode = $table['degree_program_code'];
+        $lecturer->position = $table['position'];
 
         return $lecturer;
     }
@@ -42,6 +44,7 @@ class Lecturer extends User
         $lecturer->personalEmail = $data['personalEmail'];
         $lecturer->contactNo = $data['contactNo'];
         $lecturer->degreeProgramCode = $data['degreeProgramCode'] ?? '';
+        $lecturer->position = $data['position'] ?? 'Lecturer';
 
         return $lecturer;
     }
@@ -65,6 +68,7 @@ class Lecturer extends User
                 'active_status' => $this->activeStatus ?? 0,
                 'profile_picture' => $this->profilePicture ?? '',
                 'degree_program_code' => $this->degreeProgramCode ?? '',
+                'position' => $this->position ?? 'Lecturer',
                 'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
             ]
         );

@@ -59,6 +59,10 @@
     margin-left: 10px;
 }
 
+#save{
+    border: none;
+}
+
 .modal-content .two-button-row {
     gap: 30px;
 }

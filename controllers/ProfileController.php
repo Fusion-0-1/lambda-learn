@@ -36,7 +36,6 @@ class ProfileController extends Controller
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getRegNo();
         $params['mssg'] = 'ERROR';
-//        var_dump($params['mssg']);
 
         // Update password
         if(isset($body['password'])){
@@ -119,7 +118,11 @@ class ProfileController extends Controller
             $readCSVParams = [Admin::class, 'createNewAdmin'];
         }
 
-        $categorizedData = $file->readUserCSV($readCSVParams);
+        $categorizedData = $file->readCSV(
+            constructor: $readCSVParams,
+            readUserData: true,
+            location: 'User Uploads/Profiles/' . $file->getFilename() . "_" . date('YmdHis')
+        );
         if ($categorizedData != false) {
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
                 return $this->render(

@@ -9,6 +9,8 @@ class CourseSubTopic {
     private string $topicId;
     private string $subTopicId;
     private string $subTopicName;
+    private int $isBeingTracked;
+
 
     public function __construct() {}
 
@@ -36,6 +38,32 @@ class CourseSubTopic {
         }
 
         return $subTopics;
+    }
+
+    public function insertCourseSubTopics($courseCode,$lec_reg_no, $topicsArray, $subTopicsArray, $chekboxes)
+    {
+        $topicId = 1;
+        foreach ($topicsArray as $index => $topic) {
+            $subTopicId = 1;
+            foreach ($subTopicsArray[$index] as $subTopic) {
+                if($subTopic != ''){
+                    $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
+                    Application::$db->insert(
+                        table: 'CourseSubTopic',
+                        values: [
+                            'course_code' => $courseCode,
+                            'topic_id' => $topicId,
+                            'sub_topic_id' => $subTopicIdFormatted,
+                            'sub_topic' => $subTopic,
+                            'is_being_tracked' =>(int)$chekboxes[$topicId],
+                            'lec_reg_no' => $lec_reg_no
+                        ]
+                    );
+                }
+                $subTopicId++;
+            }
+            $topicId++;
+        }
     }
 
     // ---------------------------Getters and Setters-----------------------------------
@@ -87,5 +115,22 @@ class CourseSubTopic {
     {
         $this->subTopicName = $subTopicName;
     }
+
+    /**
+     * @return int
+     */
+    public function getIsBeingTracked(): int
+    {
+        return $this->isBeingTracked;
+    }
+
+    /**
+     * @param int $isBeingTracked
+     */
+    public function setIsBeingTracked(int $isBeingTracked): void
+    {
+        $this->isBeingTracked = $isBeingTracked;
+    }
+
 
 }

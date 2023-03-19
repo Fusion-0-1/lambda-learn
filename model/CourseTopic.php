@@ -9,6 +9,7 @@ class CourseTopic {
     private string $topicId;
     private string $topicName;
     private array $subTopics = [];
+    private int $isBeingTracked;
 
     public function __construct() {}
     public static function createNewTopic($topicId, $topicName, $subTopics = []): CourseTopic
@@ -19,6 +20,26 @@ class CourseTopic {
         $topic->subTopics = $subTopics;
 
         return $topic;
+    }
+
+    public function insertCourseTopics($courseCode, $topicsArray)
+    {
+        $topicId = 1;
+        foreach ($topicsArray as $topic) {
+            if($topic != ''){
+                Application::$db->insert(
+                    table: 'CourseTopic',
+                    values: [
+                        'course_code' => $courseCode,
+                        'topic_id' => $topicId,
+                        'topic' => $topic
+                    ]
+                );
+                $topicId++;
+            } else {
+                break;
+            }
+        }
     }
 
     public static function getCourseTopics($courseCode): array
@@ -89,5 +110,21 @@ class CourseTopic {
     public function setSubTopics(array $subTopics): void
     {
         $this->subTopics = $subTopics;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsBeingTracked(): int
+    {
+        return $this->isBeingTracked;
+    }
+
+    /**
+     * @param int $isBeingTracked
+     */
+    public function setIsBeingTracked(int $isBeingTracked): void
+    {
+        $this->isBeingTracked = $isBeingTracked;
     }
 }

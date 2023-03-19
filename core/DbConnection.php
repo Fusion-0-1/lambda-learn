@@ -80,18 +80,21 @@ class DbConnection
         return $this->rowCount($result) > 0;
     }
 
-    public function update($table, $columns, $where): bool|\mysqli_result
+    public function update($table, $columns, $where, $math_formulae = false): bool|\mysqli_result
     {
         $sql = "UPDATE $table";
 
         $sql .= " SET ";
         foreach ($columns as $key => $value) {
-            $sql .= "$key = '$value', ";
+            if ($math_formulae) {
+                $sql .= "$key = $value, ";
+            } else {
+                $sql .= "$key = '$value', ";
+            }
         }
         $sql = substr($sql, 0, -2);
 
         $sql .= $this->addSQLWhere($where);
-
         return $this->db->query($sql);
     }
 

@@ -116,7 +116,7 @@ CREATE TABLE CourseSubmission (
     description VARCHAR(300),
     allocated_mark INT,
     allocated_point INT,
-    due_date DATETIME NOT NULL,
+    due_date DATETIME,
     visibility BOOLEAN,
     CONSTRAINT PK_CourseSubmission PRIMARY KEY (course_code, submission_id),
     CONSTRAINT FK_CourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
@@ -201,9 +201,8 @@ CREATE TABLE AttendanceReport (
     report_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     report_date DATETIME NOT NULL,
-    course_code VARCHAR(8) NOT NULL,
-    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id, course_code),
-    CONSTRAINT FK_AttendanceReport_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
+    path VARCHAR(255) NOT NULL,
+    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id)
 );
  
 DROP TABLE IF EXISTS ProgressReport;
@@ -269,4 +268,4 @@ CREATE TABLE StuCourseSubmission (
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
 );
- 
+

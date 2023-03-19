@@ -5,6 +5,7 @@ use app\controllers\AuthController;
 use app\controllers\Kanbanboard;
 use app\controllers\LeaderboardController;
 use app\controllers\ProfileController;
+use app\controllers\ReportController;
 use app\controllers\SummaryViewController;
 use app\core\Application;
 use app\controllers\CourseController;
@@ -33,7 +34,9 @@ $app->router->get('/calender', 'calender');
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
-$app->router->get('/attendance_upload', 'attendance_upload');
+
+$app->router->get('/attendance_upload', [ReportController::class, 'uploadAttendance']);
+$app->router->post('/attendance_upload', [ReportController::class, 'uploadAttendance']);
 $app->router->get('/utilization', [SummaryViewController::class, 'displayUtilizationReport']);
 
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
@@ -44,7 +47,9 @@ $app->router->post('/upload-submission', [ProfileController::class, 'CreateSubmi
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
-$app->router->get('/course_initialization', [CourseController::class, 'courseInitialization']);
+
+$app->router->post('/course_page', [CourseController::class, 'courseInitialization']);
+
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
 $app->router->get('/site_announcement', [AnnouncementController::class, 'displaySiteAnnouncements']);
