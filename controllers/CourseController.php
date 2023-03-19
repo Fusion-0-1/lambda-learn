@@ -20,11 +20,15 @@ class CourseController extends Controller
         );
     }
 
-    public function displayCourse()
+    public function displayCourse(Request $request)
     {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $params['course'] = Course::getCourse($courseCode);
         return $this->render(
             view: '/course/course_page',
-            allowedRoles: ['Lecturer', 'Student']
+            allowedRoles: ['Lecturer', 'Student'],
+            params: $params
         );
     }
 

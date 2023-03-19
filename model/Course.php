@@ -4,6 +4,7 @@ namespace app\model;
 
 use app\core\Application;
 use app\core\User;
+use app\core\Request;
 use app\model\User\Lecturer;
 
 class Course
@@ -14,13 +15,15 @@ class Course
     private string $lecRegNo;
     private string $lecFirstName;
     private string $lecLastName;
+    private array $courseTopics = [];
 
 
 
     // -------------------------------Constructors---------------------------------------
     private function __construct() {}
 
-    public static function createNewCourse($courseCode, $courseName, $optionalFlag, $lecRegNo, $lecFirstName, $lecLastName) {
+    public static function createNewCourse($courseCode, $courseName, $optionalFlag,
+                                           $lecRegNo='', $lecFirstName='', $lecLastName='', $courseTopics = []): Course {
         $course = new Course();
         $course->courseCode = $courseCode;
         $course->courseName = $courseName;
@@ -28,7 +31,7 @@ class Course
         $course->lecRegNo = $lecRegNo;
         $course->lecFirstName = $lecFirstName;
         $course->lecLastName = $lecLastName;
-
+        $course->courseTopics = $courseTopics;
         return $course;
     }
     // --------------------------------------------------------------------------------
@@ -107,12 +110,12 @@ class Course
         }
         while ($course = Application::$db->fetch($results)){
             $courses[] = self::createNewCourse(
-                $course['course_code'],
-                $course['course_name'],
-                $course['optional_flag'],
-                $course['lec_reg_no'],
-                $course['first_name'],
-                $course['last_name']
+                courseCode: $course['course_code'],
+                courseName: $course['course_name'],
+                optionalFlag: $course['optional_flag'],
+                lecRegNo: $course['lec_reg_no'],
+                lecFirstName: $course['first_name'],
+                lecLastName: $course['last_name']
             );
         }
         return $courses;
@@ -124,6 +127,25 @@ class Course
     }
     // --------------------------------------------------------------------------------
 
+
+    // ---------------------------Getters and Setters-----------------------------------
+    public static function getCourse($courseCode): Course
+    {
+        $results = Application::$db->select(
+            table: 'Course',
+            columns: ['course_code', 'course_name', 'optional_flag'],
+            where: ['course_code' => $courseCode]
+        );
+        $course = Application::$db->fetch($results);
+        $courseTopics = CourseTopic::getCourseTopics($course['course_code']);
+        return self::createNewCourse(
+            courseCode: $course['course_code'],
+            courseName: $course['course_name'],
+            optionalFlag: (int) $course['optional_flag'],
+            courseTopics: $courseTopics
+        );
+
+    }
 
     // ---------------------------Getters and Setters-----------------------------------
     /**
@@ -221,8 +243,25 @@ class Course
     {
         $this->lecLastName = $lecLastName;
     }
-    // --------------------------------------------------------------------------------
 
-}
+    /**
+     * @return array
+     */
+    public function getTopics(): array
+    {
+        return $this->courseTopics;
+    }
+
+    /**
+     * @param array $courseTopics
+     */
+    public function setTopics(array $courseTopics): void
+    {
+        $this->courseTopics = $courseTopics;
+    }
+    // --------------------------------------------------------------------------------
+};
+
+
 
 
