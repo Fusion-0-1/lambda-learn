@@ -16,14 +16,6 @@ class CSVFile
         'text/csv', 'application/csv', 'application/excel', 'application/vnd.msexcel', 'text/plain'
     ];
 
-    public function __construct($file)
-    {
-        $this->filename = $file['name'];
-        $this->filepath = $file['tmp_name'];
-        $this->filetype = $file['type'];
-    }
-
-
     /**
      * @description Read the CSV file
      * two functionalities wrapped into this function.
@@ -31,18 +23,21 @@ class CSVFile
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
      *       index numbers which students have incorrect data (one or more attributes of the student is invalid).
-     *       @param $constructor: constructor of the account creation object. [class, 'constructor of factory pattern']
+     * @param null $constructor constructor of the account creation object. [class, 'constructor of factory pattern']
      *                  example : [Student::class, 'createNewStudent'];
-     *       @param bool $readUserData: true (this will enable read user data function)
      *  2. Update Student attendance.
+     * @param bool $readUserData true (this will enable read user data function)
      *       This will read attendance containing csv file. Will return false if course codes provided are wrong.
      *       This will update student update for each course as specified in the csv file. 10 points will be given for
      *       leaderboard ranking.
-     *       @param bool $updateAttendance: true (This should be true if want to enable this feature).
+     * @param bool $updateAttendance true (This should be true if want to enable this feature).
+     * @param string|null $location
      * @return array|bool
      */
-    public function readCSV($constructor = null, $readUserData = false, $updateAttendance = false): bool|array
+    public function readCSV($constructor = null, bool $readUserData = false,
+                            bool $updateAttendance = false, string $location = null): bool|array
     {
+        $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
             if (is_uploaded_file($this->filepath)) {
                 $csvFile = fopen($this->filepath, 'r');
@@ -52,11 +47,38 @@ class CSVFile
                     $output = $this->updateAttendance($csvFile);
                 }
                 fclose($csvFile);
+                // Save the file in the server
+                if ($location != null) {
+                    if ($readUserData) { // User account creation file naming
+                        if (count($output['invalid']) > 0) {
+                            $location = $location . '_invalid.csv';
+                        } elseif (count($output['update']) > 0) {
+                            $location = $location . '_update.csv';
+                        } else {
+                            $location = $location . '_valid.csv';
+                        }
+                    } elseif ($updateAttendance) { // Student attendance file naming
+                        if (count($output) > 0) {
+                            $location = $location . '_invalid.csv';
+                        } else {
+                            $location = $location . '_valid.csv';
+                        }
+                    }
+                    move_uploaded_file($this->filepath, $location);
+                }
             } else {
                 return false;
             }
         }
         return $output;
+    }
+
+
+    public function __construct($file)
+    {
+        $this->filename = $file['name'];
+        $this->filepath = $file['tmp_name'];
+        $this->filetype = $file['type'];
     }
 
 
@@ -95,10 +117,10 @@ class CSVFile
     /**
      * @description Update student attendance. This function must be used inside readCSV. This is a passive function.
      * i.e. function itself can not run.
-     * @param $csvFile: csvFile which was read by inbuilt fopen(). This is used in readCSV file function.
-     * @return bool|array
+     * @param $csvFile : csvFile which was read by inbuilt fopen(). This is used in readCSV file function.
+     * @return array
      */
-    public function updateAttendance($csvFile): bool|array
+    public function updateAttendance($csvFile): array
     {
         $invalid = [];
         $header = fgetcsv($csvFile); # contains the column names
@@ -106,7 +128,7 @@ class CSVFile
         for ($i = 0; $i < count($header); $i++) {
             $header[$i] = trim($header[$i]);
             if (!Course::checkExists($header[$i])) {
-                return false;
+                return [$header[$i]];
             }
         }
         while (($line = fgetcsv($csvFile)) !== false) {
@@ -120,5 +142,29 @@ class CSVFile
             }
         }
         return $invalid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFilepath(): string
+    {
+        return $this->filepath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFiletype(): string
+    {
+        return $this->filetype;
     }
 }

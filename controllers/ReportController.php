@@ -24,12 +24,17 @@ class ReportController extends Controller
                 allowedRoles: ['Admin']
             );
         } elseif ($request->isPost()) {
+            $body = $request->getBody();
             $file = new CSVFile($request->getFile());
-            $output = $file->readCSV(updateAttendance: true);
+
+            $output = $file->readCSV(
+                updateAttendance: true,
+                location: '../CSV Files/User Uploads/Attendance/' . $body['date']
+            );
             # if csv header course codes are invalid, $output will be a false.
             # if regNo are invalid, invalid regNos will be assigned to $output
             # if all are correct, $output will be an empty array
-            if ($output != false) {
+            if (count($output) > 0) {
                 return $this->render(
                     view: '/attendance_upload',
                     allowedRoles: ['Admin'],
