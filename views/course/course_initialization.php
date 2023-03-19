@@ -9,6 +9,7 @@
     <form method="post" action="<?php { echo '/course_page?course_code='.$course->getCourseCode();} ?>" enctype="multipart/form-data">
         <div class="border main-container v-center flex-gap">
             <h4>Course Topics</h4><hr><br>
+            <input type="hidden" value="<?php echo $course->getCourseCode()?>" name="course_code">
             <div class="flex flex-wrap h-justify">
                 <div id="topic" class="flex flex-wrap h-evenly flex-gap">
                     <input id="input_topic_1" class="input input-topic flex flex-gap" placeholder="Add new topic"
