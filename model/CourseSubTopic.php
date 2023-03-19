@@ -40,7 +40,7 @@ class CourseSubTopic {
         return $subTopics;
     }
 
-    public function insertCourseSubTopics($courseCode,$lec_reg_no, $topicsArray, $subTopicsArray)
+    public function insertCourseSubTopics($courseCode,$lec_reg_no, $topicsArray, $subTopicsArray, $chekboxes)
     {
         $topicId = 1;
         foreach ($topicsArray as $index => $topic) {
@@ -55,7 +55,7 @@ class CourseSubTopic {
                             'topic_id' => $topicId,
                             'sub_topic_id' => $subTopicIdFormatted,
                             'sub_topic' => $subTopic,
-                            'is_being_tracked' => 1,
+                            'is_being_tracked' =>(int)$chekboxes[$topicId],
                             'lec_reg_no' => $lec_reg_no
                         ]
                     );
