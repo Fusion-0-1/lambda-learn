@@ -201,9 +201,8 @@ CREATE TABLE AttendanceReport (
     report_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     report_date DATETIME NOT NULL,
-    course_code VARCHAR(8) NOT NULL,
-    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id, course_code),
-    CONSTRAINT FK_AttendanceReport_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
+    path VARCHAR(255) NOT NULL,
+    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id)
 );
  
 DROP TABLE IF EXISTS ProgressReport;
