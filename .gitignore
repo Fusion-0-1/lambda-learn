@@ -6,7 +6,7 @@
 /vendor/
 .env
 composer.lock
-/CSV Files/User Uploads/
+CSV Files/User Uploads/
 
 # Mac OS
 .DS_Store
