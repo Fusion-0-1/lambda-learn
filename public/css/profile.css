@@ -5,6 +5,13 @@
     border: 3px solid var(--heading-blue);
 }
 
+.profile-img-admin{
+    width: 200PX;
+    height: 200PX;
+    border-radius: 50%;
+    border: 3px solid var(--heading-blue);
+}
+
 .profile-img-center{
     display: block;
 }
