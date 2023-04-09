@@ -73,30 +73,44 @@
         <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
-                <div class="progress-bar-inner border-radius" id="topic1">
-                    <div class="progress-bar border-radius" id="topic1-value"></div>
-                    <div class="topic-progress-label"> Topic 1 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic2">
-                    <div class="progress-bar border-radius" id="topic2-value"></div>
-                    <div class="topic-progress-label"> Topic 2 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic3">
-                    <div class="progress-bar border-radius" id="topic3-value"></div>
-                    <div class="topic-progress-label"> Topic 3 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic4">
-                    <div class="progress-bar border-radius" id="topic4-value"></div>
-                    <div class="topic-progress-label"> Topic 4 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic5">
-                    <div class="progress-bar border-radius" id="topic5-value"></div>
-                    <div class="topic-progress-label"> Topic 5 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic6">
-                    <div class="progress-bar border-radius" id="topic6-value"></div>
-                    <div class="topic-progress-label"> Topic 6 </div>
-                </div>
+                <?php foreach ($course->getTopics() as $courseTopic) {
+                    foreach ($courseTopic->getSubTopics() as $courseSubTopic) {
+                        if($courseSubTopic->getIsBeingTracked()==1){?>
+                            <div class="progress-bar-inner border-radius width-full" id="topic1">
+                                <div class="progress-bar border-radius flex" id="topic1-value"></div>
+                                <div class="topic-progress-label"> <?php echo "Topic " . $courseTopic->getTopicId()?> </div>
+                            </div>
+                        <?php
+                            break;
+                        }
+                    }
+                } ?>
+
+<!--                <div class="progress-bar-inner border-radius" id="topic1">-->
+<!--                    <div class="progress-bar border-radius" id="topic1-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 1 </div>-->
+<!--                </div>-->
+<!--                <div class="progress-bar-inner border-radius" id="topic2">-->
+<!--                    <div class="progress-bar border-radius" id="topic2-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 2 </div>-->
+<!--                </div>-->
+<!--                <div class="progress-bar-inner border-radius" id="topic3">-->
+<!--                    <div class="progress-bar border-radius" id="topic3-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 3 </div>-->
+<!--                </div>-->
+<!--                <div class="progress-bar-inner border-radius" id="topic4">-->
+<!--                    <div class="progress-bar border-radius" id="topic4-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 4 </div>-->
+<!--                </div>-->
+<!--                <div class="progress-bar-inner border-radius" id="topic5">-->
+<!--                    <div class="progress-bar border-radius" id="topic5-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 5 </div>-->
+<!--                </div>-->
+<!--                <div class="progress-bar-inner border-radius" id="topic6">-->
+<!--                    <div class="progress-bar border-radius" id="topic6-value"></div>-->
+<!--                    <div class="topic-progress-label"> Topic 6 </div>-->
+<!--                </div>-->
+                <!--TODO: calculate the progress percentage-->
                 <div class="progress-value flex h-end v-center"><h5> 35% </h5></div>
             </div>
         </div>
@@ -131,7 +145,7 @@
         <div class="secondary-container border border-radius flex flex-column">
             <h5> Course Topics </h5>
             <hr class="hr">
-            <div class="topic-container flex flex-row item-gap">
+            <div class="topic-container flex flex-row item-gap flex-wrap">
                 <?php foreach ($course->getTopics() as $courseTopic) {?>
                     <div class="course-topic border border-radius flex flex-column ">
                         <h5> <?php echo $courseTopic->getTopicId().". ".$courseTopic->getTopicName()?> </h5>
@@ -139,7 +153,7 @@
                                 <div>
                                     <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
                                         <h5> <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?> </h5>
-                                        <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" checked class="topic-check">
+                                        <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" class="topic-check">
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
                                         <!--TODO: Retrieve recordings and lecture notes from the database-->
