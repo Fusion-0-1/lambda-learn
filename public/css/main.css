@@ -640,6 +640,10 @@ button:disabled{
     display: inline-block;
 }
 
+.block{
+    display: block;
+}
+
 .absolute-position{
     position: absolute;
 }
