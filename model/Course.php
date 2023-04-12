@@ -160,6 +160,16 @@ class Course
         return $count/$subTopicCount * 100;
     }
 
+    public function getStuTotalTopicCompletionProgress():int{
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getStuSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
+
     /**
      * @return string
      */
