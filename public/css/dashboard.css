@@ -2,7 +2,7 @@ a {
     cursor: pointer;
 }
 
- .main-heading {
+.main-heading {
     text-align: center;
     padding: 0px;
     font-size: 2.1rem;
@@ -63,6 +63,19 @@ a {
     color: white;
     text-decoration: none;
 }
+
+/* Header formatting*/
+h3 {
+    width: 80%;
+}
+.selector select {
+    width: 100px;
+    text-align: center;
+}
+.selector {
+    column-gap: 15px;
+}
+
 
 @media (max-width: 1394px){
     .card{
