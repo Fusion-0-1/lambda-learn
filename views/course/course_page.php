@@ -73,45 +73,16 @@
         <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
-                <?php foreach ($course->getTopics() as $courseTopic) {
-                    foreach ($courseTopic->getSubTopics() as $courseSubTopic) {
-                        if($courseSubTopic->getIsBeingTracked()==1){?>
-                            <div class="progress-bar-inner border-radius width-full" id="topic1">
-                                <div class="progress-bar border-radius flex" id="topic1-value"></div>
-                                <div class="topic-progress-label"> <?php echo "Topic " . $courseTopic->getTopicId()?> </div>
-                            </div>
-                        <?php
-                            break;
-                        }
-                    }
+                <?php foreach ($course->getTopics() as $courseTopic) { ?>
+                    <div class="progress-bar-inner border-radius width-full" id="topic1">
+                        <div class="progress-bar border-radius flex" style="width:
+                            <?php echo $courseTopic->getLecSubTopicCompletePercentage(). "%"?>">
+                        </div>
+                        <div class="topic-progress-label"> <?php echo "Topic " . $courseTopic->getTopicId()?> </div>
+                    </div>
+                    <?php
                 } ?>
-
-<!--                <div class="progress-bar-inner border-radius" id="topic1">-->
-<!--                    <div class="progress-bar border-radius" id="topic1-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 1 </div>-->
-<!--                </div>-->
-<!--                <div class="progress-bar-inner border-radius" id="topic2">-->
-<!--                    <div class="progress-bar border-radius" id="topic2-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 2 </div>-->
-<!--                </div>-->
-<!--                <div class="progress-bar-inner border-radius" id="topic3">-->
-<!--                    <div class="progress-bar border-radius" id="topic3-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 3 </div>-->
-<!--                </div>-->
-<!--                <div class="progress-bar-inner border-radius" id="topic4">-->
-<!--                    <div class="progress-bar border-radius" id="topic4-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 4 </div>-->
-<!--                </div>-->
-<!--                <div class="progress-bar-inner border-radius" id="topic5">-->
-<!--                    <div class="progress-bar border-radius" id="topic5-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 5 </div>-->
-<!--                </div>-->
-<!--                <div class="progress-bar-inner border-radius" id="topic6">-->
-<!--                    <div class="progress-bar border-radius" id="topic6-value"></div>-->
-<!--                    <div class="topic-progress-label"> Topic 6 </div>-->
-<!--                </div>-->
-                <!--TODO: calculate the progress percentage-->
-                <div class="progress-value flex h-end v-center"><h5> 35% </h5></div>
+                <div class="progress-value flex h-end v-center"><h5><?php echo $course->getLecTotalTopicCompletionProgress() . "%"?></h5></div>
             </div>
         </div>
     </div>
@@ -153,7 +124,27 @@
                                 <div>
                                     <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
                                         <h5> <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?> </h5>
-                                        <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" class="topic-check">
+                                        <form  method="post" action="/course_page?course_code=<?php echo $course->getCourseCode(); ?>" name="update_progress_bar">
+                                            <input type="hidden" name="update_progress_bar">
+                                            <input type="hidden" value="<?php echo $course->getCourseCode()?>" name="course_code">
+                                            <?php if ($_SESSION['user-role'] == 'Student') {?>
+                                            <?php if($courseSubTopic->getIsCovered()){?>
+                                                <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                            <?php } else { ?>
+                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
+                                                    <input type="hidden" value="<?php echo $courseTopic->getTopicId()?>" name="course_topic">
+                                                    <button class="btn-checkbox" type="submit"></button>
+                                            <?php } ?>
+                                            <?php } ?>
+                                            <?php if ($_SESSION['user-role'] == 'Lecturer') {?>
+                                                <?php if($courseSubTopic->getIsCovered()){?>
+                                                    <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                                <?php } else { ?>
+                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
+                                                    <button class="btn-checkbox" type="submit"></button>
+                                                <?php } ?>
+                                            <?php } ?>
+                                        </form>
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
                                         <!--TODO: Retrieve recordings and lecture notes from the database-->
