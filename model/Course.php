@@ -145,6 +145,21 @@ class Course
     }
 
     // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @return int
+     */
+    public function getLecTotalTopicCompletionProgress(): int
+    {
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getLecSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
+
     /**
      * @return string
      */
