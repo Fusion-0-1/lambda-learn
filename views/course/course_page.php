@@ -128,7 +128,7 @@
                                             <input type="hidden" name="update_progress_bar">
                                             <input type="hidden" value="<?php echo $course->getCourseCode()?>" name="course_code">
                                             <?php if ($_SESSION['user-role'] == 'Student') {?>
-                                            <?php if($courseSubTopic->getIsCovered()){?>
+                                            <?php if($courseSubTopic->getStuIsCompleted()){?>
                                                 <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
                                             <?php } else { ?>
                                                     <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
