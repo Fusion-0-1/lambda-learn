@@ -10,15 +10,18 @@ class CourseSubTopic {
     private string $subTopicId;
     private string $subTopicName;
     private int $isBeingTracked;
-
+    private int $isCovered;
+//    stuCompleted 1 / 0
 
     public function __construct() {}
 
-    public static function createNewSubTopic($subTopicId, $subTopicName) {
+    public static function createNewSubTopic($subTopicId, $subTopicName, $isBeingTracked, $isCovered) {
         $subTopic = new CourseSubTopic();
         $subTopic->subTopicId = $subTopicId;
         $subTopic->subTopicName = $subTopicName;
-
+        $subTopic->isBeingTracked = $isBeingTracked;
+        $subTopic->isCovered = $isCovered;
+// stuComplete, pass default 0 in the param
         return $subTopic;
     }
 
@@ -26,14 +29,20 @@ class CourseSubTopic {
         $subTopics = [];
         $results = Application::$db->select(
             table: 'CourseSubTopic',
-            columns: ['sub_topic_id', 'sub_topic'],
+            columns: ['sub_topic_id', 'sub_topic', 'is_being_tracked', 'is_covered'],
             where: ['course_code' => $courseCode, 'topic_id' => $topicId],
         );
-
+        // fetch stuCourseSubTopic to array A
         while ($subTopic = Application::$db->fetch($results)){
             $subTopics[] = self::createNewSubTopic(
                 $subTopic['sub_topic_id'],
-                $subTopic['sub_topic']
+                $subTopic['sub_topic'],
+                $subTopic['is_being_tracked'],
+                $subTopic['is_covered']
+                // stuCompleted: find subtopic id matching to this from A
+                // stuCompleted: function() {
+            // body
+                // }
             );
         }
 
@@ -55,7 +64,7 @@ class CourseSubTopic {
                             'topic_id' => $topicId,
                             'sub_topic_id' => $subTopicIdFormatted,
                             'sub_topic' => $subTopic,
-                            'is_being_tracked' =>(int)$chekboxes[$topicId],
+                            'is_being_tracked' =>(int)$chekboxes[$topicId-1],
                             'lec_reg_no' => $lec_reg_no
                         ]
                     );
@@ -65,6 +74,17 @@ class CourseSubTopic {
             $topicId++;
         }
     }
+
+    public function updateProgress($courseCode,$subTopicId, $user, $regNo)
+    {
+            Application::$db->update(
+                table: 'CourseSubTopic',
+                columns: ['is_covered' => 1],
+                where: ['course_code' => $courseCode, 'sub_topic_id' => $subTopicId]
+            );
+    }
+
+
 
     // ---------------------------Getters and Setters-----------------------------------
 
@@ -132,5 +152,19 @@ class CourseSubTopic {
         $this->isBeingTracked = $isBeingTracked;
     }
 
+    /**
+     * @return int
+     */
+    public function getIsCovered(): int
+    {
+        return $this->isCovered;
+    }
 
+    /**
+     * @param int $isCovered
+     */
+    public function setIsCovered(int $isCovered): void
+    {
+        $this->isCovered = $isCovered;
+    }
 }
