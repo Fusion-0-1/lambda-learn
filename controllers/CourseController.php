@@ -44,8 +44,48 @@ class CourseController extends Controller
         }
     }
 
-    public function updateProgressBar(Request $request){
+    public function updateCoursePage(Request $request){
+        $body = $request->getBody();
+        $user = unserialize($_SESSION['user']);
+        $regNo = $user->getregNo();
+        if(isset($body['update_progress_bar'])){
+            $courseCode = $body['course_code'];
+            $subTopicId = $body['course_subtopic'];
+            $courseSubTopic = new CourseSubTopic();
+            $courseSubTopic->updateProgress($courseCode,$subTopicId, $user, $regNo);
 
+            $params['course'] = Course::getCourse($courseCode);
+
+            return $this->render(
+                view: '/course/course_page',
+                allowedRoles: ['Lecturer', 'Student'],
+                params: $params
+            );
+        } else {
+            $body = $_POST;
+            $topicsArray = $body['topics'];
+            $subTopicsArray = $body['subtopic'];
+
+            for ($i = 0; $i<count($topicsArray); $i++) {
+                $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
+            }
+
+            $courseCode = $_POST['course_code'];
+
+            $courseSubTopics = new CourseSubTopic();
+            $courseTopics = new CourseTopic();
+
+            $courseTopics->insertCourseTopics($courseCode, $topicsArray);
+            $courseSubTopics->insertCourseSubTopics($courseCode, $regNo, $topicsArray, $subTopicsArray, $checkboxes);
+
+
+            $params['course'] = Course::getCourse($courseCode);
+            return $this->render(
+                view: 'course/course_page',
+                allowedRoles: ['Lecturer'],
+                params:$params
+            );
+        }
     }
 
     public function displayAllSubmissions(Request $request)
@@ -65,34 +105,6 @@ class CourseController extends Controller
         return $this->render(
             view: '/marks_upload',
             allowedRoles: ['Lecturer', 'Coordinator']
-        );
-    }
-
-    public function courseInitialization(Request $request)
-    {
-        $lec_reg_no = unserialize($_SESSION['user'])->getRegNo();
-        $body = $_POST;
-        $topicsArray = $body['topics'];
-        $subTopicsArray = $body['subtopic'];
-
-        for ($i = 0; $i<count($topicsArray); $i++) {
-            $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
-        }
-
-        $courseCode = $_POST['course_code'];
-
-        $courseSubTopics = new CourseSubTopic();
-        $courseTopics = new CourseTopic();
-
-        $courseTopics->insertCourseTopics($courseCode, $topicsArray);
-        $courseSubTopics->insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray, $checkboxes);
-
-
-        $params['course'] = Course::getCourse($courseCode);
-        return $this->render(
-            view: 'course/course_page',
-            allowedRoles: ['Lecturer'],
-            params:$params
         );
     }
 
