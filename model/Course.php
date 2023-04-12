@@ -160,6 +160,9 @@ class Course
         return $count/$subTopicCount * 100;
     }
 
+    /**
+     * @return int
+     */
     public function getStuTotalTopicCompletionProgress():int{
         $count = 0;
         $subTopicCount = 0;
