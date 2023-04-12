@@ -52,7 +52,7 @@ class CourseController extends Controller
             $courseCode = $body['course_code'];
             $subTopicId = $body['course_subtopic'];
             $courseSubTopic = new CourseSubTopic();
-            $courseSubTopic->updateProgress($courseCode,$subTopicId, $user, $regNo);
+            $courseSubTopic->updateProgress($courseCode,$subTopicId);
 
             $params['course'] = Course::getCourse($courseCode);
 
