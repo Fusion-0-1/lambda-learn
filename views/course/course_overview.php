@@ -10,11 +10,19 @@
                     <div class="cards-inside">
                         <div class="course-name"><?php echo $course->getCourseName()?></div>
                     </div>
-                    <div class="border-style"></div>
+                    <?php if ($_SESSION['user-role'] == 'Student') {?>
+                        <div class="border-style" style="width: <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?>"></div>
+                    <?php } else {?>
+                        <div class="border-style" style="width: <?php echo $course->getLecTotalTopicCompletionProgress() . "%"?>"></div>
+                    <?php } ?>
                     <div class="grid-content">
                         <div class="course-code"><?php echo $course->getCourseCode()?></div>
                         <div class="lecturer-name"><?php echo $course->getLecFirstName()." ".$course->getLecLastName()?></div>
-                        <div class="percentage"><div class="percentage-inside">80%</div></div>
+                        <?php if ($_SESSION['user-role'] == 'Student') {?>
+                            <div class="percentage"><div class="percentage-inside"><?php echo $course->getStuTotalTopicCompletionProgress() . "%" ?></div></div>
+                        <?php } else {?>
+                            <div class="percentage"><div class="percentage-inside"><?php echo $course->getLecTotalTopicCompletionProgress() . "%" ?></div></div>
+                        <?php } ?>
                     </div>
                 </div>
             </a>
