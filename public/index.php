@@ -33,6 +33,8 @@ $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
+$app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
+
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 
 $app->router->get('/attendance_upload', [ReportController::class, 'uploadAttendance']);
@@ -45,8 +47,6 @@ $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkU
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
-
-$app->router->post('/course_page', [CourseController::class, 'courseInitialization']);
 
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
