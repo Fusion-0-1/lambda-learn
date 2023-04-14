@@ -115,7 +115,8 @@ class Course
                 optionalFlag: $course['optional_flag'],
                 lecRegNo: $course['lec_reg_no'],
                 lecFirstName: $course['first_name'],
-                lecLastName: $course['last_name']
+                lecLastName: $course['last_name'],
+                courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
         return $courses;
