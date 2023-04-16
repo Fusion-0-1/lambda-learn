@@ -39,15 +39,10 @@ class Request
     {
         $body = [];
         if ($this->isGet()) {
-            foreach ($_GET as $key => $value) {
-                if (is_array($value)) {
-                    // If the value is an array, recursively sanitize each element
-                    $subArray = $this->sanitizeArray($value);
-                    $body[$key] = $subArray;
-                } else {
-                    // Special Characters - < > " ' & are encoded to HTML entities : &lt; &gt; &quot; &apos; &amp;
-                    $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
-                }
+            $getArray = $this->sanitizeArray($_GET);
+            foreach ($getArray as $key => $value) {
+                // Append each key with square brackets to differentiate levels of nesting
+                $body[$key] = $value;
             }
         }
         if ($this->isPost()) {
