@@ -44,7 +44,8 @@ class CourseController extends Controller
         }
     }
 
-    public function updateCoursePage(Request $request){
+    public function updateCoursePage(Request $request)
+    {
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getregNo();
@@ -62,7 +63,6 @@ class CourseController extends Controller
                 params: $params
             );
         } else {
-            $body = $_POST;
             $topicsArray = $body['topics'];
             $subTopicsArray = $body['subtopic'];
 
