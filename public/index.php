@@ -20,6 +20,15 @@ $config = [
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASS'],
         'port' => $_ENV['DB_PORT'],
+    ],
+    'mailer' => [
+        'host' => $_ENV['SMTP_HOST'],
+        'port' => $_ENV['SMTP_PORT'],
+        'username' => $_ENV['SMTP_USER'],
+        'password' => $_ENV['SMTP_PASS'],
+        'from' => $_ENV['SMTP_FROM'],
+        'from_name' => $_ENV['SMTP_FROM_NAME'],
+        'encryption' => $_ENV['SMTP_SECURE'],
     ]
 ];
 

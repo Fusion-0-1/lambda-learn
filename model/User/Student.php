@@ -57,8 +57,9 @@ class Student extends User
 
 
     // -----------------------------Basic Methods-------------------------------------
-    public function insert()
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'Student',
             values: [
@@ -75,9 +76,10 @@ class Student extends User
                 'index_no' => $this->indexNo,
                 'date_joined' => $this->dateJoined,
                 'degree_program_code' => $this->degreeProgramCode,
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT)
             ]
         );
+        return $password;
     }
     // --------------------------------------------------------------------------------
 

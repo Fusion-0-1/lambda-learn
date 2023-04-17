@@ -46,8 +46,9 @@ class Admin extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
-    public function insert()
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'Admin',
             values: [
@@ -61,9 +62,10 @@ class Admin extends User
                 'last_logout' => $this->lastLogout ?? date('Y-m-d H:i:s', time()),
                 'active_status' => $this->activeStatus ?? 0,
                 'profile_picture' => $this->profilePicture ?? '',
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT)
             ]
         );
+        return $password;
     }
     // --------------------------------------------------------------------------------
 }
