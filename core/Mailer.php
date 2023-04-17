@@ -20,6 +20,11 @@ class Mailer
     private string $fromName;
 
 
+    /**
+     * @param $config: must contain following keys as an associative array:
+     * host, port, encryption, username, password, from, from_name
+     * @description Mailer constructor. This is a singleton class. Need to create object from getMailerInstance method
+     */
     private function __construct($config)
     {
         //Set who the message is to be sent from
@@ -31,7 +36,6 @@ class Mailer
         $this->fromEmail = $config['from'];
         $this->fromName = $config['from_name'];
     }
-
     public static function getMailerInstance($config): Mailer
     {
         if (!isset(static::$instance)) {
@@ -40,6 +44,12 @@ class Mailer
         return static::$instance;
     }
 
+    /**
+     * @description Send email to the newly created user
+     * @param User $user: Newly created user object
+     * @param $password: Password of the newly created user
+     * @return void
+     */
     public function sendAccountCreateMail(User $user, $password): void
     {
         $email_vars = array(
@@ -58,6 +68,17 @@ class Mailer
     }
 
 
+    /**
+     * @description : Generic function to email the user
+     * @param $subject: Subject of the email
+     * @param $htmlTemplateFile: HTML template file path
+     * @param $templateDirectory: HTML template file folder path
+     * @param $toEmail: Recipient email address
+     * @param $toName: Recipient name
+     * @param $emailVars: Associative array of variables to be replaced in the template file
+     * @return void
+     * @throws \PHPMailer\PHPMailer\Exception: If there is an error in sending the email
+     */
     private function sendMail(
         $subject, $htmlTemplateFile, $templateDirectory, $toEmail, $toName, $emailVars)
     {
