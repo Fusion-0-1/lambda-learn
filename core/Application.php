@@ -18,6 +18,7 @@ class Application
     public Response $response;
     public static Application $app;
     public static DbConnection $db;
+    public static Mailer $mailer;
 
     public function __construct($root_path, $config = [])
     {
@@ -27,6 +28,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         static::$db = DbConnection::getDatabaseInstance($config['db']);
+        static::$mailer = Mailer::getMailerInstance($config['mailer']);
         session_start();
     }
 
