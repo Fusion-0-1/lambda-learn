@@ -75,6 +75,8 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 // Coordinator routes
 // -------------------------------------------------------------------------
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
+$app->router->post('/assign_users_to_courses', [CourseController::class, 'updateAssignUsersToCourses']);
+
 // -------------------------------------------------------------------------
 
 
