@@ -106,6 +106,39 @@ class Student extends User
             }
         }
     }
+
+    public static function fetchStudents()
+    {
+        $results = Application::$db->select(
+            table: 'Student',
+            columns: ['reg_no', 'degree_program_code']
+        );
+        $users = [];
+        while ($row = Application::$db->fetch($results)) {
+            $users[] = ['reg_no' => $row['reg_no'], 'degree_program_code' => $row['degree_program_code']];
+        }
+        return $users;
+    }
+
+    public static function assignStudentsToCourses($regNo, $courseCode)
+    {
+        $values = Application::$db->select(
+            table: 'Student',
+            columns: ['reg_no'],
+            like: ['reg_no' => $regNo],
+        );
+
+        while ($student = Application::$db->fetch($values)){
+            Application::$db->insert(
+                table: 'StuCourse',
+                values: [
+                    'stu_reg_no' => $student['reg_no'],
+                    'course_code' => $courseCode
+                ]
+            );
+        }
+
+    }
     // --------------------------------------------------------------------------------
 
 
@@ -146,6 +179,30 @@ class Student extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
+    public static function getBatchYears($regNos)
+    {
+        $uniqueYears = []; // Array to store unique years
+        foreach ($regNos as $regNo) {
+            $batchYear = explode('/', $regNo, 3)[0]; // Get batch year from regNo
+            if (!in_array($batchYear, $uniqueYears)) {
+                // If batch year is not already in uniqueYears array, add it
+                $uniqueYears[] = $batchYear;
+            }
+        }
+        return $uniqueYears;
+    }
+
+    public static function getDegreePrograms($degreePrograms)
+    {
+        $uniqueDegreePrograms = [];
+        foreach ($degreePrograms as $degreeProgram) {// Get batch year from regNo
+            if (!in_array($degreeProgram, $uniqueDegreePrograms)) {
+                $uniqueDegreePrograms[] = $degreeProgram;
+            }
+        }
+        return $uniqueDegreePrograms;
+    }
+
     public static function getDegreeProgramCodeByRegNo($regNo): string
     {
         return strtoupper(explode('/', $regNo, 3)[1]);
