@@ -1,5 +1,16 @@
 <link rel="stylesheet" href="css/assign_users.css">
 
+<!--Success and error messages model on the bottom right to display accounts created successfully-->
+<?php if($mssg) { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>User Assigned successfully.</p>
+    </div>
+<?php } else {?>
+    <div id="mssg-modal" class="erroe-mssg text-justify">
+        <p>Failed to assign user.</p>
+    </div>
+<?php }?>
+
 <div id="file-upload-container" class="border main-container v-center flex-gap">
     <div class="flex flex-row h-justify">
         <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_students">
@@ -18,7 +29,7 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Degree Program</label>
-                <select class="input" id="courseSelect" name="degree_program">
+                <select class="input" id="courseSelect" name="degree_program" onchange="filterCourses()">
                     <option value="" disabled selected hidden>Select a degree program...</option>
                     <?php
                     foreach ($degree_programs as $degree_program) {?>
@@ -29,7 +40,7 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
-                <select class="input" name="course">
+                <select class="input" name="course" id="course" onchange="filterDegreeProgram()">
                     <option value="" disabled selected hidden>Select a course...</option>
                     <?php
                     foreach ($courses as $course) {?>
@@ -45,31 +56,29 @@
 
 
         <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
+            <input type="hidden" name="assign_lecturer">
             <h3>Assign Lecturers to courses</h3>
-
+            <?php $count = 0?>
             <div class="flex flex-column flex-gap">
                 <label>Registration Number</label>
-                <select class="input">
+                <select class="input"  name="lecturer">
+                    <option value="" disabled selected hidden>Select a lecturer...</option>
                     <?php
                     foreach ($lecturers as $lecturer) {?>
-                        <option><?php echo $lecturer ?></option>
+                        <option><?php echo $lecturer['reg_no']?></option>
                     <?php } ?>
                 </select>
             </div>
 
             <div class="flex flex-column flex-gap">
-                <label>Year</label>
-                <select class="input">
-                    <option value="1">Year 1</option>
-                    <option value="2">Year 2</option>
-                    <option value="3">Year 3</option>
-                    <option value="4">Year 4</option>
-                </select>
+                <label>Lecturer Name</label>
+                <input type="text" id="selectedLecturer" readonly class="input">
             </div>
 
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
-                <select class="input">
+                <select class="input input-field" name="course">
+                    <option value="" disabled selected hidden>Select a course...</option>
                     <?php
                     foreach ($courses as $course) {?>
                         <option><?php echo $course['course_code'] . ' - ' . $course['course_name'] ?></option>
@@ -99,5 +108,53 @@
         <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, first_name, last_name, position, email, contact_number, date_joined respectively</p>
     </form>
 </div>
+
+<script>
+    function filterCourses() {
+        var selectedDegreeProgram = document.getElementById('courseSelect').value;
+        var course = document.getElementById('course');
+        course.innerHTML = '';
+        <?php
+        foreach ($courses as $course) { ?>
+        var option = document.createElement('option');
+        option.text = '<?php echo $course['course_code'] . ' - ' . $course['course_name'] ?>';
+        if (option.text.startsWith(selectedDegreeProgram)) {
+            course.add(option);
+        }
+        <?php } ?>
+        for (var i = 0; i < course.options.length; i++) {
+            if (course.options[i].text.startsWith(selectedDegreeProgram)) {
+                course.selectedIndex = i;
+                break;
+            }
+        }
+    }
+
+    function filterDegreeProgram() {
+        var selectedCourseCode = document.getElementById('course').value;
+        var degreeProgramSelect = document.getElementById('courseSelect');
+        for (var i = 0; i < degreeProgramSelect.options.length; i++) {
+            if (degreeProgramSelect.options[i].value === selectedCourseCode.substring(0, 2)) {
+                degreeProgramSelect.options[i].selected = true;
+                break;
+            }
+        }
+    }
+
+    var lecturers = <?php echo json_encode($lecturers); ?>;
+    function onLecturerSelectChange() {
+        var selectElement = document.querySelector('select[name="lecturer"]');
+        var selectedLecturerRegNo = selectElement.options[selectElement.selectedIndex].text;
+        var selectedLecturerName = '';
+        for (var i = 0; i < lecturers.length; i++) {
+            if (lecturers[i]['reg_no'] === selectedLecturerRegNo) {
+                selectedLecturerName = lecturers[i]['first_name'] +  " " + lecturers[i]['last_name'];
+                break;
+            }
+        }
+        document.getElementById('selectedLecturer').value = selectedLecturerName;
+    }
+    document.querySelector('select[name="lecturer"]').onchange = onLecturerSelectChange;
+</script>
 
 
