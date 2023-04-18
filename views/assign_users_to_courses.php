@@ -2,53 +2,58 @@
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
     <div class="flex flex-row h-justify">
-        <form class="main-container border flex flex-column flex-gap width-full" id="assign_students">
+        <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_students">
             <h3>Assign Students to courses</h3>
 
             <div class="flex flex-column flex-gap">
                 <label>Batch year</label>
-                <select class="input">
-                    <option value="2019">2019</option>
-                    <option value="2020">2020</option>
-                    <option value="2021">2021</option>
-                    <option value="2022">2022</option>
+                <select class="input" id="degreeProgramSelect" name="batch_year">
+                    <option value="" disabled selected hidden>Select a batch...</option>
+                    <?php
+                    foreach ($batch_years as $batch_year) {?>
+                    <option><?php echo $batch_year ?></option>
+                   <?php } ?>
                 </select>
             </div>
 
             <div class="flex flex-column flex-gap">
                 <label>Degree Program</label>
-                <select class="input">
-                    <option value="cs">Computer Science</option>
-                    <option value="is">Information Systems</option>
+                <select class="input" id="courseSelect" name="degree_program">
+                    <option value="" disabled selected hidden>Select a degree program...</option>
+                    <?php
+                    foreach ($degree_programs as $degree_program) {?>
+                        <option><?php echo $degree_program ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
-                <select class="input">
-                    <option value="scs2001">SCS2001 - Data Structures and Algorithms</option>
-                    <option value="scs2002">SCS2002 - Software Engineering</option>
-                    <option value="scs2003">SCS2003 - Laboratory II</option>
-                    <option value="scs2004">SCS2004 - Database I</option>
+                <select class="input" name="course">
+                    <option value="" disabled selected hidden>Select a course...</option>
+                    <?php
+                    foreach ($courses as $course) {?>
+                        <option><?php echo $course['course_code'] . ' - ' . $course['course_name'] ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
             <div class="flex flex-column flex-gap ">
-                <br><button class="edit-btn-text margin-top">Assign</button>
+                <br><button type="submit" class="edit-btn-text margin-top">Assign</button>
             </div>
         </form>
 
 
-        <form class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
+        <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
             <h3>Assign Lecturers to courses</h3>
 
             <div class="flex flex-column flex-gap">
                 <label>Registration Number</label>
                 <select class="input">
-                    <option value="2020lc0195">2020/LC/0195</option>
-                    <option value="2019lc0010">2019/LC/0010</option>
-                    <option value="2022lc0016">2022/LC/0016</option>
-                    <option value="2020lc0878">2020/LC/0878</option>
+                    <?php
+                    foreach ($lecturers as $lecturer) {?>
+                        <option><?php echo $lecturer ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
@@ -65,10 +70,10 @@
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
                 <select class="input">
-                    <option value="scs2001">SCS2001 - Data Structures and Algorithms</option>
-                    <option value="scs2002">SCS2002 - Software Engineering</option>
-                    <option value="scs2003">SCS2003 - Laboratory II</option>
-                    <option value="scs2004">SCS2004 - Database I</option>
+                    <?php
+                    foreach ($courses as $course) {?>
+                        <option><?php echo $course['course_code'] . ' - ' . $course['course_name'] ?></option>
+                    <?php } ?>
                 </select>
             </div>
 
