@@ -74,6 +74,19 @@ class Lecturer extends User
         );
     }
 
+    public static function fetchLecturers()
+    {
+        $results = Application::$db->select(
+            table: 'AcademicStaff',
+            columns: ['reg_no']
+        );
+        $users = [];
+        while ($row = Application::$db->fetch($results)) {
+            $users[] = $row['reg_no'];
+        }
+        return $users;
+    }
+
 
 
     // ---------------------------Getters and Setters-----------------------------------
