@@ -6,8 +6,8 @@ class AdminConfiguration
 {
     private string $sem_start_date;
     private string $sem_end_date;
-    private int $sem_count;
-    private int $max_sem_count;
+    private int $sem_count_year;
+    private int $total_sem_count;
 
     public function __construct(array $config)
     {
