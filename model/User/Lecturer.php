@@ -80,21 +80,30 @@ class Lecturer extends User
     {
         $results = Application::$db->select(
             table: 'AcademicStaff',
-            columns: ['reg_no']
+            columns: ['reg_no', 'first_name', 'last_name']
         );
         $users = [];
         while ($row = Application::$db->fetch($results)) {
-            $users[] = $row['reg_no'];
+            $users[] = ['reg_no' => $row['reg_no'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
         }
         return $users;
     }
 
-
+    public static function assignLecturersToCourses($lecturer, $courseCode)
+    {
+        Application::$db->insert(
+            table: 'LecCourse',
+            values: [
+                'lec_reg_no' => $lecturer,
+                'course_code' => $courseCode
+            ]
+        );
+    }
 
     // ---------------------------Getters and Setters-----------------------------------
     public function isCoordinator(): bool
     {
-        return $this->degreeProgramCode != null;
+        return $this->degreeProgramCode != '';
     }
     // --------------------------------------------------------------------------------
 }
