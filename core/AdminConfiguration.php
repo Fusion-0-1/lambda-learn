@@ -16,7 +16,6 @@ class AdminConfiguration
                 $this->{$key} = $value;
             }
         }
-        var_dump($this);
     }
 
     /**
@@ -54,32 +53,32 @@ class AdminConfiguration
     /**
      * @return int
      */
-    public function getSemCount(): int
+    public function getSemCountYear(): int
     {
-        return $this->sem_count;
+        return $this->sem_count_year;
     }
 
     /**
-     * @param int $sem_count
+     * @param int $sem_count_year
      */
-    public function setSemCount(int $sem_count): void
+    public function setSemCountYear(int $sem_count_year): void
     {
-        $this->sem_count = $sem_count;
+        $this->sem_count_year = $sem_count_year;
     }
 
     /**
      * @return int
      */
-    public function getMaxSemCount(): int
+    public function getTotalSemCount(): int
     {
-        return $this->max_sem_count;
+        return $this->total_sem_count;
     }
 
     /**
-     * @param int $max_sem_count
+     * @param int $total_sem_count
      */
-    public function setMaxSemCount(int $max_sem_count): void
+    public function setTotalSemCount(int $total_sem_count): void
     {
-        $this->max_sem_count = $max_sem_count;
+        $this->total_sem_count = $total_sem_count;
     }
 }
