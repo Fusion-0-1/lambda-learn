@@ -145,6 +145,19 @@ class Course
 
     }
 
+    public static function fetchAllCourses()
+    {
+        $results = Application::$db->select(
+            table: 'Course',
+            columns: ['course_code', 'course_name'],
+        );
+        $courses = [];
+        while ($row = Application::$db->fetch($results)) {
+            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name']];
+        }
+        return $courses;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
