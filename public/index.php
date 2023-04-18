@@ -11,6 +11,7 @@ use app\core\Application;
 use app\controllers\CourseController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+$admin_config = parse_ini_file("../admin_configuration.ini", true);
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 $config = [
@@ -32,7 +33,7 @@ $config = [
     ]
 ];
 
-$app = new Application(dirname(__DIR__), $config);
+$app = new Application(dirname(__DIR__), $config, $admin_config);
 
 
 // Public routes
