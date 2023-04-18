@@ -132,8 +132,7 @@ class CourseController extends Controller
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $courses = Course::fetchAllCourses();
-        $params['courses'] = $courses;
+        $params['courses'] = Course::fetchAllCourses();;
 
         return $this->render(
             view: '/assign_users_to_courses',
@@ -145,6 +144,15 @@ class CourseController extends Controller
     public function updateAssignUsersToCourses(Request $request)
     {
         $body = $request->getBody();
+        $courseCode = trim(explode("-", $body['course'])[0]);
+
+        if(isset($body['assign_lecturer'])){
+            $lecturer = $body['lecturer'];
+            Lecturer::assignLecturersToCourses($lecturer, $courseCode);
+        } else {
+            $regNo = $body['batch_year'] . '/' . $body['degree_program'];
+            Student::assignStudentsToCourses($regNo, $courseCode);
+        }
         $users = Student::fetchStudents();
 
         $regNos = [];
@@ -157,12 +165,9 @@ class CourseController extends Controller
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();;
+        $params['courses'] = Course::fetchAllCourses();
 
-        $courseCode = trim(explode("-", $body['course'])[0]);
-        $regNo = $body['batch_year'] . '/' . $body['degree_program'];
-        Student::assignStudentsToCourses($regNo, $courseCode);
-
+        $params['mssg'] = true;
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
