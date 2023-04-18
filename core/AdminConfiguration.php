@@ -16,7 +16,6 @@ class AdminConfiguration
                 $this->{$key} = $value;
             }
         }
-        var_dump($this);
     }
 
     /**
