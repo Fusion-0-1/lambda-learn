@@ -52,8 +52,9 @@ class Lecturer extends User
 
 
 
-    public function insert()
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'AcademicStaff',
             values: [
@@ -69,9 +70,10 @@ class Lecturer extends User
                 'profile_picture' => $this->profilePicture ?? '',
                 'degree_program_code' => $this->degreeProgramCode ?? '',
                 'position' => $this->position ?? 'Lecturer',
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT)
             ]
         );
+        return $password;
     }
 
     public static function fetchLecturers()

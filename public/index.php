@@ -11,6 +11,7 @@ use app\core\Application;
 use app\controllers\CourseController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+$admin_config = parse_ini_file("../admin_configuration.ini", true);
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 $config = [
@@ -20,10 +21,19 @@ $config = [
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASS'],
         'port' => $_ENV['DB_PORT'],
+    ],
+    'mailer' => [
+        'host' => $_ENV['SMTP_HOST'],
+        'port' => $_ENV['SMTP_PORT'],
+        'username' => $_ENV['SMTP_USER'],
+        'password' => $_ENV['SMTP_PASS'],
+        'from' => $_ENV['SMTP_FROM'],
+        'from_name' => $_ENV['SMTP_FROM_NAME'],
+        'encryption' => $_ENV['SMTP_SECURE'],
     ]
 ];
 
-$app = new Application(dirname(__DIR__), $config);
+$app = new Application(dirname(__DIR__), $config, $admin_config);
 
 
 // Public routes
