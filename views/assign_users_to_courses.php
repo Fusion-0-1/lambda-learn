@@ -6,7 +6,7 @@
         <p>User Assigned successfully.</p>
     </div>
 <?php } else {?>
-    <div id="mssg-modal" class="erroe-mssg text-justify">
+    <div id="mssg-modal" class="error-mssg text-justify">
         <p>Failed to assign user.</p>
     </div>
 <?php }?>
