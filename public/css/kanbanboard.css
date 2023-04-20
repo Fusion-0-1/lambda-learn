@@ -82,7 +82,7 @@
     display: none;
 }
 
-.card-add-modal {
+.card-add-modal, .card-edit-modal {
     width: 40%;
     padding: 10px;
     margin: 15% auto;

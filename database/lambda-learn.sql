@@ -128,13 +128,10 @@ CREATE TABLE KanbanTask (
     task_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     description VARCHAR(300),
-    due_date DATETIME,
+    due_date VARCHAR(20),
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
-    stu_reg_no VARCHAR(12),
-    lec_reg_no VARCHAR(12),
-    CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id),
-    CONSTRAINT FK_KanbanTask_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_KanbanTask_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no)
+    reg_no VARCHAR(12),
+    CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id)
 );
  
 DROP TABLE IF EXISTS TimeTableEvent;
