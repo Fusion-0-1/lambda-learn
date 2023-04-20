@@ -2,7 +2,7 @@
 
 use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
-use app\controllers\Kanbanboard;
+use app\controllers\KanbanboardController;
 use app\controllers\LeaderboardController;
 use app\controllers\ProfileController;
 use app\controllers\SummaryViewController;
@@ -32,7 +32,12 @@ $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
-$app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
+
+$app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanboard']);
+$app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
+$app->router->post('/delete_task', [KanbanboardController::class, 'deleteKanbanTasks']);
+$app->router->post('/update_task', [KanbanboardController::class, 'updateKanbanTasks']);
+
 $app->router->get('/attendance_upload', 'attendance_upload');
 $app->router->get('/utilization', [SummaryViewController::class, 'displayUtilizationReport']);
 
