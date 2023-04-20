@@ -39,7 +39,7 @@ class DbConnection
      *  ],
      * ]
      */
-    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null)
+    public function select($table, $columns = '*', $join = null, $where = null, $like = null, $order = null, $limit = null)
     {
         if ($columns != '*') {
             $columns = implode(', ', $columns);
@@ -52,6 +52,14 @@ class DbConnection
         }
         if ($where != null) {
             $sql .= $this->addSQLWhere($where);
+        }
+        if ($like != null) {
+            if ($where != null) {
+                $sql .= " AND "; // Added 'AND' if 'where' condition exists
+            } else {
+                $sql .= " WHERE ";
+            }
+            $sql .= $this->addSQLLike($like);
         }
         if ($order != null) {
             $sql .= " ORDER BY $order";
@@ -132,6 +140,16 @@ class DbConnection
         foreach ($where as $key => $value) {
             $sql .= " $operator $key = '$value'";
         }
+        return $sql;
+    }
+
+    private function addSQLLike($like)
+    {
+        $sql = "";
+        foreach ($like as $column => $value) {
+            $sql .= " $column LIKE '%$value%' AND";
+        }
+        $sql = rtrim($sql, "AND");
         return $sql;
     }
 

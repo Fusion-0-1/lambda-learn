@@ -9,6 +9,8 @@ use app\model\Course;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\submission;
+use app\model\User\Lecturer;
+use app\model\User\Student;
 
 class CourseController extends Controller
 {
@@ -118,9 +120,58 @@ class CourseController extends Controller
 
     public function displayAssignUsersToCourses()
     {
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();;
+
         return $this->render(
             view: '/assign_users_to_courses',
-            allowedRoles: ['Coordinator']
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function updateAssignUsersToCourses(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = trim(explode("-", $body['course'])[0]);
+
+        if(isset($body['assign_lecturer'])){
+            $lecturer = $body['lecturer'];
+            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+        } else {
+            $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
+            Student::assignStudentsToCourse($regNoLike, $courseCode);
+        }
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();
+
+        $params['mssg'] = true;
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator'],
+            params: $params
         );
     }
 }
