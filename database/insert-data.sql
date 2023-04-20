@@ -306,6 +306,7 @@ INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, cour
     ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2002"),
     ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2003");
 
+<<<<<<< HEAD
 -- INSERT INTO AttendanceReport (title, report_date, course_code) VALUES
 --     ("Attendance CS 2001 25/11", "2022-11-26", "CS 2001"),
 --     ("Attendance CS 2002 25/11", "2022-11-26", "CS 2002"),
@@ -322,6 +323,8 @@ INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, cour
 --     ("Attendance IS 2002 02/12", "2022-12-03", "IS 2002"),
 --     ("Attendance IS 2003 02/12", "2022-12-03", "IS 2003");
 
+=======
+>>>>>>> a7cc35c78ec4f88635bd5cd135dce1105fc0e8df
 INSERT INTO ProgressReport (title, report_date, course_code) VALUES
     ("Progress CS 2001 25/11", "2022-11-26", "CS 2001"),
     ("Progress CS 2002 25/11", "2022-11-26", "CS 2002"),

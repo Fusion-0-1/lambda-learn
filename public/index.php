@@ -11,6 +11,7 @@ use app\core\Application;
 use app\controllers\CourseController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
+$admin_config = parse_ini_file("../admin_configuration.ini", true);
 $dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 $config = [
@@ -20,10 +21,19 @@ $config = [
         'user' => $_ENV['DB_USER'],
         'password' => $_ENV['DB_PASS'],
         'port' => $_ENV['DB_PORT'],
+    ],
+    'mailer' => [
+        'host' => $_ENV['SMTP_HOST'],
+        'port' => $_ENV['SMTP_PORT'],
+        'username' => $_ENV['SMTP_USER'],
+        'password' => $_ENV['SMTP_PASS'],
+        'from' => $_ENV['SMTP_FROM'],
+        'from_name' => $_ENV['SMTP_FROM_NAME'],
+        'encryption' => $_ENV['SMTP_SECURE'],
     ]
 ];
 
-$app = new Application(dirname(__DIR__), $config);
+$app = new Application(dirname(__DIR__), $config, $admin_config);
 
 
 // Public routes
@@ -33,6 +43,8 @@ $app->router->get('/calender', 'calender');
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
+$app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
+
 $app->router->get('/kanbanboard', [Kanbanboard::class, 'displayKanbanboard']);
 
 $app->router->get('/attendance_upload', [ReportController::class, 'uploadAttendance']);
@@ -47,8 +59,6 @@ $app->router->post('/submission_visibility', [CourseController::class, 'changeSu
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
 $app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
-
-$app->router->post('/course_page', [CourseController::class, 'courseInitialization']);
 
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
@@ -77,6 +87,8 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 // Coordinator routes
 // -------------------------------------------------------------------------
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
+$app->router->post('/assign_users_to_courses', [CourseController::class, 'updateAssignUsersToCourses']);
+
 // -------------------------------------------------------------------------
 
 

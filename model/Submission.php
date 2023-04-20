@@ -59,21 +59,19 @@ class Submission
         return $assignmentSubmissions;
     }
 
-    public function getAttachmentFiles($path) {
+    public function getAttachmentFileNames($path) {
         $files = [];
-            if (is_dir($path)) {
-
-                $dir = scandir($path);
-                foreach ($dir as $file) {
-                    if (!in_array($file, ['.', '..'])) {
-                        $files[] = $file;
-                    }
+        if (is_dir($path)) {
+            $dir = scandir($path);
+            foreach ($dir as $file) {
+                if (!in_array($file, ['.', '..'])) {
+                    $files[] = $file;
                 }
             }
-         return $files;
+        }return $files;
     }
 
-    public function submissionsInsert()
+    public function submissionInsert()
     {
         $db = Application::$db;
         $db->insert(
@@ -103,7 +101,7 @@ class Submission
         return $lastInsertId['submission_id'];
     }
 
-    public static function visibilityUpdate($courseCode,$submissionId,$visibility)
+    public static function updateVisibility($courseCode,$submissionId,$visibility)
     {
         var_dump($courseCode);
         Application::$db->update(

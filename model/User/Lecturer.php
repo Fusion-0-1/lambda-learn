@@ -52,8 +52,9 @@ class Lecturer extends User
 
 
 
-    public function insert()
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'AcademicStaff',
             values: [
@@ -69,17 +70,40 @@ class Lecturer extends User
                 'profile_picture' => $this->profilePicture ?? '',
                 'degree_program_code' => $this->degreeProgramCode ?? '',
                 'position' => $this->position ?? 'Lecturer',
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT)
+            ]
+        );
+        return $password;
+    }
+
+    public static function fetchLecturers()
+    {
+        $results = Application::$db->select(
+            table: 'AcademicStaff',
+            columns: ['reg_no', 'first_name', 'last_name']
+        );
+        $users = [];
+        while ($row = Application::$db->fetch($results)) {
+            $users[] = ['reg_no' => $row['reg_no'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
+        }
+        return $users;
+    }
+
+    public static function assignLecturersToCourse($lecturer, $courseCode)
+    {
+        Application::$db->insert(
+            table: 'LecCourse',
+            values: [
+                'lec_reg_no' => $lecturer,
+                'course_code' => $courseCode
             ]
         );
     }
 
-
-
     // ---------------------------Getters and Setters-----------------------------------
     public function isCoordinator(): bool
     {
-        return $this->degreeProgramCode != null;
+        return $this->degreeProgramCode != '';
     }
     // --------------------------------------------------------------------------------
 }

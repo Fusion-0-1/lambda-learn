@@ -46,8 +46,48 @@ class CourseController extends Controller
         }
     }
 
-    public function updateProgressBar(Request $request){
+    public function updateCoursePage(Request $request)
+    {
+        $body = $request->getBody();
+        $user = unserialize($_SESSION['user']);
+        $regNo = $user->getregNo();
+        if(isset($body['update_progress_bar'])){
+            $courseCode = $body['course_code'];
+            $subTopicId = $body['course_subtopic'];
+            $courseSubTopic = new CourseSubTopic();
+            $courseSubTopic->updateProgress($courseCode,$subTopicId);
 
+            $params['course'] = Course::getCourse($courseCode);
+
+            return $this->render(
+                view: '/course/course_page',
+                allowedRoles: ['Lecturer', 'Student'],
+                params: $params
+            );
+        } else {
+            $topicsArray = $body['topics'];
+            $subTopicsArray = $body['subtopic'];
+
+            for ($i = 0; $i<count($topicsArray); $i++) {
+                $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
+            }
+
+            $courseCode = $_POST['course_code'];
+
+            $courseSubTopics = new CourseSubTopic();
+            $courseTopics = new CourseTopic();
+
+            $courseTopics->insertCourseTopics($courseCode, $topicsArray);
+            $courseSubTopics->insertCourseSubTopics($courseCode, $regNo, $topicsArray, $subTopicsArray, $checkboxes);
+
+
+            $params['course'] = Course::getCourse($courseCode);
+            return $this->render(
+                view: 'course/course_page',
+                allowedRoles: ['Lecturer'],
+                params:$params
+            );
+        }
     }
 
     public function displayAllSubmissions(Request $request)
@@ -107,14 +147,14 @@ class CourseController extends Controller
             }
         }
         $course_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
-        $course_submissions->submissionsInsert();
+        $course_submissions->submissionInsert();
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
     public function changeSubmissionVisibility(Request $request)
     {
         $body = $request->getBody();
-        Submission::visibilityUpdate($body['course_code'],$body['submission_id'],$body['visibility']);
+        Submission::updateVisibility($body['course_code'],$body['submission_id'],$body['visibility']);
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
@@ -124,34 +164,6 @@ class CourseController extends Controller
         return $this->render(
             view: '/marks_upload',
             allowedRoles: ['Lecturer', 'Coordinator']
-        );
-    }
-
-    public function courseInitialization(Request $request)
-    {
-        $lec_reg_no = unserialize($_SESSION['user'])->getRegNo();
-        $body = $_POST;
-        $topicsArray = $body['topics'];
-        $subTopicsArray = $body['subtopic'];
-
-        for ($i = 0; $i<count($topicsArray); $i++) {
-            $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
-        }
-
-        $courseCode = $_POST['course_code'];
-
-        $courseSubTopics = new CourseSubTopic();
-        $courseTopics = new CourseTopic();
-
-        $courseTopics->insertCourseTopics($courseCode, $topicsArray);
-        $courseSubTopics->insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray, $checkboxes);
-
-
-        $params['course'] = Course::getCourse($courseCode);
-        return $this->render(
-            view: 'course/course_page',
-            allowedRoles: ['Lecturer'],
-            params:$params
         );
     }
 
@@ -165,9 +177,58 @@ class CourseController extends Controller
 
     public function displayAssignUsersToCourses()
     {
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();;
+
         return $this->render(
             view: '/assign_users_to_courses',
-            allowedRoles: ['Coordinator']
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function updateAssignUsersToCourses(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = trim(explode("-", $body['course'])[0]);
+
+        if(isset($body['assign_lecturer'])){
+            $lecturer = $body['lecturer'];
+            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+        } else {
+            $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
+            Student::assignStudentsToCourse($regNoLike, $courseCode);
+        }
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();
+
+        $params['mssg'] = true;
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator'],
+            params: $params
         );
     }
 }

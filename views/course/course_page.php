@@ -66,38 +66,23 @@
             <h5> Student Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-outer border-radius">
-                    <div class="progress-bar student-progress border-radius"></div>
+                    <div class="progress-bar border-radius" style="width: <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?>"></div>
                 </div>
-                <div class="progress-value flex h-end v-center"><h5> 20% </h5></div>
+                <div class="progress-value flex h-end v-center"><h5> <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?> </h5></div>
             </div>
         <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
-                <div class="progress-bar-inner border-radius" id="topic1">
-                    <div class="progress-bar border-radius" id="topic1-value"></div>
-                    <div class="topic-progress-label"> Topic 1 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic2">
-                    <div class="progress-bar border-radius" id="topic2-value"></div>
-                    <div class="topic-progress-label"> Topic 2 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic3">
-                    <div class="progress-bar border-radius" id="topic3-value"></div>
-                    <div class="topic-progress-label"> Topic 3 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic4">
-                    <div class="progress-bar border-radius" id="topic4-value"></div>
-                    <div class="topic-progress-label"> Topic 4 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic5">
-                    <div class="progress-bar border-radius" id="topic5-value"></div>
-                    <div class="topic-progress-label"> Topic 5 </div>
-                </div>
-                <div class="progress-bar-inner border-radius" id="topic6">
-                    <div class="progress-bar border-radius" id="topic6-value"></div>
-                    <div class="topic-progress-label"> Topic 6 </div>
-                </div>
-                <div class="progress-value flex h-end v-center"><h5> 35% </h5></div>
+                <?php foreach ($course->getTopics() as $courseTopic) { ?>
+                    <div class="progress-bar-inner border-radius width-full" id="topic1">
+                        <div class="progress-bar border-radius flex" style="width:
+                            <?php echo $courseTopic->getLecSubTopicCompletePercentage(). "%"?>">
+                        </div>
+                        <div class="topic-progress-label"> <?php echo "Topic " . $courseTopic->getTopicId()?> </div>
+                    </div>
+                    <?php
+                } ?>
+                <div class="progress-value flex h-end v-center"><h5><?php echo $course->getLecTotalTopicCompletionProgress() . "%"?></h5></div>
             </div>
         </div>
     </div>
@@ -131,7 +116,7 @@
         <div class="secondary-container border border-radius flex flex-column">
             <h5> Course Topics </h5>
             <hr class="hr">
-            <div class="topic-container flex flex-row item-gap">
+            <div class="topic-container flex flex-row item-gap flex-wrap">
                 <?php foreach ($course->getTopics() as $courseTopic) {?>
                     <div class="course-topic border border-radius flex flex-column ">
                         <h5> <?php echo $courseTopic->getTopicId().". ".$courseTopic->getTopicName()?> </h5>
@@ -139,7 +124,27 @@
                                 <div>
                                     <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
                                         <h5> <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?> </h5>
-                                        <input type="checkbox" name="cs1208-1.2" id="cs1208-1.2" checked class="topic-check">
+                                        <form  method="post" action="/course_page?course_code=<?php echo $course->getCourseCode(); ?>" name="update_progress_bar">
+                                            <input type="hidden" name="update_progress_bar">
+                                            <input type="hidden" value="<?php echo $course->getCourseCode()?>" name="course_code">
+                                            <?php if ($_SESSION['user-role'] == 'Student') {
+                                                if($courseSubTopic->getStuIsCompleted()){?>
+                                                <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                            <?php } else { ?>
+                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
+                                                    <input type="hidden" value="<?php echo $courseTopic->getTopicId()?>" name="course_topic">
+                                                    <button class="btn-checkbox" type="submit"></button>
+                                            <?php }
+                                            } ?>
+                                            <?php if ($_SESSION['user-role'] == 'Lecturer') {
+                                                if($courseSubTopic->getIsCovered()){?>
+                                                    <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                                <?php } else { ?>
+                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
+                                                    <button class="btn-checkbox" type="submit"></button>
+                                                <?php }
+                                            } ?>
+                                        </form>
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
                                         <!--TODO: Retrieve recordings and lecture notes from the database-->

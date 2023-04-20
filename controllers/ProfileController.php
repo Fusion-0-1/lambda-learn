@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
@@ -136,7 +137,8 @@ class ProfileController extends Controller
                 );
             }
             foreach ($categorizedData['valid'] as $user) {
-                $user->insert();
+                $password = $user->insert();
+                Application::$mailer->sendAccountCreateMail($user, $password);
             }
         }
         $body['success_mssg'] = true;

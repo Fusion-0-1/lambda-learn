@@ -39,18 +39,35 @@ class Request
     {
         $body = [];
         if ($this->isGet()) {
-            foreach ($_GET as $key => $value) {
-                // Special Characters - < > " ' & are encoded to HTML entities : &lt; &gt; &quot; &apos; &amp;
-                $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            $getArray = $this->sanitizeArray($_GET);
+            foreach ($getArray as $key => $value) {
+                // Append each key with square brackets to differentiate levels of nesting
+                $body[$key] = $value;
             }
         }
         if ($this->isPost()) {
-            foreach ($_POST as $key => $value) {
-                // Special Characters - < > " ' & are encoded to HTML entities : &lt; &gt; &quot; &apos; &amp;
-                $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
+            $postArray = $this->sanitizeArray($_POST);
+            foreach ($postArray as $key => $value) {
+                // Append each key with square brackets to differentiate levels of nesting
+                $body[$key] = $value;
             }
         }
         return $body;
+    }
+
+    private function sanitizeArray($array)
+    {
+        $result = [];
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                // If the nested value is an array, recursively sanitize each element
+                $result[$key] = $this->sanitizeArray($value);
+            } else {
+                // If the value is a scalar, sanitize using FILTER_SANITIZE_SPECIAL_CHARS
+                $result[$key] = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);
+            }
+        }
+        return $result;
     }
 
     public function getFile()

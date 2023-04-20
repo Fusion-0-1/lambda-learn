@@ -64,7 +64,7 @@
                     <button class="marks-btn dark-btn">Download All Submissions</button>
                     <?php
                     $attachmentPath = $sub->getLocation();
-                    $attachmentFiles = $sub->getAttachmentFiles($attachmentPath);
+                    $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
                     ?>
                         <?php foreach ($attachmentFiles as $file) { ?>
                             <div class="files-views"><a href="<?php echo $file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>

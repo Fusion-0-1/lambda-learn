@@ -181,4 +181,5 @@
         document.getElementById('primary-dashboard').hidden = true;
         document.getElementById('admin-dashboard-2').hidden = false;
     }
+
 </script>
