@@ -45,7 +45,6 @@
                         <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
                     </div>
             </div>
-
             <div class="submissions-card-inside border">
                 <div class="container-heading grid h-justify v-center">
                     <div class="view-points-and-marks">Marks Allocated:- <?php echo $sub->getAllocatedMark()?></div>
@@ -56,21 +55,19 @@
                     <?php echo $sub->getDescription()?>
                 </p>
                 <form class="submissions flex v-center" action="/submission_visibility" method="post">
-
                     <label for="visibility2"> Visibility </label><br>
                     <input type="hidden" name="visibility" value="0">
                     <input type="checkbox" onchange="this.form.submit()" id="visibility2" name="visibility" value="1" <?php echo $sub->getVisibility() ? 'checked' : ''; ?>>
                     <button class="marks-btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
                     <button class="marks-btn dark-btn">Download All Submissions</button>
                     <?php
-                    $attachmentPath = $sub->getLocation();
-                    $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
-                    ?>
-                        <?php foreach ($attachmentFiles as $file) { ?>
+                        $attachmentPath = $sub->getLocation();
+                        $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
+                        foreach ($attachmentFiles as $file) { ?>
                             <div class="files-views"><a href="<?php echo $file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
-                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"hidden >
-                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"hidden >
+                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>" hidden >
+                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>" hidden >
                 </form>
             </div>
         </div>

@@ -16,9 +16,9 @@ BEGIN
     DECLARE stu_reg_no_ VARCHAR(12);
     DECLARE done INT DEFAULT FALSE;
     DECLARE get_stu_reg_no CURSOR FOR
-    SELECT stu_reg_no
-    FROM StuCourse
-    WHERE course_code = NEW.course_code;
+        SELECT stu_reg_no
+        FROM StuCourse
+        WHERE course_code = NEW.course_code;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     OPEN get_stu_reg_no;

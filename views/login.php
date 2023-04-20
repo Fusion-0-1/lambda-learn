@@ -55,7 +55,6 @@ if (isset($_SESSION['user'])) {
     <title>Lambda - Learn </title>
 </head>
 <body class="flex v-center h-center">
-
     <div class="login-container flex-wrap flex align-stretch h-center margin-top">
         <div class="background-image-container">
             <img src="images/login.png" alt="login">
