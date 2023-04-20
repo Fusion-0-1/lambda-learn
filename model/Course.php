@@ -17,6 +17,9 @@ class Course
     private string $lecLastName;
     private array $courseTopics = [];
 
+
+
+    // -------------------------------Constructors---------------------------------------
     private function __construct() {}
 
     public static function createNewCourse($courseCode, $courseName, $optionalFlag,
@@ -31,7 +34,11 @@ class Course
         $course->courseTopics = $courseTopics;
         return $course;
     }
+    // --------------------------------------------------------------------------------
 
+
+
+    // -----------------------------Basic Methods-------------------------------------
     private static function getUserTable(User $user){
         $type = $user::getUserType($user->getRegNo());
         if ($type == 'Student') {
@@ -108,10 +115,16 @@ class Course
                 optionalFlag: $course['optional_flag'],
                 lecRegNo: $course['lec_reg_no'],
                 lecFirstName: $course['first_name'],
-                lecLastName: $course['last_name']
+                lecLastName: $course['last_name'],
+                courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
         return $courses;
+    }
+
+    public static function checkExists($course)
+    {
+        return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
 
     public static function getCourse($courseCode): Course
@@ -132,7 +145,47 @@ class Course
 
     }
 
+    public static function fetchAllCourses()
+    {
+        $results = Application::$db->select(
+            table: 'Course',
+            columns: ['course_code', 'course_name'],
+        );
+        $courses = [];
+        while ($row = Application::$db->fetch($results)) {
+            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name']];
+        }
+        return $courses;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @return int
+     */
+    public function getLecTotalTopicCompletionProgress(): int
+    {
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getLecSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStuTotalTopicCompletionProgress():int{
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getStuSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
 
     /**
      * @return string
@@ -245,7 +298,7 @@ class Course
     {
         $this->courseTopics = $courseTopics;
     }
-
+    // --------------------------------------------------------------------------------
 };
 
 

@@ -8,6 +8,7 @@ use app\core\User;
 class Lecturer extends User
 {
     private string $degreeProgramCode;
+    private string $position;
 
     // -------------------------------Constructors---------------------------------------
     private function __construct() {}
@@ -28,6 +29,7 @@ class Lecturer extends User
         $lecturer->activeStatus = $table['active_status'];
         $lecturer->profilePicture = $table['profile_picture'];
         $lecturer->degreeProgramCode = $table['degree_program_code'];
+        $lecturer->position = $table['position'];
 
         return $lecturer;
     }
@@ -42,6 +44,7 @@ class Lecturer extends User
         $lecturer->personalEmail = $data['personalEmail'];
         $lecturer->contactNo = $data['contactNo'];
         $lecturer->degreeProgramCode = $data['degreeProgramCode'] ?? '';
+        $lecturer->position = $data['position'] ?? 'Lecturer';
 
         return $lecturer;
     }
@@ -49,8 +52,9 @@ class Lecturer extends User
 
 
 
-    public function insert()
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'AcademicStaff',
             values: [
@@ -65,17 +69,41 @@ class Lecturer extends User
                 'active_status' => $this->activeStatus ?? 0,
                 'profile_picture' => $this->profilePicture ?? '',
                 'degree_program_code' => $this->degreeProgramCode ?? '',
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'position' => $this->position ?? 'Lecturer',
+                'password' => password_hash($password, PASSWORD_DEFAULT)
+            ]
+        );
+        return $password;
+    }
+
+    public static function fetchLecturers()
+    {
+        $results = Application::$db->select(
+            table: 'AcademicStaff',
+            columns: ['reg_no', 'first_name', 'last_name']
+        );
+        $users = [];
+        while ($row = Application::$db->fetch($results)) {
+            $users[] = ['reg_no' => $row['reg_no'], 'first_name' => $row['first_name'], 'last_name' => $row['last_name']];
+        }
+        return $users;
+    }
+
+    public static function assignLecturersToCourse($lecturer, $courseCode)
+    {
+        Application::$db->insert(
+            table: 'LecCourse',
+            values: [
+                'lec_reg_no' => $lecturer,
+                'course_code' => $courseCode
             ]
         );
     }
 
-
-
     // ---------------------------Getters and Setters-----------------------------------
     public function isCoordinator(): bool
     {
-        return $this->degreeProgramCode != null;
+        return $this->degreeProgramCode != '';
     }
     // --------------------------------------------------------------------------------
 }

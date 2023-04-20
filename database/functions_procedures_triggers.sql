@@ -1,6 +1,49 @@
--- DROP FUNCTION IF EXISTS validateRegNoInSiteAnnouncement;
+DELIMITER $$
+CREATE OR REPLACE TRIGGER createCourseAttendanceSubmission
+    AFTER INSERT ON Course
+    FOR EACH ROW
+    BEGIN
+        INSERT INTO CourseSubmission(course_code, submission_id, topic, allocated_point, visibility)
+        VALUES (NEW.course_code, 'A001', 'Attendance', 0, FALSE);
+    END;
+DELIMITER ;
+
+DELIMITER $$
+CREATE OR REPLACE TRIGGER createCourseSubmToStuCourseAttendSubm
+    AFTER INSERT ON CourseSubmission
+    FOR EACH ROW
+BEGIN
+    DECLARE stu_reg_no_ VARCHAR(12);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE get_stu_reg_no CURSOR FOR
+        SELECT stu_reg_no
+        FROM StuCourse
+        WHERE course_code = NEW.course_code;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN get_stu_reg_no;
+    stu_reg_no_loop: LOOP
+        FETCH get_stu_reg_no INTO stu_reg_no_;
+        IF done THEN
+            LEAVE stu_reg_no_loop;
+        END IF;
+        INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
+        VALUES (stu_reg_no_, NEW.course_code, NEW.submission_id, 0, 'Done');
+    END LOOP;
+    CLOSE get_stu_reg_no;
+END;
+
+DELIMITER $$
+CREATE OR REPLACE TRIGGER createStuToStuCourseAttendSubm
+    AFTER INSERT ON StuCourse
+    FOR EACH ROW
+BEGIN
+    INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
+    VALUES (NEW.stu_reg_no, NEW.course_code, 'A001', 0, 'Done');
+END;
+
 -- DELIMITER $$
--- CREATE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN
+-- CREATE OR REPLACE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN
 -- BEGIN
 --     DECLARE count_ INT;
 --
@@ -35,9 +78,8 @@
 -- DELIMITER ;
 --
 --
--- DROP TRIGGER IF EXISTS FK_Trigger_SiteAnnouncement_Admin;
 -- DELIMITER $$
--- CREATE TRIGGER FK_Trigger_SiteAnnouncement_Admin
+-- CREATE OR REPLACE TRIGGER FK_Trigger_SiteAnnouncement_Admin
 -- BEFORE INSERT ON SiteAnnouncement
 -- FOR EACH ROW
 -- BEGIN
@@ -50,9 +92,8 @@
 -- END $$
 -- DELIMITER ;
 --
--- DROP TRIGGER IF EXISTS FK_Trigger_SiteAnnouncement_AcademicStaff;
 -- DELIMITER $$
--- CREATE TRIGGER FK_Trigger_SiteAnnouncement_AcademicStaff
+-- CREATE OR REPLACE TRIGGER FK_Trigger_SiteAnnouncement_AcademicStaff
 -- BEFORE INSERT ON SiteAnnouncement
 -- FOR EACH ROW
 -- BEGIN

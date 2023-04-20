@@ -9,34 +9,120 @@ class CourseSubTopic {
     private string $topicId;
     private string $subTopicId;
     private string $subTopicName;
+    private int $isBeingTracked;
+    private int $isCovered;
+    private int $stuIsCompleted;
 
     public function __construct() {}
 
-    public static function createNewSubTopic($subTopicId, $subTopicName) {
+    public static function createNewSubTopic($subTopicId, $subTopicName, $isBeingTracked, $isCovered, $stuIsCompleted=0) {
         $subTopic = new CourseSubTopic();
-        $subTopic->subTopicId = $subTopicId;
-        $subTopic->subTopicName = $subTopicName;
-
+        subTopicId: $subTopic->subTopicId = $subTopicId;
+        subTopicName: $subTopic->subTopicName = $subTopicName;
+        isBeingTracked: $subTopic->isBeingTracked = $isBeingTracked;
+        isCovered: $subTopic->isCovered = $isCovered;
+        stuIsCompleted: $subTopic->stuIsCompleted = $stuIsCompleted;
         return $subTopic;
     }
 
     public static function getCourseSubTopics($topicId, $courseCode): array {
         $subTopics = [];
+
         $results = Application::$db->select(
             table: 'CourseSubTopic',
-            columns: ['sub_topic_id', 'sub_topic'],
+            columns: ['sub_topic_id', 'sub_topic', 'is_being_tracked', 'is_covered'],
             where: ['course_code' => $courseCode, 'topic_id' => $topicId],
         );
 
-        while ($subTopic = Application::$db->fetch($results)){
-            $subTopics[] = self::createNewSubTopic(
-                $subTopic['sub_topic_id'],
-                $subTopic['sub_topic']
+        // Fetch stuCourseSubTopic to an array
+        if($_SESSION['user-role'] == 'Student'){
+            $user = unserialize($_SESSION['user']);
+            $regNo = $user->getregNo();
+            $completedSubTopics = Application::$db->select(
+                table: 'StuCourseSubTopic',
+                columns: ['sub_topic_id'],
+                where: ['course_code' => $courseCode, 'stu_reg_no' => $regNo, 'topic_id' => $topicId, 'is_completed' => 1]
             );
-        }
 
+
+            $completedSubTopicIds = [];
+            foreach ($completedSubTopics as $completedSubTopic) {
+                $completedSubTopicIds[] = $completedSubTopic['sub_topic_id'];
+            }
+
+            while ($subTopic = Application::$db->fetch($results)) {
+                // Check if subTopicId exists in completedSubTopicIds
+                $stuIsCompleted = in_array($subTopic['sub_topic_id'], $completedSubTopicIds) ? 1 : 0;
+
+                $subTopics[] = self::createNewSubTopic(
+                    $subTopic['sub_topic_id'],
+                    $subTopic['sub_topic'],
+                    $subTopic['is_being_tracked'],
+                    $subTopic['is_covered'],
+                    $stuIsCompleted
+                );
+            }
+
+        } else {
+            while ($subTopic = Application::$db->fetch($results)){
+
+                $subTopics[] = self::createNewSubTopic(
+                    $subTopic['sub_topic_id'],
+                    $subTopic['sub_topic'],
+                    $subTopic['is_being_tracked'],
+                    $subTopic['is_covered'],
+                );
+            }
+        }
         return $subTopics;
     }
+
+    public function insertCourseSubTopics($courseCode,$lec_reg_no, $topicsArray, $subTopicsArray, $chekboxes)
+    {
+        $topicId = 1;
+        foreach ($topicsArray as $index => $topic) {
+            $subTopicId = 1;
+            foreach ($subTopicsArray[$index] as $subTopic) {
+                if($subTopic != ''){
+                    $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
+                    Application::$db->insert(
+                        table: 'CourseSubTopic',
+                        values: [
+                            'course_code' => $courseCode,
+                            'topic_id' => $topicId,
+                            'sub_topic_id' => $subTopicIdFormatted,
+                            'sub_topic' => $subTopic,
+                            'is_being_tracked' =>(int)$chekboxes[$topicId-1],
+                            'lec_reg_no' => $lec_reg_no
+                        ]
+                    );
+                }
+                $subTopicId++;
+            }
+            $topicId++;
+        }
+    }
+
+    public function updateProgress($courseCode,$subTopicId)
+    {
+        if($_SESSION['user-role']=='Lecturer'){
+            Application::$db->update(
+                table: 'CourseSubTopic',
+                columns: ['is_covered' => 1],
+                where: ['course_code' => $courseCode, 'sub_topic_id' => $subTopicId]
+            );
+        } else {
+            $user = unserialize($_SESSION['user']);
+            $regNo = $user->getregNo();
+            Application::$db->update(
+                table: 'StuCourseSubTopic',
+                columns: ['is_completed' => 1],
+                where: ['course_code' => $courseCode, 'sub_topic_id' => $subTopicId, 'stu_reg_no' => $regNo]
+            );
+        }
+    }
+
+
 
     // ---------------------------Getters and Setters-----------------------------------
 
@@ -88,4 +174,51 @@ class CourseSubTopic {
         $this->subTopicName = $subTopicName;
     }
 
+    /**
+     * @return int
+     */
+    public function getIsBeingTracked(): int
+    {
+        return $this->isBeingTracked;
+    }
+
+    /**
+     * @param int $isBeingTracked
+     */
+    public function setIsBeingTracked(int $isBeingTracked): void
+    {
+        $this->isBeingTracked = $isBeingTracked;
+    }
+
+    /**
+     * @return int
+     */
+    public function getIsCovered(): int
+    {
+        return $this->isCovered;
+    }
+
+    /**
+     * @param int $isCovered
+     */
+    public function setIsCovered(int $isCovered): void
+    {
+        $this->isCovered = $isCovered;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStuIsCompleted(): int
+    {
+        return $this->stuIsCompleted;
+    }
+
+    /**
+     * @param int $stuIsCompleted
+     */
+    public function setStuIsCompleted(int $stuIsCompleted): void
+    {
+        $this->stuIsCompleted = $stuIsCompleted;
+    }
 }

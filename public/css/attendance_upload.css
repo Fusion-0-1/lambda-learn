@@ -12,3 +12,7 @@ tr {
     color: white;
     width: 100px;
 }
+
+#date-picker {
+    width: 375px;
+}

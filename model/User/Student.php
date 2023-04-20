@@ -56,8 +56,10 @@ class Student extends User
 
 
 
-    public function insert()
+    // -----------------------------Basic Methods-------------------------------------
+    public function insert(): string
     {
+        $password = $this->generateRandomPassword();
         Application::$db->insert(
             table: 'Student',
             values: [
@@ -74,10 +76,71 @@ class Student extends User
                 'index_no' => $this->indexNo,
                 'date_joined' => $this->dateJoined,
                 'degree_program_code' => $this->degreeProgramCode,
-                'password' => password_hash($this->regNo, PASSWORD_DEFAULT)
+                'password' => password_hash($password, PASSWORD_DEFAULT)
             ]
         );
+        return $password;
     }
+    // --------------------------------------------------------------------------------
+
+
+
+    // -----------------------------Custom Methods-------------------------------------
+    public function updateCourseAttendance($courseCode)
+    {
+        Application::$db->update(
+            table: 'StuCourseSubmission',
+            columns: ['stu_submission_point' => 'stu_submission_point + 10'],
+            where: [
+                'stu_reg_no' => $this->regNo,
+                'course_code' => $courseCode,
+                'submission_id' => 'A001'
+                ],
+            math_formulae: true
+        );
+    }
+
+    public function updateAllCoursesAttendance($courses, $attendance)
+    {
+        for ($i = 0; $i < count($courses); $i++) {
+            if (trim($attendance[$i]) == '1') {
+                $this->updateCourseAttendance($courses[$i]);
+            }
+        }
+    }
+
+    public static function fetchStudents()
+    {
+        $results = Application::$db->select(
+            table: 'Student',
+            columns: ['reg_no', 'degree_program_code']
+        );
+        $users = [];
+        while ($row = Application::$db->fetch($results)) {
+            $users[] = ['reg_no' => $row['reg_no'], 'degree_program_code' => $row['degree_program_code']];
+        }
+        return $users;
+    }
+
+    public static function assignStudentsToCourse($regNoLike, $courseCode)
+    {
+        $values = Application::$db->select(
+            table: 'Student',
+            columns: ['reg_no'],
+            like: ['reg_no' => $regNoLike],
+        );
+
+        while ($student = Application::$db->fetch($values)){
+            Application::$db->insert(
+                table: 'StuCourse',
+                values: [
+                    'stu_reg_no' => $student['reg_no'],
+                    'course_code' => $courseCode
+                ]
+            );
+        }
+    }
+    // --------------------------------------------------------------------------------
 
 
 
@@ -117,6 +180,30 @@ class Student extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
+    public static function getBatchYears(array $regNos)
+    {
+        $uniqueYears = []; // Array to store unique years
+        foreach ($regNos as $regNo) {
+            $batchYear = explode('/', $regNo, 3)[0]; // Get batch year from regNo
+            if (!in_array($batchYear, $uniqueYears)) {
+                // If batch year is not already in uniqueYears array, add it
+                $uniqueYears[] = $batchYear;
+            }
+        }
+        return $uniqueYears;
+    }
+
+    public static function getDegreePrograms(array $degreePrograms)
+    {
+        $uniqueDegreePrograms = [];
+        foreach ($degreePrograms as $degreeProgram) {// Get batch year from regNo
+            if (!in_array($degreeProgram, $uniqueDegreePrograms)) {
+                $uniqueDegreePrograms[] = $degreeProgram;
+            }
+        }
+        return $uniqueDegreePrograms;
+    }
+
     public static function getDegreeProgramCodeByRegNo($regNo): string
     {
         return strtoupper(explode('/', $regNo, 3)[1]);

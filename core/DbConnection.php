@@ -39,7 +39,7 @@ class DbConnection
      *  ],
      * ]
      */
-    public function select($table, $columns = '*', $join = null, $where = null, $order = null, $limit = null)
+    public function select($table, $columns = '*', $join = null, $where = null, $like = null, $order = null, $limit = null)
     {
         if ($columns != '*') {
             $columns = implode(', ', $columns);
@@ -52,6 +52,14 @@ class DbConnection
         }
         if ($where != null) {
             $sql .= $this->addSQLWhere($where);
+        }
+        if ($like != null) {
+            if ($where != null) {
+                $sql .= " AND "; // Added 'AND' if 'where' condition exists
+            } else {
+                $sql .= " WHERE ";
+            }
+            $sql .= $this->addSQLLike($like);
         }
         if ($order != null) {
             $sql .= " ORDER BY $order";
@@ -80,18 +88,21 @@ class DbConnection
         return $this->rowCount($result) > 0;
     }
 
-    public function update($table, $columns, $where): bool|\mysqli_result
+    public function update($table, $columns, $where, $math_formulae = false): bool|\mysqli_result
     {
         $sql = "UPDATE $table";
 
         $sql .= " SET ";
         foreach ($columns as $key => $value) {
-            $sql .= "$key = '$value', ";
+            if ($math_formulae) {
+                $sql .= "$key = $value, ";
+            } else {
+                $sql .= "$key = '$value', ";
+            }
         }
         $sql = substr($sql, 0, -2);
 
         $sql .= $this->addSQLWhere($where);
-
         return $this->db->query($sql);
     }
 
@@ -129,6 +140,16 @@ class DbConnection
         foreach ($where as $key => $value) {
             $sql .= " $operator $key = '$value'";
         }
+        return $sql;
+    }
+
+    private function addSQLLike($like)
+    {
+        $sql = "";
+        foreach ($like as $column => $value) {
+            $sql .= " $column LIKE '%$value%' AND";
+        }
+        $sql = rtrim($sql, "AND");
         return $sql;
     }
 

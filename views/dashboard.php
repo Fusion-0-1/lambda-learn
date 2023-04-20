@@ -1,7 +1,24 @@
 <link rel="stylesheet" href="css/dashboard.css">
 
 <div id="primary-dashboard" class="border main-container v-center flex-gap responsive-container">
-    <h3>Dashboard</h3>
+    <div class="flex flex-row h-center">
+        <h3>Dashboard</h3>
+        <?php
+        try {
+            if (unserialize($_SESSION['user'])->isCoordinator()) {
+                $_SESSION['user-role'] = $_GET['user-role'] ?? 'Coordinator';
+            ?>
+        <form class="selector flex flex-row v-center" method="get" action="/">
+            <p>Account : </p>
+            <select onchange="this.form.submit()" name="user-role">
+                <option value="Lecturer">Lecturer</option>
+                <option value="Coordinator" <?php if($_SESSION['user-role'] == 'Coordinator') echo "selected"?>>
+                    Coordinator
+                </option>
+            </select>
+        </form>
+        <?php }} catch (\Throwable $th) {} ?>
+    </div>
     <div class="card">
         <!-- Common cards -->
         <a href="/calender" class="link">
@@ -160,14 +177,6 @@
                 <div class="card-name">Lecturer Account</div>
             </div>
         </a>
-        <a href="/account_creation?type=Coordinator" class="link">
-            <div class="cards">
-                <div class="cards-inside">
-                    <img src="./images/dashboard/coordinatorAccount.svg" alt="Coordinator Account">
-                </div>
-                <div class="card-name">Coordinator Account</div>
-            </div>
-        </a>
         <a href="/account_creation?type=Admin" class="link">
             <div class="cards">
                 <div class="cards-inside">
@@ -189,4 +198,5 @@
         document.getElementById('primary-dashboard').hidden = true;
         document.getElementById('admin-dashboard-2').hidden = false;
     }
+
 </script>

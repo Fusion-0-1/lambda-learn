@@ -83,6 +83,7 @@ CREATE TABLE CourseSubTopic (
     sub_topic VARCHAR(50) NOT NULL,
     is_being_tracked BOOLEAN NOT NULL,
     lec_reg_no VARCHAR(12) NOT NULL,
+    is_covered BOOLEAN DEFAULT 0,
     CONSTRAINT PK_CourseSubTopic PRIMARY KEY (course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_CourseSubTopic_CourseTopic FOREIGN KEY (course_code, topic_id) REFERENCES CourseTopic(course_code, topic_id),
     CONSTRAINT FK_CourseSubTopic_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no)
@@ -116,8 +117,7 @@ CREATE TABLE CourseSubmission (
     description VARCHAR(300),
     allocated_mark INT,
     allocated_point INT,
-    due_date DATETIME NOT NULL,
-
+    due_date DATETIME,
     visibility BOOLEAN,
     CONSTRAINT PK_CourseSubmission PRIMARY KEY (course_code, submission_id),
     CONSTRAINT FK_CourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
@@ -200,9 +200,8 @@ CREATE TABLE AttendanceReport (
     report_id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(50) NOT NULL,
     report_date DATETIME NOT NULL,
-    course_code VARCHAR(8) NOT NULL,
-    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id, course_code),
-    CONSTRAINT FK_AttendanceReport_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
+    path VARCHAR(255) NOT NULL,
+    CONSTRAINT PK_AttendanceReport PRIMARY KEY (report_id)
 );
  
 DROP TABLE IF EXISTS ProgressReport;
@@ -230,7 +229,7 @@ CREATE TABLE StuCourseSubTopic (
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
-    is_completed BOOLEAN,
+    is_completed BOOLEAN DEFAULT 0,
     CONSTRAINT PK_StuCourseSubTopic PRIMARY KEY (stu_reg_no, course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_StuCourseSubTopic_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubTopic_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)
@@ -268,4 +267,4 @@ CREATE TABLE StuCourseSubmission (
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
 );
- 
+
