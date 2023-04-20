@@ -64,13 +64,10 @@ class DbConnection
 
     public function insert($table, $values)
     {
-
         $columns = "(" . implode(", ", array_keys($values)) . ")";
         $col_values = "('" . implode("','", array_values($values)) . "')";
         $sql = "INSERT INTO " . $table . $columns . " VALUES " . $col_values;
-        var_dump($sql);
         return $this->db->query($sql);
-
     }
 
     public function checkExists($table, $primaryKey): bool
