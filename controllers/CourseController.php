@@ -67,7 +67,6 @@ class CourseController extends Controller
         $body = $request->getBody();
         $dueDateStr = $body['duetime'];
         $dueDate = new DateTime($dueDateStr);
-        $visibility = filter_var($body['visibility'], FILTER_VALIDATE_BOOLEAN);
 
         $course_submissions = Submission::createNewSubmission(
             courseCode: $body['course_code'],
@@ -76,7 +75,7 @@ class CourseController extends Controller
             allocatedMark: $body['mark'],
             allocatedPoint: $body['point'],
             dueDate: $dueDate->format('Y-m-d H:i:s'),
-            visibility: $visibility,
+            visibility: $body['visibility'],
         );
 
         $submission_id = $course_submissions->getLastSubmissionId()+1;
@@ -112,7 +111,7 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
-    public function SubmissionVisibility(Request $request)
+    public function changeSubmissionVisibility(Request $request)
     {
         $body = $request->getBody();
         Submission::visibilityUpdate($body['course_code'],$body['submission_id'],$body['visibility']);
