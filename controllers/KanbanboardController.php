@@ -26,24 +26,13 @@ class KanbanboardController extends Controller
     {
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
-        $type = $user::getUserType($user->getRegNo());
-        if ($type == 'Student') {
-            $kanbanTask = KanbanTask::createNewKanbanTask(
-                title: $body['card-header'],
-                description: $body['card-body'],
-                state: $body['card-status'],
-                dueDate: $body['card-deadline'],
-                stu_reg_no: $user->getRegNo()
+        $kanbanTask = KanbanTask::createNewKanbanTask(
+            title: $body['card-header'],
+            description: $body['card-body'],
+            state: $body['card-status'],
+            regNo: $user->getRegNo(),
+            dueDate: $body['card-deadline']
             );
-        } elseif ($type == 'Lecturer') {
-            $kanbanTask = KanbanTask::createNewKanbanTask(
-                title: $body['card-header'],
-                description: $body['card-body'],
-                state: $body['card-status'],
-                dueDate: $body['card-deadline'],
-                lec_reg_no: $user->getRegNo()
-            );
-        }
         $kanbanTask->insertKanbanTask();
         header("Location: /kanbanboard");
     }
@@ -51,7 +40,6 @@ class KanbanboardController extends Controller
     public function deleteKanbanTasks(Request $request)
     {
         $body = $request->getBody();
-
         KanbanTask::deleteKanbanTask($body['card-delete']);
         header("Location: /kanbanboard");
     }
@@ -59,10 +47,12 @@ class KanbanboardController extends Controller
     public function updateKanbanTasks(Request $request)
     {
         $body = $request->getBody();
+        $user = unserialize($_SESSION['user']);
         $kanbanTask = KanbanTask::createNewKanbanTask(
             title: $body['card-header'],
             description: $body['card-body'],
             state: $body['card-state'],
+            regNo: $user->getRegNo(),
             dueDate: $body['card-deadline'],
             taskId: $body['card-id']
         );
