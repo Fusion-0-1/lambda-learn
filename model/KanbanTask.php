@@ -13,30 +13,23 @@ class KanbanTask
     private string $description;
     private string $dueDate;
     private string $state;
-//    private string $stu_reg_no;
-//    private string $lec_reg_no;
+    private string $stu_reg_no;
+    private string $lec_reg_no;
 
     private function __construct() {}
 
-    public static function createNewKanbanTask($taskId, $title, $description,
-                                               $dueDate='', $state): KanbanTask {
+    public static function createNewKanbanTask($title, $description, $state, $dueDate='',
+                                               $stu_reg_no='', $lec_reg_no='', $taskId=''): KanbanTask {
         $task = new KanbanTask();
-        $task->taskId = $taskId;
         $task->title = $title;
         $task->description = $description;
-        $task->dueDate = $dueDate;
         $task->state = $state;
-//        $task->stu_reg_no = $stu_reg_no;
-//        $task->lec_reg_no = $lec_reg_no;
+        $task->dueDate = $dueDate;
+        $task->stu_reg_no = $stu_reg_no;
+        $task->lec_reg_no = $lec_reg_no;
+        $task->taskId = $taskId;
+
         return $task;
-    }
-
-    public static function getTasks(User $user): array
-    {
-
-        $toDoTasks = self::getToDoTasks($user);
-        $inProgressTasks = self::getInProgressTasks($user);
-        $doneTasks = self::getDoneTasks($user);
     }
 
     public static function getToDoTasks(User $user): array
@@ -48,23 +41,23 @@ class KanbanTask
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['stu_reg_no' => $user->getRegNo(), 'state' => 'To Do'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date ASC'
             );
         } elseif ($type == 'Lecturer') {
             $results = Application::$db->select(
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['lec_reg_no' => $user->getRegNo(), 'state' => 'To Do'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date ASC'
             );
         }
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
-                taskId: $kanbanTask['task_id'],
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
+                state: $kanbanTask['state'],
                 dueDate: $kanbanTask['due_date'],
-                state: $kanbanTask['state']
+                taskId: $kanbanTask['task_id']
             );
         }
         return $kanbanTasks;
@@ -79,23 +72,23 @@ class KanbanTask
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['stu_reg_no' => $user->getRegNo(), 'state' => 'In Progress'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date ASC'
             );
         } elseif ($type == 'Lecturer') {
             $results = Application::$db->select(
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['lec_reg_no' => $user->getRegNo(), 'state' => 'In Progress'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date ASC'
             );
         }
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
-                taskId: $kanbanTask['task_id'],
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
+                state: $kanbanTask['state'],
                 dueDate: $kanbanTask['due_date'],
-                state: $kanbanTask['state']
+                taskId: $kanbanTask['task_id']
             );
         }
         return $kanbanTasks;
@@ -110,27 +103,66 @@ class KanbanTask
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['stu_reg_no' => $user->getRegNo(), 'state' => 'Done'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date DESC'
             );
         } elseif ($type == 'Lecturer') {
             $results = Application::$db->select(
                 table: 'KanbanTask',
                 columns: ['task_id', 'title', 'description', 'due_date', 'state'],
                 where: ['lec_reg_no' => $user->getRegNo(), 'state' => 'Done'],
-                order: ['due_date' => 'ASC']
+                order: 'due_date DESC'
             );
         }
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
-                taskId: $kanbanTask['task_id'],
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
+                state: $kanbanTask['state'],
                 dueDate: $kanbanTask['due_date'],
-                state: $kanbanTask['state']
+                taskId: $kanbanTask['task_id']
             );
         }
         return $kanbanTasks;
     }
+
+    public function insertKanbanTask()
+    {
+        Application::$db->insert(
+            table: 'KanbanTask',
+            values: [
+                'title' => $this->title,
+                'description' => $this->description,
+                'state' => $this->state,
+                'due_date' => $this->dueDate,
+                'stu_reg_no' => $this->stu_reg_no ?? '',
+                'lec_reg_no' => $this->lec_reg_no ?? ''
+            ]
+        );
+    }
+
+    public static function deleteKanbanTask($taskIdDlt)
+    {
+        var_dump($taskIdDlt);
+        Application::$db->delete(
+            table: 'KanbanTask',
+            where: ['task_id' => $taskIdDlt]
+        );
+    }
+
+    public function updateKanbanTask()
+    {
+        Application::$db->update(
+            table: 'KanbanTask',
+            columns: [
+                'title' => $this->title,
+                'description' => $this->description,
+                'state' => $this->state,
+                'due_date' => $this->dueDate
+            ],
+            where: ['task_id' => $this->taskId]
+        );
+    }
+
 
     // ---------------------------Getters and Setters-----------------------------------
 
