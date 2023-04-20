@@ -31,15 +31,15 @@ function printType($type){
                     echo "already in the database.";
                 } else if (sizeof($invalidUsersRegNo) > 0) {
                     echo "invalid. CSV must follow the given format and all should be valid.
-                     Registration number should follow the format: 20XX/AA/XXX.";
+                     Registration number should follow the format: 20XX/AA/XXXX. Where ";
                     if ($type == 'Student') {
-                        echo "AA = CS or IS, (Eg: 2018/CS/001)";
+                        echo "AA = CS or IS, (Eg: 2018/CS/0001)";
                     } elseif ($type == 'Lecturer') {
-                        echo "AA = LC (Eg: 2018/LC/001)";
+                        echo "AA = LC (Eg: 2018/LC/0001)";
                     } elseif ($type == 'Coordinator') {
-                        echo "AA = LC, (Eg: 2018/LC/001)";
+                        echo "AA = LC, (Eg: 2018/LC/0001)";
                     } elseif ($type == 'Admin') {
-                        echo "AA = AD, (Eg: 2018/AD/001)";
+                        echo "AA = AD, (Eg: 2018/AD/0001)";
                     }
                 }
             ?>

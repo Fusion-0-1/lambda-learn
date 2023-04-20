@@ -115,7 +115,8 @@ class Course
                 optionalFlag: $course['optional_flag'],
                 lecRegNo: $course['lec_reg_no'],
                 lecFirstName: $course['first_name'],
-                lecLastName: $course['last_name']
+                lecLastName: $course['last_name'],
+                courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
         return $courses;
@@ -144,7 +145,48 @@ class Course
 
     }
 
+    public static function fetchAllCourses()
+    {
+        $results = Application::$db->select(
+            table: 'Course',
+            columns: ['course_code', 'course_name'],
+        );
+        $courses = [];
+        while ($row = Application::$db->fetch($results)) {
+            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name']];
+        }
+        return $courses;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @return int
+     */
+    public function getLecTotalTopicCompletionProgress(): int
+    {
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getLecSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStuTotalTopicCompletionProgress():int{
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count = $count + $topic->getStuSubTopicCompleteCount();
+            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+        }
+        return $count/$subTopicCount * 100;
+    }
+
     /**
      * @return string
      */

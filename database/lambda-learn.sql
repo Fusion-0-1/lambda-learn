@@ -83,6 +83,7 @@ CREATE TABLE CourseSubTopic (
     sub_topic VARCHAR(50) NOT NULL,
     is_being_tracked BOOLEAN NOT NULL,
     lec_reg_no VARCHAR(12) NOT NULL,
+    is_covered BOOLEAN DEFAULT 0,
     CONSTRAINT PK_CourseSubTopic PRIMARY KEY (course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_CourseSubTopic_CourseTopic FOREIGN KEY (course_code, topic_id) REFERENCES CourseTopic(course_code, topic_id),
     CONSTRAINT FK_CourseSubTopic_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no)
@@ -230,7 +231,7 @@ CREATE TABLE StuCourseSubTopic (
     course_code VARCHAR(8) NOT NULL,
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
-    is_completed BOOLEAN,
+    is_completed BOOLEAN DEFAULT 0,
     CONSTRAINT PK_StuCourseSubTopic PRIMARY KEY (stu_reg_no, course_code, topic_id, sub_topic_id),
     CONSTRAINT FK_StuCourseSubTopic_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
     CONSTRAINT FK_StuCourseSubTopic_CourseSubTopic FOREIGN KEY (course_code, topic_id, sub_topic_id) REFERENCES CourseSubTopic(course_code, topic_id, sub_topic_id)

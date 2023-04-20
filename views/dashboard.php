@@ -1,8 +1,6 @@
 <link rel="stylesheet" href="css/dashboard.css">
 
 <div id="primary-dashboard" class="border main-container v-center flex-gap responsive-container">
-    <h3>Dashboard</h3>
-
     <div class="card">
         <!-- Common cards -->
         <a href="/calender" class="link">
@@ -182,4 +180,5 @@
         document.getElementById('primary-dashboard').hidden = true;
         document.getElementById('admin-dashboard-2').hidden = false;
     }
+
 </script>

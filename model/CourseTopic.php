@@ -65,6 +65,37 @@ class CourseTopic {
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
+     * @return int
+     */
+    public function getLecSubTopicCompletePercentage(): int
+    {
+        return ($this->getLecSubTopicCompleteCount() / sizeof($this->subTopics)) * 100;
+    }
+
+    /**
+     * @return int
+     */
+    public function getStuSubTopicCompleteCount(): int
+    {
+        $count = 0;
+        foreach ($this->subTopics as $subTopic)
+            if ($subTopic->getStuIsCompleted()) $count++;
+        return $count;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLecSubTopicCompleteCount(): int
+    {
+        $count = 0;
+        foreach ($this->subTopics as $subTopic)
+            if ($subTopic->getIsCovered()) $count++;
+        return $count;
+    }
+
+
+    /**
      * @return string
      */
     public function getTopicId(): string
