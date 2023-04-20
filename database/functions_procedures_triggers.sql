@@ -18,9 +18,9 @@ BEGIN
     DECLARE stu_reg_no_ VARCHAR(12);
     DECLARE done INT DEFAULT FALSE;
     DECLARE get_stu_reg_no CURSOR FOR
-        SELECT stu_reg_no
-        FROM StuCourse
-        WHERE course_code = NEW.course_code;
+    SELECT stu_reg_no
+    FROM StuCourse
+    WHERE course_code = NEW.course_code;
     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     OPEN get_stu_reg_no;
@@ -29,8 +29,8 @@ BEGIN
         IF done THEN
             LEAVE stu_reg_no_loop;
         END IF;
-        INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
-        VALUES (stu_reg_no_, NEW.course_code, 'A001', 0, 'Done');
+        INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id)
+        VALUES (stu_reg_no_, NEW.course_code, NEW.submission_id);
     END LOOP;
     CLOSE get_stu_reg_no;
 END;
@@ -45,6 +45,17 @@ BEGIN
     VALUES (NEW.stu_reg_no, NEW.course_code, 'A001', 0, 'Done');
 END;
 
+DELIMITER $$
+CREATE TRIGGER compositeKey
+    BEFORE INSERT ON coursesubmission
+    FOR EACH ROW BEGIN
+    SET NEW.submission_id = (
+       SELECT IFNULL(MAX(submission_id), 0) + 1
+       FROM coursesubmission
+       WHERE course_code  = NEW.course_code
+    );
+END $$
+DELIMITER ;
 -- DROP FUNCTION IF EXISTS validateRegNoInSiteAnnouncement;
 -- DELIMITER $$
 -- CREATE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN
