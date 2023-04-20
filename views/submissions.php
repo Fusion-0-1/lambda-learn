@@ -24,14 +24,12 @@
             </div>
 
             <div class="flex v-center">
-
                 <label for="visibility1" class="visibility-css"> Visibility </label><br>
                 <input type="checkbox" id="visibility1" name="visibility">
-
-            <input id="upload_attachment" type="file" name="attachment[]" accept=".pdf,.png,.jpg" multiple onchange="previewAttachment()" hidden >
-            <label for="upload_attachment" class="attach-btn dark-btn flex-end h-center">Add Attachments</label>
-            <div id="num-of-files">No Files Chosen</div>
-            <div id="display-files" class="flex"></div>
+                <input id="upload_attachment" type="file" name="attachment[]" accept=".pdf,.png,.jpg" multiple onchange="previewAttachment()" hidden >
+                <label for="upload_attachment" class="attach-btn dark-btn flex-end h-center">Add Attachments</label>
+                <div id="num-of-files">No Files Chosen</div>
+                <div id="display-files" class="flex"></div>
             </div>
 
             <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
@@ -56,7 +54,6 @@
                 </div>
                 <p class="text-justify view-points-and-marks">
                     <?php echo $sub->getDescription()?>
-
                 </p>
                 <form class="submissions flex v-center" action="/submission_visibility" method="post">
 

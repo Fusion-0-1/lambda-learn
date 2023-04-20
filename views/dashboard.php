@@ -2,7 +2,6 @@
 
 <div id="primary-dashboard" class="border main-container v-center flex-gap responsive-container">
     <h3>Dashboard</h3>
-
     <div class="card">
         <!-- Common cards -->
         <a href="/calender" class="link">

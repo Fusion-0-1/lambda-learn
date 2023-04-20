@@ -111,15 +111,18 @@ CREATE TABLE CourseSubTopicSlide (
 DROP TABLE IF EXISTS CourseSubmission;
 CREATE TABLE CourseSubmission (
     course_code VARCHAR(8) NOT NULL,
-    submission_id VARCHAR(4) NOT NULL,
+    submission_id INT NOT NULL,
     topic VARCHAR(70) NOT NULL,
-    description VARCHAR(300),
+    description VARCHAR(500),
     allocated_mark INT,
     allocated_point INT,
     due_date DATETIME,
     visibility BOOLEAN,
+    attachments VARCHAR(300),
     CONSTRAINT PK_CourseSubmission PRIMARY KEY (course_code, submission_id),
     CONSTRAINT FK_CourseSubmission_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
    
 DROP TABLE IF EXISTS KanbanTask;
@@ -260,7 +263,7 @@ DROP TABLE IF EXISTS StuCourseSubmission;
 CREATE TABLE StuCourseSubmission (
     stu_reg_no VARCHAR(12) NOT NULL,
     course_code VARCHAR(8) NOT NULL,
-    submission_id VARCHAR(4) NOT NULL,
+    submission_id INT NOT NULL,
     stu_submission_point INT,
     stu_submission_mark INT,
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",

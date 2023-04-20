@@ -44,6 +44,7 @@ abstract class User
             return 'Admin';
         }
         return false;
+
     }
 
     private static function getUserTable($regNo): string

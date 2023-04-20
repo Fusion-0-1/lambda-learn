@@ -112,9 +112,6 @@ class Submission
             where: ['submission_id'=>$submissionId,'course_code'=>$courseCode]
         );
     }
-    /**
-     * @param int $allocatedMark
-     */
 
     /**
      * @return int

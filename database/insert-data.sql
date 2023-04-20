@@ -15,7 +15,7 @@ INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, pas
     ("2014/LC/0034", "Erandi", "Gamage", "2014lc0034@fusion.ac.lk", "772469621", "$2y$10$fJJYYm4dcPVD6u/3aPgbP.0A2fx7u8E39j9NdBxaAi8AGOBz/RoHq", "Senior Lecturer"),    
     ("2008/LC/0002", "Naresh", "Rajan", "2008lc0002@fusion.ac.lk", "746682736", "20080002@LC", "Lecturer"),
     ("2006/LC/0014", "Janani", "Walpola", "2006lc0014@fusion.ac.lk", "753028364", "20060014@LC", "Lecturer"),
-    ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "20180022@LC", "Professor"),
+    ("2018/LC/0022", "Tissa", "Silva", "2018lc0022@fusion.ac.lk", "764861337", "$2y$10$s4kAAMw/JInG7gBYcf.TFejBZpantRRh7hq/U12XnkqieJRx269dy", "Professor"),
     ("2003/LC/0004", "Manoj", "Fernando", "2003lc0004@fusion.ac.lk", "742335368", "$2y$10$eMkJfs5mM7MMFS3fLpv/peLGCcjEQiFBdIF9cGJdqZH9Ta/F1I6ou", "Professor"),
     ("1999/LC/0008", "Mohomad", "Abdullah", "1999lc0008@fusion.ac.lk", "716934345", "19990008@LC", "Senior Lecturer"),        
     ("2016/LC/0015", "Kamani", "Perera", "2016lc0015@fusion.ac.lk", "752345331", "20160015@LC", "Senior Professor"),
@@ -306,21 +306,21 @@ INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, cour
     ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2002"),
     ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2003");
 
-INSERT INTO AttendanceReport (title, report_date, course_code) VALUES
-    ("Attendance CS 2001 25/11", "2022-11-26", "CS 2001"),
-    ("Attendance CS 2002 25/11", "2022-11-26", "CS 2002"),
-    ("Attendance CS 2003 25/11", "2022-11-26", "CS 2003"),
-    ("Attendance CS 2004 25/11", "2022-11-26", "CS 2004"),
-    ("Attendance IS 2001 25/11", "2022-11-26", "IS 2001"),
-    ("Attendance IS 2002 25/11", "2022-11-26", "IS 2002"),
-    ("Attendance IS 2003 25/11", "2022-11-26", "IS 2003"),
-    ("Attendance CS 2001 02/12", "2022-12-03", "CS 2001"),
-    ("Attendance CS 2002 02/12", "2022-12-03", "CS 2002"),
-    ("Attendance CS 2003 02/12", "2022-12-03", "CS 2003"),
-    ("Attendance CS 2004 02/12", "2022-12-03", "CS 2004"),
-    ("Attendance IS 2001 02/12", "2022-12-03", "IS 2001"),
-    ("Attendance IS 2002 02/12", "2022-12-03", "IS 2002"),
-    ("Attendance IS 2003 02/12", "2022-12-03", "IS 2003");
+-- INSERT INTO AttendanceReport (title, report_date, course_code) VALUES
+--     ("Attendance CS 2001 25/11", "2022-11-26", "CS 2001"),
+--     ("Attendance CS 2002 25/11", "2022-11-26", "CS 2002"),
+--     ("Attendance CS 2003 25/11", "2022-11-26", "CS 2003"),
+--     ("Attendance CS 2004 25/11", "2022-11-26", "CS 2004"),
+--     ("Attendance IS 2001 25/11", "2022-11-26", "IS 2001"),
+--     ("Attendance IS 2002 25/11", "2022-11-26", "IS 2002"),
+--     ("Attendance IS 2003 25/11", "2022-11-26", "IS 2003"),
+--     ("Attendance CS 2001 02/12", "2022-12-03", "CS 2001"),
+--     ("Attendance CS 2002 02/12", "2022-12-03", "CS 2002"),
+--     ("Attendance CS 2003 02/12", "2022-12-03", "CS 2003"),
+--     ("Attendance CS 2004 02/12", "2022-12-03", "CS 2004"),
+--     ("Attendance IS 2001 02/12", "2022-12-03", "IS 2001"),
+--     ("Attendance IS 2002 02/12", "2022-12-03", "IS 2002"),
+--     ("Attendance IS 2003 02/12", "2022-12-03", "IS 2003");
 
 INSERT INTO ProgressReport (title, report_date, course_code) VALUES
     ("Progress CS 2001 25/11", "2022-11-26", "CS 2001"),
