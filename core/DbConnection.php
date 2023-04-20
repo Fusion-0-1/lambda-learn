@@ -153,7 +153,6 @@ class DbConnection
         return $sql;
     }
 
-
     public function __destruct()
     {
         $this->db->close();

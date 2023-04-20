@@ -122,12 +122,12 @@ class Student extends User
         return $users;
     }
 
-    public static function assignStudentsToCourses($regNo, $courseCode)
+    public static function assignStudentsToCourse($regNoLike, $courseCode)
     {
         $values = Application::$db->select(
             table: 'Student',
             columns: ['reg_no'],
-            like: ['reg_no' => $regNo],
+            like: ['reg_no' => $regNoLike],
         );
 
         while ($student = Application::$db->fetch($values)){
@@ -180,7 +180,7 @@ class Student extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
-    public static function getBatchYears($regNos)
+    public static function getBatchYears(array $regNos)
     {
         $uniqueYears = []; // Array to store unique years
         foreach ($regNos as $regNo) {
@@ -193,7 +193,7 @@ class Student extends User
         return $uniqueYears;
     }
 
-    public static function getDegreePrograms($degreePrograms)
+    public static function getDegreePrograms(array $degreePrograms)
     {
         $uniqueDegreePrograms = [];
         foreach ($degreePrograms as $degreeProgram) {// Get batch year from regNo

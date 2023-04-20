@@ -89,7 +89,7 @@ class Lecturer extends User
         return $users;
     }
 
-    public static function assignLecturersToCourses($lecturer, $courseCode)
+    public static function assignLecturersToCourse($lecturer, $courseCode)
     {
         Application::$db->insert(
             table: 'LecCourse',

@@ -148,10 +148,10 @@ class CourseController extends Controller
 
         if(isset($body['assign_lecturer'])){
             $lecturer = $body['lecturer'];
-            Lecturer::assignLecturersToCourses($lecturer, $courseCode);
+            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
         } else {
-            $regNo = $body['batch_year'] . '/' . $body['degree_program'];
-            Student::assignStudentsToCourses($regNo, $courseCode);
+            $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
+            Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
         $users = Student::fetchStudents();
 
