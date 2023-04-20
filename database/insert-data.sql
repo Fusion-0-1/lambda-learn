@@ -273,13 +273,13 @@ INSERT INTO CourseSubmission (course_code, submission_id, topic, description, al
     ("IS 2003", "1I03", "Practical Assessment", "Execute given instructions on your Linux machine and submit a document with screenshots.", 60, 6, "2023-01-10", 0),
     ("IS 2003", "2I03", "Assessment 02", "Create the given document usign LaTeX", 40, 4, "2022-12-20", 1);
  
-INSERT INTO KanbanTask (title, description, due_date, state, stu_reg_no, lec_reg_no) VALUES
-    ("Complete Database Note", "Complete database note together with diagrams and codes", "2022-12-10", 1, "2020/CS/0011", NULL),
-    ("Create login", "Finish login and authentication module", "2022-12-20", 2, "2020/CS/0044", NULL),
-    ("Update Slides", "Update data structures lecture slides", "2023-01-01", 1, NULL, "2003/LC/0004"),
-    ("Assignment marks", "Correct 1st year assignments and upload marks", "2022-11-30", 3, NULL, "2018/LC/0022"),
-    ("IEEE Script", "IEEE script review with the committee members", "2022-12-21", 1, "2020/IS/0032", NULL),
-    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 2, "2020/CS/0026", NULL);
+INSERT INTO KanbanTask (title, description, due_date, state, reg_no) VALUES
+    ("Complete Database Note", "Complete database note together with diagrams and codes", "2022-12-10", 1, "2020/CS/0011"),
+    ("Create login", "Finish login and authentication module", "2022-12-20", 2, "2020/CS/0044"),
+    ("Update Slides", "Update data structures lecture slides", "2023-01-01", 1, "2003/LC/0004"),
+    ("Assignment marks", "Correct 1st year assignments and upload marks", "2022-11-30", 3, "2018/LC/0022"),
+    ("IEEE Script", "IEEE script review with the committee members", "2022-12-21", 1, "2020/IS/0032"),
+    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 2, "2020/CS/0026");
 
 INSERT INTO TimeTableEvent (course_code, location, start_datetime, end_datetime, lec_reg_no) VALUES
     ("CS 2001", "A201", "2022-11-21 10:00:00", "2022-11-21 12:00:00", "2014/LC/0034"),
