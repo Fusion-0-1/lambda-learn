@@ -4,7 +4,7 @@ namespace app\model;
 
 use app\core\Application;
 
-class submission
+class Submission
 {
     private int $submissionId;
     private string $courseCode;
@@ -13,13 +13,15 @@ class submission
     private int $allocatedMark;
     private int $allocatedPoint;
     private string $dueDate;
-    private string $visibility;
+    private bool $visibility;
+    private string $location;
+
 
     private function __construct() {}
 
-    public static function createNewSubmission($courseCode, $topic, $description, $allocatedMark, $allocatedPoint, $dueDate, $visibility, $submissionId=null) {
-        $submission = new submission();
-        if ($submissionId != null){
+    public static function createNewSubmission($courseCode, $topic, $description, $allocatedMark, $allocatedPoint, $dueDate, $visibility, $location='',$submissionId="") {
+        $submission = new Submission();
+        if ($submissionId != ""){
             $submission->submissionId = $submissionId;
         }
         $submission->courseCode = $courseCode;
@@ -29,7 +31,7 @@ class submission
         $submission->allocatedPoint = $allocatedPoint;
         $submission->dueDate = $dueDate;
         $submission->visibility = $visibility;
-
+        $submission->location = $location;
         return $submission;
     }
 
@@ -43,19 +45,76 @@ class submission
         );
         while ($sub = Application::$db->fetch($results)){
             $assignmentSubmissions[] = self::createNewSubmission(
-                $sub['course_code'],
-                $sub['topic'],
-                $sub['description'],
-                $sub['allocated_mark'],
-                $sub['allocated_point'],
-                $sub['due_date'],
-                $sub['visibility'],
-                (int)$sub['submission_id'],
+                courseCode: $sub['course_code'],
+                topic: $sub['topic'],
+                description: $sub['description'],
+                allocatedMark: $sub['allocated_mark'],
+                allocatedPoint: $sub['allocated_point'],
+                dueDate: $sub['due_date'],
+                visibility: $sub['visibility'],
+                location: $sub['attachments']?? '',
+                submissionId: $sub['submission_id']
             );
-
         }
         return $assignmentSubmissions;
     }
+
+    public function getAttachmentFiles($path) {
+        $files = [];
+            if (is_dir($path)) {
+
+                $dir = scandir($path);
+                foreach ($dir as $file) {
+                    if (!in_array($file, ['.', '..'])) {
+                        $files[] = $file;
+                    }
+                }
+            }
+         return $files;
+    }
+
+    public function submissionsInsert()
+    {
+        $db = Application::$db;
+        $db->insert(
+            table: 'coursesubmission',
+            values: [
+                'course_code' => $this->courseCode,
+                'topic' => $this->topic,
+                'description' => $this->description,
+                'allocated_mark' => $this->allocatedMark,
+                'allocated_point' => $this->allocatedPoint,
+                'visibility' => $this->visibility,
+                'due_date' => $this->dueDate,
+                'attachments' => $this->location
+            ]
+        );
+    }
+
+    public function getLastSubmissionId(){
+        $result = Application::$db->select(
+            table: 'coursesubmission',
+            columns:['submission_id'],
+            where: ['course_code' => $this->courseCode],
+            order: 'submission_id DESC',
+            limit: 1
+        );
+        $lastInsertId = Application::$db->fetch($result);
+        return $lastInsertId['submission_id'];
+    }
+
+    public static function visibilityUpdate($courseCode,$submissionId,$visibility)
+    {
+        var_dump($courseCode);
+        Application::$db->update(
+            table: 'coursesubmission',
+            columns: ['visibility'=>$visibility,],
+            where: ['submission_id'=>$submissionId,'course_code'=>$courseCode]
+        );
+    }
+    /**
+     * @param int $allocatedMark
+     */
 
     /**
      * @return int
@@ -114,10 +173,28 @@ class submission
     }
 
     /**
-     * @return string
+     * @return bool
      */
-    public function getVisibility(): string
+    public function getVisibility(): bool
     {
         return $this->visibility;
     }
+
+    /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param string $location
+     */
+    public function setLocation(string $location): void
+    {
+        $this->location = $location;
+    }
+
+
 }
