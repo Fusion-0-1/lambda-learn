@@ -51,9 +51,7 @@
                     <div class="view-points-and-marks">Points Allocated:- <?php echo $sub->getAllocatedPoint()?></div>
                     <div class="view-points-and-marks text-right"><?php echo $sub->getDueDate()?></div>
                 </div>
-                <p class="text-justify view-points-and-marks">
-                    <?php echo $sub->getDescription()?>
-                </p>
+                <p class="text-justify view-points-and-marks"><?php echo $sub->getDescription()?></p>
                 <form class="submissions flex v-center" action="/submission_visibility" method="post">
                     <label for="visibility2"> Visibility </label><br>
                     <input type="hidden" name="visibility" value="0">
@@ -66,8 +64,8 @@
                         foreach ($attachmentFiles as $file) { ?>
                             <div class="files-views"><a href="<?php echo $file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
-                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>" hidden >
-                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>" hidden >
+                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
+                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >
                 </form>
             </div>
         </div>
