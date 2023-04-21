@@ -1,22 +1,53 @@
 <link href="css/course/course_creation.css" rel="stylesheet">
-</head>
-<body>
+<script type="text/javascript" src="./js/validation.js"></script>
+
+<!--success and error messages-->
+<?php if($mssg == 'Success') { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Course Created successfully.</p>
+    </div>
+<?php }  elseif($mssg == 'Exists') { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>The course Already exists</p>
+    </div>
+<?php }  elseif($mssg == 'updated') { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>The course updated successfully</p>
+    </div>
+<?php }  elseif($mssg == 'failed') { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>TFailed to update course</p>
+    </div>
+<?php }?>
+
 <div class="main-container outer border flex flex-column v-center h-center">
     <div class="main-container inner border flex flex-column h-center">
         <div class="heading">
             <h3>Course Create</h3>
         </div>
-        <form action="" method="GET" class="course-create-form flex flex-row">
+        <form action="create_course" method="POST" class="course-create-form flex flex-row">
             <label class="flex flex-column">
                 <p>Course Code</p>
-                <input id="input-create-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
+                <input id="input-create-course-code" class="input" type="text" name="course_code"
+                       placeholder="Course Code" required/>
             </label>
             <label class="flex flex-column">
                 <p>Course Name</p>
-                <input id="input-create-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
+                <input id="input-create-course-name" class="input" type="text" name="course_name"
+                       placeholder="Course Name" required/>
+            </label>
+            <label class="flex flex-column">
+                <p>Course Type</p>
+                <select class="input drop-down" name="course_type" id="course-type">
+                    <option>Optional</option>
+                    <option>Compulsory</option>
+                </select>
             </label>
             <label class="flex flex-column h-end" id="create-course">
-                <button class="dark-btn" type="submit" onclick="return course_validate(document.getElementById('input-create-course-code').value)" name="create">Create</button>
+                <button class="dark-btn" type="submit"
+                        onclick="return course_validate(document.getElementById('input-create-course-code').value)">
+                    Create
+                </button>
             </label>
         </form>
     </div>
@@ -28,44 +59,33 @@
                         <th>Course Code</th>
                         <th>Course Name</th>
                     </tr>
-                    <tr>
-                        <td class="text-center">SCS2202</td>
-                        <td>Group project I</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">SCS2209</td>
-                        <td>Database II</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">SCS2210</td>
-                        <td>Discrete Mathematics II</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">SCS2211</td>
-                        <td>Laboratory II</td>
-                    </tr>
+                    <?php foreach ($courses as $course) { ?>
+                        <tr>
+                            <td class="text-center"><?php echo $course['course_code']?></td>
+                            <td><?php echo $course['course_name']?></td>
+                        </tr>
+                    <?php } ?>
                 </table>
                 <table class="button-column">
                     <tr>
                         <th></th>
                         <th></th>
                     </tr>
-                    <tr>
-                        <td><button class='error-btn error-btn-icon' onclick='delete_course(this, "SCS2209")'> <i class='fa fa-trash' aria-hidden='true'></i> </button></td>
-                        <td><button class='edit-btn edit-btn-icon' onclick='edit_course("SCS2209","Database II")'> <i class='fa fa-pencil' aria-hidden='true'></i> </button></td>
-                    </tr>
-                    <tr>
-                        <td><button class='error-btn error-btn-icon' onclick='delete_course(this, "SCS2210")'> <i class='fa fa-trash' aria-hidden='true'></i> </button></td>
-                        <td><button class='edit-btn edit-btn-icon' onclick='edit_course("Discrete Mathematics II", "SCS2210")'> <i class='fa fa-pencil' aria-hidden='true'></i> </button></td>
-                    </tr>
-                    <tr>
-                        <td><button class='error-btn error-btn-icon' onclick='delete_course(this, "SCS2211")'> <i class='fa fa-trash' aria-hidden='true'></i> </button></td>
-                        <td><button class='edit-btn edit-btn-icon' onclick='edit_course("SCS2211", "Laboratory II")'> <i class='fa fa-pencil' aria-hidden='true'></i> </button></td>
-                    </tr>
-                    <tr>
-                        <td><button class='error-btn error-btn-icon' onclick='delete_course(this, "SCS2211")'> <i class='fa fa-trash' aria-hidden='true'></i> </button></td>
-                        <td><button class='edit-btn edit-btn-icon' onclick='edit_course("SCS2211", "Laboratory II")'> <i class='fa fa-pencil' aria-hidden='true'></i> </button></td>
-                    </tr>
+                    <?php foreach ($courses as $course) { ?>
+                        <tr>
+                            <td><button class='error-btn error-btn-icon'
+                                        onclick='delete_course(this, "<?php echo $course['course_code']?>")'>
+                                    <i class='fa fa-trash' aria-hidden='true'></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class='edit-btn edit-btn-icon'
+                                        onclick='edit_course("<?php echo $course['course_code']?>","<?php echo $course['course_name']?>")'>
+                                    <i class='fa fa-pencil' aria-hidden='true'></i>
+                                </button>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </table>
 
         </div>
@@ -77,24 +97,26 @@
             <div class="heading">
                 <h3>Course Create</h3>
             </div>
-        <form action="" method="GET">
+        <form action="edit_course" method="POST">
             <div class="course-create-form flex flex-row">
                 <label class="flex flex-column">
                     <p>Course Code</p>
-                    <input id="input-edit-course-code" class="input" type="text" name="course_code" placeholder="Course Code" required/>
+                    <input id="input-edit-course-code" class="input" type="text" name="course_code" readonly/>
                 </label>
                 <label class="flex flex-column">
                     <p>Course Name</p>
-                    <input id="input-edit-course-name" class="input" type="text" name="course_name" placeholder="Course Name" required/>
+                    <input id="input-edit-course-name" class="input" type="text" name="course_name"/>
                 </label>
             </div>
             <div class="flex h-center">
                 <div class="flex flex-row two-button-row">
                     <label class="flex flex-column h-center">
-                        <button id="cancel-btn-edit" class="cancel-btn btn-border-blue" type="button" name="create">Cancel</button>
+                        <button id="cancel-btn-edit" class="cancel-btn btn-border-blue" type="button" name="create">
+                            Cancel
+                        </button>
                     </label>
                     <label class="flex flex-column h-center">
-                        <button class="dark-btn" type="submit" onclick="return course_validate(document.getElementById('input-edit-course-code').value)" name="create">Create</button>
+                        <button class="dark-btn" type="submit">Create</button>
                     </label>
                 </div>
             </div>
@@ -137,7 +159,6 @@
 </div>
 
 <!--  Scripts  -->
-<script type="text/javascript" src="./js/validation.js"></script>
 <script>
     modal_cancel("edit-modal");
     modal_cancel("delete-modal");
@@ -188,4 +209,3 @@
         // }
     }
 </script>
-</body>
