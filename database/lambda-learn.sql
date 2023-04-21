@@ -61,7 +61,7 @@ CREATE TABLE Course (
     course_code VARCHAR(8) NOT NULL,
     course_name VARCHAR(50) NOT NULL,
     optional_flag BOOLEAN NOT NULL,
-    cord_reg_no VARCHAR(12) NOT NULL,
+    cord_reg_no VARCHAR(12),
     CONSTRAINT PK_Course PRIMARY KEY (course_code),
     CONSTRAINT FK_Course_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
 );
