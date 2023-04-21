@@ -62,7 +62,10 @@ $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkU
 
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
-$app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
+$app->router->get('/course_creation', [CourseController::class, 'displayCourseCreation']);
+$app->router->post('/create_course', [CourseController::class, 'createNewCourse']);
+$app->router->post('/edit_course', [CourseController::class, 'editCourse']);
+$app->router->post('/delete_course', [CourseController::class, 'deleteCourse']);
 
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
