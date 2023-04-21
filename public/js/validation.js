@@ -12,12 +12,13 @@ function validate_course_code(course_code) {
     /*
     ^ matches the start of the string
     [A-Z] matches any uppercase letter
-    {3} specifies that exactly 3 uppercase letters should be matched
+    {2} specifies that exactly 3 uppercase letters should be matched
+    \s matches any whitespace character
     \d matches any digit
     {4} specifies that exactly 4 digits should be matched
     $ matches the end of the string
      */
-    const re = new  RegExp("^[A-Z]{3}\\d{4}$");
+    const re = new  RegExp("^[A-Z]{2}\\s\\d{4}$");
     return re.test(course_code);
 }
 
