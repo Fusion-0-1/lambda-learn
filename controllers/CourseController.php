@@ -110,11 +110,32 @@ class CourseController extends Controller
         );
     }
 
-    public function courseCreation()
+    public function displayCourseCreation()
     {
+        $params['courses'] = Course::fetchAllCourses();
         return $this->render(
             view: 'course/course_creation',
-            allowedRoles: ['Coordinator']
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function createNewCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $courseName = $body['course_name'];
+        if($body['course_type'] == 'Optional'){
+            $isOptional = 1;
+        } else {
+            $isOptional = 0;
+        }
+        $params['mssg'] = Course::insertCourse($courseCode, $courseName, $isOptional);
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
         );
     }
 
