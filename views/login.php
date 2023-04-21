@@ -73,7 +73,6 @@ if (isset($_SESSION['user'])) {
             </div>
                 <form class="login_form flex align-stretch flex-column h-center" action="/login" name="form_login" onsubmit="return isValid()" method="POST">
                     <input type="text" name="reg_no" placeholder="Registration No" id="reg_no" class="input margin-top" required> <br>
-
                     <input type="password" name="password" placeholder="Password" id="password" class="input margin-top" required><br>
                     <a href="" class="float-right" id="forget_pass">Forgot password?</a><br><br>
                     <input type="submit" value="Login" name="login" id="btn" class="dark-btn margin-top">
