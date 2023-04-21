@@ -54,8 +54,6 @@ CREATE TRIGGER compositeKey
     );
 END $$
 DELIMITER ;
--- DROP FUNCTION IF EXISTS validateRegNoInSiteAnnouncement;
-=======
 
 -- DELIMITER $$
 -- CREATE OR REPLACE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN
