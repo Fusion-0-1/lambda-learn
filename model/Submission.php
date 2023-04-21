@@ -73,8 +73,7 @@ class Submission
 
     public function submissionInsert()
     {
-        $db = Application::$db;
-        $db->insert(
+        $db = Application::$db->insert(
             table: 'coursesubmission',
             values: [
                 'course_code' => $this->courseCode,
