@@ -173,6 +173,16 @@ class Course
         } else return "Exists";
     }
 
+    public static function UpdateCourse($courseCode,$courseName)
+    {
+        Application::$db->update(
+            table: 'Course',
+            columns: ['course_name' => $courseName],
+            where: ['course_code' => $courseCode]
+        );
+        return "Updated";
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
