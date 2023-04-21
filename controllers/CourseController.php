@@ -9,6 +9,8 @@ use app\model\Course;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\Submission;
+use app\model\User\Lecturer;
+use app\model\User\Student;
 use DateTime;
 use DateTimeZone;
 
