@@ -139,6 +139,24 @@ class CourseController extends Controller
         );
     }
 
+    public function editCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $courseName = $body['course_name'];
+        if(Course::UpdateCourse($courseCode, $courseName)){
+            $params['mssg'] = 'updated';
+        } else {
+            $params['mssg'] = 'failed';
+        }
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
     public function displayAssignUsersToCourses()
     {
         $users = Student::fetchStudents();
