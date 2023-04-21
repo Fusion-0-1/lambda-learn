@@ -15,6 +15,10 @@ label, .input {
     height: 33px;
 }
 
+.drop-down{
+    height: 32px !important;
+}
+
 @media(max-width:767px) {
     .course-create-form {
         align-items: center;
