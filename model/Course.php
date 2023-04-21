@@ -158,6 +158,21 @@ class Course
         return $courses;
     }
 
+    public static function insertCourse($courseCode,$courseName,$isOptional)
+    {
+        if(!self::checkExists($courseCode)){
+            Application::$db->insert(
+                table: 'Course',
+                values: [
+                    'course_code' => $courseCode,
+                    'course_name' => $courseName,
+                    'optional_flag' => $isOptional
+                ]
+            );
+            return "Success";
+        } else return "Exists";
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
