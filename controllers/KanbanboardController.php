@@ -59,4 +59,10 @@ class KanbanboardController extends Controller
         $kanbanTask->updateKanbanTask();
         header("Location: /kanbanboard");
     }
+
+    public function updateKanbanTasksState(Request $request)
+    {
+        $body = $request->getBody();
+        KanbanTask::updateKanbanTaskState($body['card-id'], $body['card-state']);
+    }
 }
