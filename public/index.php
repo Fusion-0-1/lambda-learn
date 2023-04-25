@@ -49,6 +49,7 @@ $app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanb
 $app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
 $app->router->post('/delete_task', [KanbanboardController::class, 'deleteKanbanTasks']);
 $app->router->post('/update_task', [KanbanboardController::class, 'updateKanbanTasks']);
+$app->router->post('/update_task_state', [KanbanboardController::class, 'updateKanbanTasksState']);
 
 $app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
 
