@@ -55,9 +55,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-todo"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="1">
                 <?php foreach ($toDo as $toDoTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $toDoTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $toDoTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $toDoTask->getDescription()?> </p>
@@ -91,9 +91,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-inprogress"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="2">
                 <?php foreach ($inProgress as $inProgressTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $inProgressTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $inProgressTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $inProgressTask->getDescription()?> </p>
@@ -127,9 +127,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-done"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="3">
                 <?php foreach ($done as $doneTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $doneTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $doneTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $doneTask->getDescription()?> </p>
