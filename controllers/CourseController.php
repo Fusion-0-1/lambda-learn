@@ -207,10 +207,10 @@ class CourseController extends Controller
 
         if(isset($body['assign_lecturer'])){
             $lecturer = $body['lecturer'];
-            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            $params['mssg'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
-            Student::assignStudentsToCourse($regNoLike, $courseCode);
+            $params['mssg'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
         $users = Student::fetchStudents();
 
@@ -226,11 +226,19 @@ class CourseController extends Controller
         $params['lecturers'] = Lecturer::fetchLecturers();
         $params['courses'] = Course::fetchAllCourses();
 
-        $params['mssg'] = true;
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
             params: $params
+        );
+    }
+
+    public function uploadAssignUsersToCourses()
+    {
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator'],
+//            params: $params
         );
     }
 }

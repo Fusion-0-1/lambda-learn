@@ -1,13 +1,13 @@
 <link rel="stylesheet" href="css/assign_users.css">
 
 <!--Success and error messages model on the bottom right to display accounts created successfully-->
-<?php if($mssg) { ?>
+<?php if($mssg == 'Success') { ?>
     <div id="mssg-modal" class="success-mssg text-justify">
         <p>User Assigned successfully.</p>
     </div>
-<?php } else {?>
+<?php } else if($mssg == 'Exists'){?>
     <div id="mssg-modal" class="error-mssg text-justify">
-        <p>Failed to assign user.</p>
+        <p>User Assigned Already.</p>
     </div>
 <?php }?>
 
@@ -94,7 +94,7 @@
 
 
     <form id="file-upload-form" class="main-container border flex flex-column"
-          action="" method="post" enctype="multipart/form-data">
+          action="/upload_student_course_csv" method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
         <h3 class="page-header">Assign Students to Courses</h3>
         <button type="button" class="x-dark-btn">
