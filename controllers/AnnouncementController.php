@@ -48,7 +48,6 @@ class AnnouncementController extends Controller
                 adminRegNo: $profile->getRegNo()
             );
         }
-
         $site_announcement->SiteAnnouncementInsert();
         header("Location: /site_announcement");
     }
@@ -67,5 +66,13 @@ class AnnouncementController extends Controller
 
         $course_announcement->CourseAnnouncementInsert();
         header("Location: /course_announcement?course_code=".$body['course_code']);
+    }
+
+
+    public function updateSiteAnnouncements(Request $request)
+    {
+        $body = $request->getBody();
+        SiteAnnouncement::updateAnnouncements($body['announcement_id'],$body['heading'],$body['content']);
+        header("Location: /site_announcement?announcement_id=".$body['announcement_id']);
     }
 }
