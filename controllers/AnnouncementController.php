@@ -48,7 +48,6 @@ class AnnouncementController extends Controller
                 adminRegNo: $profile->getRegNo()
             );
         }
-
         $site_announcement->SiteAnnouncementInsert();
         header("Location: /site_announcement");
     }
