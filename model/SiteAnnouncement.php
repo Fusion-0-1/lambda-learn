@@ -71,7 +71,6 @@ class SiteAnnouncement extends Announcement
     //---------------Insert SiteAnnouncement------------------
 
     public function SiteAnnouncementInsert()
-
     {
         Application::$db->insert(
             table: 'SiteAnnouncement',

@@ -76,7 +76,6 @@ $app->router->post('/course_announcement', [AnnouncementController::class, 'crea
 
 $app->router->post('/update_site_announcement', [AnnouncementController::class, 'updateSiteAnnouncements']);
 
-
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
 
