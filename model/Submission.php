@@ -102,7 +102,6 @@ class Submission
 
     public static function updateVisibility($courseCode,$submissionId,$visibility)
     {
-        var_dump($courseCode);
         Application::$db->update(
             table: 'coursesubmission',
             columns: ['visibility'=>$visibility,],
