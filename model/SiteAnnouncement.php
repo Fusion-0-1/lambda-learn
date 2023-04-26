@@ -71,6 +71,7 @@ class SiteAnnouncement extends Announcement
     //---------------Insert SiteAnnouncement------------------
 
     public function SiteAnnouncementInsert()
+
     {
         Application::$db->insert(
             table: 'SiteAnnouncement',
@@ -82,6 +83,17 @@ class SiteAnnouncement extends Announcement
                 'cord_reg_no' => $this->cordRegNo ?? ''
             ]
         );
+    }
+
+    //-----------------Update SiteAnnouncement------------------
+
+    public static function updateAnnouncements($announcementId,$heading,$content)
+    {
+         Application::$db->update(
+             table: 'siteannouncement',
+             columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+             where: ['announcement_id'=>$announcementId]
+         );
     }
 
     /**
