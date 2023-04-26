@@ -81,6 +81,16 @@ class CourseAnnouncement extends Announcement
             ]
         );
     }
+
+    public static function CourseAnnouncementsUpdate($announcementId,$heading,$content)
+    {
+        Application::$db->update(
+            table: 'courseannouncement',
+            columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+            where: ['announcement_id'=>$announcementId]
+        );
+    }
+
     /**
      * @return string
      */
