@@ -40,7 +40,7 @@ class KanbanboardController extends Controller
     public function deleteKanbanTasks(Request $request)
     {
         $body = $request->getBody();
-        KanbanTask::deleteKanbanTask($body['card-delete']);
+        KanbanTask::deleteKanbanTask($body['card-delete-id']);
         header("Location: /kanbanboard");
     }
 
