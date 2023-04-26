@@ -80,8 +80,6 @@ class AnnouncementController extends Controller
     {
         $body = $request->getBody();
         CourseAnnouncement::CourseAnnouncementsUpdate($body['announcement_id'],$body['heading'],$body['content']);
-//        header("Location: /course_announcement?announcement_id=".$body['announcement_id']);
         header("Location: /course_announcement?course_code=".$body['course_code']);
-
     }
 }
