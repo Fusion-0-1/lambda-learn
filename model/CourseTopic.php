@@ -72,15 +72,19 @@ class CourseTopic {
         return ($this->getLecSubTopicCompleteCount() / sizeof($this->subTopics)) * 100;
     }
 
+    private function getSubTopicCompleteCount(bool $stu): int
+    {
+        return count(array_filter($this->subTopics, function ($subTopic) use ($stu) {
+            return ($stu ? $subTopic->getStuIsCompleted() : $subTopic->getIsCovered()) and $subTopic->getIsBeingTracked();
+        }));
+    }
+
     /**
      * @return int
      */
     public function getStuSubTopicCompleteCount(): int
     {
-        $count = 0;
-        foreach ($this->subTopics as $subTopic)
-            if ($subTopic->getStuIsCompleted()) $count++;
-        return $count;
+        return $this->getSubTopicCompleteCount(stu: true);
     }
 
     /**
@@ -88,10 +92,7 @@ class CourseTopic {
      */
     public function getLecSubTopicCompleteCount(): int
     {
-        $count = 0;
-        foreach ($this->subTopics as $subTopic)
-            if ($subTopic->getIsCovered()) $count++;
-        return $count;
+        return $this->getSubTopicCompleteCount(stu: false);
     }
 
 
