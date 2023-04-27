@@ -79,7 +79,7 @@ class CourseTopic {
     {
         $count = 0;
         foreach ($this->subTopics as $subTopic)
-            if ($subTopic->getStuIsCompleted()) $count++;
+            if ($subTopic->getStuIsCompleted() and $subTopic->getIsBeingTracked()) $count++;
         return $count;
     }
 
@@ -90,7 +90,7 @@ class CourseTopic {
     {
         $count = 0;
         foreach ($this->subTopics as $subTopic)
-            if ($subTopic->getIsCovered()) $count++;
+            if ($subTopic->getIsCovered() and $subTopic->getIsBeingTracked()) $count++;
         return $count;
     }
 
