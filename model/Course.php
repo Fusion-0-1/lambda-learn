@@ -169,9 +169,17 @@ class Course
         $subTopicCount = 0;
         foreach ($this->courseTopics as $topic){
             $count = $count + $topic->getLecSubTopicCompleteCount();
-            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+            foreach($topic->getSubTopics() as $subTopic){
+                if($subTopic->getIsBeingTracked()==1){
+                    $subTopicCount++;
+                }
+            }
         }
-        return $count/$subTopicCount * 100;
+        if($subTopicCount == 0){
+            return 0;
+        } else {
+            return $count/$subTopicCount * 100;
+        }
     }
 
     /**
@@ -182,9 +190,17 @@ class Course
         $subTopicCount = 0;
         foreach ($this->courseTopics as $topic){
             $count = $count + $topic->getStuSubTopicCompleteCount();
-            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
+            foreach($topic->getSubTopics() as $subTopic){
+                if($subTopic->getIsBeingTracked()==1){
+                    $subTopicCount++;
+                }
+            }
         }
-        return $count/$subTopicCount * 100;
+        if($subTopicCount == 0){
+            return 0;
+        } else {
+            return $count/$subTopicCount * 100;
+        }
     }
 
     /**
