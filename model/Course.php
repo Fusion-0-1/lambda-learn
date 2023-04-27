@@ -160,47 +160,33 @@ class Course
 
     // ---------------------------Getters and Setters-----------------------------------
 
-    /**
-     * @return int
-     */
-    public function getLecTotalTopicCompletionProgress(): int
+    private function getTotalTopicCompletionProgress(bool $stu):int
     {
         $count = 0;
         $subTopicCount = 0;
         foreach ($this->courseTopics as $topic){
-            $count = $count + $topic->getLecSubTopicCompleteCount();
-            foreach($topic->getSubTopics() as $subTopic){
-                if($subTopic->getIsBeingTracked()==1){
-                    $subTopicCount++;
-                }
-            }
+            $count += $stu ? $topic->getStuSubTopicCompleteCount() : $topic->getLecSubTopicCompleteCount();
+            $subTopicCount += sizeof(array_filter($topic->getSubTopics(), function ($subTopic) {
+                return $subTopic->getIsBeingTracked();
+            }));
         }
-        if($subTopicCount == 0){
-            return 0;
-        } else {
-            return $count/$subTopicCount * 100;
-        }
+        return $subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount ;
     }
 
     /**
      * @return int
      */
-    public function getStuTotalTopicCompletionProgress():int{
-        $count = 0;
-        $subTopicCount = 0;
-        foreach ($this->courseTopics as $topic){
-            $count = $count + $topic->getStuSubTopicCompleteCount();
-            foreach($topic->getSubTopics() as $subTopic){
-                if($subTopic->getIsBeingTracked()==1){
-                    $subTopicCount++;
-                }
-            }
-        }
-        if($subTopicCount == 0){
-            return 0;
-        } else {
-            return $count/$subTopicCount * 100;
-        }
+    public function getLecTotalTopicCompletionProgress(): int
+    {
+        return $this->getTotalTopicCompletionProgress(stu: false);
+    }
+
+    /**
+     * @return int
+     */
+    public function getStuTotalTopicCompletionProgress(): int
+    {
+        return $this->getTotalTopicCompletionProgress(stu: true);
     }
 
     /**
