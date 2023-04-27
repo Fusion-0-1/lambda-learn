@@ -5,11 +5,11 @@
     <h3> Kanban Board </h3>    
 
     <div class="modal" id="card-add-modal">
-        <div class="card-add-modal border border-radius flex flex-column">
+        <div class="card-add-modal modal-content border border-radius flex flex-column">
             <form method="post" action="insert_task">
-                <div class="flex"><input type="text" name="card-header" id="card-header-modal" class="card-header  card-header-modal border border-radius" placeholder="Card Title" required></div>
-                <div class="flex"><textarea name="card-body" class="card-body card-body-modal border border-radius" placeholder="Card Content" required></textarea></div>
-                <div class="card-footer border border-radius flex flex-row h-justify v-center">
+                <div class="flex"><input type="text" name="card-header" id="card-header-modal" class="card-header  card-header-modal border card-border-radius" placeholder="Card Title" required></div>
+                <div class="flex"><textarea name="card-body" class="card-body card-body-modal border card-border-radius" placeholder="Card Content" required></textarea></div>
+                <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
                     <div class="card-deadline-label">
                         <label>Deadline :</label>
                         <input type="date" name="card-deadline" class="card-deadline">
@@ -18,30 +18,46 @@
                     <div id="radio-inprogress"><input type="radio" name="card-status" value="In Progress"> In Progress </div>
                     <div id="radio-done"><input type="radio" name="card-status" value="Done"> Done </div>
                 </div>
-                <div class="card-save-container flex h-center">
-                    <input type="button" value="Cancel" class="modal-cancel border-radius" id="card-save-cancel">
-                    <input type="submit" value="Save" class="card-save border-radius" id="card-add-save">
+                <div class="card-save-container flex flex-row ">
+                    <input type="button" value="Cancel" class="cancel-btn btn-border-dark-blue" id="card-save-cancel">
+                    <input type="submit" value="Insert" class="card-btn" id="card-add-save">
                 </div>
             </form>
         </div>
     </div>
 
     <div class="modal" id="card-edit-modal">
-        <div class="card-edit-modal border border-radius flex flex-column">
+        <div class="card-edit-modal modal-content border border-radius flex flex-column">
             <form method="post" action="update_task">
                 <input type="hidden" name="card-id" id="card-id">
                 <input type="hidden" name="card-state" id="card-state">
-                <div class="flex"><input type="text" name="card-header" id="card-header-edit-modal" class="card-header  card-header-modal border border-radius" placeholder="Card Title" required></div>
-                <div class="flex"><textarea name="card-body" id="card-body-edit-modal" class="card-body card-body-modal border border-radius" placeholder="Card Content" required></textarea></div>
-                <div class="card-footer border border-radius flex flex-row h-justify v-center">
+                <div class="flex"><input type="text" name="card-header" id="card-header-edit-modal" class="card-header card-header-modal border card-border-radius" placeholder="Card Title" required></div>
+                <div class="flex"><textarea name="card-body" id="card-body-edit-modal" class="card-body card-body-modal border card-border-radius" placeholder="Card Content" required></textarea></div>
+                <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
                     <div class="card-deadline-label">
                         <label>Deadline :</label>
                         <input type="date" name="card-deadline" id="card-deadline-edit-modal" class="card-deadline">
                     </div>
                 </div>
                 <div class="card-save-container flex h-center">
-                    <input type="button" value="Cancel" class="modal-cancel border-radius" id="card-edit-cancel">
-                    <input type="submit" value="Save" class="card-save border-radius" id="card-edit-save">
+                    <input type="button" value="Cancel" class="cancel-btn btn-border-dark-blue" id="card-edit-cancel">
+                    <input type="submit" value="Save" class="card-btn" id="card-edit-save">
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="delete-modal">
+        <div class="modal-content error-modal-content">
+            <form action="delete_task" method="post">
+                <input type="hidden" name="card-delete-id" id="card-delete-id">
+                <div class="flex flex-column v-center h-center">
+                    <img src="./images/primary_icons/error.svg">
+                    <h4 id="delete-warning" class="modal-header">Are you sure you want to delete this card?</h4>
+                    <section class="flex flex-row two-button-row">
+                        <input type="button" value="Cancel" class="dark-btn cancel-btn" id="card-dlt-cancel">
+                        <input type="submit" value="Delete" class="dark-btn error-btn">
+                    </section>
                 </div>
             </form>
         </div>
@@ -55,9 +71,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-todo"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="1">
                 <?php foreach ($toDo as $toDoTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $toDoTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $toDoTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $toDoTask->getDescription()?> </p>
@@ -71,11 +87,9 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <form action="delete_task" method="post">
-                                        <button type="submit" name="card-delete" class="card-button" value="<?php echo $toDoTask->getTaskId()?>" onclick="return confirm('Are you sure?');">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </form>
+                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $toDoTask->getTaskId();?>)">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -91,9 +105,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-inprogress"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="2">
                 <?php foreach ($inProgress as $inProgressTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $inProgressTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $inProgressTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $inProgressTask->getDescription()?> </p>
@@ -107,11 +121,9 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <form action="delete_task" method="post">
-                                        <button type="submit" name="card-delete" class="card-button" value="<?php echo $inProgressTask->getTaskId()?>" onclick="return confirm('Are you sure?');">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </form>
+                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $inProgressTask->getTaskId();?>)">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -127,9 +139,9 @@
                     <div class="add-card"><button class="card-button" id="card-add-done"><span class="fa fa-plus-square"></span></button></div>
             </div>
 
-            <div class="droppable">
+            <div class="droppable" data-state="3">
                 <?php foreach ($done as $doneTask) {?>
-                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true">
+                    <div class="draggable flex flex-column align-stretch h-center border border-radius" draggable="true" data-id="<?php echo $doneTask->getTaskId()?>">
                         <div class="card-header border-radius text-bold"><?php echo $doneTask->getTitle()?></div>
                         <div class="card-body border border-radius">
                             <p> <?php echo $doneTask->getDescription()?> </p>
@@ -143,11 +155,9 @@
                                     </button>
                                 </div>
                                 <div>
-                                    <form action="delete_task" method="post">
-                                        <button type="submit" name="card-delete" class="card-button" value="<?php echo $doneTask->getTaskId()?>" onclick="return confirm('Are you sure?');">
-                                            <span class="fa fa-trash"></span>
-                                        </button>
-                                    </form>
+                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $doneTask->getTaskId();?>)">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
