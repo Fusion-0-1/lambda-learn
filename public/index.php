@@ -49,6 +49,7 @@ $app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanb
 $app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
 $app->router->post('/delete_task', [KanbanboardController::class, 'deleteKanbanTasks']);
 $app->router->post('/update_task', [KanbanboardController::class, 'updateKanbanTasks']);
+$app->router->post('/update_task_state', [KanbanboardController::class, 'updateKanbanTasksState']);
 
 $app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
 
@@ -74,6 +75,8 @@ $app->router->get('/course_announcement', [AnnouncementController::class, 'displ
 $app->router->post('/site_announcement', [AnnouncementController::class, 'createSiteAnnouncements']);
 $app->router->post('/course_announcement', [AnnouncementController::class, 'createCourseAnnouncements']);
 
+$app->router->post('/update_site_announcement', [AnnouncementController::class, 'updateSiteAnnouncements']);
+$app->router->post('/update_course_announcement', [AnnouncementController::class, 'updateCourseAnnouncements']);
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);

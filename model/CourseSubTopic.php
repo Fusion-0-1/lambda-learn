@@ -103,26 +103,50 @@ class CourseSubTopic {
         }
     }
 
-    public function updateProgress($courseCode,$subTopicId)
+    public static function updateProgress(string $courseCode, int $topicId, $subTopicId)
     {
         if($_SESSION['user-role']=='Lecturer'){
             Application::$db->update(
                 table: 'CourseSubTopic',
                 columns: ['is_covered' => 1],
-                where: ['course_code' => $courseCode, 'sub_topic_id' => $subTopicId]
+                where: ['course_code' => $courseCode,'topic_id' => $topicId, 'sub_topic_id' => $subTopicId]
             );
         } else {
             $user = unserialize($_SESSION['user']);
             $regNo = $user->getregNo();
-            Application::$db->update(
+
+            $isCompletedByStu = Application::$db->select(
                 table: 'StuCourseSubTopic',
-                columns: ['is_completed' => 1],
-                where: ['course_code' => $courseCode, 'sub_topic_id' => $subTopicId, 'stu_reg_no' => $regNo]
+                columns: ['is_completed'],
+                where: ['course_code' => $courseCode,'topic_id' => $topicId, 'sub_topic_id' => $subTopicId,
+                    'stu_reg_no' => $regNo]
             );
+            if(Application::$db->fetch($isCompletedByStu)['is_completed'] == "1"){
+                Application::$db->update(
+                    table: 'StuCourseSubTopic',
+                    columns: ['is_completed' => 0],
+                    where: ['course_code' => $courseCode,'topic_id' => $topicId, 'sub_topic_id' => $subTopicId,
+                        'stu_reg_no' => $regNo]
+                );
+            } else {
+                $isCoveredByLec = Application::$db->select(
+                    table: 'CourseSubTopic',
+                    columns: ['is_covered'],
+                    where: ['course_code' => $courseCode,'topic_id' => $topicId, 'sub_topic_id' => $subTopicId]
+                );
+                if( Application::$db->fetch($isCoveredByLec)['is_covered'] == "1"){
+                    Application::$db->update(
+                        table: 'StuCourseSubTopic',
+                        columns: ['is_completed' => 1],
+                        where: ['course_code' => $courseCode,'topic_id' => $topicId, 'sub_topic_id' => $subTopicId,
+                            'stu_reg_no' => $regNo]
+                    );
+                } else {
+                    return 'Failed';
+                }
+            }
         }
     }
-
-
 
     // ---------------------------Getters and Setters-----------------------------------
 

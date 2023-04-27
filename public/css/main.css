@@ -324,6 +324,12 @@ a:active {
     color: var(--x-dark-blue);
 }
 
+.btn-border-dark-blue {
+    border: 3px solid var(--blue);
+    border-radius: 8px;
+    color: var(--blue);
+}
+
 .btn-border-green {
     border: 3px solid var(--green);
     border-radius: 8px;
@@ -524,11 +530,19 @@ button:disabled{
     margin: 0;
 }
 
+.modal-header {
+    padding: 10px;
+}
+
+.modal-text {
+    padding: 10px;
+}
+
 .modal-content h4 {
     font-weight: bold;
 }
 
-.modal-content button {
+.modal-content button, .modal-content input[type="button"], .modal-content input[type="submit"] {
     min-height: 35px;
     width: 90px;
     font-weight: bold;

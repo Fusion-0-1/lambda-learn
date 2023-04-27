@@ -56,9 +56,9 @@ class CourseController extends Controller
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
             $subTopicId = $body['course_subtopic'];
-            $courseSubTopic = new CourseSubTopic();
-            $courseSubTopic->updateProgress($courseCode,$subTopicId);
+            $topicId = $body['course_topic'];
 
+            $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
 
             return $this->render(
