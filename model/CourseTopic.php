@@ -74,13 +74,9 @@ class CourseTopic {
 
     private function getSubTopicCompleteCount(bool $stu): int
     {
-            return $stu ?
-                count(array_filter($this->subTopics, function ($subTopic) {
-                return $subTopic->getStuIsCompleted() and $subTopic->getIsBeingTracked();
-            })) :
-                 count(array_filter($this->subTopics, function ($subTopic) {
-                return $subTopic->getIsCovered() and $subTopic->getIsBeingTracked();
-            }));
+        return count(array_filter($this->subTopics, function ($subTopic) use ($stu) {
+            return ($stu ? $subTopic->getStuIsCompleted() : $subTopic->getIsCovered()) and $subTopic->getIsBeingTracked();
+        }));
     }
 
     /**
