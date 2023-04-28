@@ -191,7 +191,7 @@ class CourseController extends Controller
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();;
+        $params['courses'] = Course::fetchAllCourses();
 
         return $this->render(
             view: '/assign_users_to_courses',

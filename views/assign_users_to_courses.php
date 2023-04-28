@@ -13,7 +13,8 @@
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
     <div class="flex flex-row h-justify">
-        <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_students">
+        <form action="/assign_users_to_courses" method="post"
+              class="main-container border flex flex-column flex-gap width-full" id="assign_students">
             <h3>Assign Students to courses</h3>
 
             <div class="flex flex-column flex-gap">
@@ -43,9 +44,13 @@
                 <select class="input" name="course" id="course" onchange="filterDegreeProgram()">
                     <option value="" disabled selected hidden>Select a course...</option>
                     <?php
-                    foreach ($courses as $course) {?>
-                        <option><?php echo $course['course_code'] . ' - ' . $course['course_name'] ?></option>
-                    <?php } ?>
+                    $topicCounts = array();
+                    foreach ($courses as $course) {
+                        $topicCounts[$course['course_code']] = \app\model\Course::getTopicCount($course['course_code']);
+                        if(\app\model\Course::getTopicCount($course['course_code']) > 0){?>
+                        <option><?php echo $course['course_code'] . ' - ' . $course['course_name']?></option>
+                    <?php }
+                    }?>
                 </select>
             </div>
 
@@ -55,7 +60,8 @@
         </form>
 
 
-        <form action="/assign_users_to_courses" method="post" class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
+        <form action="/assign_users_to_courses" method="post"
+              class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
             <input type="hidden" name="assign_lecturer">
             <h3>Assign Lecturers to courses</h3>
             <?php $count = 0?>
@@ -105,21 +111,26 @@
         </button>
 
         <h4 class="csv-header-text">CSV Header Columns Format:</h4>
-        <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, first_name, last_name, position, email, contact_number, date_joined respectively</p>
+        <p class="csv-header-format flex v-center h-center">
+            The CSV file should include stu_reg_no, course_code respectively
+        </p>
     </form>
 </div>
 
 <script>
+    var topicCounts = <?php echo json_encode($topicCounts); ?>;
+
     function filterCourses() {
         var selectedDegreeProgram = document.getElementById('courseSelect').value;
         var course = document.getElementById('course');
         course.innerHTML = '';
-        <?php
-        foreach ($courses as $course) { ?>
-        var option = document.createElement('option');
-        option.text = '<?php echo $course['course_code'] . ' - ' . $course['course_name'] ?>';
-        if (option.text.startsWith(selectedDegreeProgram)) {
-            course.add(option);
+        <?php foreach ($courses as $course) {?>
+        if (parseInt(topicCounts['<?php echo $course['course_code']; ?>']) > 0) {
+            var option = document.createElement('option');
+            option.text = '<?php echo $course['course_code'] . ' - ' . $course['course_name']?>';
+            if (option.text.startsWith(selectedDegreeProgram)) {
+                course.add(option);
+            }
         }
         <?php } ?>
         for (var i = 0; i < course.options.length; i++) {
