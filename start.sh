@@ -5,7 +5,8 @@
 # reading the first parameter --env and assigning it to env. cut: separate the value.
 # -d=: Specifies the delimiter to be the equal sign (=).
 # -f2: Specifies the field to extract as the second field after the delimiter.
-env=$(echo "$1" | cut -d= -f2)
+params=$(echo "$1")
+env=$($params | cut -d= -f2)
 
 #-----------------------start mysql-----------------------
 chmod +x scripts/performance_tracking.sh scripts/os.sh
@@ -19,7 +20,7 @@ fi
 
 #--------------------performance script-------------------
 echo "Starting performance tracking script. Logs are in scripts/logs/performance.log"
-nohup scripts/./performance_tracking.sh >> scripts/logs/performance.log &
+nohup scripts/./performance_tracking.sh $params>> scripts/logs/performance.log &
 
 #----------------------server starts----------------------
 cd public/
@@ -35,3 +36,5 @@ if [ "$env" == "dev" ] || [ "$env" == "" ]; then
 elif [ "$env" != "test" ]; then
   echo "Unknown environment. Please use --env=test or --env=dev. Defaulting to dev."
 fi
+
+echo ""
