@@ -1,9 +1,16 @@
 #!/bin/bash
+env=$(echo "$1" | cut -d= -f2)
 
-source ../.env
+if [ "$env" == "test" ]; then
+  source .env
+  echo "[TEST_ENV]: Using .env.test"
+elif [ "$env" == "dev" ] || [ "$env" == "" ]; then
+  source .env.test
+  echo "[DEV_ENV]: Using .env"
+fi
 
 # import the os.bash script to get the OS
-OS=$(/bin/bash ../scripts/os.bash)
+OS=$(scripts/./os.sh)
 
 while [ true ]
 do

@@ -9,10 +9,11 @@ use app\controllers\ReportController;
 use app\controllers\SummaryViewController;
 use app\core\Application;
 use app\controllers\CourseController;
+use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $admin_config = parse_ini_file("../admin_configuration.ini", true);
-$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv = Dotenv::createImmutable(dirname(__DIR__), '.env');
 $dotenv->load();
 $config = [
     'db' => [
