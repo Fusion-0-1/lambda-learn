@@ -4,10 +4,13 @@
 
 # Project files
 /vendor/
-.env
+.env*
 composer.lock
-/CSV Files/
+index.php-e
+.phpunit.result.cache
+
 /public/User Uploads/
+scripts/logs/
 
 # Mac OS
 .DS_Store
