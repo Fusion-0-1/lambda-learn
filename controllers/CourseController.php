@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
@@ -233,12 +234,41 @@ class CourseController extends Controller
         );
     }
 
-    public function uploadAssignUsersToCourses()
+    public function uploadAssignUsersToCourses(Request $request)
     {
+        $file = new CSVFile($request->getFile());
+        $categorizedData = $file->readCSV(
+            assignStudents: true
+        );
+        if($categorizedData){
+            if(sizeof($categorizedData['invalid_course'])>0){
+                $params['mssg'] = 'invalid course';
+            } else {
+                if(sizeof($categorizedData['invalid'])>0){
+                    $params['mssg'] = 'invalid regno';
+                } else if (sizeof($categorizedData['exist'])>0){
+                    $params['mssg'] = 'Exists';
+                } else {
+                    $params['mssg'] = 'Success';
+                }
+            }
+        }
+        $users = Student::fetchStudents();
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();
+
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
-//            params: $params
+            params: $params
         );
     }
 }
