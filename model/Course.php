@@ -170,7 +170,6 @@ class Course
         while ($row = Application::$db->fetch($results)) {
             $courses[] = ['topic_id' => $row['topic_id']];
         }
-        var_dump(sizeof($courses));
         return sizeof($courses);
     }
 
