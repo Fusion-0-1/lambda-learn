@@ -158,6 +158,16 @@ class Course
         return $courses;
     }
 
+    public static function getTopicCount($courseCode)
+    {
+        $results = Application::$db->select(
+            table: 'CourseTopic',
+            columns: ['topic_id'],
+            where: ['course_code'=>$courseCode]
+        );
+        return Application::$db->rowCount($results);
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     private function getTotalTopicCompletionProgress(bool $stu):int

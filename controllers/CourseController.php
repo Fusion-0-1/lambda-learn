@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
@@ -187,11 +188,10 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();;
+        $params['courses'] = Course::fetchAllCourses();
 
         return $this->render(
             view: '/assign_users_to_courses',
@@ -207,11 +207,12 @@ class CourseController extends Controller
 
         if(isset($body['assign_lecturer'])){
             $lecturer = $body['lecturer'];
-            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
-            Student::assignStudentsToCourse($regNoLike, $courseCode);
+            $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
+
         $users = Student::fetchStudents();
 
         $regNos = [];
@@ -220,13 +221,43 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
         $params['courses'] = Course::fetchAllCourses();
 
-        $params['mssg'] = true;
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function uploadAssignUsersToCourses(Request $request)
+    {
+        $file = new CSVFile($request->getFile());
+        $categorizedData = $file->readCSV(
+            assignStudents: true
+        );
+        if($categorizedData){
+            $params['invalid_course'] = $categorizedData['invalid_course'];
+            $params['invalid_reg_no'] = $categorizedData['invalid'];
+            $params['exists'] = $categorizedData['exist'];
+        }
+
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();
+
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
