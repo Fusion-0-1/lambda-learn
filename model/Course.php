@@ -165,12 +165,7 @@ class Course
             columns: ['topic_id'],
             where: ['course_code'=>$courseCode]
         );
-
-        $courses = [];
-        while ($row = Application::$db->fetch($results)) {
-            $courses[] = ['topic_id' => $row['topic_id']];
-        }
-        return sizeof($courses);
+        return Application::$db->rowCount($results);
     }
 
     // ---------------------------Getters and Setters-----------------------------------

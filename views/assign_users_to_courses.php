@@ -1,27 +1,41 @@
 <link rel="stylesheet" href="css/assign_users.css">
 
-<!--Success and error messages model on the bottom right to display accounts created successfully-->
-<?php if($mssg == 'Success') { ?>
-    <div id="mssg-modal" class="success-mssg text-justify">
-        <p>User Assigned successfully.</p>
-    </div>
-<?php } else if($mssg == 'Exists'){?>
-    <div id="mssg-modal" class="error-mssg text-justify">
-        <p>User Assigned Already.</p>
-    </div>
-<?php } else if($mssg == 'invalid course'){?>
-    <div id="mssg-modal" class="error-mssg text-justify">
-        <p>Please check whether you have renamed the CSV file with the correct course name.</p>
-    </div>
-<?php } else if($mssg == 'invalid regno'){?>
-    <div id="mssg-modal" class="error-mssg text-justify">
-        <p>There exists invalid registration numbers. Failed to assign students.</p>
-    </div>
-<?php }?>
+<!--Success and error message model on the bottom right to display whether user assigned successfully-->
+<?php if(isset($exists)){
+    if(isset($invalid_course)){
+        if(sizeof($invalid_course) > 0){?>
+            <div id="mssg-modal" class="error-mssg text-justify">
+                <p>Please check whether you have renamed the CSV file with the correct course name.</p>
+            </div>
+        <?php } elseif(sizeof($invalid_reg_no) > 0){?>
+            <div id="mssg-modal" class="error-mssg text-justify">
+                <p>Invalid registration numbers (<?php foreach ($invalid_reg_no as $regNo){
+                        echo $regNo . ", " ;
+                    }?>). <br>Failed to assign students.</p>
+            </div>
+        <?php } elseif($exists==null){?>
+            <div id="mssg-modal" class="success-mssg text-justify">
+                <p>Users assigned successfully</p>
+            </div>
+        <?php }
+    } else {
+        if($exists==null){?>
+            <div id="mssg-modal" class="success-mssg text-justify">
+                <p>Users assigned successfully</p>
+            </div>
+        <?php }
+    }
+    if(sizeof($exists) > 0){?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Users have been assigned already</p>
+        </div>
+    <?php }
+}?>
+
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
     <div class="flex flex-row h-justify responsive-card">
-        <form action="/assign_users_to_courses" method="post"
+        <form action="/assign_users_to_courses" method="post" name="assign_stu_form"
               class="main-container border flex flex-column flex-gap width-full" id="assign_students">
             <h3>Assign Students to courses</h3>
 

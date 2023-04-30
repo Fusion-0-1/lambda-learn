@@ -206,10 +206,7 @@ class CSVFile
             }
             if(sizeof($invalidRegNo)==0){
                 foreach ($valid as $regNo){
-                    $mssg = Student::assignStudentsToCourse($regNo,$fileName);
-                    if($mssg == 'Exists'){
-                        $exist[] = $regNo;
-                    }
+                    $exist = Student::assignStudentsToCourse($regNo,$fileName);
                 }
             }
         } else {

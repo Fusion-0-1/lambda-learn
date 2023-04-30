@@ -188,7 +188,6 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
@@ -208,11 +207,12 @@ class CourseController extends Controller
 
         if(isset($body['assign_lecturer'])){
             $lecturer = $body['lecturer'];
-            $params['mssg'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
-            $params['mssg'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
+            $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
+
         $users = Student::fetchStudents();
 
         $regNos = [];
@@ -221,7 +221,6 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
@@ -241,19 +240,13 @@ class CourseController extends Controller
             assignStudents: true
         );
         if($categorizedData){
-            if(sizeof($categorizedData['invalid_course'])>0){
-                $params['mssg'] = 'invalid course';
-            } else {
-                if(sizeof($categorizedData['invalid'])>0){
-                    $params['mssg'] = 'invalid regno';
-                } else if (sizeof($categorizedData['exist'])>0){
-                    $params['mssg'] = 'Exists';
-                } else {
-                    $params['mssg'] = 'Success';
-                }
-            }
+            $params['invalid_course'] = $categorizedData['invalid_course'];
+            $params['invalid_reg_no'] = $categorizedData['invalid'];
+            $params['exists'] = $categorizedData['exist'];
         }
+
         $users = Student::fetchStudents();
+
         $regNos = [];
         $degreePrograms = [];
         foreach ($users as $user) {
