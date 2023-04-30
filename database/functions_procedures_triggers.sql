@@ -60,15 +60,15 @@ DELIMITER $$
 CREATE OR REPLACE TRIGGER assignStudentForSubTopics
 	AFTER INSERT ON stucourse
 	FOR EACH ROW
-    BEGIN
-        DECLARE topic_id_ INT;
-        DECLARE sub_topic_id_ DECIMAL(4,2);
-        DECLARE done INT DEFAULT FALSE;
-        DECLARE get_subtopics CURSOR FOR
-            SELECT topic_id, sub_topic_id
-            FROM CourseSubtopic
-            WHERE course_code = NEW.course_code;
-        DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+BEGIN
+    DECLARE topic_id_ INT;
+    DECLARE sub_topic_id_ DECIMAL(4,2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE get_subtopics CURSOR FOR
+        SELECT topic_id, sub_topic_id
+        FROM CourseSubtopic
+        WHERE course_code = NEW.course_code;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
 
     OPEN get_subtopics;
     get_subtopic_: LOOP
@@ -76,11 +76,12 @@ CREATE OR REPLACE TRIGGER assignStudentForSubTopics
         IF done THEN
             LEAVE get_subtopic_;
         END IF;
+
         INSERT INTO stucoursesubtopic(stu_reg_no, course_code, topic_id, sub_topic_id)
         VALUES (NEW.stu_reg_no, NEW.course_code, topic_id_, sub_topic_id_);
-        END LOOP;
+    END LOOP;
     CLOSE get_subtopics;
-    END;
+END;
 
 -- DELIMITER $$
 -- CREATE OR REPLACE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN

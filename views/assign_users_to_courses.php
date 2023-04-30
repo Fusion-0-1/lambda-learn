@@ -5,7 +5,7 @@
     if(isset($invalid_course)){
         if(sizeof($invalid_course) > 0){?>
             <div id="mssg-modal" class="error-mssg text-justify">
-                <p>Please check whether you have renamed the CSV file with the correct course name.</p>
+                <p>Please check whether you have renamed the CSV file with the correct course code.</p>
             </div>
         <?php } elseif(sizeof($invalid_reg_no) > 0){?>
             <div id="mssg-modal" class="error-mssg text-justify">
@@ -18,13 +18,11 @@
                 <p>Users assigned successfully</p>
             </div>
         <?php }
-    } else {
-        if($exists==null){?>
+    } elseif($exists==null){?>
             <div id="mssg-modal" class="success-mssg text-justify">
                 <p>Users assigned successfully</p>
             </div>
         <?php }
-    }
     if(sizeof($exists) > 0){?>
         <div id="mssg-modal" class="error-mssg text-justify">
             <p>Users have been assigned already</p>
