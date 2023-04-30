@@ -9,10 +9,18 @@
     <div id="mssg-modal" class="error-mssg text-justify">
         <p>User Assigned Already.</p>
     </div>
+<?php } else if($mssg == 'invalid course'){?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>Please check whether you have renamed the CSV file with the correct course name.</p>
+    </div>
+<?php } else if($mssg == 'invalid regno'){?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>There exists invalid registration numbers. Failed to assign students.</p>
+    </div>
 <?php }?>
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
-    <div class="flex flex-row h-justify">
+    <div class="flex flex-row h-justify responsive-card">
         <form action="/assign_users_to_courses" method="post"
               class="main-container border flex flex-column flex-gap width-full" id="assign_students">
             <h3>Assign Students to courses</h3>
@@ -59,7 +67,6 @@
             </div>
         </form>
 
-
         <form action="/assign_users_to_courses" method="post"
               class="main-container border flex flex-column flex-gap width-full" id="assign_lecturers">
             <input type="hidden" name="assign_lecturer">
@@ -98,7 +105,6 @@
         </form>
     </div>
 
-
     <form id="file-upload-form" class="main-container border flex flex-column"
           action="/upload_student_course_csv" method="post" enctype="multipart/form-data">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
@@ -112,7 +118,9 @@
 
         <h4 class="csv-header-text">CSV Header Columns Format:</h4>
         <p class="csv-header-format flex v-center h-center">
-            The CSV file should include stu_reg_no, course_code respectively
+            The CSV file should be renamed with the course code which you are going to assign users.<br>
+            The CSV file should include only the registration numbers of the students to be assigned.
+            Every new registration number should start from a new line, and it should be in the first column.
         </p>
     </form>
 </div>
@@ -166,6 +174,18 @@
         document.getElementById('selectedLecturer').value = selectedLecturerName;
     }
     document.querySelector('select[name="lecturer"]').onchange = onLecturerSelectChange;
+
+    function update_existing_stu() {
+        let input = document.getElementById('file-input-field');
+        input.onchange = e => {
+            let file = Array.from(input.files);
+            document.getElementById('upload-file-text').innerText = 'File Name: ' + file[0]['name'];
+            document.getElementsByClassName('upload-icon')[0].addEventListener('click', function () {
+                document.getElementById('file-upload-form').submit();
+            });
+        }
+        input.click();
+    }
 </script>
 
 
