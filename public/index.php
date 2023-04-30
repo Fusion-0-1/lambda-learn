@@ -98,6 +98,7 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 // -------------------------------------------------------------------------
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
 $app->router->post('/assign_users_to_courses', [CourseController::class, 'updateAssignUsersToCourses']);
+$app->router->post('/upload_student_course_csv', [CourseController::class, 'uploadAssignUsersToCourses']);
 
 // -------------------------------------------------------------------------
 
