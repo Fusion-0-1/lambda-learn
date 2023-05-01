@@ -80,6 +80,7 @@
 }
 .btn {
     width: 100px;
+    height: 35px;
 }
 .add-submissions-content {
     border-radius: 5px;
@@ -138,6 +139,19 @@ figure{
     resize: none;
 }
 
+.modal{
+    display: none;
+}
+
+.close{
+    font-size: 40px;
+    float: right;
+}
+
+.close:hover,
+.close:focus {
+    cursor: pointer;
+}
 @media(max-width:768px) {
     .submissions-card{
         width: 95%;
