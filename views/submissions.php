@@ -1,8 +1,9 @@
 <link rel="stylesheet" href="css/submissions.css">
+<link rel="stylesheet" href="css/submission_popup.css">
 
 <div id="file-upload-container" class="main-container border v-center flex-gap responsive-container">
     <h3><?php echo $course_code?></h3>
-
+    <?php if ($_SESSION['user-role'] == 'Lecturer') {?>
     <form id="add-attachment" class="flex flex-column" action="/submissions" method="post" enctype="multipart/form-data">
         <div class="submissions-card border">
             <div class="topic-container-add grid v-center h-justify">
@@ -35,14 +36,21 @@
             <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
         </div>
     </form>
+    <?php } ?>
 
     <?php foreach ($submissions as $sub) { ?>
+        <?php if ($_SESSION['user-role'] == 'Lecturer' or ($_SESSION['user-role'] == 'Student' and ($sub->getVisibility() !== null && $sub->getVisibility() == 1))) { ?>
         <div class="submissions-card border">
             <div class="topic-container grid v-center h-justify" >
                 <h4 class="heading-content text-bold text-justify"><?php echo $sub->getTopic()?></h4>
                     <div class="edit-delete-timeremaining grid v-center">
-                        <a href="" class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
-                        <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
+                        <?php if ($_SESSION['user-role'] == 'Lecturer') {?>
+                            <a href="" class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
+                            <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
+                        <?php } ?>
+                        <?php if ($_SESSION['user-role'] == 'Student') {?>
+                           <button class="btn dark-btn h-center v-center" id="submission_modal" onclick="uploadsubmission('<?php echo $sub->getDueDate()."','".$sub->getSubmissionId()."','".$sub->getAllocatedMark()."','".$sub->getAllocatedPoint()."'";?>)">Upload</button>
+                        <?php } ?>
                     </div>
             </div>
             <div class="submissions-card-inside border">
@@ -53,23 +61,96 @@
                 </div>
                 <p class="text-justify view-points-and-marks"><?php echo $sub->getDescription()?></p>
                 <form class="submissions flex v-center" action="/submission_visibility" method="post">
+                    <?php if ($_SESSION['user-role'] == 'Lecturer') {?>
                     <label for="visibility2"> Visibility </label><br>
                     <input type="hidden" name="visibility" value="0">
                     <input type="checkbox" onchange="this.form.submit()" id="visibility2" name="visibility" value="1" <?php echo $sub->getVisibility() ? 'checked' : ''; ?>>
                     <button class="marks-btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
                     <button class="marks-btn dark-btn">Download All Submissions</button>
+                    <?php } ?>
                     <?php
                         $attachmentPath = $sub->getLocation();
                         $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
                         foreach ($attachmentFiles as $file) { ?>
-                            <div class="files-views"><a href="<?php echo $file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
+                            <div class="files-views"><a href="../../User Uploads/Submissions/<?php echo $sub->getCourseCode()."/".$sub->getSubmissionId()."/Lecturer_Attachments/".$file ?>" class="text-no-decoration" download="<?php echo $file ?>" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
                     <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
                     <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >
                 </form>
             </div>
         </div>
+        <?php } ?>
     <?php } ?>
+</div>
+
+<div class="modal" id="modal_submission">
+    <div class="popup-card modal-content">
+        <form method="post" action="stu_submissions" id="stu_submission" enctype="multipart/form-data">
+        <span class="close">&times;</span>
+        <div class="course-name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
+        <div class="course-code flex h-center"><?php echo $course_code?></div>
+
+        <div class="submission-topic text-bold">Submission 1 - String Matching</div>
+        <div class="submissions-card-insides">
+            <div class="due-date-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_due_date.png">
+                    <div>Due Date</div>
+                </div>
+                <div class="due-date-contain text-center" id="modal_due_date"></div>
+            </div>
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">
+                    <div>Time remaining</div>
+                </div>
+                <div class="due-date-contain text-center flex h-center" id="remaining_time"></div>
+            </div>
+
+            <div class="break-line"></div>
+
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_granding_status.png">
+                    <div>Grading status</div>
+                </div>
+                <div class="due-date-contain flex h-center">Pending</div>
+            </div>
+            <div class="text-right file-size-text">*Max Files Size 50MB</div>
+            <div class="time-remaning-div-filesize grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_file_submission.png">
+                    <div>File submission</div>
+                </div>
+                <div class="due-date-contain flex h-center" id="display-stu-files">- -</div>
+            </div>
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_submitted-date.png">
+                    <div>Submitted Date</div>
+                </div>
+                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>
+            </div>
+            <div class="submit-buttons flex h-center">
+                <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip" onchange="previewStuAttachment()" hidden >
+                <label for="upload_stu_attachment" class="edit-btn submission-btn text-center">Add submission</label>
+
+                <button class="edit-btn submission-btn text-center hide" id="edit-stu-submission" onclick="editAttachment()">Edit submission</button>
+                <button class="edit-btn submission-btn text-center hide" id="remove-stu-submission" onclick="removeAttachment()">Remove submission</button>
+                <button class="edit-btn submission-btn text-center hide" id="save-btn" onclick="saveAttachment()">Save</button>
+                <button class="edit-btn submission-btn text-center hide" onclick="cancelStuAttachment()" id="stu-cancel-btn">Cancel</button>
+            </div>
+        </div>
+            <input id="submission_stu_id" type="text" name="submission_stu_id" hidden>
+            <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>" hidden>
+            <input id="stu_reg_no" type="text" name="stu_reg_no" value="<?php
+                $profile = unserialize($_SESSION['user']);
+                echo $profile->getRegNo();
+                ?>" hidden>
+            <input id="submission_stu_mark" type="text" name="submission_stu_mark" hidden>
+            <input id="submission_stu_point" type="text" name="submission_stu_point" hidden>
+        </form>
+    </div>
 </div>
 
 <script type="text/javascript">
@@ -109,4 +190,162 @@
             reader.readAsArrayBuffer(i);
         }
     }
+
+    // function previewStuAttachment() {
+    //     const fileInput = document.getElementById("upload_stu_attachment");
+    //     const fileContainer = document.getElementById("display-stu-files");
+    //     fileContainer.innerHTML = "";
+    //
+    //     if (fileInput.files.length === 1) {
+    //         const reader = new FileReader();
+    //         const figure = document.createElement("figure");
+    //         const figCap = document.createElement("figcaption");
+    //         figCap.innerText = fileInput.files[0].name;
+    //         figure.appendChild(figCap);
+    //         reader.onload = () => {
+    //             const fileBlob = new Blob([reader.result], { type: "application/pdf" });
+    //             const fileUrl = URL.createObjectURL(fileBlob);
+    //             figCap.addEventListener("click", () => window.open(fileUrl));
+    //         };
+    //         fileContainer.appendChild(figure);
+    //         reader.readAsArrayBuffer(fileInput.files[0]);
+    //     }
+    // }
+
+
+    function previewStuAttachment() {
+        const fileInput = document.getElementById("upload_stu_attachment");
+        const fileContainer = document.getElementById("display-stu-files");
+        const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+        fileContainer.innerHTML = "";
+
+        if (fileInput.files.length === 1) {
+            const file = fileInput.files[0];
+            if (file.size <= maxSize) {
+                const reader = new FileReader();
+                const figure = document.createElement("figure");
+                const figCap = document.createElement("figcaption");
+                figCap.innerText = file.name;
+                figure.appendChild(figCap);
+                reader.onload = () => {
+                    const fileBlob = new Blob([reader.result], { type: "application/pdf,image/jpeg,image/png,image/jpg" });
+                    const fileUrl = URL.createObjectURL(fileBlob);
+                    figCap.addEventListener("click", () => window.open(fileUrl));
+                };
+                fileContainer.appendChild(figure);
+                reader.readAsArrayBuffer(file);
+
+                // show edit and remove submission buttons
+                document.getElementById("save-btn").classList.remove("hide");
+                document.getElementById("stu-cancel-btn").classList.remove("hide");
+                // hide add submission button
+                document.querySelector("label[for='upload_stu_attachment']").classList.add("hide");
+            } else {
+                alert("The selected file is too large. Please select a file that is 50MB or smaller.");
+                fileInput.value = null;
+            }
+        }
+    }
+
+    function cancelStuAttachment() {
+        const fileInput = document.getElementById("upload_stu_attachment");
+        const fileContainer = document.getElementById("display-stu-files");
+
+        // Hide the Save and Cancel buttons, show the Add button
+        document.getElementById("save-btn").classList.add("hide");
+        document.getElementById("stu-cancel-btn").classList.add("hide");
+        document.querySelector("label[for='upload_stu_attachment']").classList.remove("hide");
+        document.getElementById("edit-stu-submission").classList.add("hide");
+
+        // Clear the file input and remove any displayed files
+        fileInput.value = null;
+        fileContainer.innerHTML = "";
+    }
+
+    function saveAttachment() {
+        // Hide the Save and Cancel buttons, show the Edit and Remove buttons
+        document.getElementById("save-btn").classList.add("hide");
+        document.getElementById("stu-cancel-btn").classList.add("hide");
+        document.getElementById("edit-stu-submission").classList.remove("hide");
+        document.getElementById("remove-stu-submission").classList.remove("hide");
+    }
+
+    function removeAttachment() {
+        const fileInput = document.getElementById("upload_stu_attachment");
+        const fileContainer = document.getElementById("display-stu-files");
+
+        document.getElementById("save-btn").classList.add("hide");
+        document.getElementById("stu-cancel-btn").classList.add("hide");
+        document.getElementById("edit-stu-submission").classList.add("hide");
+        document.getElementById("remove-stu-submission").classList.add("hide");
+        document.querySelector("label[for='upload_stu_attachment']").classList.remove("hide");
+
+        fileInput.value = null;
+        fileContainer.innerHTML = "";
+    }
+
+    function editAttachment() {
+        document.getElementById("save-btn").classList.remove("hide");
+        document.getElementById("stu-cancel-btn").classList.remove("hide");
+        document.getElementById("edit-stu-submission").classList.add("hide");
+        document.getElementById("remove-stu-submission").classList.add("hide");
+    }
+
+    function uploadsubmission(due_date,announcement_id,stu_mark,stu_point){
+        const modal_submission = document.getElementById('modal_submission')
+        modal_submission.style.display='block';
+        document.getElementById('submission_stu_id').value = announcement_id;
+        document.getElementById('submission_stu_mark').value = stu_mark;
+        document.getElementById('submission_stu_point').value = stu_point;
+
+        // Set the due date
+        const dueDate = new Date(due_date);
+        const dueDateString = dueDate.toDateString() + " " + dueDate.toLocaleTimeString();
+
+        // Set the remaining time
+        const remainingTimeElement = document.getElementById('remaining_time');
+        let countdownInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        function updateCountdown() {
+            const currentTime = new Date();
+            const timeDiff = dueDate.getTime() - currentTime.getTime();
+            if (timeDiff <= 0) {
+                remainingTimeElement.classList.add('overdue');
+                remainingTimeElement.textContent = "Assignment is overdue by: " + Math.abs(Math.floor(timeDiff / (1000 * 60 * 60 * 24))) + " days " + Math.abs(Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))) + " hours";
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            } else {
+                remainingTimeElement.classList.remove('overdue');
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                const remainingTimeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+                remainingTimeElement.textContent = remainingTimeString;
+            }
+        }
+
+        // Update the DOM
+        document.getElementById('modal_due_date').textContent = dueDateString;
+
+        var span = document.getElementsByClassName("close")[0];
+        span.onclick = function(){
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+            modal_submission.style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target == modal_submission) {
+                if (countdownInterval) {
+                    clearInterval(countdownInterval);
+                    countdownInterval = null;
+                }
+                modal_submission.style.display = "none";
+            }
+        }
+    }
+
 </script>
