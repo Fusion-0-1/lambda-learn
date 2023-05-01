@@ -59,8 +59,8 @@ class Mailer
         );
         $this->sendMail(
             'Lambda-Learn Account Information',
-            '../Emails/account_creation.html',
-            '/Emails/',
+            '../assets/Emails/account_creation.html',
+            '/assets/Emails/',
             $user->getPersonalEmail(),
             $user->getFullName(),
             $email_vars

@@ -183,33 +183,45 @@ class Course
         return "Updated";
     }
 
+    public static function getTopicCount($courseCode)
+    {
+        $results = Application::$db->select(
+            table: 'CourseTopic',
+            columns: ['topic_id'],
+            where: ['course_code'=>$courseCode]
+        );
+        return Application::$db->rowCount($results);
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
+
+    private function getTotalTopicCompletionProgress(bool $stu):int
+    {
+        $count = 0;
+        $subTopicCount = 0;
+        foreach ($this->courseTopics as $topic){
+            $count += $stu ? $topic->getStuSubTopicCompleteCount() : $topic->getLecSubTopicCompleteCount();
+            $subTopicCount += sizeof(array_filter($topic->getSubTopics(), function ($subTopic) {
+                return $subTopic->getIsBeingTracked();
+            }));
+        }
+        return $subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount ;
+    }
 
     /**
      * @return int
      */
     public function getLecTotalTopicCompletionProgress(): int
     {
-        $count = 0;
-        $subTopicCount = 0;
-        foreach ($this->courseTopics as $topic){
-            $count = $count + $topic->getLecSubTopicCompleteCount();
-            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
-        }
-        return $count/$subTopicCount * 100;
+        return $this->getTotalTopicCompletionProgress(stu: false);
     }
 
     /**
      * @return int
      */
-    public function getStuTotalTopicCompletionProgress():int{
-        $count = 0;
-        $subTopicCount = 0;
-        foreach ($this->courseTopics as $topic){
-            $count = $count + $topic->getStuSubTopicCompleteCount();
-            $subTopicCount = $subTopicCount + sizeof($topic->getSubTopics());
-        }
-        return $count/$subTopicCount * 100;
+    public function getStuTotalTopicCompletionProgress(): int
+    {
+        return $this->getTotalTopicCompletionProgress(stu: true);
     }
 
     /**

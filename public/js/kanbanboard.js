@@ -26,14 +26,7 @@ newbtndone.addEventListener('click', function () {
     newmodal.style.display = 'block';
     radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
 });
-// savebutton.addEventListener('click', function () {
-//     if (cardtitle === NULL) {
-//         cardtitle.innerHTML.value = "Please enter a card title"
-//     }
-//     else {
-//         newmodal.style.display = 'none';
-//     }
-// });
+
 cancelbtnnew.addEventListener('click', function () {
     newmodal.style.display = 'none';
 });
@@ -49,15 +42,20 @@ document.addEventListener('dragstart', e=> {
     }
 });
 document.addEventListener('dragend', e=> {
-    if(e.target.classList.contains('draggable')) {
+    if (e.target.classList.contains('draggable')) {
         e.target.classList.remove('dragging');
+        const taskid = e.target.getAttribute('data-id');
+        const taskstate = e.target.parentNode.getAttribute('data-state');
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/update_task_state', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send(`card-id=${taskid}&card-state=${taskstate}`);
     }
 });
 droppables.forEach(droppable=> {
     droppable.addEventListener('dragover', e=> {
         e.preventDefault();
         const dragging = document.querySelector('.dragging');
-        // droppable.append(dragging);
         const frontSib = getClosestFrontSibling(droppable, e.clientY);
         if (frontSib) {
             frontSib.insertAdjacentElement('afterend',dragging);

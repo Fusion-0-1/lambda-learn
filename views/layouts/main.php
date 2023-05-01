@@ -181,26 +181,26 @@ if (!isset($_SESSION['user'])) {
 <!--Dropdown menu-->
     <div id="modal_navbar" class=" hide flex flex-column">
         <div class="border-modal inline v-center">
-            <a href="/profile" class="modal-text nav-link flex">
+            <a href="/profile" class="nav-link flex">
                 <img src="images/dashboard/userAccounts.svg" id="sidenav-element">
             </a>
-            <a href="/profile" class="modal-text nav-link flex">Profile</a>
+            <a href="/profile" class="nav-link flex">Profile</a>
         </div>
 
         <?php if ($_SESSION['user-role'] == 'Student') {?>
             <div class="border-modal inline v-center">
-                <a href="/leaderboard" class="modal-text nav-link flex">
+                <a href="/leaderboard" class="nav-link flex">
                     <img src="images/dashboard/leaderBoard.svg" id="sidenav-element">
                 </a>
-                <a href="/leaderboard" class="modal-text nav-link flex">Leaderboard</a>
+                <a href="/leaderboard" class="nav-link flex">Leaderboard</a>
             </div>
         <?php }?>
 
         <div class="border-modal inline v-center">
-            <a href="/logout" class="modal-text nav-link flex">
+            <a href="/logout" class="nav-link flex">
                 <img src="images/dashboard/Logout.svg" id="sidenav-element">
             </a>
-            <a href="/logout" class="modal-text nav-link flex">Logout</a>
+            <a href="/logout" class="nav-link flex">Logout</a>
         </div>
     </div>
 

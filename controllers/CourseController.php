@@ -3,14 +3,17 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
-use app\model\submission;
+use app\model\Submission;
 use app\model\User\Lecturer;
 use app\model\User\Student;
+use DateTime;
+use DateTimeZone;
 
 class CourseController extends Controller
 {
@@ -54,9 +57,9 @@ class CourseController extends Controller
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
             $subTopicId = $body['course_subtopic'];
-            $courseSubTopic = new CourseSubTopic();
-            $courseSubTopic->updateProgress($courseCode,$subTopicId);
+            $topicId = $body['course_topic'];
 
+            $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
 
             return $this->render(
@@ -94,13 +97,70 @@ class CourseController extends Controller
     {
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
-        $params['submissions'] = submission::getSubmission($params['course_code']);
+        $params['submissions'] = Submission::getSubmission($params['course_code']);
         return $this->render(
             view: '/submissions',
             allowedRoles: ['Lecturer'],
             params:  $params
         );
     }
+
+    public function CreateSubmission(Request $request)
+    {
+        $body = $request->getBody();
+        $dueDateStr = $body['duetime'];
+        $dueDate = new DateTime($dueDateStr);
+
+        $course_submissions = Submission::createNewSubmission(
+            courseCode: $body['course_code'],
+            topic: $body['heading'],
+            description: $body['content'],
+            allocatedMark: $body['mark'],
+            allocatedPoint: $body['point'],
+            dueDate: $dueDate->format('Y-m-d H:i:s'),
+            visibility: $body['visibility'],
+        );
+
+        $submission_id = $course_submissions->getLastSubmissionId()+1;
+        $files = $_FILES['attachment'];
+        $numFiles = count($files['name']);
+        // create course and submission folders if they don't exist
+        $course_dir = 'User Uploads/Submissions/' . $body['course_code'];
+        if (!file_exists($course_dir)) {
+            mkdir($course_dir);
+        }
+        $sub_dir = $course_dir . '/' . $submission_id;
+        if (!file_exists($sub_dir)) {
+            mkdir($sub_dir);
+        }
+        $LecturerAttachments = $course_dir . '/' . $submission_id .'/'. 'Lecturer_Attachments';
+        if (!file_exists($LecturerAttachments)) {
+            mkdir($LecturerAttachments);
+        }
+
+        for ($i = 0; $i < $numFiles; $i++) {
+            $fileName = $files['name'][$i];
+            $tmpName = $files['tmp_name'][$i];
+            $fileExists = file_exists($LecturerAttachments.'/'.$fileName);
+
+            if ($fileExists) {
+                echo "Sorry, file already exists.";
+            } else {
+                move_uploaded_file($tmpName, $LecturerAttachments.'/'.$fileName);
+            }
+        }
+        $course_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
+        $course_submissions->submissionInsert();
+        header("Location: /submissions?course_code=".$body['course_code']);
+    }
+
+    public function changeSubmissionVisibility(Request $request)
+    {
+        $body = $request->getBody();
+        Submission::updateVisibility($body['course_code'],$body['submission_id'],$body['visibility']);
+        header("Location: /submissions?course_code=".$body['course_code']);
+    }
+
 
     public function displayCourseMarkUpload()
     {
@@ -167,11 +227,10 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();;
+        $params['courses'] = Course::fetchAllCourses();
 
         return $this->render(
             view: '/assign_users_to_courses',
@@ -187,11 +246,12 @@ class CourseController extends Controller
 
         if(isset($body['assign_lecturer'])){
             $lecturer = $body['lecturer'];
-            Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
-            Student::assignStudentsToCourse($regNoLike, $courseCode);
+            $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
+
         $users = Student::fetchStudents();
 
         $regNos = [];
@@ -200,13 +260,43 @@ class CourseController extends Controller
             $regNos[] = $user["reg_no"];
             $degreePrograms[] = $user['degree_program_code'];
         }
-
         $params['batch_years'] = Student::getBatchYears($regNos);
         $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
         $params['lecturers'] = Lecturer::fetchLecturers();
         $params['courses'] = Course::fetchAllCourses();
 
-        $params['mssg'] = true;
+        return $this->render(
+            view: '/assign_users_to_courses',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function uploadAssignUsersToCourses(Request $request)
+    {
+        $file = new CSVFile($request->getFile());
+        $categorizedData = $file->readCSV(
+            assignStudents: true
+        );
+        if($categorizedData){
+            $params['invalid_course'] = $categorizedData['invalid_course'];
+            $params['invalid_reg_no'] = $categorizedData['invalid'];
+            $params['exists'] = $categorizedData['exist'];
+        }
+
+        $users = Student::fetchStudents();
+
+        $regNos = [];
+        $degreePrograms = [];
+        foreach ($users as $user) {
+            $regNos[] = $user["reg_no"];
+            $degreePrograms[] = $user['degree_program_code'];
+        }
+        $params['batch_years'] = Student::getBatchYears($regNos);
+        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $params['lecturers'] = Lecturer::fetchLecturers();
+        $params['courses'] = Course::fetchAllCourses();
+
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],

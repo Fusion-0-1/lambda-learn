@@ -103,10 +103,6 @@ a:visited{
     background-color: var(--white);
 }
 
-.modal-text{
-    margin-bottom: 0;
-}
-
 #sidenav-element{
     height: 25px;
 }

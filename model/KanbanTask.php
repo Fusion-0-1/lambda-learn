@@ -130,6 +130,17 @@ class KanbanTask
         );
     }
 
+    public static function updateKanbanTaskState($taskId, $state)
+    {
+        Application::$db->update(
+            table: 'KanbanTask',
+            columns: [
+                'state' => $state
+            ],
+            where: ['task_id' => $taskId]
+        );
+    }
+
 
     // ---------------------------Getters and Setters-----------------------------------
 

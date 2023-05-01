@@ -9,10 +9,11 @@ use app\controllers\ReportController;
 use app\controllers\SummaryViewController;
 use app\core\Application;
 use app\controllers\CourseController;
+use Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 $admin_config = parse_ini_file("../admin_configuration.ini", true);
-$dotenv = \Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv = Dotenv::createImmutable(dirname(__DIR__), '.env');
 $dotenv->load();
 $config = [
     'db' => [
@@ -49,6 +50,7 @@ $app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanb
 $app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
 $app->router->post('/delete_task', [KanbanboardController::class, 'deleteKanbanTasks']);
 $app->router->post('/update_task', [KanbanboardController::class, 'updateKanbanTasks']);
+$app->router->post('/update_task_state', [KanbanboardController::class, 'updateKanbanTasksState']);
 
 $app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
 
@@ -59,6 +61,8 @@ $app->router->get('/utilization', [SummaryViewController::class, 'displayUtiliza
 
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
 $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
+$app->router->post('/submissions', [CourseController::class, 'CreateSubmission']);
+$app->router->post('/submission_visibility', [CourseController::class, 'changeSubmissionVisibility']);
 
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
@@ -75,6 +79,8 @@ $app->router->get('/course_announcement', [AnnouncementController::class, 'displ
 $app->router->post('/site_announcement', [AnnouncementController::class, 'createSiteAnnouncements']);
 $app->router->post('/course_announcement', [AnnouncementController::class, 'createCourseAnnouncements']);
 
+$app->router->post('/update_site_announcement', [AnnouncementController::class, 'updateSiteAnnouncements']);
+$app->router->post('/update_course_announcement', [AnnouncementController::class, 'updateCourseAnnouncements']);
 
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
@@ -95,6 +101,7 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 // -------------------------------------------------------------------------
 $app->router->get('/assign_users_to_courses', [CourseController::class, 'displayAssignUsersToCourses']);
 $app->router->post('/assign_users_to_courses', [CourseController::class, 'updateAssignUsersToCourses']);
+$app->router->post('/upload_student_course_csv', [CourseController::class, 'uploadAssignUsersToCourses']);
 
 // -------------------------------------------------------------------------
 
