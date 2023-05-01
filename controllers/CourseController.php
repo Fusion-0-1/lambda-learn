@@ -99,7 +99,7 @@ class CourseController extends Controller
         $params['submissions'] = Submission::getSubmission($params['course_code']);
         return $this->render(
             view: '/submissions',
-            allowedRoles: ['Lecturer'],
+            allowedRoles: ['Lecturer','Student'],
             params:  $params
         );
     }
@@ -136,6 +136,10 @@ class CourseController extends Controller
         if (!file_exists($LecturerAttachments)) {
             mkdir($LecturerAttachments);
         }
+        $StudentAttachments = $course_dir . '/' . $submission_id .'/'. 'Student_Submissions';
+        if (!file_exists($StudentAttachments)) {
+            mkdir($StudentAttachments);
+        }
 
         for ($i = 0; $i < $numFiles; $i++) {
             $fileName = $files['name'][$i];
@@ -150,6 +154,31 @@ class CourseController extends Controller
         }
         $course_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
         $course_submissions->submissionInsert();
+        header("Location: /submissions?course_code=".$body['course_code']);
+    }
+
+    public function createStuSubmissions(Request $request){
+        $body = $request->getBody();
+
+        $stu_submissions = Submission::createStuNewSubmission(
+            courseCode: $body['course_code'],
+            regNo: $body['stu_reg_no'],
+            allocatedMark: $body['submission_stu_mark'],
+            allocatedPoint: $body['submission_stu_point'],
+            submissionId: $body['submission_stu_id'],
+        );
+
+        $fileName = $_FILES['attachment']['name'];
+        $fileTmpName = $_FILES['attachment']['tmp_name'];
+        $fileExists = file_exists($body['course_code'].'/'.$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$fileName);
+        if ($fileExists) {
+            echo "Sorry, file already exists.";
+        } else {
+            move_uploaded_file($fileTmpName, '/public/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$fileName);
+        }
+
+        $stu_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/' . 'Student_Submissions');
+        $stu_submissions->stuSubmissionInsert();
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
