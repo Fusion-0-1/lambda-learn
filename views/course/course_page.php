@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <!--<link rel="stylesheet" href="css/submission_popup.css">-->
 
+<<<<<<< HEAD
 <!--<div class="modal hide" id="modal_submission">-->
 <!--    <div class="popup-card modal-content">-->
 <!--        <span class="close">&times;</span>-->
@@ -55,6 +56,68 @@
 <!--    </div>-->
 <!---->
 <!--</div>-->
+=======
+<?php if($mssg == 'Failed') { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>The subtopic is not being covered by the lecturer</p>
+    </div>
+<?php } ?>
+
+<div class="modal hide" id="modal_submission">
+    <div class="popup-card modal-content">
+        <span class="close">&times;</span>
+        <div class="course-name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
+        <div class="course-code flex h-center">CS 2003</div>
+
+        <div class="submission-topic text-bold">Submission 1 - String Matching</div>
+        <div class="submissions-card-inside">
+            <div class="due-date-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_due_date.png">
+                    <div>Due-Date</div>
+                </div>
+                <div class="due-date-contain">Wednesday, September 2, 2022       |   12.00 PM</div>
+            </div>
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">
+                    <div>Time remaining</div>
+                </div>
+                <div class="due-date-contain flex h-center">-- --</div>
+            </div>
+
+            <div class="break-line"></div>
+
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_granding_status.png">
+                    <div>Grading status</div>
+                </div>
+                <div class="due-date-contain flex h-center">Pending</div>
+            </div>
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_file_submission.png">
+                    <div>File submission</div>
+                </div>
+                <div class="due-date-contain flex h-center">StringMatching_01.zip</div>
+            </div>
+            <div class="time-remaning-div grid h-justify v-center">
+                <div class="due-date-heading flex v-center" >
+                    <img src="/images/submissions_popup/submission_pop_submitted-date.png">
+                    <div>Submitted Date</div>
+                </div>
+                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>
+            </div>
+            <div class="submit-buttons grid h-center">
+                <div class="edit-btn submission-btn text-center">Add submission</div>
+                <div class="edit-btn submission-btn text-center">Edit submission</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+>>>>>>> b1db0e913b80cfe415dd82993742689bfdd60029
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
@@ -66,14 +129,21 @@
             <h5> Student Progress </h5>
             <div class="flex flex-row">
                 <div class="progress-bar-outer border-radius">
-                    <div class="progress-bar border-radius" style="width: <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?>"></div>
+                    <div class="progress-bar border-radius"
+                         style="width: <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?>"></div>
                 </div>
-                <div class="progress-value flex h-end v-center"><h5> <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?> </h5></div>
+                <div class="progress-value flex h-end v-center">
+                    <h5> <?php echo $course->getStuTotalTopicCompletionProgress() . "%"?> </h5>
+                </div>
             </div>
         <?php } ?>
             <h5> Topic Progress </h5>
             <div class="flex flex-row">
-                <?php foreach ($course->getTopics() as $courseTopic) { ?>
+                <?php foreach ($course->getTopics() as $courseTopic) {
+                    $count = 0;
+                    foreach ($courseTopic->getSubTopics() as $courseSubTopics){
+                        $count++;
+                        if($courseSubTopics->getIsBeingTracked() == 1 and $count == 1){ ?>
                     <div class="progress-bar-inner border-radius width-full" id="topic1">
                         <div class="progress-bar border-radius flex" style="width:
                             <?php echo $courseTopic->getLecSubTopicCompletePercentage(). "%"?>">
@@ -81,8 +151,13 @@
                         <div class="topic-progress-label"> <?php echo "Topic " . $courseTopic->getTopicId()?> </div>
                     </div>
                     <?php
-                } ?>
-                <div class="progress-value flex h-end v-center"><h5><?php echo $course->getLecTotalTopicCompletionProgress() . "%"?></h5></div>
+                    }
+                    }
+                }?>
+
+                <div class="progress-value flex h-end v-center">
+                    <h5><?php echo $course->getLecTotalTopicCompletionProgress() . "%"?></h5>
+                </div>
             </div>
         </div>
     </div>
@@ -123,24 +198,33 @@
                             <?php foreach ($courseTopic->getSubTopics() as $courseSubTopic) {?>
                                 <div>
                                     <div class="course-sub-topic border-radius flex flex-row h-justify v-center">
-                                        <h5> <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?> </h5>
-                                        <form  method="post" action="/course_page?course_code=<?php echo $course->getCourseCode(); ?>" name="update_progress_bar">
+                                        <h5>
+                                            <?php echo $courseSubTopic->getSubTopicId()." ".$courseSubTopic->getSubTopicName()?>
+                                        </h5>
+                                        <form  method="post" action="/course_page?course_code=<?php echo $course->getCourseCode(); ?>"
+                                               name="update_progress_bar">
                                             <input type="hidden" name="update_progress_bar">
-                                            <input type="hidden" value="<?php echo $course->getCourseCode()?>" name="course_code">
+                                            <input type="hidden" value="<?php echo $course->getCourseCode()?>"
+                                                   name="course_code">
+                                            <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>"
+                                                   name="course_subtopic">
+                                            <input type="hidden" value="<?php echo $courseTopic->getTopicId()?>"
+                                                   name="course_topic">
                                             <?php if ($_SESSION['user-role'] == 'Student') {
                                                 if($courseSubTopic->getStuIsCompleted()){?>
-                                                <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                                    <button class="btn-checkbox-checked" type="submit">
+                                                        <i class="fa-sharp fa-solid fa-check"></i>
+                                                    </button>
                                             <?php } else { ?>
-                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
-                                                    <input type="hidden" value="<?php echo $courseTopic->getTopicId()?>" name="course_topic">
                                                     <button class="btn-checkbox" type="submit"></button>
                                             <?php }
                                             } ?>
                                             <?php if ($_SESSION['user-role'] == 'Lecturer') {
                                                 if($courseSubTopic->getIsCovered()){?>
-                                                    <button class="btn-checkbox-checked" type="submit"><i class="fa-sharp fa-solid fa-check"></i></button>
+                                                    <button class="btn-checkbox-checked" type="submit">
+                                                        <i class="fa-sharp fa-solid fa-check"></i>
+                                                    </button>
                                                 <?php } else { ?>
-                                                    <input type="hidden" value="<?php echo $courseSubTopic->getSubTopicId()?>" name="course_subtopic">
                                                     <button class="btn-checkbox" type="submit"></button>
                                                 <?php }
                                             } ?>

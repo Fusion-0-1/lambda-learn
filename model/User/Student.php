@@ -122,23 +122,31 @@ class Student extends User
         return $users;
     }
 
-    public static function assignStudentsToCourse($regNoLike, $courseCode)
+    public static function assignStudentsToCourse(string $regNoLike, string $courseCode)
     {
+        $semester = explode(' ', $courseCode);
         $values = Application::$db->select(
             table: 'Student',
             columns: ['reg_no'],
             like: ['reg_no' => $regNoLike],
         );
-
+        $studentExists = [];
         while ($student = Application::$db->fetch($values)){
-            Application::$db->insert(
-                table: 'StuCourse',
-                values: [
-                    'stu_reg_no' => $student['reg_no'],
-                    'course_code' => $courseCode
-                ]
-            );
+            $primaryKeys = ['stu_reg_no' => $student['reg_no'],'course_code' => $courseCode];
+            if(Application::$db->checkExists('StuCourse', $primaryKeys)){
+                $studentExists[] = $student['reg_no'];
+            } else {
+                Application::$db->insert(
+                    table: 'StuCourse',
+                    values: [
+                        'stu_reg_no' => $student['reg_no'],
+                        'course_code' => $courseCode,
+                        'semester' =>  $semester[1][1]
+                    ]
+                );
+            }
         }
+        return $studentExists;
     }
     // --------------------------------------------------------------------------------
 

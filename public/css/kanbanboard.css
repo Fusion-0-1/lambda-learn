@@ -25,6 +25,13 @@
     color: #0B2273;
 }
 
+.card-btn {
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 8px;
+    border: none;
+}
+
 .droppable {
     flex: 1;
     height: 20%;
@@ -74,6 +81,10 @@
     color: #0B2273;
 }
 
+.card-border-radius {
+    border-radius: 15px;
+}
+
 .item-gap {
     gap: 20px;
 }
@@ -102,7 +113,8 @@ input[value="Done"] {
 }
 
 .card-save-container {
-    padding-top: 3px;
+    padding-top: 10px;
+    justify-content: space-evenly;
 }
 
 .card-save, .modal-cancel {

@@ -89,15 +89,22 @@ class Lecturer extends User
         return $users;
     }
 
-    public static function assignLecturersToCourse($lecturer, $courseCode)
+    public static function assignLecturersToCourse(string $lecturer, string $courseCode)
     {
-        Application::$db->insert(
-            table: 'LecCourse',
-            values: [
-                'lec_reg_no' => $lecturer,
-                'course_code' => $courseCode
-            ]
-        );
+        $lecturerExists = [];
+        $primaryKeys = ['lec_reg_no' => $lecturer,'course_code' => $courseCode];
+        if(Application::$db->checkExists('LecCourse', $primaryKeys)){
+            $lecturerExists[] = $lecturer;
+        } else {
+            Application::$db->insert(
+                table: 'LecCourse',
+                values: [
+                    'lec_reg_no' => $lecturer,
+                    'course_code' => $courseCode
+                ]
+            );
+        }
+        return $lecturerExists;
     }
 
     // ---------------------------Getters and Setters-----------------------------------
