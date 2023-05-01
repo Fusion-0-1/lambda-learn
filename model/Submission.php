@@ -15,6 +15,8 @@ class Submission
     private string $dueDate;
     private bool $visibility;
     private string $location;
+    private string $regNo;
+    private string $submittedDate;
 
 
     private function __construct() {}
@@ -33,6 +35,20 @@ class Submission
         $submission->visibility = $visibility;
         $submission->location = $location;
         return $submission;
+    }
+
+    public static function createStuNewSubmission($courseCode,$regNo,$allocatedMark, $allocatedPoint, $submissionId, $submittedDate='', $location='') {
+        $stuSubmission = new Submission();
+        if ($submissionId != ""){
+            $stuSubmission->submissionId = $submissionId;
+        }
+        $stuSubmission->courseCode = $courseCode;
+        $stuSubmission->allocatedMark = $allocatedMark;
+        $stuSubmission->allocatedPoint = $allocatedPoint;
+        $stuSubmission->submittedDate = $submittedDate ;
+        $stuSubmission->regNo = $regNo;
+        $stuSubmission->location = $location;
+        return $stuSubmission;
     }
 
     public static function getSubmission($course_code): array
@@ -84,6 +100,21 @@ class Submission
                 'visibility' => $this->visibility,
                 'due_date' => $this->dueDate,
                 'attachments' => $this->location
+            ]
+        );
+    }
+
+    public function stuSubmissionInsert(){
+        Application::$db->insert(
+            table: 'stucoursesubmission',
+            values: [
+                'stu_reg_no'=>$this->regNo,
+                'course_code'=>$this->courseCode,
+                'submission_id'=>$this->submissionId,
+                'stu_submission_point'=>$this->allocatedPoint,
+                'stu_submission_mark'=>$this->allocatedMark,
+                'submitted_date'=>$this->submittedDate ?: date('Y-m-d H:i:s'),
+                'stu_attachments'=>$this->location
             ]
         );
     }
@@ -182,12 +213,26 @@ class Submission
     }
 
     /**
+     * @return string
+     */
+    public function getRegNo(): string
+    {
+        return $this->regNo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSubmittedDate(): string
+    {
+        return $this->submittedDate;
+    }
+
+    /**
      * @param string $location
      */
     public function setLocation(string $location): void
     {
         $this->location = $location;
     }
-
-
 }
