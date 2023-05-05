@@ -2,29 +2,51 @@
 <script type="text/javascript" src="./js/validation.js"></script>
 
 <!--success and error messages-->
-<?php if($mssg == 'Success') { ?>
+<?php if(isset($course_insert)) {
+    if($course_insert){?>
     <div id="mssg-modal" class="success-mssg text-justify">
         <p>Course Created successfully.</p>
     </div>
-<?php }  elseif($mssg == 'Exists') { ?>
+    <?php } else { ?>
     <div id="mssg-modal" class="error-mssg text-justify">
-        <p>The course Already exists</p>
+        <p>Failed to create course.</p>
     </div>
-<?php }  elseif($mssg == 'updated') { ?>
+<?php }
+    } elseif(isset($course_update)) {
+    if($course_update){?>
     <div id="mssg-modal" class="success-mssg text-justify">
-        <p>The course updated successfully</p>
+        <p>Course updated successfully.</p>
     </div>
-<?php }  elseif($mssg == 'failed') { ?>
+    <?php } else { ?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Failed to update course.</p>
+    </div>
+<?php }
+    } elseif(isset($course_delete)) {
+    if($course_delete){?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Course deleted successfully.</p>
+    </div>
+    <?php } else { ?>
     <div id="mssg-modal" class="error-mssg text-justify">
-        <p>TFailed to update course</p>
+        <p>Failed to delete course.</p>
     </div>
-<?php }?>
+<?php }
+    }?>
 
 <div class="main-container outer border flex flex-column v-center h-center">
     <div class="main-container inner border flex flex-column h-center">
         <div class="heading">
             <h3>Course Create</h3>
         </div>
+        <h4 class="csv-header-text">Course Code Format:</h4>
+        <p class="csv-header-format flex v-center h-center">
+            The course code should contain 6 characters which starts with two uppercase letters and 4 digits. (ie: CS 2101)<br>
+            -Two upper case letters represent the degree program (ie: 'CS' for Computer Science)<br>
+            -4 digits represent year and the semester respectively and other two digits represents the course number
+            <br>(ie: the above course is a second year 1st semester course)<br>
+        </p>
+        <br>
         <form action="create_course" method="POST" class="course-create-form flex flex-row">
             <label class="flex flex-column">
                 <p>Course Code</p>
@@ -53,6 +75,11 @@
     </div>
     <div class="main-container inner border">
         <h3>Courses</h3>
+        <p class="csv-header-format flex v-center h-center">
+            Please note that you can delete courses only if they are not been initialised by the lecturer.
+            If you want to delete a course which is already initialised, you can delete it once the lecturer reset it at
+            the end of the semester
+        </p>
         <div class="overflow-x grid grid-table">
                 <table class="text-column">
                     <tr>
@@ -73,10 +100,17 @@
                     </tr>
                     <?php foreach ($courses as $course) { ?>
                         <tr>
-                            <td><button class='error-btn error-btn-icon'
+                            <td>
+                                <?php if(\app\model\Course::getTopicCount($course['course_code'])==0){?>
+                                <button class='error-btn error-btn-icon'
                                         onclick='delete_course(this, "<?php echo $course['course_code']?>")'>
                                     <i class='fa fa-trash' aria-hidden='true'></i>
                                 </button>
+                                <?php } else {?>
+                                <button class='error-btn error-btn-icon' disabled>
+                                    <i class='fa fa-trash' aria-hidden='true'></i>
+                                </button>
+                                <?php }?>
                             </td>
                             <td>
                                 <button class='edit-btn edit-btn-icon'
@@ -116,7 +150,7 @@
                         </button>
                     </label>
                     <label class="flex flex-column h-center">
-                        <button class="dark-btn" type="submit">Create</button>
+                        <button class="dark-btn" type="submit">Update</button>
                     </label>
                 </div>
             </div>
@@ -125,17 +159,19 @@
 </div>
 
 <div id="delete-modal" class="modal" hidden>
-    <div class="modal-content error-modal-content">
-        <div class="flex flex-column v-center h-center">
-            <img src="./images/primary_icons/error.svg">
-            <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
-            <p class="modal-text">Once you delete a course, you cannot undo the process</p>
-            <section class="flex flex-row two-button-row">
-                <button class="dark-btn cancel-btn">Cancel</button>
-                <button id="delete-btn" class="dark-btn error-btn">Delete</button>
-            </section>
+    <form action="delete_course" method="POST" id="delete_form">
+        <div class="modal-content error-modal-content">
+            <div class="flex flex-column v-center h-center">
+                <img src="./images/primary_icons/error.svg">
+                <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
+                <p class="modal-text">Once you delete a course, you cannot undo the process</p>
+                <section class="flex flex-row two-button-row">
+                    <button class="dark-btn cancel-btn">Cancel</button>
+                    <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
+                </section>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 <div id="warn-modal" class="modal" hidden>
@@ -146,8 +182,8 @@
             <div>
                 <p>Course code should follow below format,</p>
                 <ul>
-                    <li>Must contain 7 characters.</li>
-                    <li>Should starts with 3 letters (Non-symbolic).</li>
+                    <li>Must contain 6 characters.</li>
+                    <li>Should starts with 2 letters (Non-symbolic).</li>
                     <li>Should ends with 4 digits.</li>
                 </ul>
             </div>
@@ -175,6 +211,12 @@
 
     function delete_course(btn, course_code) {
         document.getElementById("delete-warning").innerHTML = "Are you sure you want to delete " + course_code + " course? ";
+
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "course_code")
+        input.setAttribute("value", course_code);
+        document.getElementById('delete_form').appendChild(input);
 
         const modal = document.getElementById("delete-modal");
         modal.hidden = false;
