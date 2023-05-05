@@ -160,7 +160,7 @@ class Course
 
     public static function insertCourse($courseCode,$courseName,$isOptional)
     {
-        if(!self::checkExists($courseCode)){
+        if(!self::checkExists($courseCode)) {
             Application::$db->insert(
                 table: 'Course',
                 values: [
@@ -169,8 +169,8 @@ class Course
                     'optional_flag' => $isOptional
                 ]
             );
-            return "Success";
-        } else return "Exists";
+            return true;
+        }
     }
 
     public static function UpdateCourse($courseCode,$courseName)
@@ -180,7 +180,30 @@ class Course
             columns: ['course_name' => $courseName],
             where: ['course_code' => $courseCode]
         );
-        return "Updated";
+        return true;
+    }
+
+    public static function deleteCourse($courseCode)
+    {
+        $lecCount = Application::$db->select(
+          table: 'LecCourse',
+          where: ['course_code'=>$courseCode]
+        );
+        if(Application::$db->rowCount($lecCount)>0){
+            Application::$db->delete(
+                table: 'LecCourse',
+                where: ['course_code'=>$courseCode]
+            );
+        }
+        Application::$db->delete(
+            table: 'CourseSubmission',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'Course',
+            where: ['course_code'=>$courseCode]
+        );
+        return true;
     }
 
     public static function getTopicCount($courseCode)

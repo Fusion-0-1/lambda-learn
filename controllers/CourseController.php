@@ -190,7 +190,7 @@ class CourseController extends Controller
         } else {
             $isOptional = 0;
         }
-        $params['mssg'] = Course::insertCourse($courseCode, $courseName, $isOptional);
+        $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional);
         $params['courses'] = Course::fetchAllCourses();
         return $this->render(
             view: 'course/course_creation',
@@ -204,11 +204,19 @@ class CourseController extends Controller
         $body = $request->getBody();
         $courseCode = $body['course_code'];
         $courseName = $body['course_name'];
-        if(Course::UpdateCourse($courseCode, $courseName)){
-            $params['mssg'] = 'updated';
-        } else {
-            $params['mssg'] = 'failed';
-        }
+        $params['course_update'] = Course::UpdateCourse($courseCode, $courseName);
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function deleteCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $params['course_delete'] = Course::deleteCourse($body['course_code']);
         $params['courses'] = Course::fetchAllCourses();
         return $this->render(
             view: 'course/course_creation',
