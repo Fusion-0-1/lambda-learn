@@ -440,7 +440,7 @@ td{
 
 .error-btn {
     color: var(--white);
-    border: var(--error-btn) 1px solid;
+    border: none;
     background-color: var(--error-btn);
 }
 
