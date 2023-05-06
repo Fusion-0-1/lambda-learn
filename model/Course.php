@@ -122,12 +122,12 @@ class Course
         return $courses;
     }
 
-    public static function checkExists($course)
+    public static function checkExists(string $course)
     {
         return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
 
-    public static function getCourse($courseCode): Course
+    public static function getCourse(string $courseCode): Course
     {
         $results = Application::$db->select(
             table: 'Course',
@@ -159,7 +159,7 @@ class Course
         return $courses;
     }
 
-    public static function insertCourse($courseCode,$courseName,$isOptional)
+    public static function insertCourse(string $courseCode,string $courseName,int $isOptional)
     {
         if(!self::checkExists($courseCode)) {
             Application::$db->insert(
@@ -173,9 +173,10 @@ class Course
             );
             return true;
         }
+        return false;
     }
 
-    public static function UpdateCourse($courseCode,$courseName)
+    public static function UpdateCourse(string $courseCode,string $courseName)
     {
         Application::$db->update(
             table: 'Course',
@@ -185,7 +186,7 @@ class Course
         return true;
     }
 
-    public static function deleteCourse($courseCode)
+    public static function deleteCourse(string $courseCode)
     {
         $lecCount = Application::$db->select(
           table: 'LecCourse',
@@ -208,7 +209,7 @@ class Course
         return true;
     }
 
-    public static function getTopicCount($courseCode)
+    public static function getTopicCount(string $courseCode)
     {
         $results = Application::$db->select(
             table: 'CourseTopic',
