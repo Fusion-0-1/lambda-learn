@@ -79,6 +79,10 @@ $app->router->post('/course_announcement', [AnnouncementController::class, 'crea
 $app->router->post('/update_site_announcement', [AnnouncementController::class, 'updateSiteAnnouncements']);
 $app->router->post('/update_course_announcement', [AnnouncementController::class, 'updateCourseAnnouncements']);
 
+$app->router->post('/delete_site_announcement', [AnnouncementController::class, 'deleteSiteAnnouncements']);
+$app->router->post('/delete_course_announcement', [AnnouncementController::class, 'deleteCourseAnnouncements']);
+
+
 $app->router->get('/profile', [ProfileController::class, 'displayProfile']);
 $app->router->post('/profile', [ProfileController::class, 'editProfile']);
 

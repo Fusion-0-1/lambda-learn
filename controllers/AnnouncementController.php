@@ -82,4 +82,18 @@ class AnnouncementController extends Controller
         CourseAnnouncement::CourseAnnouncementsUpdate($body['announcement_id'],$body['heading'],$body['content']);
         header("Location: /course_announcement?course_code=".$body['course_code']);
     }
+
+    public function deleteSiteAnnouncements(Request $request)
+    {
+        $body = $request->getBody();
+        SiteAnnouncement::deleteSiteAnnouncement($body['announcement_id_delete']);
+        header("Location: /site_announcement");
+    }
+
+    public function deleteCourseAnnouncements(Request $request)
+    {
+        $body = $request->getBody();
+        CourseAnnouncement::deleteCourseAnnouncement($body['announcement_id_delete'],$body['course_code_delete']);
+        header("Location: /course_announcement?course_code=".$body['course_code_delete']);
+    }
 }

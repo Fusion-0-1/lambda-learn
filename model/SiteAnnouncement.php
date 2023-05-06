@@ -53,6 +53,7 @@ class SiteAnnouncement extends Announcement
         $siteAnnouncements = [];
         $results = Application::$db->select(
             table: 'SiteAnnouncement',
+            where: ['active' => 1],
             order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
@@ -93,6 +94,15 @@ class SiteAnnouncement extends Announcement
              columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
              where: ['announcement_id'=>$announcementId]
          );
+    }
+
+    public static function deleteSiteAnnouncement($announcementId)
+    {
+        Application::$db->update(
+            table: 'siteannouncement',
+            columns: ['active' => 0],
+            where: ['announcement_id'=>$announcementId]
+        );
     }
 
     /**
