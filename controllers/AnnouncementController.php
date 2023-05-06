@@ -63,11 +63,9 @@ class AnnouncementController extends Controller
             lecRegNo: $profile->getRegNo(),
             courseCode: $body['course_code']
         );
-
         $course_announcement->CourseAnnouncementInsert();
         header("Location: /course_announcement?course_code=".$body['course_code']);
     }
-
 
     public function updateSiteAnnouncements(Request $request)
     {
