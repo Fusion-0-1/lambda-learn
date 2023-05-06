@@ -19,7 +19,7 @@ class Submission
 
     private function __construct() {}
 
-    public static function createNewSubmission($courseCode, $topic, $description, $allocatedMark, $dueDate, $allocatedPoint="", $visibility=false, $location="",$submissionId="") {
+    public static function createNewSubmission($courseCode, $topic, $description, $dueDate, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
         $submission = new Submission();
         if ($submissionId != ""){
             $submission->submissionId = $submissionId;
@@ -48,8 +48,8 @@ class Submission
                 courseCode: $sub['course_code'],
                 topic: $sub['topic'],
                 description: $sub['description'],
-                allocatedMark: $sub['allocated_mark'],
                 dueDate: $sub['due_date'],
+                allocatedMark: $sub['allocated_mark'],
                 allocatedPoint: $sub['allocated_point'],
                 visibility: $sub['visibility'],
                 location: $sub['attachments']?? '',

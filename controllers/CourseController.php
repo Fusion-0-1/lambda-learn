@@ -115,9 +115,9 @@ class CourseController extends Controller
             courseCode: $body['course_code'],
             topic: $body['heading'],
             description: $body['content'],
-            allocatedMark: $body['mark'],
             dueDate: $dueDate->format('Y-m-d H:i:s'),
-            allocatedPoint: $body['point'],
+            allocatedMark: (int)$body['mark'] ?? 0,
+            allocatedPoint: (int)$body['point'] ?? 0,
             visibility: $body['visibility'] ?? false,
         );
 
