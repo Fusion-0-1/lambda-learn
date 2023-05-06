@@ -118,7 +118,7 @@ class CourseController extends Controller
             allocatedMark: $body['mark'],
             dueDate: $dueDate->format('Y-m-d H:i:s'),
             allocatedPoint: $body['point'],
-            visibility: $body['visibility'] ?? '',
+            visibility: $body['visibility'] ?? false,
         );
 
         $submission_id = $course_submissions->getLastSubmissionId()+1;
