@@ -105,3 +105,21 @@ window.onclick = function(event) {
         editmodal.style.display = 'none';
     }
 }
+
+const deletemodal = document.getElementById("delete-modal");
+function deletecard(taskid) {
+    deletemodal.style.display = 'block';
+    document.getElementById('card-delete-id').value = taskid;
+}
+
+const canceldltbtn = document.getElementById('card-dlt-cancel');
+
+canceldltbtn.addEventListener('click', function () {
+    deletemodal.style.display = 'none';
+});
+
+window.onclick = function(event) {
+    if (event.target === deletemodal) {
+        deletemodal.style.display = 'none';
+    }
+}
