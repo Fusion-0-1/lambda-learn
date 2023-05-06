@@ -27,8 +27,9 @@ BEGIN
         IF done THEN
             LEAVE stu_reg_no_loop;
         END IF;
-        INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
-        VALUES (stu_reg_no_, NEW.course_code, NEW.submission_id, 0, 'Done');
+
+        INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id)
+        VALUES (stu_reg_no_, NEW.course_code, NEW.submission_id);
     END LOOP;
     CLOSE get_stu_reg_no;
 END;
@@ -40,6 +41,46 @@ CREATE OR REPLACE TRIGGER createStuToStuCourseAttendSubm
 BEGIN
     INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
     VALUES (NEW.stu_reg_no, NEW.course_code, 'A001', 0, 'Done');
+END;
+
+DELIMITER $$
+CREATE TRIGGER compositeKey
+    BEFORE INSERT ON coursesubmission
+    FOR EACH ROW BEGIN
+    SET NEW.submission_id = (
+       SELECT IFNULL(MAX(submission_id), 0) + 1
+       FROM coursesubmission
+       WHERE course_code  = NEW.course_code
+    );
+END $$
+DELIMITER ;
+
+-- Assign Students to course SubTopics
+DELIMITER $$
+CREATE OR REPLACE TRIGGER assignStudentForSubTopics
+	AFTER INSERT ON stucourse
+	FOR EACH ROW
+BEGIN
+    DECLARE topic_id_ INT;
+    DECLARE sub_topic_id_ DECIMAL(4,2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE get_subtopics CURSOR FOR
+        SELECT topic_id, sub_topic_id
+        FROM CourseSubtopic
+        WHERE course_code = NEW.course_code;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN get_subtopics;
+    get_subtopic_: LOOP
+        FETCH get_subtopics INTO topic_id_, sub_topic_id_;
+        IF done THEN
+            LEAVE get_subtopic_;
+        END IF;
+
+        INSERT INTO stucoursesubtopic(stu_reg_no, course_code, topic_id, sub_topic_id)
+        VALUES (NEW.stu_reg_no, NEW.course_code, topic_id_, sub_topic_id_);
+    END LOOP;
+    CLOSE get_subtopics;
 END;
 
 -- DELIMITER $$
