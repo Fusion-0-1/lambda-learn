@@ -39,8 +39,7 @@
             $hideButtons = '';
         }
         ?>
-
-            <?php if(($_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') or ($remainingTime<=0)){?>
+        <?php if(($_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') or ($remainingTime<=0)){?>
             <div class="announcement-card border">
                 <div class="topic-container grid v-center h-justify">
                     <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
@@ -71,7 +70,7 @@
                     </p>
                 </div>
             </div>
-            <?php } ?>
+        <?php } ?>
     <?php } ?>
 </div>
 

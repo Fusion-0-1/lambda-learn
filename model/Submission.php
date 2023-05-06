@@ -19,7 +19,7 @@ class Submission
 
     private function __construct() {}
 
-    public static function createNewSubmission($courseCode, $topic, $description, $allocatedMark, $allocatedPoint, $dueDate, $visibility, $location="",$submissionId="") {
+    public static function createNewSubmission($courseCode, $topic, $description, $dueDate, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
         $submission = new Submission();
         if ($submissionId != ""){
             $submission->submissionId = $submissionId;
@@ -48,9 +48,9 @@ class Submission
                 courseCode: $sub['course_code'],
                 topic: $sub['topic'],
                 description: $sub['description'],
+                dueDate: $sub['due_date'],
                 allocatedMark: $sub['allocated_mark'],
                 allocatedPoint: $sub['allocated_point'],
-                dueDate: $sub['due_date'],
                 visibility: $sub['visibility'],
                 location: $sub['attachments']?? '',
                 submissionId: $sub['submission_id']
@@ -106,6 +106,15 @@ class Submission
             table: 'coursesubmission',
             columns: ['visibility'=>$visibility,],
             where: ['submission_id'=>$submissionId,'course_code'=>$courseCode]
+        );
+    }
+
+    public static function updateSubmission($courseCode,$submissionId,$topic,$allocatedMark,$dueDate,$description)
+    {
+        Application::$db->update(
+            table: 'coursesubmission',
+            columns: ['topic'=>$topic,'allocated_mark'=>$allocatedMark,'due_date'=> $dueDate, 'description'=>$description],
+            where: ['course_code'=>$courseCode,'submission_id'=>$submissionId]
         );
     }
 

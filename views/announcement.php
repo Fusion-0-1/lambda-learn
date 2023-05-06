@@ -161,7 +161,6 @@
         }
     }
     setInterval(updateRemainingTime, 60000);
-
     const deletemodal = document.getElementById('delete-modal')
     function announcementdelete(announcement_id) {
         const deletemodal = document.getElementById('delete-modal')
