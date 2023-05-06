@@ -115,10 +115,10 @@ class CourseController extends Controller
             courseCode: $body['course_code'],
             topic: $body['heading'],
             description: $body['content'],
-            allocatedMark: $body['mark'],
-            allocatedPoint: $body['point'],
             dueDate: $dueDate->format('Y-m-d H:i:s'),
-            visibility: $body['visibility'],
+            allocatedMark: (int)$body['mark'] ?? 0,
+            allocatedPoint: (int)$body['point'] ?? 0,
+            visibility: $body['visibility'] ?? false,
         );
 
         $submission_id = $course_submissions->getLastSubmissionId()+1;
@@ -160,6 +160,45 @@ class CourseController extends Controller
         Submission::updateVisibility($body['course_code'],$body['submission_id'],$body['visibility']);
         header("Location: /submissions?course_code=".$body['course_code']);
     }
+
+    public function updateAllSubmissions(Request $request)
+    {
+        $body = $request->getBody();
+        $files = $_FILES['edit_attachment'];
+        $numFiles = count($files['name']);
+        $folderPath = $body['upload_attachment_edit'];
+
+        // Check for new files
+        $newFilesUploaded = false;
+        foreach ($files['name'] as $name) {
+            if (!empty($name)) {
+                $newFilesUploaded = true;
+                break;
+            }
+        }
+
+        if ($newFilesUploaded) {
+            // Remove old files
+            $oldFiles = glob($folderPath . "/*");
+            foreach ($oldFiles as $file) {
+                unlink($file);
+            }
+
+            // Move new files
+            for ($i = 0; $i < $numFiles; $i++) {
+                $fileName = $files['name'][$i];
+                $tmpName = $files['tmp_name'][$i];
+
+                if (!empty($fileName)) {
+                    move_uploaded_file($tmpName, $folderPath . '/' . $fileName);
+                }
+            }
+        }
+
+        Submission::updateSubmission($body['course_code'],$body['submission_id_edit'],$body['edit_heading'],$body['edit_mark'],$body['edit_duetime'],$body['edit_content']);
+        header("Location: /submissions?course_code=".$body['course_code']);
+    }
+
 
 
     public function displayCourseMarkUpload()

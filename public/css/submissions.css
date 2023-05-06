@@ -107,6 +107,12 @@
 a:link{
     color: var(--white);
 }
+.card-edit-modal {
+    width: 80%;
+    margin: 15% auto;
+    background-color: var(--white);
+    border-radius: 15px;
+}
 .attach-btn{
     padding: 10px;
     margin: 10px;
@@ -126,6 +132,31 @@ figure{
 }
 .visibility-css{
     margin-left: 30px;
+}
+.submissions-card_modal{
+    border-radius: 10px;
+}
+.attach-btn_modal{
+    padding: 10px;
+    margin: 10px 10px 10px 28px;
+    cursor: pointer;
+}
+.modal{
+    display: none;
+}
+.modal-btns{
+    margin: auto;
+}
+.modal-publish-btn{
+    margin: 10px;
+}
+.cancel-btn{
+    border: var(--green) 1px solid;
+    border-radius: 10px;
+    color: var(--green);
+    min-height: 35px;
+    width: 100px;
+    margin: 10px;
 }
 #heading_textarea{
     display: block;
