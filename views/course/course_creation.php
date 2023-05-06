@@ -9,7 +9,7 @@
     </div>
     <?php } else { ?>
     <div id="mssg-modal" class="error-mssg text-justify">
-        <p>Failed to create course.</p>
+        <p>The course exists.</p>
     </div>
 <?php }
     } elseif(isset($course_update)) {
@@ -18,7 +18,7 @@
         <p>Course updated successfully.</p>
     </div>
     <?php } else { ?>
-    <div id="mssg-modal" class="success-mssg text-justify">
+    <div id="mssg-modal" class="error-mssg text-justify">
         <p>Failed to update course.</p>
     </div>
 <?php }
@@ -41,10 +41,11 @@
         </div>
         <h4 class="csv-header-text">Course Code Format:</h4>
         <p class="csv-header-format flex v-center h-center">
-            The course code should contain 6 characters which starts with two uppercase letters and 4 digits. (ie: CS 2101)<br>
-            -Two upper case letters represent the degree program (ie: 'CS' for Computer Science)<br>
-            -4 digits represent year and the semester respectively and other two digits represents the course number
-            <br>(ie: the above course is a second year 1st semester course)<br>
+            The course code format consists of six characters starting with two uppercase letters followed by four digits.
+            The first two letters indicate the degree program (e.g., 'CS' for Computer Science), while the remaining four
+            digits represent the year, semester, and course number. Specifically, the first digit of the four-digit code
+            denotes the year, the second digit represents the semester, and the last two digits indicate the course number.
+            For example, CS 2101 denotes a second-year first-semester course in the Computer Science program.
         </p>
         <br>
         <form action="create_course" method="POST" class="course-create-form flex flex-row">
@@ -76,9 +77,9 @@
     <div class="main-container inner border">
         <h3>Courses</h3>
         <p class="csv-header-format flex v-center h-center">
-            Please note that you can delete courses only if they are not been initialised by the lecturer.
-            If you want to delete a course which is already initialised, you can delete it once the lecturer reset it at
-            the end of the semester
+            Please note that courses can only be deleted if they have not been initialized by the lecturer. If you
+            attempt to delete a course that has already been initialized, you will need to wait until the end of the
+            semester when the lecturer can reset the course before you can delete it.
         </p>
         <div class="overflow-x grid grid-table">
                 <table class="text-column">
@@ -86,11 +87,18 @@
                         <th>Course Code</th>
                         <th>Course Name</th>
                     </tr>
-                    <?php foreach ($courses as $course) { ?>
-                        <tr>
-                            <td class="text-center"><?php echo $course['course_code']?></td>
-                            <td><?php echo $course['course_name']?></td>
-                        </tr>
+                    <?php foreach ($courses as $course) {
+                        if(date('Y-m-d') == $course['date_created']){?>
+                            <tr class="tr-new-course">
+                                <td class="text-center"><?php echo $course['course_code']?></td>
+                                <td><?php echo $course['course_name']?></td>
+                            </tr>
+                        <?php } else { ?>
+                            <tr>
+                                <td class="text-center"><?php echo $course['course_code']?></td>
+                                <td><?php echo $course['course_name']?></td>
+                            </tr>
+                        <?php } ?>
                     <?php } ?>
                 </table>
                 <table class="button-column">
@@ -107,7 +115,7 @@
                                     <i class='fa fa-trash' aria-hidden='true'></i>
                                 </button>
                                 <?php } else {?>
-                                <button class='error-btn error-btn-icon' disabled>
+                                <button class='error-btn error-btn-icon'  id="delete-course" disabled>
                                     <i class='fa fa-trash' aria-hidden='true'></i>
                                 </button>
                                 <?php }?>
@@ -220,22 +228,6 @@
 
         const modal = document.getElementById("delete-modal");
         modal.hidden = false;
-
-        // const delete_btn = document.getElementById("delete-btn");
-        // delete_btn.onclick = function () {
-        //     var xmlhttp = new XMLHttpRequest();
-        //     xmlhttp.onreadystatechange = function() {
-        //         if (this.readyState === 4 && this.status === 200) {
-        //             document.getElementById("delete-success-message").innerHTML = this.responseText + " has been deleted";
-        //             document.getElementById("delete-success-message").style.display = "block";
-        //             const row = btn.parentNode.parentNode;
-        //             row.parentNode.removeChild(row);
-        //         }
-        //     }
-        //     xmlhttp.open("DELETE", "course-delete.php?course_code=" + course_code, true);
-        //     xmlhttp.send();
-        //     modal.style.display = "none";
-        // }
     }
 
     function edit_course(course_code, course_name) {
@@ -244,10 +236,5 @@
 
         const modal = document.getElementById("edit-modal");
         modal.hidden = false;
-
-        // const edit_save_btn = document.getElementById("edit-save-btn");
-        // edit_save_btn.onclick = function () {
-        //     window.location.href = "course-edit.php?course_code=" + course_code + "&course_name=" + course_name;
-        // }
     }
 </script>
