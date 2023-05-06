@@ -149,11 +149,12 @@ class Course
     {
         $results = Application::$db->select(
             table: 'Course',
-            columns: ['course_code', 'course_name'],
+            columns: ['course_code', 'course_name', 'date_created'],
         );
         $courses = [];
         while ($row = Application::$db->fetch($results)) {
-            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name']];
+            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name'],
+                'date_created'=>$row['date_created']];
         }
         return $courses;
     }
@@ -166,7 +167,8 @@ class Course
                 values: [
                     'course_code' => $courseCode,
                     'course_name' => $courseName,
-                    'optional_flag' => $isOptional
+                    'optional_flag' => $isOptional,
+                    'date_created' => date('Y-m-d')
                 ]
             );
             return true;
