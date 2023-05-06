@@ -86,7 +86,7 @@ class CourseAnnouncement extends Announcement
     {
         Application::$db->update(
             table: 'courseannouncement',
-            columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+            columns: ['heading'=>$heading,'content'=>$content],
             where: ['announcement_id'=>$announcementId]
         );
     }
