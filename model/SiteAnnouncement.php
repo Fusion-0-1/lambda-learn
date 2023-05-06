@@ -84,6 +84,17 @@ class SiteAnnouncement extends Announcement
         );
     }
 
+    //-----------------Update SiteAnnouncement------------------
+
+    public static function updateAnnouncements($announcementId,$heading,$content)
+    {
+         Application::$db->update(
+             table: 'siteannouncement',
+             columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+             where: ['announcement_id'=>$announcementId]
+         );
+    }
+
     /**
      * @return string
      */

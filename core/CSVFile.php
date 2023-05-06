@@ -77,7 +77,7 @@ class CSVFile
      * @return array|bool
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, string $location = null): bool|array
+                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null): bool|array
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
@@ -87,6 +87,8 @@ class CSVFile
                     $output = $this->readUserData($constructor, $csvFile);
                 } else if ($updateAttendance){
                     $output = $this->updateAttendance($csvFile);
+                } else if ($assignStudents) {
+                    $output = $this->assignStudents($csvFile);
                 }
                 fclose($csvFile);
                 // Save the file in the server
@@ -108,7 +110,6 @@ class CSVFile
                         }
                         $this->insertAttendanceReport($location, end($date));
                     }
-
                     move_uploaded_file($this->filepath, $location);
                 }
             } else {
@@ -179,6 +180,39 @@ class CSVFile
             }
         }
         return $invalid;
+    }
+
+
+    /**
+     * @description Assigns students to a course by reading a CSV file containing their registration numbers.
+     * @param $csvFile - The CSV file containing the registration numbers of the students to be assigned.
+     * @return array - Returns an array of invalid registration numbers that were not found in the database.
+     */
+    public function assignStudents($csvFile): array
+    {
+        $invalidRegNo = [];
+        $valid = [];
+        $invalidCourse = [];
+        $exist = [];
+        $fileName = $this->getFilename();
+        if(Course::checkExists($fileName)){
+            while (($line = fgetcsv($csvFile)) !== false) {
+                $regNo = trim(array_shift($line));
+                if (!User::userExists($regNo)) {
+                    $invalidRegNo[] = $regNo;
+                } else {
+                    $valid[] = $regNo;
+                }
+            }
+            if(sizeof($invalidRegNo)==0){
+                foreach ($valid as $regNo){
+                    $exist = Student::assignStudentsToCourse($regNo,$fileName);
+                }
+            }
+        } else {
+            $invalidCourse[] = $fileName;
+        }
+        return ['invalid' => $invalidRegNo, 'invalid_course' => $invalidCourse, 'exist' => $exist];
     }
     // --------------------------------------------------------------------------------
 
