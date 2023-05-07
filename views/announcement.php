@@ -31,7 +31,7 @@
         // Calculate the remaining time in minutes
         $publishTime = strtotime($ann->getPublishDate());
         $currentTime = time();
-        $remainingTime = 30 - round(($currentTime - $publishTime) / 60);
+        $remainingTime = 2 - round(($currentTime - $publishTime) / 60);
         // If the remaining time is less than or equal to zero, hide the buttons
         if ($remainingTime <= 0) {
             $hideButtons = 'style="display:none;"';
@@ -160,7 +160,7 @@
         var elements = document.getElementsByClassName("edit-time");
         for (var i = 0; i < elements.length; i++) {
             var remainingTime = parseInt(elements[i].firstChild.textContent);
-            if (remainingTime > 0) {
+            if (remainingTime > 1) {
                 remainingTime--;
                 elements[i].firstChild.textContent = remainingTime;
                 elements[i].lastChild.textContent = (remainingTime == 1) ? " min left" : " mins left";

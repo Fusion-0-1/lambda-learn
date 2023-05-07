@@ -100,6 +100,7 @@
                 <button type="button" value="Cancel" id="edit-cancel-btn" class="cancel-btn h-center v-center cancel-btn-edit-modal">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
+            <input id="publish_date_time" type="text" name="publish_date_time" hidden>
         </form>
     </div>
 </div>
@@ -161,7 +162,7 @@
         var elements = document.getElementsByClassName("edit-time");
         for (var i = 0; i < elements.length; i++) {
             var remainingTime = parseInt(elements[i].firstChild.textContent);
-            if (remainingTime > 0) {
+            if (remainingTime > 1) {
                 remainingTime--;
                 elements[i].firstChild.textContent = remainingTime;
                 elements[i].lastChild.textContent = (remainingTime == 1) ? " min left" : " mins left";

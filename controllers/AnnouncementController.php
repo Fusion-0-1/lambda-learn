@@ -7,7 +7,6 @@ use app\core\Request;
 use app\model\SiteAnnouncement;
 use app\model\CourseAnnouncement;
 
-
 class AnnouncementController extends Controller
 {
     public function displaySiteAnnouncements()
@@ -51,7 +50,6 @@ class AnnouncementController extends Controller
         $site_announcement->SiteAnnouncementInsert();
         header("Location: /site_announcement");
     }
-
 
     public function createCourseAnnouncements(Request $request)
     {
