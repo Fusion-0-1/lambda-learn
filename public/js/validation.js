@@ -12,7 +12,7 @@ function validate_course_code(course_code) {
     /*
     ^ matches the start of the string
     [A-Z] matches any uppercase letter
-    {2} specifies that exactly 3 uppercase letters should be matched
+    {2} specifies that exactly 2 uppercase letters should be matched
     \s matches any whitespace character
     \d matches any digit
     {4} specifies that exactly 4 digits should be matched

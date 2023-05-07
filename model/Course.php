@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\User;
 use app\core\Request;
 use app\model\User\Lecturer;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class Course
 {
@@ -122,7 +123,7 @@ class Course
         return $courses;
     }
 
-    public static function checkExists(string $course)
+    public static function checkExists(string $course) : bool
     {
         return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
@@ -145,7 +146,7 @@ class Course
 
     }
 
-    public static function fetchAllCourses()
+    public static function fetchAllCourses() : array
     {
         $results = Application::$db->select(
             table: 'Course',
@@ -159,7 +160,7 @@ class Course
         return $courses;
     }
 
-    public static function insertCourse(string $courseCode,string $courseName,int $isOptional)
+    public static function insertCourse(string $courseCode,string $courseName,int $isOptional) : bool
     {
         if(!self::checkExists($courseCode)) {
             Application::$db->insert(
@@ -176,7 +177,7 @@ class Course
         return false;
     }
 
-    public static function UpdateCourse(string $courseCode,string $courseName)
+    public static function UpdateCourse(string $courseCode,string $courseName) : bool
     {
         Application::$db->update(
             table: 'Course',
@@ -186,7 +187,7 @@ class Course
         return true;
     }
 
-    public static function deleteCourse(string $courseCode)
+    public static function deleteCourse(string $courseCode) : bool
     {
         $lecCount = Application::$db->select(
           table: 'LecCourse',
@@ -209,7 +210,7 @@ class Course
         return true;
     }
 
-    public static function getTopicCount(string $courseCode)
+    public static function getTopicCount(string $courseCode) : int
     {
         $results = Application::$db->select(
             table: 'CourseTopic',
