@@ -96,8 +96,8 @@
                 </div>
             </div>
             <div class="modal-btns flex h-center">
-                <button id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
-                <button id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
+                <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
+                <button type="button" id="edit-cancel-btn" class="cancel-btn cancel-btn-edit-modal h-center v-center">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
         </form>
@@ -111,8 +111,8 @@
                 <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
                 <p class="modal-text">Once you delete announcement, you cannot undo the process</p>
                 <section class="flex flex-row two-button-row">
-                    <button class="dark-btn cancel-btn-edit cancel-btn">Cancel</button>
-                    <button id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="button" id="delete-cancel-btn" class="dark-btn cancel-btn-edit cancel-btn">Cancel</button>
                 </section>
             </div>
             <input id="announcement_id_delete" type="text" name="announcement_id_delete" hidden>
@@ -145,7 +145,16 @@
         document.getElementById('content_textarea_edit').value = edit_content;
         document.getElementById('announcement_id').value = edit_btn_id;
     }
-    modal_cancel(editmodal);
+
+    const cancelbtn = document.getElementById('edit-cancel-btn');
+    cancelbtn.addEventListener('click', function () {
+        editmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === editmodal) {
+            editmodal.style.display = 'none';
+        }
+    });
 
     function updateRemainingTime() {
         var elements = document.getElementsByClassName("edit-time");
@@ -161,11 +170,19 @@
         }
     }
     setInterval(updateRemainingTime, 60000);
-    const deletemodal = document.getElementById('delete-modal')
+    const deleteSiteAnnouncementmodal = document.getElementById('delete-modal')
     function announcementdelete(announcement_id) {
-        const deletemodal = document.getElementById('delete-modal')
-        deletemodal.style.display='block';
+        deleteSiteAnnouncementmodal.style.display='block';
         document.getElementById('announcement_id_delete').value = announcement_id;
     }
-    modal_cancel(deletemodal)
+
+    const cancelBtn = document.getElementById('delete-cancel-btn');
+    cancelBtn.addEventListener('click', function () {
+        deleteSiteAnnouncementmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === deleteSiteAnnouncementmodal) {
+            deleteSiteAnnouncementmodal.style.display = 'none';
+        }
+    });
 </script>

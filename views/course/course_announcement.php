@@ -96,8 +96,8 @@
                 </div>
             </div>
             <div class="modal-btns flex h-center">
-                <input type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">
-                <input type="button" value="Cancel" id="cancel-btn" class="cancel-btn h-center v-center">
+                <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
+                <button type="button" value="Cancel" id="edit-cancel-btn" class="cancel-btn h-center v-center cancel-btn-edit-modal">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
         </form>
@@ -111,8 +111,8 @@
                 <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
                 <p class="modal-text">Once you delete announcement, you cannot undo the process</p>
                 <section class="flex flex-row two-button-row">
-                    <button class="dark-btn cancel-btn cancel-btn-edit">Cancel</button>
-                    <button id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="button" id="delete-cancel-btn" class="dark-btn cancel-btn cancel-btn-edit">Cancel</button>
                 </section>
             </div>
             <input id="announcement_id_delete" type="text" name="announcement_id_delete" hidden>
@@ -147,9 +147,14 @@
         document.getElementById('announcement_id').value = edit_btn_id;
     }
 
-    const cancelbtn = document.getElementById('cancel-btn');
+    const cancelbtn = document.getElementById('edit-cancel-btn');
     cancelbtn.addEventListener('click', function () {
         editmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === editmodal) {
+            editmodal.style.display = 'none';
+        }
     });
 
     function updateRemainingTime() {
@@ -169,9 +174,17 @@
 
     const deleteCourseAnnouncementmodal = document.getElementById('delete-modal');
     function announcementdelete(announcement_id) {
-        const deleteCourseAnnouncementmodal = document.getElementById('delete-modal');
         deleteCourseAnnouncementmodal.style.display='block';
         document.getElementById('announcement_id_delete').value = announcement_id;
     }
-    // modal_cancel(deleteCourseAnnouncementmodal)
+
+    const cancelBtn = document.getElementById('delete-cancel-btn');
+    cancelBtn.addEventListener('click', function () {
+        deleteCourseAnnouncementmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === deleteCourseAnnouncementmodal) {
+            deleteCourseAnnouncementmodal.style.display = 'none';
+        }
+    });
 </script>
