@@ -209,11 +209,58 @@ class CourseController extends Controller
         );
     }
 
-    public function courseCreation()
+    public function displayCourseCreation()
     {
+        $params['courses'] = Course::fetchAllCourses();
         return $this->render(
             view: 'course/course_creation',
-            allowedRoles: ['Coordinator']
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function createNewCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $courseName = $body['course_name'];
+        if($body['course_type'] == 'Optional'){
+            $isOptional = 1;
+        } else {
+            $isOptional = 0;
+        }
+        $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional);
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function editCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $courseName = $body['course_name'];
+        $params['course_update'] = Course::UpdateCourse($courseCode, $courseName);
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
+        );
+    }
+
+    public function deleteCourse(Request $request)
+    {
+        $body = $request->getBody();
+        $params['course_delete'] = Course::deleteCourse($body['course_code']);
+        $params['courses'] = Course::fetchAllCourses();
+        return $this->render(
+            view: 'course/course_creation',
+            allowedRoles: ['Coordinator'],
+            params: $params
         );
     }
 
