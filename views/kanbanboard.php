@@ -48,6 +48,14 @@
                         <label>Deadline :</label>
                         <input type="date" name="card-deadline" id="card-deadline-edit-modal" class="card-deadline">
                     </div>
+                    <div>
+                        <label>Priority :</label>
+                        <select name="card-priority" class="card-priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="card-save-container flex h-center">
                     <input type="button" value="Cancel" class="cancel-btn btn-border-dark-blue" id="card-edit-cancel">
