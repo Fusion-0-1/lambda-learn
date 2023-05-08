@@ -133,6 +133,7 @@ CREATE TABLE KanbanTask (
     description VARCHAR(300),
     due_date VARCHAR(20),
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
+    priority ENUM ("Low", "Medium", "High") NOT NULL DEFAULT "Low",
     reg_no VARCHAR(12),
     CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id)
 );
