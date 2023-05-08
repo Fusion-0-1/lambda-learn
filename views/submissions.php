@@ -85,7 +85,7 @@
                     <div class="container-heading-input grid h-justify v-center">
                         <div class="view-points-and-marks">Marks Allocated:- <input id="edit_mark" type="text" name="edit_mark" placeholder="Add Marks ..." class="add-points-and-marks"></div>
                         <div class="view-points-and-marks flex" >Points Allocated:-<div id="view_point"></div> </div>
-                        <label for="duetime">Due date:- </label>
+                        <label for="duetime_edit">Due date:- </label>
                         <input type="datetime-local" id="duetime_edit" name="edit_duetime" class="due-date">
                     </div>
                     <div  class="add-submissions-content-div">
@@ -111,6 +111,7 @@
         </form>
     </div>
 </div>
+
 
 <script type="text/javascript">
     textarea = document.querySelector("#heading_textarea");
@@ -192,4 +193,44 @@
         document.getElementById('submission_id_edit').value = submission_id;
     }
     modal_cancel('subimission_modal_update');
+
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getUTCFullYear();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    if (day<10){
+        day = '0' + day
+    }
+    if (month<10){
+        month = '0' + month
+    }
+    if (hour<10){
+        hour = '0' + hour
+    }
+    if (minute<10){
+        minute = '0' + minute
+    }
+    var minDateTime = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+    document.getElementById("duetime").setAttribute('min',minDateTime);
+
+    var duetimeInput = document.getElementById("duetime");
+    duetimeInput.addEventListener("change", function() {
+        if (duetimeInput.value < minDateTime) {
+            duetimeInput.setCustomValidity("Selected time cannot be earlier than current time.");
+        } else {
+            duetimeInput.setCustomValidity("");
+        }
+    });
+    document.getElementById("duetime_edit").setAttribute('min',minDateTime);
+    var duetimeEditInput = document.getElementById("duetime");
+    duetimeEditInput.addEventListener("change", function() {
+        if (duetimeEditInput.value < minDateTime) {
+            duetimeEditInput.setCustomValidity("Selected time cannot be earlier than current time.");
+        } else {
+            duetimeEditInput.setCustomValidity("");
+        }
+    });
 </script>
