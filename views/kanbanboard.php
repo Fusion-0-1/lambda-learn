@@ -98,6 +98,7 @@
                         </div>
                         <div class="card-footer border flex flex-row h-justify v-center">
                             <div class="card-deadline"><?php echo $toDoTask->getDueDate()?></div>
+                            <div class="card-priority"><?php echo $toDoTask->getPriority()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
                                     <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $toDoTask->getTaskId().",'".$toDoTask->getTitle()."','".$toDoTask->getDescription()."','".$toDoTask->getState()."','".$toDoTask->getDueDate()."'";?>)">
@@ -132,6 +133,7 @@
                         </div>
                         <div class="card-footer border flex flex-row h-justify v-center">
                             <div class="card-deadline"><?php echo $inProgressTask->getDueDate()?></div>
+                            <div class="card-priority"><?php echo $inProgressTask->getPriority()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
                                     <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $inProgressTask->getTaskId().", '".$inProgressTask->getTitle()."','".$inProgressTask->getDescription()."','".$inProgressTask->getState()."','".$inProgressTask->getDueDate()."'";?>)">
@@ -166,6 +168,7 @@
                         </div>
                         <div class="card-footer border flex flex-row h-justify v-center">
                             <div class="card-deadline"><?php echo $doneTask->getDueDate()?></div>
+                            <div class="card-priority"><?php echo $doneTask->getPriority()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
                                     <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $doneTask->getTaskId().", '".$doneTask->getTitle()."','".$doneTask->getDescription()."','".$doneTask->getState()."','".$doneTask->getDueDate()."'";?>)">
