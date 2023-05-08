@@ -77,7 +77,7 @@ class CSVFile
      * @return array|bool
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null): bool|array
+                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null)
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
