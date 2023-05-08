@@ -6,36 +6,19 @@ const newbtninprogress = document.getElementById('card-add-inprogress');
 const newbtndone = document.getElementById('card-add-done');
 
 const newmodal = document.getElementById('card-add-modal');
-const savebutton = document.getElementById('card-add-save');
-const cardtitle = document.getElementById('card-header-modal');
-const cancelbtnnew = document.getElementById('card-save-cancel');
+const editmodal = document.getElementById('card-edit-modal');
+const deletemodal = document.getElementById("delete-modal");
 
 const radiotodo = document.getElementById('radio-todo');
 const radioinprogress = document.getElementById('radio-inprogress')
 const radiodone = document.getElementById('radio-done');
 
-newbtntodo.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radiotodo.innerHTML = '<input type="radio" name="card-status" value="To Do" checked> To Do';
-});
-newbtninprogress.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radioinprogress.innerHTML = '<input type="radio" name="card-status" value="In Progress" checked> In Progress';
-});
-newbtndone.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
-});
+const cancelbtnnew = document.getElementById('card-save-cancel');
+const canceleditbtn = document.getElementById('card-edit-cancel');
+const canceldltbtn = document.getElementById('card-dlt-cancel');
 
-cancelbtnnew.addEventListener('click', function () {
-    newmodal.style.display = 'none';
-});
+// --------------------------- Drag and Drop -----------------------------------
 
-window.onclick = function(event) {
-    if (event.target === newmodal) {
-        newmodal.style.display = 'none';
-    }
-}
 document.addEventListener('dragstart', e=> {
     if(e.target.classList.contains('draggable')) {
         e.target.classList.add('dragging');
@@ -79,10 +62,22 @@ function getClosestFrontSibling(droppable, draggingY) {
     return result;
 }
 
-const editmodal = document.getElementById('card-edit-modal');
-const editbtn = document.getElementsByName('card-update');
-const saveeditbutton = document.getElementById('card-edit-save');
-const canceleditbtn = document.getElementById('card-edit-cancel');
+// --------------------------- Modal Open -----------------------------------
+
+newbtntodo.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radiotodo.innerHTML = '<input type="radio" name="card-status" value="To Do" checked> To Do';
+});
+
+newbtninprogress.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radioinprogress.innerHTML = '<input type="radio" name="card-status" value="In Progress" checked> In Progress';
+});
+
+newbtndone.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
+});
 
 function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskdeadline) {
     editmodal.style.display = 'block';
@@ -93,33 +88,41 @@ function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskdeadlin
     document.getElementById('card-id').value = taskid;
 }
 
-saveeditbutton.addEventListener('click', function () {
-        editmodal.style.display = 'none';
-});
-canceleditbtn.addEventListener('click', function () {
-    editmodal.style.display = 'none';
-});
-
-window.onclick = function(event) {
-    if (event.target === editmodal) {
-        editmodal.style.display = 'none';
-    }
-}
-
-const deletemodal = document.getElementById("delete-modal");
 function deletecard(taskid) {
     deletemodal.style.display = 'block';
     document.getElementById('card-delete-id').value = taskid;
 }
 
-const canceldltbtn = document.getElementById('card-dlt-cancel');
+// --------------------------- Modal Close with Cancel Button -----------------------------------
+
+cancelbtnnew.addEventListener('click', function () {
+    newmodal.style.display = 'none';
+});
+
+canceleditbtn.addEventListener('click', function () {
+    editmodal.style.display = 'none';
+});
 
 canceldltbtn.addEventListener('click', function () {
     deletemodal.style.display = 'none';
 });
 
-window.onclick = function(event) {
+// --------------------------- Modal Close when clicked outside Window -----------------------------------
+
+window.addEventListener("click", function(event) {
+    if (event.target === newmodal) {
+        newmodal.style.display = 'none';
+    }
+});
+
+window.addEventListener("click", function(event) {
+    if (event.target === editmodal) {
+        editmodal.style.display = 'none';
+    }
+});
+
+window.addEventListener("click", function(event) {
     if (event.target === deletemodal) {
         deletemodal.style.display = 'none';
     }
-}
+});
