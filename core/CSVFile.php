@@ -65,19 +65,19 @@ class CSVFile
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
      *       index numbers which students have incorrect data (one or more attributes of the student is invalid).
-     * @param null $constructor constructor of the account creation object. [class, 'constructor of factory pattern']
-     *                  example : [Student::class, 'createNewStudent'];
+     *      @param null $constructor constructor of the account creation object. [class, 'constructor of factory pattern']
+     *                       example : [Student::class, 'createNewStudent'];
      *  2. Update Student attendance.
-     * @param bool $readUserData true (this will enable read user data function)
+     *      @param bool $readUserData true (this will enable read user data function)
      *       This will read attendance containing csv file. Will return false if course codes provided are wrong.
      *       This will update student update for each course as specified in the csv file. 10 points will be given for
      *       leaderboard ranking.
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location
-     * @return array|bool
+     * @return array|bool|null
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null): bool|array
+                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null)
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
@@ -123,10 +123,15 @@ class CSVFile
     /**
      * @description Create user accounts. This function must be used inside readCSV. This is a passive function.
      * i.e. function itself can not run.
-     * @param $csvFile: csvFile which was read by inbuilt fopen(). This is used in readCSV file function.
-     * @param $constructor: constructor of the account creation object. [class, 'constructor of factory pattern']
+     * @param $constructor : constructor of the account creation object. [class, 'constructor of factory pattern']
      *            example : [Student::class, 'createNewStudent'];
-     * @return bool|array
+     * @param $csvFile : csvFile which was read by inbuilt fopen(). This is used in readCSV file function.
+     * @return array [
+     *              'valid' => Valid users as objects,
+     *              'invalid' => Invalid format data such as index, email etc. OR
+     *                          Uploading wrong file (Lecturer.csv for Student vise versa)
+     *              'update' => Students who need to be updates (if the student is already in the database)
+     * ]
      */
     public function readUserData($constructor, $csvFile): array
     {
@@ -137,11 +142,14 @@ class CSVFile
 
         while (($line = fgetcsv($csvFile)) !== FALSE) {
             $unwrappedData = User::unwrapData($line);
-            if (User::validateUserAttrFromArray($unwrappedData)) {
+            // Check if the user type is correct, Student != Lecturer etc.
+            if (!str_contains($constructor[0], User::getUserType($unwrappedData['regNo']))) {
+                $invalid[] = $unwrappedData['regNo'];
+            } elseif (User::validateUserAttrFromArray($unwrappedData)) { // Validate user attributes
                 $newUser = call_user_func($constructor, $unwrappedData);
-                if (!User::userExists($newUser->getRegNo())) {
+                if (!User::userExists($newUser->getRegNo())) { // Check if the user already exists
                     $valid[] = $newUser;
-                } else {
+                } else { // If the user exists, add to update array
                     $update[] = $newUser;
                 }
             } else {
