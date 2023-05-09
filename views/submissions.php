@@ -8,13 +8,15 @@
             <div class="topic-container-add grid v-center h-justify">
                     <textarea id="heading_textarea" name="heading" placeholder="Type your submission topic..."
                               class="add-headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
-                <button class="btn confirm-btn h-center v-center">Upload</button>
+                <button class="btn confirm-btn h-center v-center"
+                        onclick="return submissionInsertValidate(document.getElementById('heading_textarea').value,document.getElementById('add_mark').value,document.getElementById('add_point').value,document.getElementById('content_textarea').value)">Upload
+                </button>
             </div>
 
             <div class="submissions-card-inside border">
                 <div class="container-heading-input grid h-justify v-center">
-                    <div class="view-points-and-marks">Marks Allocated:- <input type="text" name="mark" placeholder="Add Marks ..." class="add-points-and-marks"></div>
-                    <div class="view-points-and-marks">Points Allocated:- <input type="text" name="point" placeholder="Add Points..." class="add-points-and-marks"></div>
+                    <div class="view-points-and-marks">Marks Allocated:- <input id="add_mark" type="number" name="mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
+                    <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" min="0" pattern="\d+"></div>
                     <label for="duetime">Due date:- </label>
                     <input type="datetime-local" id="duetime" name="duetime" class="due-date">
                 </div>
@@ -72,7 +74,7 @@
     <?php } ?>
 </div>
 
-<div class="modal" id="subimission_modal_update">
+<div class="modal" id="subimission_modal_update" hidden>
     <div class="card-edit-modal">
         <form id="add-attachment" class="flex flex-column" action="/update_submissions" method="post" enctype="multipart/form-data">
             <div class="submissions-card_modal border">
@@ -83,7 +85,7 @@
 
                 <div class="submissions-card-inside border">
                     <div class="container-heading-input grid h-justify v-center">
-                        <div class="view-points-and-marks">Marks Allocated:- <input id="edit_mark" type="text" name="edit_mark" placeholder="Add Marks ..." class="add-points-and-marks"></div>
+                        <div class="view-points-and-marks">Marks Allocated:- <input id="edit_mark" type="number" name="edit_mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
                         <div class="view-points-and-marks flex" >Points Allocated:-<div id="view_point"></div> </div>
                         <label for="duetime_edit">Due date:- </label>
                         <input type="datetime-local" id="duetime_edit" name="edit_duetime" class="due-date">
@@ -100,8 +102,10 @@
                     <div id="display-files-edit" class="flex"></div>
                 </div>
                 <div class="modal-btns flex h-center">
-                    <button id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
-                    <button id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
+                    <button id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn"
+                            onclick="return submissionUpdateValidate(document.getElementById('heading_textarea_edit').value,document.getElementById('edit_mark').value,document.getElementById('content_textarea_edit').value)">Publish
+                    </button>
+                    <button id="cancelbtn" class="cancel-btn cancel-modal-btn h-center v-center">Cancel</button>
                 </div>
 
                 <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
@@ -112,6 +116,20 @@
     </div>
 </div>
 
+<div id="warn-modal" class="modal" hidden>
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Input Field or Fields are Empty</h4>
+            <div>
+                <p>Please check whether heading or description or mark or point fields are empty</p>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
     textarea = document.querySelector("#heading_textarea");
@@ -233,4 +251,27 @@
             duetimeEditInput.setCustomValidity("");
         }
     });
+
+    function submissionInsertValidate(heading,mark,point,content) {
+        if (!heading || !mark || !point || !content) {
+            const modal = document.getElementById("warn-modal");
+            modal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+    document.getElementById("continue-btn").addEventListener("click", function() {
+        document.getElementById("warn-modal").hidden = true;
+    });
+
+    function submissionUpdateValidate(heading,mark,content) {
+        if (!heading || !mark || !content) {
+            const modal = document.getElementById("warn-modal");
+            modal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+
+
 </script>
