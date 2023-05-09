@@ -12,17 +12,19 @@ class KanbanTask
     private string $description;
     private string $dueDate;
     private string $state;
+    private string $priority;
     private string $regNo;
 
     private function __construct() {}
 
-    public static function createNewKanbanTask($title, $description, $state, $regNo, $dueDate='', $taskId=''): KanbanTask {
+    public static function createNewKanbanTask($title, $description, $state, $priority, $regNo, $dueDate='', $taskId=''): KanbanTask {
         $task = new KanbanTask();
         $task->title = $title;
         $task->description = $description;
         $task->state = $state;
-        $task->dueDate = $dueDate;
+        $task->priority = $priority;
         $task->regNo = $regNo;
+        $task->dueDate = $dueDate;
         $task->taskId = $taskId;
 
         return $task;
@@ -33,15 +35,16 @@ class KanbanTask
         $kanbanTasks = [];
         $results = Application::$db->select(
             table: 'KanbanTask',
-            columns: ['task_id', 'title', 'description', 'due_date', 'state'],
+            columns: ['task_id', 'title', 'description', 'due_date', 'state', 'priority'],
             where: ['reg_no' => $user->getRegNo(), 'state' => 'To Do'],
-            order: 'due_date ASC'
+            order: 'priority DESC, due_date ASC'
         );
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
                 state: $kanbanTask['state'],
+                priority: $kanbanTask['priority'],
                 regNo: $user->getRegNo(),
                 dueDate: $kanbanTask['due_date'],
                 taskId: $kanbanTask['task_id']
@@ -55,15 +58,16 @@ class KanbanTask
         $kanbanTasks = [];
         $results = Application::$db->select(
             table: 'KanbanTask',
-            columns: ['task_id', 'title', 'description', 'due_date', 'state'],
+            columns: ['task_id', 'title', 'description', 'due_date', 'state', 'priority'],
             where: ['reg_no' => $user->getRegNo(), 'state' => 'In Progress'],
-            order: 'due_date ASC'
+            order: 'priority DESC, due_date ASC'
         );
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
                 state: $kanbanTask['state'],
+                priority: $kanbanTask['priority'],
                 regNo: $user->getRegNo(),
                 dueDate: $kanbanTask['due_date'],
                 taskId: $kanbanTask['task_id']
@@ -77,15 +81,16 @@ class KanbanTask
         $kanbanTasks = [];
         $results = Application::$db->select(
             table: 'KanbanTask',
-            columns: ['task_id', 'title', 'description', 'due_date', 'state'],
+            columns: ['task_id', 'title', 'description', 'due_date', 'state', 'priority'],
             where: ['reg_no' => $user->getRegNo(), 'state' => 'Done'],
-            order: 'due_date DESC'
+            order: 'priority DESC, due_date DESC'
         );
         while ($kanbanTask = Application::$db->fetch($results)) {
             $kanbanTasks[] = self::createNewKanbanTask(
                 title: $kanbanTask['title'],
                 description: $kanbanTask['description'],
                 state: $kanbanTask['state'],
+                priority: $kanbanTask['priority'],
                 regNo: $user->getRegNo(),
                 dueDate: $kanbanTask['due_date'],
                 taskId: $kanbanTask['task_id']
@@ -102,6 +107,7 @@ class KanbanTask
                 'title' => $this->title,
                 'description' => $this->description,
                 'state' => $this->state,
+                'priority' => $this->priority,
                 'due_date' => $this->dueDate,
                 'reg_no' => $this->regNo
             ]
@@ -124,6 +130,7 @@ class KanbanTask
                 'title' => $this->title,
                 'description' => $this->description,
                 'state' => $this->state,
+                'priority' => $this->priority,
                 'due_date' => $this->dueDate
             ],
             where: ['task_id' => $this->taskId]
@@ -221,6 +228,22 @@ class KanbanTask
     public function setState(string $state): void
     {
         $this->state = $state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPriority(): string
+    {
+        return $this->priority;
+    }
+
+    /**
+     * @param string $priority
+     */
+    public function setPriority(string $priority): void
+    {
+        $this->priority = $priority;
     }
 
 }
