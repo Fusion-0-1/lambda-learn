@@ -8,7 +8,8 @@
             <div class="topic-container-add grid v-center h-justify">
                 <textarea id="heading_textarea" name="heading" placeholder="Add Announcement Heading..."
                           class="add-headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
-                <button id="publishbtn" class="btn confirm-btn h-center v-center">Publish</button>
+                <button id="publishbtn" class="btn confirm-btn h-center v-center" onclick="return courseAnnouncementInsertValidate(document.getElementById('heading_textarea').value,document.getElementById('content_textarea').value)">Publish
+                </button>
             </div>
             <div class="announcement-card-inside border">
                 <div class="container-heading grid h-justify v-center">
@@ -96,7 +97,8 @@
                 </div>
             </div>
             <div class="modal-btns flex h-center">
-                <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
+                <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn" onclick="return courseAnnouncementUpdateValidate(document.getElementById('heading_textarea_edit').value,document.getElementById('content_textarea_edit').value)">Publish
+                </button>
                 <button type="button" value="Cancel" id="edit-cancel-btn" class="cancel-btn h-center v-center cancel-btn-edit-modal">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
@@ -120,6 +122,21 @@
             <input type="text" value="<?php echo $course_code?>" name="course_code_delete" hidden>
         </div>
     </form>
+</div>
+
+<div id="warn-modal" class="modal" hidden>
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Input Field or Fields are Empty</h4>
+            <div>
+                <p>Please check whether heading or description fields are empty</p>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     textarea = document.querySelector("#heading_textarea");
@@ -186,6 +203,34 @@
     document.addEventListener('click', function (event) {
         if (event.target === deleteCourseAnnouncementmodal) {
             deleteCourseAnnouncementmodal.style.display = 'none';
+        }
+    });
+
+    //validation
+    function courseAnnouncementInsertValidate(heading,content) {
+        if (!heading || !content) {
+            const modal = document.getElementById("warn-modal");
+            modal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+    function courseAnnouncementUpdateValidate(heading,content) {
+        if (!heading || !content) {
+            const modal = document.getElementById("warn-modal");
+            modal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+    document.getElementById("continue-btn").addEventListener("click", function() {
+        document.getElementById("warn-modal").hidden = true;
+    });
+
+    const courseWarn = document.getElementById('warn-modal');
+    document.addEventListener('click', function (event) {
+        if (event.target === courseWarn) {
+            courseWarn.style.display = 'none';
         }
     });
 </script>
