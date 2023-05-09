@@ -220,6 +220,38 @@ class Course
         return Application::$db->rowCount($results);
     }
 
+    public static function addNewTopicsAndSubTopics($courseCode, $topics, $subTopics, $lecRegNo)
+    {
+        $lastTopicId = Application::$db->select(
+            table: 'CourseTopic',
+            columns: ['topic_id'],
+            where:  ['course_code' => $courseCode]
+        );
+        $topicId = Application::$db->rowCount($lastTopicId)+1;
+        $subTopicCount = 0;
+        foreach ($topics as $topic){
+            if($topic != ''){
+                $subTopicId = 0;
+                Application::$db->insert(
+                    table: 'CourseTopic',
+                    values: ['course_code' => $courseCode, 'topic_id' => $topicId, 'topic' => $topic]
+                );
+                foreach ($subTopics[$subTopicCount] as $subTopic){
+                    $subTopicIdFormat = ($topicId) . '.' . sprintf('%02d', ($subTopicId+1));
+                    Application::$db->insert(
+                        table: 'CourseSubTopic',
+                        values: ['course_code' => $courseCode, 'topic_id' => $topicId, 'sub_topic_id' => $subTopicIdFormat,
+                            'sub_topic' => $subTopic, 'lec_reg_no' => $lecRegNo ]
+                    );
+                    $subTopicId++;
+                }
+                $subTopicCount++;
+                $topicId++;
+            }
+        }
+        return true;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     private function getTotalTopicCompletionProgress(bool $stu):int

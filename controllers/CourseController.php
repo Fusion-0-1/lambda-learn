@@ -350,4 +350,67 @@ class CourseController extends Controller
             params: $params
         );
     }
+
+    public function displayCourseEdit(Request $request)
+    {
+        $body = $request->getBody();
+        $params['course'] = Course::getCourse($body['course_code']);
+
+        return $this->render(
+            view: '/course/course_edit',
+            allowedRoles: ['Lecturer'],
+            params: $params
+        );
+    }
+
+    public function editCourseTopicsAndSubTopics(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $topics = CourseTopic::getCourseTopics($courseCode);
+
+        $updatedTopics = $body['update_topics'];
+        $updatedSubtopics = $body['update_subtopics'];
+        $topicCount = 0;
+        foreach ($topics as $topic){
+            $subTopicCount = 0;
+            if($topic->getTopicName() != $updatedTopics[$topicCount]){
+                $topicId = $topicCount+1;
+                $params['is_topic_edited'] = CourseTopic::editTopics($courseCode, $topicId, $updatedTopics[$topicCount]);
+            }
+            foreach ($topic->getSubTopics() as $subTopic){
+                if($subTopic->getSubTopicName() != $updatedSubtopics[$topicCount+1][$subTopicCount]){
+                    $subTopicId = ($topicCount+1) . '.' . sprintf('%02d', ($subTopicCount+1));
+                    $params['is_sub_topic_edited'] = CourseSubTopic::editSubTopics($courseCode, ($topicCount+1), $subTopicId, $updatedSubtopics[$topicCount+1][$subTopicCount]);
+                }
+                $subTopicCount++;
+            }
+            $topicCount++;
+        }
+
+        $params['course'] = Course::getCourse($courseCode);
+        return $this->render(
+            view: '/course/course_page',
+            allowedRoles: ['Lecturer'],
+            params: $params
+        );
+    }
+
+    public function addNewCourseTopicsAndSubTopics(Request $request)
+    {
+        $body = $request->getBody();
+        $newTopics = $body['topics'];
+        $newSubTopics = $body['subtopic'];
+
+        $courseCode = $body['course_code'];$user = unserialize($_SESSION['user']);
+        $lecRegNo = $user->getregNo();
+        $params['add_topics'] = Course::addNewTopicsAndSubTopics($courseCode, $newTopics, $newSubTopics, $lecRegNo);
+
+        $params['course'] = Course::getCourse($courseCode);
+        return $this->render(
+            view: '/course/course_page',
+            allowedRoles: ['Lecturer'],
+            params: $params
+        );
+    }
 }
