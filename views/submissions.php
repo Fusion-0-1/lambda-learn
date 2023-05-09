@@ -102,10 +102,10 @@
                     <div id="display-files-edit" class="flex"></div>
                 </div>
                 <div class="modal-btns flex h-center">
-                    <button id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn"
+                    <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn"
                             onclick="return submissionUpdateValidate(document.getElementById('heading_textarea_edit').value,document.getElementById('edit_mark').value,document.getElementById('content_textarea_edit').value)">Publish
                     </button>
-                    <button id="cancelbtn" class="cancel-btn cancel-modal-btn h-center v-center">Cancel</button>
+                    <button type="button" id="modal-cancel-btn" class="cancel-btn cancel-modal-btn h-center v-center">Cancel</button>
                 </div>
 
                 <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
@@ -210,7 +210,15 @@
         document.getElementById('upload_attachments_edit').value=location;
         document.getElementById('submission_id_edit').value = submission_id;
     }
-    modal_cancel('subimission_modal_update');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+    modalCancelBtn.addEventListener('click', function () {
+        editsubmissionmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === editsubmissionmodal) {
+            editsubmissionmodal.style.display = 'none';
+        }
+    });
 
     var date = new Date();
     var day = date.getDate();
@@ -254,24 +262,30 @@
 
     function submissionInsertValidate(heading,mark,point,content) {
         if (!heading || !mark || !point || !content) {
-            const modal = document.getElementById("warn-modal");
-            modal.hidden = false;
+            const warnmodal = document.getElementById("warn-modal");
+            warnmodal.hidden = false;
             return false;
         }
         return true;
     }
-    document.getElementById("continue-btn").addEventListener("click", function() {
-        document.getElementById("warn-modal").hidden = true;
-    });
 
     function submissionUpdateValidate(heading,mark,content) {
         if (!heading || !mark || !content) {
-            const modal = document.getElementById("warn-modal");
-            modal.hidden = false;
+            const wranmodal = document.getElementById("warn-modal");
+            wranmodal.hidden = false;
             return false;
         }
         return true;
     }
 
+    const warnModal = document.getElementById("warn-modal");
+    document.getElementById("continue-btn").addEventListener("click", function() {
+        document.getElementById("warn-modal").hidden = true;
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === warnModal) {
+            warnModal.style.display = 'none';
+        }
+    });
 
 </script>
