@@ -107,6 +107,7 @@ class KanbanTask
                 'title' => $this->title,
                 'description' => $this->description,
                 'state' => $this->state,
+                'priority' => $this->priority,
                 'due_date' => $this->dueDate,
                 'reg_no' => $this->regNo
             ]
@@ -129,6 +130,7 @@ class KanbanTask
                 'title' => $this->title,
                 'description' => $this->description,
                 'state' => $this->state,
+                'priority' => $this->priority,
                 'due_date' => $this->dueDate
             ],
             where: ['task_id' => $this->taskId]
