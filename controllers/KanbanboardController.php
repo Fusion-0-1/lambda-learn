@@ -30,6 +30,7 @@ class KanbanboardController extends Controller
             title: $body['card-header'],
             description: $body['card-body'],
             state: $body['card-status'],
+            priority: $body['card-priority'],
             regNo: $user->getRegNo(),
             dueDate: $body['card-deadline']
             );
@@ -52,6 +53,7 @@ class KanbanboardController extends Controller
             title: $body['card-header'],
             description: $body['card-body'],
             state: $body['card-state'],
+            priority: $body['card-priority'],
             regNo: $user->getRegNo(),
             dueDate: $body['card-deadline'],
             taskId: $body['card-id']
