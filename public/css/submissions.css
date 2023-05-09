@@ -158,6 +158,11 @@ figure{
     width: 100px;
     margin: 10px;
 }
+.cancel-btn-delete{
+    border: var(--error-btn) 1px solid;
+    margin: 0 auto;
+    color: var(--error-btn);
+}
 #heading_textarea{
     display: block;
     overflow: hidden;
