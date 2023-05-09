@@ -67,12 +67,7 @@
 
 .card-footer {
     padding: 6px 20px;
-    border-radius: 15px;
     border-top: 0;
-}
-
-.card-deadline {
-    border: none;
 }
 
 .card-options {
