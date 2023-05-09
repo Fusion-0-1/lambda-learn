@@ -79,13 +79,14 @@ newbtndone.addEventListener('click', function () {
     radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
 });
 
-function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskdeadline) {
+function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskpriority, taskdeadline) {
     editmodal.style.display = 'block';
     document.getElementById('card-header-edit-modal').value = tasktitle;
     document.getElementById('card-body-edit-modal').value = taskdescription;
     document.getElementById('card-deadline-edit-modal').value = taskdeadline;
-    document.getElementById('card-state').value = taskstate;
-    document.getElementById('card-id').value = taskid;
+    document.getElementById('card-state-edit-modal').value = taskstate;
+    document.getElementById('card-priority-edit-modal').value = taskpriority;
+    document.getElementById('card-id-edit-modal').value = taskid;
 }
 
 function deletecard(taskid) {
@@ -126,3 +127,20 @@ window.addEventListener("click", function(event) {
         deletemodal.style.display = 'none';
     }
 });
+
+// --------------------------- Task Priority -----------------------------------
+
+const cardpriority = document.querySelectorAll('.card-priority');
+
+for (let i = 0; i < cardpriority.length; i++) {
+    const priorityvalue = cardpriority[i].textContent;
+    if (priorityvalue === 'High') {
+        cardpriority[i].style.color = '#ff0000';
+    } else if (priorityvalue === 'Medium') {
+        cardpriority[i].style.color = '#b36e15';
+    } else if (priorityvalue === 'Low') {
+        cardpriority[i].style.color = '#2ba512';
+    }
+}
+
+
