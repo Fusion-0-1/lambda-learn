@@ -62,6 +62,16 @@ class CourseTopic {
         return $topics;
     }
 
+    public static function editTopics($courseCode, $topicId, $topicName) : bool
+    {
+        Application::$db->update(
+            table: 'CourseTopic',
+            columns: ['topic' => $topicName],
+            where: ['course_code' => $courseCode, 'topic_id' => $topicId]
+        );
+        return true;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
