@@ -15,6 +15,36 @@ label, .input {
     height: 33px;
 }
 
+.drop-down{
+    height: 32px !important;
+}
+
+tr.tr-new-course td:first-of-type{
+    border-left: 5px solid var(--warn-btn);
+}
+
+tr.tr-new-course td:last-of-type{
+    border-right: 5px solid var(--warn-btn);
+}
+
+#delete-course {
+    position: relative;
+}
+
+#delete-course:hover::before {
+    content: 'Reset the course to delete it';
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    background-color: var(--border-white);
+    color: var(--ash);
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+
 @media(max-width:767px) {
     .course-create-form {
         align-items: center;

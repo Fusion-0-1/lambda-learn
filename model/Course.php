@@ -6,6 +6,7 @@ use app\core\Application;
 use app\core\User;
 use app\core\Request;
 use app\model\User\Lecturer;
+use PhpParser\Node\Expr\Cast\Bool_;
 
 class Course
 {
@@ -122,12 +123,12 @@ class Course
         return $courses;
     }
 
-    public static function checkExists($course)
+    public static function checkExists(string $course) : bool
     {
         return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
 
-    public static function getCourse($courseCode): Course
+    public static function getCourse(string $courseCode): Course
     {
         $results = Application::$db->select(
             table: 'Course',
@@ -145,20 +146,71 @@ class Course
 
     }
 
-    public static function fetchAllCourses()
+    public static function fetchAllCourses() : array
     {
         $results = Application::$db->select(
             table: 'Course',
-            columns: ['course_code', 'course_name'],
+            columns: ['course_code', 'course_name', 'date_created'],
         );
         $courses = [];
         while ($row = Application::$db->fetch($results)) {
-            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name']];
+            $courses[] = ['course_code' => $row['course_code'], 'course_name' => $row['course_name'],
+                'date_created'=>$row['date_created']];
         }
         return $courses;
     }
 
-    public static function getTopicCount($courseCode)
+    public static function insertCourse(string $courseCode,string $courseName,int $isOptional) : bool
+    {
+        if(!self::checkExists($courseCode)) {
+            Application::$db->insert(
+                table: 'Course',
+                values: [
+                    'course_code' => $courseCode,
+                    'course_name' => $courseName,
+                    'optional_flag' => $isOptional,
+                    'date_created' => date('Y-m-d')
+                ]
+            );
+            return true;
+        }
+        return false;
+    }
+
+    public static function UpdateCourse(string $courseCode,string $courseName) : bool
+    {
+        Application::$db->update(
+            table: 'Course',
+            columns: ['course_name' => $courseName],
+            where: ['course_code' => $courseCode]
+        );
+        return true;
+    }
+
+    public static function deleteCourse(string $courseCode) : bool
+    {
+        $lecCount = Application::$db->select(
+          table: 'LecCourse',
+          where: ['course_code'=>$courseCode]
+        );
+        if(Application::$db->rowCount($lecCount)>0){
+            Application::$db->delete(
+                table: 'LecCourse',
+                where: ['course_code'=>$courseCode]
+            );
+        }
+        Application::$db->delete(
+            table: 'CourseSubmission',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'Course',
+            where: ['course_code'=>$courseCode]
+        );
+        return true;
+    }
+
+    public static function getTopicCount(string $courseCode) : int
     {
         $results = Application::$db->select(
             table: 'CourseTopic',

@@ -31,14 +31,14 @@ INSERT INTO Admin (reg_no, first_name, last_name, email, contact_no, password) V
     ("2011/AD/0007", "Pathum", "Perera", "2011ad0007@fusion.ac.lk", "754533541", "20110007@AD"),
     ("2009/AD/0005", "Sisira", "Fernando", "2009ad0005@fusion.ac.lk", "777264452", "20090005@AD");
 
-INSERT INTO Course (course_code, course_name, optional_flag, cord_reg_no) VALUES
-    ("CS 2001", "Database Management", 0, "2003/LC/0004"),
-    ("CS 2002", "Discrete Mathematics", 1, "2003/LC/0004"),
-    ("CS 2003", "Data Stuctures", 0, "2003/LC/0004"),
-    ("CS 2004", "Programming Algorithms", 1, "2003/LC/0004"),
-    ("IS 2001", "Programming using C", 0, "1998/LC/0019"),
-    ("IS 2002", "Rapid Application Development", 1, "1998/LC/0019"),
-    ("IS 2003", "Laboratory 1", 0, "1998/LC/0019");
+INSERT INTO Course (course_code, course_name, optional_flag, cord_reg_no, date_created) VALUES
+    ("CS 2001", "Database Management", 0, "2003/LC/0004", "2022-10-29"),
+    ("CS 2002", "Discrete Mathematics", 1, "2003/LC/0004", "2022-10-03"),
+    ("CS 2003", "Data Stuctures", 0, "2003/LC/0004", "2023-02-20"),
+    ("CS 2004", "Programming Algorithms", 1, "2003/LC/0004", "2023-03-29"),
+    ("IS 2001", "Programming using C", 0, "1998/LC/0019", "2022-10-10"),
+    ("IS 2002", "Rapid Application Development", 1, "1998/LC/0019", "2022-11-29"),
+    ("IS 2003", "Laboratory 1", 0, "1998/LC/0019", "2022-11-25");
 
 INSERT INTO CourseTopic (course_code, topic_id, topic) VALUES
     ("CS 2001", 01, "Types of Database Management Systems"),

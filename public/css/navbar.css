@@ -67,7 +67,7 @@ a:visited{
 }
 
 .search-bar{
-    width: 250px;
+    width: 250px !important;
     padding: 10px;
     color: var(--blue);
 }
@@ -113,7 +113,7 @@ a:visited{
 
 @media screen and (max-width: 1000px) {
     .search-bar{
-        width: 150px;
+        width: 150px !important;
     }
 
     .elements{
