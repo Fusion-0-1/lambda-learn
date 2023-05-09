@@ -43,7 +43,7 @@
             <div class="topic-container grid v-center h-justify" >
                 <h4 class="heading-content text-bold text-justify"><?php echo $sub->getTopic()?></h4>
                     <div class="edit-delete-timeremaining grid v-center">
-                        <a href="" class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
+                        <button class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image" onclick="courseSubmissionDelete('<?php echo $sub->getSubmissionId()."'";?>)"></button>
                         <button class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image" onclick="submissionupdate('<?php echo $sub->getTopic()."','".$sub->getDescription()."','".$sub->getDueDate()."','".$sub->getAllocatedMark()."','".$sub->getAllocatedPoint()."','".$sub->getLocation()."','".$sub->getSubmissionId()."'";?>)"></button>
                     </div>
             </div>
@@ -129,6 +129,24 @@
             </section>
         </div>
     </div>
+</div>
+
+<div id="delete-modal" class="modal" hidden>
+    <form method="post" action="/delete_course_submission">
+        <div class="modal-content error-modal-content">
+            <div class="flex flex-column v-center h-center">
+                <img src="./images/primary_icons/error.svg">
+                <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
+                <p class="modal-text">Once you delete activity, you cannot undo the process</p>
+                <section class="flex flex-row two-button-row">
+                    <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="button" id="delete-cancel-btn" class="dark-btn cancel-btn-delete cancel-btn">Cancel</button>
+                </section>
+            </div>
+            <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>" hidden>
+            <input id="submission_id_delete" type="text" name="submission_id_delete" hidden>
+        </div>
+    </form>
 </div>
 
 <script type="text/javascript">
@@ -220,6 +238,22 @@
         }
     });
 
+    const deleteCourseSubmissionModal = document.getElementById('delete-modal')
+    function courseSubmissionDelete(submission_id) {
+        deleteCourseSubmissionModal.style.display='block';
+        document.getElementById('submission_id_delete').value = submission_id;
+    }
+    const DeleteModalCancelBtn = document.getElementById('delete-cancel-btn');
+    DeleteModalCancelBtn.addEventListener('click', function () {
+        deleteCourseSubmissionModal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === deleteCourseSubmissionModal) {
+            deleteCourseSubmissionModal.style.display = 'none';
+        }
+    });
+
+    //validation
     var date = new Date();
     var day = date.getDate();
     var month = date.getMonth() + 1;
