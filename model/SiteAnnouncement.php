@@ -53,7 +53,6 @@ class SiteAnnouncement extends Announcement
         $siteAnnouncements = [];
         $results = Application::$db->select(
             table: 'SiteAnnouncement',
-            where: ['active' => 1],
             order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
@@ -98,9 +97,8 @@ class SiteAnnouncement extends Announcement
 
     public static function deleteSiteAnnouncement($announcementId)
     {
-        Application::$db->update(
+        Application::$db->delete(
             table: 'siteannouncement',
-            columns: ['active' => 0],
             where: ['announcement_id'=>$announcementId]
         );
     }

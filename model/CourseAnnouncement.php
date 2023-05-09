@@ -49,7 +49,7 @@ class CourseAnnouncement extends Announcement
         $courseAnnouncements = [];
         $results = Application::$db->select(
             table: 'courseannouncement',
-            where: ['course_code' => $course_code,'active' => 1],
+            where: ['course_code' => $course_code],
             order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
@@ -93,9 +93,8 @@ class CourseAnnouncement extends Announcement
 
     public static function deleteCourseAnnouncement($announcementId,$courseCode)
     {
-        Application::$db->update(
+        Application::$db->delete(
             table: 'courseannouncement',
-            columns: ['active' => 0],
             where: ['announcement_id'=>$announcementId,'course_code' => $courseCode]
         );
     }
