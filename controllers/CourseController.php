@@ -381,7 +381,8 @@ class CourseController extends Controller
             foreach ($topic->getSubTopics() as $subTopic){
                 if($subTopic->getSubTopicName() != $updatedSubtopics[$topicCount+1][$subTopicCount]){
                     $subTopicId = ($topicCount+1) . '.' . sprintf('%02d', ($subTopicCount+1));
-                    $params['is_sub_topic_edited'] = CourseSubTopic::editSubTopics($courseCode, ($topicCount+1), $subTopicId, $updatedSubtopics[$topicCount+1][$subTopicCount]);
+                    $params['is_sub_topic_edited'] = CourseSubTopic::editSubTopics($courseCode, ($topicCount+1),
+                        $subTopicId, $updatedSubtopics[$topicCount+1][$subTopicCount]);
                 }
                 $subTopicCount++;
             }
