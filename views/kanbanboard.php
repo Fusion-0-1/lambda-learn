@@ -10,10 +10,6 @@
                 <div class="flex"><input type="text" name="card-header" id="card-header-modal" class="card-header  card-header-modal border card-border-radius" placeholder="Card Title" required></div>
                 <div class="flex"><textarea name="card-body" class="card-body card-body-modal border card-border-radius" placeholder="Card Content" required></textarea></div>
                 <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
-                    <div class="card-deadline-label">
-                        <label>Deadline :</label>
-                        <input type="date" name="card-deadline" class="card-deadline">
-                    </div>
                     <div>
                         <label>Priority :</label>
                         <select name="card-priority" class="card-priority">
@@ -21,6 +17,10 @@
                             <option value="Medium">Medium</option>
                             <option value="High">High</option>
                         </select>
+                    </div>
+                    <div class="card-deadline-label">
+                        <label>Deadline :</label>
+                        <input type="date" name="card-deadline" class="card-deadline">
                     </div>
                 </div>
                 <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
@@ -39,22 +39,22 @@
     <div class="modal" id="card-edit-modal">
         <div class="card-edit-modal modal-content border border-radius flex flex-column">
             <form method="post" action="update_task">
-                <input type="hidden" name="card-id" id="card-id">
-                <input type="hidden" name="card-state" id="card-state">
+                <input type="hidden" name="card-id" id="card-id-edit-modal">
+                <input type="hidden" name="card-state" id="card-state-edit-modal">
                 <div class="flex"><input type="text" name="card-header" id="card-header-edit-modal" class="card-header card-header-modal border card-border-radius" placeholder="Card Title" required></div>
                 <div class="flex"><textarea name="card-body" id="card-body-edit-modal" class="card-body card-body-modal border card-border-radius" placeholder="Card Content" required></textarea></div>
                 <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
-                    <div class="card-deadline-label">
-                        <label>Deadline :</label>
-                        <input type="date" name="card-deadline" id="card-deadline-edit-modal" class="card-deadline">
-                    </div>
                     <div>
                         <label>Priority :</label>
-                        <select name="card-priority" class="card-priority">
+                        <select name="card-priority" class="card-priority" id="card-priority-edit-modal">
                             <option value="Low">Low</option>
                             <option value="Medium">Medium</option>
                             <option value="High">High</option>
                         </select>
+                    </div>
+                    <div class="card-deadline-label">
+                        <label>Deadline :</label>
+                        <input type="date" name="card-deadline" id="card-deadline-edit-modal" class="card-deadline">
                     </div>
                 </div>
                 <div class="card-save-container flex h-center">
@@ -96,17 +96,19 @@
                         <div class="card-body border card-border-radius">
                             <p> <?php echo $toDoTask->getDescription()?> </p>
                         </div>
-                        <div class="card-footer border flex flex-row h-justify v-center">
+                        <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
+                            <div class="card-priority" id="card-priority"><?php echo $toDoTask->getPriority()?></div>
                             <div class="card-deadline"><?php echo $toDoTask->getDueDate()?></div>
-                            <div class="card-priority"><?php echo $toDoTask->getPriority()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
-                                    <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $toDoTask->getTaskId().",'".$toDoTask->getTitle()."','".$toDoTask->getDescription()."','".$toDoTask->getState()."','".$toDoTask->getDueDate()."'";?>)">
+                                    <button type="submit" name="card-update" class="card-button card-update"
+                                            onclick="kanbanupdate(<?php echo $toDoTask->getTaskId().",'".$toDoTask->getTitle()."','".$toDoTask->getDescription()."','".$toDoTask->getState()."','".$toDoTask->getPriority()."','".$toDoTask->getDueDate()."'";?>)">
                                         <span class="fa fa-pen"></span>
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $toDoTask->getTaskId();?>)">
+                                    <button type="submit" name="card-delete" class="card-button"
+                                            onclick="deletecard(<?php echo $toDoTask->getTaskId();?>)">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>
@@ -131,17 +133,19 @@
                         <div class="card-body border card-border-radius">
                             <p> <?php echo $inProgressTask->getDescription()?> </p>
                         </div>
-                        <div class="card-footer border flex flex-row h-justify v-center">
-                            <div class="card-deadline"><?php echo $inProgressTask->getDueDate()?></div>
+                        <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
                             <div class="card-priority"><?php echo $inProgressTask->getPriority()?></div>
+                            <div class="card-deadline"><?php echo $inProgressTask->getDueDate()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
-                                    <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $inProgressTask->getTaskId().", '".$inProgressTask->getTitle()."','".$inProgressTask->getDescription()."','".$inProgressTask->getState()."','".$inProgressTask->getDueDate()."'";?>)">
+                                    <button type="submit" name="card-update" class="card-button card-update"
+                                            onclick="kanbanupdate(<?php echo $inProgressTask->getTaskId().", '".$inProgressTask->getTitle()."','".$inProgressTask->getDescription()."','".$inProgressTask->getState()."','".$inProgressTask->getPriority()."','".$inProgressTask->getDueDate()."'";?>)">
                                         <span class="fa fa-pen"></span>
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $inProgressTask->getTaskId();?>)">
+                                    <button type="submit" name="card-delete" class="card-button"
+                                            onclick="deletecard(<?php echo $inProgressTask->getTaskId();?>)">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>
@@ -166,17 +170,19 @@
                         <div class="card-body border card-border-radius">
                             <p> <?php echo $doneTask->getDescription()?> </p>
                         </div>
-                        <div class="card-footer border flex flex-row h-justify v-center">
-                            <div class="card-deadline"><?php echo $doneTask->getDueDate()?></div>
+                        <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
                             <div class="card-priority"><?php echo $doneTask->getPriority()?></div>
+                            <div class="card-deadline"><?php echo $doneTask->getDueDate()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
-                                    <button type="submit" name="card-update" class="card-button card-update" onclick="kanbanupdate(<?php echo $doneTask->getTaskId().", '".$doneTask->getTitle()."','".$doneTask->getDescription()."','".$doneTask->getState()."','".$doneTask->getDueDate()."'";?>)">
+                                    <button type="submit" name="card-update" class="card-button card-update"
+                                            onclick="kanbanupdate(<?php echo $doneTask->getTaskId().", '".$doneTask->getTitle()."','".$doneTask->getDescription()."','".$doneTask->getState()."','".$doneTask->getPriority()."','".$doneTask->getDueDate()."'";?>)">
                                         <span class="fa fa-pen"></span>
                                     </button>
                                 </div>
                                 <div>
-                                    <button type="submit" name="card-delete" class="card-button" onclick="deletecard(<?php echo $doneTask->getTaskId();?>)">
+                                    <button type="submit" name="card-delete" class="card-button"
+                                            onclick="deletecard(<?php echo $doneTask->getTaskId();?>)">
                                         <span class="fa fa-trash"></span>
                                     </button>
                                 </div>
