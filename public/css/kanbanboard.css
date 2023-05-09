@@ -67,17 +67,10 @@
 
 .card-footer {
     padding: 6px 20px;
-    border-radius: 15px;
     border-top: 0;
 }
 
-.card-deadline {
-    flex: 6;
-    border: none;
-}
-
 .card-options {
-    flex: 1.2;
     color: #0B2273;
 }
 
