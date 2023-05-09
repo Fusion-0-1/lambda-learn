@@ -163,6 +163,9 @@ figure{
     margin: 0 auto;
     color: var(--error-btn);
 }
+.delete-modal-text{
+    width: 500px;
+}
 #heading_textarea{
     display: block;
     overflow: hidden;

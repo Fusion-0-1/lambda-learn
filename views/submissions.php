@@ -136,8 +136,9 @@
         <div class="modal-content error-modal-content">
             <div class="flex flex-column v-center h-center">
                 <img src="./images/primary_icons/error.svg">
-                <h4 id="delete-warning" class="modal-header">Are you sure?</h4>
-                <p class="modal-text">Once you delete activity, you cannot undo the process</p>
+                <h4 id="delete-warning" class="modal-header text-center">Are you sure you want to proceed with <br> this permenant deletion?</h4>
+                <p class="modal-text text-center delete-modal-text">Deleting this submission will <b>permanently</b> delete all student submissions attached to it.
+                    This action is <b>irreversible</b>.</p>
                 <section class="flex flex-row two-button-row">
                     <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
                     <button type="button" id="delete-cancel-btn" class="dark-btn cancel-btn-delete cancel-btn">Cancel</button>
