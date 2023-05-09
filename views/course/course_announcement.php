@@ -75,7 +75,7 @@
     <?php } ?>
 </div>
 
-<div class="modal" id="card_edit_modal">
+<div class="modal" id="card_edit_modal" hidden>
     <div class="card-edit-modal">
         <form method="post" action="/update_course_announcement" class="announcement-card border announcement-card-border">
             <input type="text" value="<?php echo $course_code?>" name="course_code" hidden>
@@ -106,7 +106,7 @@
         </form>
     </div>
 </div>
-<div id="delete-modal" class="modal">
+<div id="delete-modal" class="modal" hidden>
     <form method="post" action="/delete_course_announcement">
         <div class="modal-content error-modal-content">
             <div class="flex flex-column v-center h-center">

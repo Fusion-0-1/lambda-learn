@@ -39,19 +39,53 @@
         } else {
             $hideButtons = '';
         }
+        
+        $profile = unserialize($_SESSION['user']);
+        $regno = $profile->getRegNo();
+        $adminregno = $ann->getAdminRegNo();
+        $cordregno = $ann->getCordRegNo();
+        $flag = '';
+        if($adminregno == NULL){
+            $flag = $cordregno;
+        } else {
+            $flag = $adminregno;
+        }
         ?>
 
-        <?php if(($_SESSION['user-role'] == 'Admin' or $_SESSION['user-role'] == 'Coordinator') or ($remainingTime<=0)){?>
+        <?php if($regno == $flag && ($remainingTime > 0)){?>
             <div id="announcement-card-time-remaining" class="announcement-card border">
                 <div class="topic-container grid v-center h-justify">
                     <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
-                    <?php if ($_SESSION['user-role'] == 'Admin' or $_SESSION['user-role'] == 'Coordinator') {?>
                         <div class="edit-delete-timeremaining grid v-center" <?php echo $hideButtons ?>>
                             <div class="edit-time" id="timeremaning"><b><?php echo $remainingTime ?></b><span> mins left</span></div>
                             <button class="deletebtn link" id="deletebtn"><img src="./images/announcement/Delete.png" alt="Delete image" onclick="announcementdelete('<?php echo $ann->getAnnouncementId()."'";?>)"></button>
                             <button class="editbtn link" id="editbtn"><img src="./images/announcement/Edit.png" alt="Edit image" onclick="announcementupdate(' <?php echo $ann->getHeading()."','".$ann->getContent()."','".$ann->getAnnouncementId()."','".$ann->getPublishDate()."'";?>)"></button>
                         </div>
-                    <?php } ?>
+                </div>
+                <div class="announcement-card-inside border">
+                    <div class="container-heading grid h-justify v-center">
+                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime text-right">
+                            <?php
+                                $utcTime = $ann->getPublishDate();
+                                $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
+                                $date = new DateTime($utcTime, new DateTimeZone('UTC'));
+                                $date->setTimezone($sriLankanTimezone);
+                                $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
+                                echo $sriLankanDateAndTime;
+                            ?>
+                        </div>
+                    </div>
+                    <p class="text-justify">
+                        <?php echo $ann->getContent()?>
+                    </p>
+                </div>
+            </div>
+
+        <?php } else if ($remainingTime <= 0) { ?>
+            <div id="announcement-card-time-remaining" class="announcement-card border">
+                <div class="topic-container grid v-center h-justify">
+                    <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
