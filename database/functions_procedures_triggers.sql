@@ -83,6 +83,16 @@ BEGIN
     CLOSE get_subtopics;
 END;
 
+DROP TRIGGER IF EXISTS `delete_submissions`;
+DELIMITER //
+CREATE TRIGGER `delete_submissions`
+AFTER DELETE ON `coursesubmission`
+FOR EACH ROW
+BEGIN
+DELETE FROM StuCourseSubmission WHERE submission_id=OLD.submission_id AND course_code=OLD.course_code;
+END //
+
+
 -- DELIMITER $$
 -- CREATE OR REPLACE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN
 -- BEGIN

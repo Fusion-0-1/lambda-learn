@@ -199,7 +199,12 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
-
+    public function deleteCourseSubmission(Request $request)
+    {
+        $body = $request->getBody();
+        Submission::deleteCourseSubmission($body['course_code'],$body['submission_id_delete']);
+        header("Location: /submissions?course_code=".$body['course_code']);
+    }
 
     public function displayCourseMarkUpload()
     {

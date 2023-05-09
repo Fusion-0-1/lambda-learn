@@ -141,22 +141,27 @@ figure{
     margin: 10px 10px 10px 28px;
     cursor: pointer;
 }
-.modal{
-    display: none;
-}
 .modal-btns{
     margin: auto;
 }
 .modal-publish-btn{
     margin: 10px;
 }
-.cancel-btn{
+.cancel-modal-btn{
     border: var(--green) 1px solid;
     border-radius: 10px;
     color: var(--green);
     min-height: 35px;
     width: 100px;
     margin: 10px;
+}
+.cancel-btn-delete{
+    border: var(--error-btn) 1px solid;
+    margin: 0 auto;
+    color: var(--error-btn);
+}
+.delete-modal-text{
+    width: 500px;
 }
 #heading_textarea{
     display: block;

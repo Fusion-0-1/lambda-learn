@@ -8,13 +8,15 @@
             <div class="topic-container-add grid v-center h-justify">
                     <textarea id="heading_textarea" name="heading" placeholder="Type your submission topic..."
                               class="add-headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
-                <button class="btn confirm-btn h-center v-center">Upload</button>
+                <button class="btn confirm-btn h-center v-center"
+                        onclick="return submissionInsertValidate(document.getElementById('heading_textarea').value,document.getElementById('add_mark').value,document.getElementById('add_point').value,document.getElementById('content_textarea').value)">Upload
+                </button>
             </div>
 
             <div class="submissions-card-inside border">
                 <div class="container-heading-input grid h-justify v-center">
-                    <div class="view-points-and-marks">Marks Allocated:- <input type="text" name="mark" placeholder="Add Marks ..." class="add-points-and-marks"></div>
-                    <div class="view-points-and-marks">Points Allocated:- <input type="text" name="point" placeholder="Add Points..." class="add-points-and-marks"></div>
+                    <div class="view-points-and-marks">Marks Allocated:- <input id="add_mark" type="number" name="mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
+                    <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" min="0" pattern="\d+"></div>
                     <label for="duetime">Due date:- </label>
                     <input type="datetime-local" id="duetime" name="duetime" class="due-date">
                 </div>
@@ -41,7 +43,7 @@
             <div class="topic-container grid v-center h-justify" >
                 <h4 class="heading-content text-bold text-justify"><?php echo $sub->getTopic()?></h4>
                     <div class="edit-delete-timeremaining grid v-center">
-                        <a href="" class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
+                        <button class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image" onclick="courseSubmissionDelete('<?php echo $sub->getSubmissionId()."'";?>)"></button>
                         <button class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image" onclick="submissionupdate('<?php echo $sub->getTopic()."','".$sub->getDescription()."','".$sub->getDueDate()."','".$sub->getAllocatedMark()."','".$sub->getAllocatedPoint()."','".$sub->getLocation()."','".$sub->getSubmissionId()."'";?>)"></button>
                     </div>
             </div>
@@ -72,7 +74,7 @@
     <?php } ?>
 </div>
 
-<div class="modal" id="subimission_modal_update">
+<div class="modal" id="subimission_modal_update" hidden>
     <div class="card-edit-modal">
         <form id="add-attachment" class="flex flex-column" action="/update_submissions" method="post" enctype="multipart/form-data">
             <div class="submissions-card_modal border">
@@ -83,9 +85,9 @@
 
                 <div class="submissions-card-inside border">
                     <div class="container-heading-input grid h-justify v-center">
-                        <div class="view-points-and-marks">Marks Allocated:- <input id="edit_mark" type="text" name="edit_mark" placeholder="Add Marks ..." class="add-points-and-marks"></div>
+                        <div class="view-points-and-marks">Marks Allocated:- <input id="edit_mark" type="number" name="edit_mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
                         <div class="view-points-and-marks flex" >Points Allocated:-<div id="view_point"></div> </div>
-                        <label for="duetime">Due date:- </label>
+                        <label for="duetime_edit">Due date:- </label>
                         <input type="datetime-local" id="duetime_edit" name="edit_duetime" class="due-date">
                     </div>
                     <div  class="add-submissions-content-div">
@@ -100,8 +102,10 @@
                     <div id="display-files-edit" class="flex"></div>
                 </div>
                 <div class="modal-btns flex h-center">
-                    <button id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
-                    <button id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
+                    <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn"
+                            onclick="return submissionUpdateValidate(document.getElementById('heading_textarea_edit').value,document.getElementById('edit_mark').value,document.getElementById('content_textarea_edit').value)">Publish
+                    </button>
+                    <button type="button" id="modal-cancel-btn" class="cancel-btn cancel-modal-btn h-center v-center">Cancel</button>
                 </div>
 
                 <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
@@ -110,6 +114,40 @@
             </div>
         </form>
     </div>
+</div>
+
+<div id="warn-modal" class="modal" hidden>
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Input Field or Fields are Empty</h4>
+            <div>
+                <p>Please check whether heading or description or mark or point fields are empty</p>
+            </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="delete-modal" class="modal" hidden>
+    <form method="post" action="/delete_course_submission">
+        <div class="modal-content error-modal-content">
+            <div class="flex flex-column v-center h-center">
+                <img src="./images/primary_icons/error.svg">
+                <h4 id="delete-warning" class="modal-header text-center">Are you sure you want to proceed with <br> this permenant deletion?</h4>
+                <p class="modal-text text-center delete-modal-text">Deleting this submission will <b>permanently</b> delete all student submissions attached to it.
+                    This action is <b>irreversible</b>.</p>
+                <section class="flex flex-row two-button-row">
+                    <button type="submit" id="delete-btn" class="dark-btn error-btn">Delete</button>
+                    <button type="button" id="delete-cancel-btn" class="dark-btn cancel-btn-delete cancel-btn">Cancel</button>
+                </section>
+            </div>
+            <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>" hidden>
+            <input id="submission_id_delete" type="text" name="submission_id_delete" hidden>
+        </div>
+    </form>
 </div>
 
 <script type="text/javascript">
@@ -191,5 +229,98 @@
         document.getElementById('upload_attachments_edit').value=location;
         document.getElementById('submission_id_edit').value = submission_id;
     }
-    modal_cancel('subimission_modal_update');
+    const modalCancelBtn = document.getElementById('modal-cancel-btn');
+    modalCancelBtn.addEventListener('click', function () {
+        editsubmissionmodal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === editsubmissionmodal) {
+            editsubmissionmodal.style.display = 'none';
+        }
+    });
+
+    const deleteCourseSubmissionModal = document.getElementById('delete-modal')
+    function courseSubmissionDelete(submission_id) {
+        deleteCourseSubmissionModal.style.display='block';
+        document.getElementById('submission_id_delete').value = submission_id;
+    }
+    const DeleteModalCancelBtn = document.getElementById('delete-cancel-btn');
+    DeleteModalCancelBtn.addEventListener('click', function () {
+        deleteCourseSubmissionModal.style.display = 'none';
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === deleteCourseSubmissionModal) {
+            deleteCourseSubmissionModal.style.display = 'none';
+        }
+    });
+
+    //validation
+    var date = new Date();
+    var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var year = date.getUTCFullYear();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    if (day<10){
+        day = '0' + day
+    }
+    if (month<10){
+        month = '0' + month
+    }
+    if (hour<10){
+        hour = '0' + hour
+    }
+    if (minute<10){
+        minute = '0' + minute
+    }
+    var minDateTime = year + '-' + month + '-' + day + 'T' + hour + ':' + minute;
+    document.getElementById("duetime").setAttribute('min',minDateTime);
+
+    var duetimeInput = document.getElementById("duetime");
+    duetimeInput.addEventListener("change", function() {
+        if (duetimeInput.value < minDateTime) {
+            duetimeInput.setCustomValidity("Selected time cannot be earlier than current time.");
+        } else {
+            duetimeInput.setCustomValidity("");
+        }
+    });
+    document.getElementById("duetime_edit").setAttribute('min',minDateTime);
+    var duetimeEditInput = document.getElementById("duetime");
+    duetimeEditInput.addEventListener("change", function() {
+        if (duetimeEditInput.value < minDateTime) {
+            duetimeEditInput.setCustomValidity("Selected time cannot be earlier than current time.");
+        } else {
+            duetimeEditInput.setCustomValidity("");
+        }
+    });
+
+    function submissionInsertValidate(heading,mark,point,content) {
+        if (!heading || !mark || !point || !content) {
+            const warnmodal = document.getElementById("warn-modal");
+            warnmodal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+
+    function submissionUpdateValidate(heading,mark,content) {
+        if (!heading || !mark || !content) {
+            const wranmodal = document.getElementById("warn-modal");
+            wranmodal.hidden = false;
+            return false;
+        }
+        return true;
+    }
+
+    const warnModal = document.getElementById("warn-modal");
+    document.getElementById("continue-btn").addEventListener("click", function() {
+        document.getElementById("warn-modal").hidden = true;
+    });
+    document.addEventListener('click', function (event) {
+        if (event.target === warnModal) {
+            warnModal.style.display = 'none';
+        }
+    });
+
 </script>

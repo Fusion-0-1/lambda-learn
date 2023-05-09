@@ -118,6 +118,14 @@ class Submission
         );
     }
 
+    public static function deleteCourseSubmission($courseCode,$submissionId)
+    {
+        Application::$db->delete(
+            table: 'coursesubmission',
+            where: ['course_code' => $courseCode,'submission_id'=>$submissionId]
+        );
+    }
+
     /**
      * @return int
      */

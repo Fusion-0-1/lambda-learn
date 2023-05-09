@@ -269,6 +269,6 @@ CREATE TABLE StuCourseSubmission (
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
     CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
+    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
