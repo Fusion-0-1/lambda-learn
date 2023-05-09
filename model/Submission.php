@@ -40,7 +40,7 @@ class Submission
         $assignmentSubmissions = [];
         $results = Application::$db->select(
             table: 'coursesubmission',
-            where: ['course_code' => $course_code,'active' => 1],
+            where: ['course_code' => $course_code],
             order: 'submission_id DESC'
         );
         while ($sub = Application::$db->fetch($results)){
@@ -120,9 +120,8 @@ class Submission
 
     public static function deleteCourseSubmission($courseCode,$submissionId)
     {
-        Application::$db->update(
+        Application::$db->delete(
             table: 'coursesubmission',
-            columns: ['active' => 0],
             where: ['course_code' => $courseCode,'submission_id'=>$submissionId]
         );
     }
