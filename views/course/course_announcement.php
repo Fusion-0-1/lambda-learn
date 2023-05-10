@@ -32,7 +32,7 @@
         // Calculate the remaining time in minutes
         $publishTime = strtotime($ann->getPublishDate());
         $currentTime = time();
-        $remainingTime = 30 - round(($currentTime - $publishTime) / 60);
+        $remainingTime = 3 - round(($currentTime - $publishTime) / 60);
         // If the remaining time is less than or equal to zero, hide the buttons
         if ($remainingTime <= 0) {
             $hideButtons = 'style="display:none;"';
@@ -40,7 +40,12 @@
             $hideButtons = '';
         }
         ?>
-        <?php if(($_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') or ($remainingTime<=0)){?>
+        <?php
+        $profile = unserialize($_SESSION['user']);
+        $regno = $profile->getRegNo();
+        $legregno = $ann->getLecRegNo();
+        ?>
+        <?php if($regno == $legregno && ($remainingTime > 0)){?>
             <div class="announcement-card border">
                 <div class="topic-container grid v-center h-justify">
                     <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
@@ -66,6 +71,30 @@
                         ?>
                         </div>
                         </div>
+                    <p class="text-justify">
+                        <?php echo $ann->getContent()?>
+                    </p>
+                </div>
+            </div>
+        <?php } else if ($remainingTime <= 0) { ?>
+            <div class="announcement-card border">
+                <div class="topic-container grid v-center h-justify">
+                    <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
+                </div>
+                <div class="announcement-card-inside border">
+                    <div class="container-heading grid h-justify v-center">
+                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime text-right">
+                            <?php
+                            $utcTime = $ann->getPublishDate();
+                            $sriLankanTimezone = new DateTimeZone('Asia/Colombo');
+                            $date = new DateTime($utcTime, new DateTimeZone('UTC'));
+                            $date->setTimezone($sriLankanTimezone);
+                            $sriLankanDateAndTime = $date->format('l, F d, Y | H:i');
+                            echo $sriLankanDateAndTime;
+                            ?>
+                        </div>
+                    </div>
                     <p class="text-justify">
                         <?php echo $ann->getContent()?>
                     </p>
