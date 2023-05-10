@@ -97,7 +97,9 @@ class CourseController extends Controller
     {
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
+        $params['submission'] = Course::getCourse($body['course_code']);
         $params['submissions'] = Submission::getSubmission($params['course_code']);
+        $params['remaining_points'] = count($params['submissions']) > 0 ? $params['submissions'][0]->remainingPoints : 100;
         return $this->render(
             view: '/submissions',
             allowedRoles: ['Lecturer'],
@@ -116,9 +118,10 @@ class CourseController extends Controller
             topic: $body['heading'],
             description: $body['content'],
             dueDate: $dueDate->format('Y-m-d H:i:s'),
+            remainingPoints: (int)$body['remainingPoint'] ?? 0,
             allocatedMark: (int)$body['mark'] ?? 0,
             allocatedPoint: (int)$body['point'] ?? 0,
-            visibility: $body['visibility'] ?? false,
+            visibility: $body['visibility'] ?? false
         );
 
         $submission_id = $course_submissions->getLastSubmissionId()+1;

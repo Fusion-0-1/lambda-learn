@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="css/submissions.css">
 
 <div id="file-upload-container" class="main-container border v-center flex-gap responsive-container">
+    <h3><?php echo $submission->getCourseName()?></h3>
     <h3><?php echo $course_code?></h3>
 
     <form id="add-attachment" class="flex flex-column" action="/submissions" method="post" enctype="multipart/form-data">
@@ -16,7 +17,8 @@
             <div class="submissions-card-inside border">
                 <div class="container-heading-input grid h-justify v-center">
                     <div class="view-points-and-marks">Marks Allocated:- <input id="add_mark" type="number" name="mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
-                    <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" min="0" pattern="\d+"></div>
+                    <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" max="<?php echo $remaining_points; ?>" min="0" pattern="\d+"></div>
+                    <input type="hidden" name="remaining_points" value="<?= $params['remaining_points'] ?>">
                     <label for="duetime">Due date:- </label>
                     <input type="datetime-local" id="duetime" name="duetime" class="due-date">
                 </div>
