@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="css/announcement.css">
 
 <div class="main-container border v-center flex-gap responsive-container">
+    <h3><?php echo $course->getCourseName()?></h3>
     <h3><?php echo $course_code?></h3>
+
     <?php if ($_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') {?>
         <form method="post" action="course_announcement" class="announcement-card border">
             <input type="text" value="<?php echo $course_code?>" name="course_code" hidden>

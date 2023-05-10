@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\core\Controller;
 use app\core\Request;
+use app\model\Course;
 use app\model\SiteAnnouncement;
 use app\model\CourseAnnouncement;
 
@@ -23,11 +24,13 @@ class AnnouncementController extends Controller
     {
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
+        $params['course'] = Course::getCourse($body['course_code']);
         $params['announcements'] = CourseAnnouncement::getCourseAnnouncements($params['course_code']);
         return $this->render(
             view: 'course/course_announcement',
             params: $params
         );
+
     }
 
     public function createSiteAnnouncements(Request $request)
