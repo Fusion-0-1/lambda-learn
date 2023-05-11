@@ -207,7 +207,7 @@ class Course
                 return $subTopic->getIsBeingTracked();
             }));
         }
-        return $subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount ;
+        return (int)($subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount);
     }
 
     /**
