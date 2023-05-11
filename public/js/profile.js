@@ -1,4 +1,5 @@
-modal_cancel("warn-modal");
+modal_cancel("warn-modal-contact");
+modal_cancel("warn-modal-email");
 modal_cancel("modal");
 
 var modal = document.getElementById("modal");
@@ -38,8 +39,11 @@ btn_confirm.onclick = function () {
         document.getElementById('contact').setAttribute('readonly', true);
         document.getElementById('personal_email').setAttribute('readonly', true);
         return true;
-    } else {
-        document.getElementById('warn-modal').hidden = false;
+    } else if (!validate_contact(document.getElementById('contact').value)){
+        document.getElementById('warn-modal-contact').hidden = false;
+        return false;
+    } else if(!validate_contact(document.getElementById('personal_email').value)){
+        document.getElementById('warn-modal-email').hidden = false;
         return false;
     }
 }
@@ -65,15 +69,35 @@ function profile_validate(contact, email){
     return validate_contact(contact) && validate_email(email);
 }
 
-function isValid(){
-    try{
-        if(document.forms["change_password"]["new_password"].value === document.forms["change_password"]["confirm_password"].value ){
-            return true
-        } else {
+function isValid() {
+    let isValid = true;
+
+    try {
+        if (!validate_password(document.getElementById('new_password').value)) {
+            throw 'Weak password';
+        }
+    } catch (e) {
+        document.getElementById("new_password_error").innerHTML = e;
+        isValid = false;
+    }
+
+    try {
+        if (document.forms["change_password"]["new_password"].value === document.forms["change_password"]["password"].value) {
+            throw 'Your new password cannot be the same as your current password';
+        }
+    } catch (e) {
+        document.getElementById("new_password_error").innerHTML = e;
+        isValid = false;
+    }
+
+    try {
+        if (document.forms["change_password"]["new_password"].value !== document.forms["change_password"]["confirm_password"].value) {
             throw 'Make sure your passwords match';
         }
-    } catch (e){
-        document.getElementById("error").innerHTML=("Make sure your passwords match");
-        return false;
+    } catch (e) {
+        document.getElementById("error").innerHTML = e;
+        isValid = false;
     }
+
+    return isValid;
 }
