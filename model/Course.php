@@ -13,9 +13,7 @@ class Course
     private string $courseCode;
     private string $courseName;
     private int $optionalFlag;
-    private string $lecRegNo;
-    private string $lecFirstName;
-    private string $lecLastName;
+    private array $lecsRegNo = [];
     private array $courseTopics = [];
 
 
@@ -24,14 +22,12 @@ class Course
     private function __construct() {}
 
     public static function createNewCourse($courseCode, $courseName, $optionalFlag,
-                                           $lecRegNo='', $lecFirstName='', $lecLastName='', $courseTopics = []): Course {
+                                           $lecsRegNo=[], $courseTopics = []): Course {
         $course = new Course();
         $course->courseCode = $courseCode;
         $course->courseName = $courseName;
         $course->optionalFlag = $optionalFlag;
-        $course->lecRegNo = $lecRegNo;
-        $course->lecFirstName = $lecFirstName;
-        $course->lecLastName = $lecLastName;
+        $course->lecsRegNo = $lecsRegNo;
         $course->courseTopics = $courseTopics;
         return $course;
     }
@@ -56,30 +52,14 @@ class Course
         if ($table == 'Course') {
             $results = Application::$db->select(
                 table: $table,
-                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
-                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
-                join: [
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'AcademicStaff.reg_no = Course.cord_reg_no'
-                    ],
-                    [
-                        'table' => 'LecCourse',
-                        'on' => 'Course.course_code = LecCourse.course_code'
-                    ]
-                ],
-                where: ['Course.cord_reg_no'=>$user->getRegNo()],
+                columns: ['course_code', 'course_name', 'optional_flag'],
+                where: ['cord_reg_no'=>$user->getRegNo()],
             );
         } elseif ($table == 'LecCourse'){
             $results = Application::$db->select(
                 table: $table,
-                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
-                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag'],
                 join: [
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
-                    ],
                     [
                         'table' => 'Course',
                         'on' => 'LecCourse.course_code = Course.course_code'
@@ -90,20 +70,11 @@ class Course
         } else {
             $results = Application::$db->select(
                 table: $table,
-                columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag',
-                    'LecCourse.lec_reg_no', 'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag'],
                 join: [
                     [
                         'table' => 'Course',
                         'on' => 'StuCourse.course_code = Course.course_code'
-                    ],
-                    [
-                        'table' => 'LecCourse',
-                        'on' => 'Course.course_code = LecCourse.course_code'
-                    ],
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
                     ]
                 ],
                 where: ['StuCourse.stu_reg_no' => $user->getRegNo()],
@@ -114,13 +85,26 @@ class Course
                 courseCode: $course['course_code'],
                 courseName: $course['course_name'],
                 optionalFlag: $course['optional_flag'],
-                lecRegNo: $course['lec_reg_no'],
-                lecFirstName: $course['first_name'],
-                lecLastName: $course['last_name'],
+                lecsRegNo: self::getCourseLecturers($course['course_code']),
                 courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
         return $courses;
+    }
+
+    public static function getCourseLecturers(string $courseCode): array
+    {
+        $results = Application::$db->select(
+            table: 'LecCourse',
+            columns: ['lec_reg_no'],
+            where: ['course_code'=> $courseCode]
+        );
+
+        $courseLecturers = [];
+        while ($courseLec = Application::$db->fetch($results)) {
+            $courseLecturers[] = $courseLec['lec_reg_no'];
+        }
+        return $courseLecturers;
     }
 
     public static function checkExists(string $course) : bool
@@ -232,7 +216,7 @@ class Course
                 return $subTopic->getIsBeingTracked();
             }));
         }
-        return $subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount ;
+        return (int)($subTopicCount ?  $count/$subTopicCount * 100 : $subTopicCount);
     }
 
     /**
@@ -302,49 +286,17 @@ class Course
     /**
      * @return string
      */
-    public function getLecRegNo(): string
+    public function getLecsRegNo(): array
     {
-        return $this->lecRegNo;
+        return $this->lecsRegNo;
     }
 
     /**
      * @param string $lecRegNo
      */
-    public function setLecRegNo(string $lecRegNo): void
+    public function setLecRegNo(array $lecsRegNo): void
     {
-        $this->lecRegNo = $lecRegNo;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLecFirstName(): string
-    {
-        return $this->lecFirstName;
-    }
-
-    /**
-     * @param string $lecFirstName
-     */
-    public function setLecFirstName(string $lecFirstName): void
-    {
-        $this->lecFirstName = $lecFirstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLecLastName(): string
-    {
-        return $this->lecLastName;
-    }
-
-    /**
-     * @param string $lecFirstName
-     */
-    public function setLecLastName(string $lecLastName): void
-    {
-        $this->lecLastName = $lecLastName;
+        $this->lecsRegNo = $lecsRegNo;
     }
 
     /**

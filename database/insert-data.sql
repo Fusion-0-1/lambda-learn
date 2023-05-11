@@ -262,16 +262,16 @@ INSERT INTO CourseSubTopicSlide (course_code, topic_id, sub_topic_id, slide) VAL
     ("IS 2003", 03, 3.02, "path/slides.pdf");
  
 INSERT INTO CourseSubmission (course_code, submission_id, topic, description, allocated_mark, allocated_point, due_date, visibility) VALUES
-    ("CS 2001", "1C01", "Creating a Database", "Create EER digram, mapping and MySQL database for the given scenario", 100, 10, "2022-12-24", 1),
-    ("CS 2002", "1C02", "Assessment 01", "Inclass Quiz", 100, 10, "2023-02-24", 0),
-    ("CS 2003", "1C03", "Assignment 01", "Write algorithms to implement given structures", 60, 6, "2023-01-15", 1),
-    ("CS 2003", "2C03", "Assigment 02 - Question Paper", "Answer the questions and upload your answer sheets", 40, 4, "2022-12-18", 1),
-    ("CS 2004", "1C04", "Assessment 01", "Implement suitable sorting algorithms for given instances", 50, 5, "2023-02-28", 0),
-    ("CS 2004", "2C04", "Complexity Analysis", "Analyse the complexity of given algorithms", 50, 5, "2022-12-12", 1),
-    ("IS 2001", "1I01", "Assignment", "Write C codes to implement the given algorithms", 100, 10, "2022-12-28", 1),
-    ("IS 2002", "1I02", "Assignment - RAD", "Create a single page application usign MERN stack", 100, 10, "2023-01-20", 1),
-    ("IS 2003", "1I03", "Practical Assessment", "Execute given instructions on your Linux machine and submit a document with screenshots.", 60, 6, "2023-01-10", 0),
-    ("IS 2003", "2I03", "Assessment 02", "Create the given document usign LaTeX", 40, 4, "2022-12-20", 1);
+    ("CS 2001", "1", "Creating a Database", "Create EER digram, mapping and MySQL database for the given scenario", 100, 10, "2022-12-24", 1),
+    ("CS 2002", "1", "Assessment 01", "Inclass Quiz", 100, 10, "2023-02-24", 0),
+    ("CS 2003", "1", "Assignment 01", "Write algorithms to implement given structures", 60, 6, "2023-01-15", 1),
+    ("CS 2003", "2", "Assigment 02 - Question Paper", "Answer the questions and upload your answer sheets", 40, 4, "2022-12-18", 1),
+    ("CS 2004", "1", "Assessment 01", "Implement suitable sorting algorithms for given instances", 50, 5, "2023-02-28", 0),
+    ("CS 2004", "2", "Complexity Analysis", "Analyse the complexity of given algorithms", 50, 5, "2022-12-12", 1),
+    ("IS 2001", "1", "Assignment", "Write C codes to implement the given algorithms", 100, 10, "2022-12-28", 1),
+    ("IS 2002", "1", "Assignment - RAD", "Create a single page application usign MERN stack", 100, 10, "2023-01-20", 1),
+    ("IS 2003", "1", "Practical Assessment", "Execute given instructions on your Linux machine and submit a document with screenshots.", 60, 6, "2023-01-10", 0),
+    ("IS 2003", "2", "Assessment 02", "Create the given document usign LaTeX", 40, 4, "2022-12-20", 1);
  
 INSERT INTO KanbanTask (title, description, due_date, state, priority, reg_no) VALUES
     ("Complete Database Note", "Complete database note together with diagrams and codes", "2022-12-10", 1, 1, "2020/CS/0011"),
@@ -279,7 +279,16 @@ INSERT INTO KanbanTask (title, description, due_date, state, priority, reg_no) V
     ("Update Slides", "Update data structures lecture slides", "2023-01-01", 1, 1, "2003/LC/0004"),
     ("Assignment marks", "Correct 1st year assignments and upload marks", "2022-11-30", 3, 3, "2018/LC/0022"),
     ("IEEE Script", "IEEE script review with the committee members", "2022-12-21", 1, 1, "2020/IS/0032"),
-    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 2, 2, "2020/CS/0026");
+    ("Read!", "Algorithms resource book page 154-170", "2022-12-03", 2, 2, "2020/CS/0026"),
+    ("Prepare Final Document", "Project Final document with updated diagrams, test cases", "2023-05-14", 1, 3, "2020/CS/0011"),
+    ("Presentation Script", "Prepare Presentation script as a storyline", "2023-05-15", 1, 3, "2020/CS/0011"),
+    ("3rd year subjects", "Look into 3rd year subjects", "2023-06-05", 1, 1, "2020/CS/0011"),
+    ("Finish Implementation", "Finish all main functionalities", "2023-05-10", 2, 3, "2020/CS/0011"),
+    ("Scrabble", "Attend interfaculty scrabble practices", "2023-05-14", 2, 2, "2020/CS/0011"),
+    ("Kanban Board", "Finish Kanban board", "2023-05-09", 3, 3, "2020/CS/0011"),
+    ("Electronics", "Go through lec notes and practice MCQs", "2023-04-24", 3, 2, "2020/CS/0011"),
+    ("Organize academic folders", "Upload slides and stuff to relevent drives and organize folders in laptop", "2023-06-05", 3, 1, "2020/CS/0011"),
+    ("Testing", "Write unit test cases", "2023-05-12", 2, 3, "2020/CS/0011");
 
 INSERT INTO TimeTableEvent (course_code, location, start_datetime, end_datetime, lec_reg_no) VALUES
     ("CS 2001", "A201", "2022-11-21 10:00:00", "2022-11-21 12:00:00", "2014/LC/0034"),
@@ -613,26 +622,26 @@ INSERT INTO LecCourse (lec_reg_no, course_code) VALUES
     ("1998/LC/0019", "IS 2003");
 
 INSERT INTO StuCourseSubmission (stu_reg_no, course_code, submission_id) VALUES
-    ("2020/CS/0011", "CS 2001", "1C01"),
-    ("2020/CS/0011", "CS 2003", "2C03"),
-    ("2020/CS/0011", "CS 2004", "2C04"),
-    ("2020/CS/0014", "CS 2001", "1C01"),
-    ("2020/CS/0014", "CS 2003", "2C03"),
-    ("2020/CS/0014", "CS 2004", "2C04"),
-    ("2020/CS/0026", "CS 2001", "1C01"),
-    ("2020/CS/0026", "CS 2003", "2C03"),
-    ("2020/CS/0026", "CS 2004", "2C04"),
-    ("2020/CS/0044", "CS 2001", "1C01"),
-    ("2020/CS/0044", "CS 2003", "2C03"),
-    ("2020/CS/0044", "CS 2004", "2C04"),
-    ("2020/IS/0016", "IS 2001", "1I01"),
-    ("2020/IS/0016", "IS 2003", "2I03"),
-    ("2020/IS/0032", "IS 2001", "1I01"),
-    ("2020/IS/0032", "IS 2003", "2I03"),
-    ("2020/IS/0051", "IS 2001", "1I01"),
-    ("2020/IS/0051", "IS 2003", "2I03"),
-    ("2020/IS/0075", "IS 2001", "1I01"),
-    ("2020/IS/0075", "IS 2003", "2I03");
+    ("2020/CS/0011", "CS 2001", "1"),
+    ("2020/CS/0011", "CS 2003", "2"),
+    ("2020/CS/0011", "CS 2004", "2"),
+    ("2020/CS/0014", "CS 2001", "1"),
+    ("2020/CS/0014", "CS 2003", "2"),
+    ("2020/CS/0014", "CS 2004", "2"),
+    ("2020/CS/0026", "CS 2001", "1"),
+    ("2020/CS/0026", "CS 2003", "2"),
+    ("2020/CS/0026", "CS 2004", "2"),
+    ("2020/CS/0044", "CS 2001", "1"),
+    ("2020/CS/0044", "CS 2003", "2"),
+    ("2020/CS/0044", "CS 2004", "2"),
+    ("2020/IS/0016", "IS 2001", "1"),
+    ("2020/IS/0016", "IS 2003", "2"),
+    ("2020/IS/0032", "IS 2001", "1"),
+    ("2020/IS/0032", "IS 2003", "2"),
+    ("2020/IS/0051", "IS 2001", "1"),
+    ("2020/IS/0051", "IS 2003", "2"),
+    ("2020/IS/0075", "IS 2001", "1"),
+    ("2020/IS/0075", "IS 2003", "2");
 
 
  

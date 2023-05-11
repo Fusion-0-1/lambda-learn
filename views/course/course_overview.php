@@ -1,3 +1,4 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="/css/course/course_overview.css">
 
 <div class="border main-container v-center flex-gap responsive-container">
@@ -25,7 +26,13 @@
                     }?>
                     <div class="grid-content">
                         <div class="course-code"><?php echo $course->getCourseCode()?></div>
-                        <div class="lecturer-name"><?php echo $course->getLecFirstName()." ".$course->getLecLastName()?></div>
+                        <div class="lecturer-name">
+                            <?php foreach ($course->getLecsRegNo() as $lecRegNo) {
+                                echo Lecturer::getLecturerName($lecRegNo); ?>
+                            <br>
+                            <?php }?>
+                        </div>
+
                         <?php if ($_SESSION['user-role'] == 'Student') {
                             if($course->getTopics() == null){?>
                                 <div class="percentage"><div class="percentage-inside">0%</div></div>

@@ -39,7 +39,7 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Batch year</label>
-                <select class="input" id="degreeProgramSelect" name="batch_year">
+                <select class="input" id="degreeProgramSelect" name="batch_year" required>
                     <option value="" disabled selected hidden>Select a batch...</option>
                     <?php
                     foreach ($batch_years as $batch_year) {?>
@@ -50,7 +50,7 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Degree Program</label>
-                <select class="input" id="courseSelect" name="degree_program" onchange="filterCourses()">
+                <select class="input" id="courseSelect" name="degree_program" onchange="filterCourses()" required>
                     <option value="" disabled selected hidden>Select a degree program...</option>
                     <?php
                     foreach ($degree_programs as $degree_program) {?>
@@ -61,7 +61,7 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
-                <select class="input" name="course" id="course" onchange="filterDegreeProgram()">
+                <select class="input" name="course" id="course" onchange="filterDegreeProgram()" required>
                     <option value="" disabled selected hidden>Select a course...</option>
                     <?php
                     $topicCounts = array();
@@ -86,7 +86,7 @@
             <?php $count = 0?>
             <div class="flex flex-column flex-gap">
                 <label>Registration Number</label>
-                <select class="input"  name="lecturer">
+                <select class="input"  name="lecturer" required>
                     <option value="" disabled selected hidden>Select a lecturer...</option>
                     <?php
                     foreach ($lecturers as $lecturer) {?>
@@ -97,12 +97,12 @@
 
             <div class="flex flex-column flex-gap">
                 <label>Lecturer Name</label>
-                <input type="text" id="selectedLecturer" readonly class="input">
+                <input type="text" id="selectedLecturer" readonly class="input" required>
             </div>
 
             <div class="flex flex-column flex-gap">
                 <label>Course</label>
-                <select class="input input-field" name="course">
+                <select class="input input-field" name="course" required>
                     <option value="" disabled selected hidden>Select a course...</option>
                     <?php
                     foreach ($courses as $course) {?>
