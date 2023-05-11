@@ -13,9 +13,7 @@ class Course
     private string $courseCode;
     private string $courseName;
     private int $optionalFlag;
-    private string $lecRegNo;
-    private string $lecFirstName;
-    private string $lecLastName;
+    private array $lecsRegNo = [];
     private array $courseTopics = [];
 
 
@@ -24,14 +22,12 @@ class Course
     private function __construct() {}
 
     public static function createNewCourse($courseCode, $courseName, $optionalFlag,
-                                           $lecRegNo='', $lecFirstName='', $lecLastName='', $courseTopics = []): Course {
+                                           $lecsRegNo=[], $courseTopics = []): Course {
         $course = new Course();
         $course->courseCode = $courseCode;
         $course->courseName = $courseName;
         $course->optionalFlag = $optionalFlag;
-        $course->lecRegNo = $lecRegNo;
-        $course->lecFirstName = $lecFirstName;
-        $course->lecLastName = $lecLastName;
+        $course->lecsRegNo = $lecsRegNo;
         $course->courseTopics = $courseTopics;
         return $course;
     }
@@ -89,13 +85,27 @@ class Course
                 courseCode: $course['course_code'],
                 courseName: $course['course_name'],
                 optionalFlag: $course['optional_flag'],
-//                lecRegNo: $course['lec_reg_no'],
-//                lecFirstName: $course['first_name'],
-//                lecLastName: $course['last_name'],
+                lecsRegNo: self::getCourseLecturers($course['course_code']),
                 courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
+        var_dump($courses);
         return $courses;
+    }
+
+    public static function getCourseLecturers(string $courseCode): array
+    {
+        $results = Application::$db->select(
+            table: 'LecCourse',
+            columns: ['lec_reg_no'],
+            where: ['course_code'=> $courseCode]
+        );
+
+        $courseLecturers = [];
+        while ($courseLec = Application::$db->fetch($results)) {
+            $courseLecturers[] = $courseLec['lec_reg_no'];
+        }
+        return $courseLecturers;
     }
 
     public static function checkExists(string $course) : bool
@@ -277,51 +287,51 @@ class Course
     /**
      * @return string
      */
-    public function getLecRegNo(): string
+    public function getLecsRegNo(): array
     {
-        return $this->lecRegNo;
+        return $this->lecsRegNo;
     }
 
     /**
      * @param string $lecRegNo
      */
-    public function setLecRegNo(string $lecRegNo): void
+    public function setLecRegNo(array $lecsRegNo): void
     {
-        $this->lecRegNo = $lecRegNo;
+        $this->lecsRegNo = $lecsRegNo;
     }
 
-    /**
-     * @return string
-     */
-    public function getLecFirstName(): string
-    {
-        return $this->lecFirstName;
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getLecFirstName(): string
+//    {
+//        return $this->lecFirstName;
+//    }
+//
+//    /**
+//     * @param string $lecFirstName
+//     */
+//    public function setLecFirstName(string $lecFirstName): void
+//    {
+//        $this->lecFirstName = $lecFirstName;
+//    }
+//
+//    /**
+//     * @return string
+//     */
+//    public function getLecLastName(): string
+//    {
+//        return $this->lecLastName;
+//    }
 
-    /**
-     * @param string $lecFirstName
-     */
-    public function setLecFirstName(string $lecFirstName): void
-    {
-        $this->lecFirstName = $lecFirstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLecLastName(): string
-    {
-        return $this->lecLastName;
-    }
-
-    /**
-     * @param string $lecFirstName
-     */
-    public function setLecLastName(string $lecLastName): void
-    {
-        $this->lecLastName = $lecLastName;
-    }
-
+//    /**
+//     * @param string $lecFirstName
+//     */
+//    public function setLecLastName(string $lecLastName): void
+//    {
+//        $this->lecLastName = $lecLastName;
+//    }
+//
     /**
      * @return array
      */
