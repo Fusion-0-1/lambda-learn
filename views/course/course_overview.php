@@ -1,3 +1,4 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="/css/course/course_overview.css">
 
 <div class="border main-container v-center flex-gap responsive-container">
@@ -27,7 +28,7 @@
                         <div class="course-code"><?php echo $course->getCourseCode()?></div>
                         <div class="lecturer-name">
                             <?php foreach ($course->getLecsRegNo() as $lecRegNo) {
-                                echo \app\model\User\Lecturer::getLecturerName($lecRegNo); ?>
+                                echo Lecturer::getLecturerName($lecRegNo); ?>
                             <br>
                             <?php }?>
                         </div>
