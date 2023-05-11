@@ -57,10 +57,10 @@ class ProfileController extends Controller
             {
                 $fileExtension = strtolower(explode('.', $fileName)[1]);
                 $fileNameNew = $userRegNo . "." . $fileExtension;
-                $filePath = 'images/profile/' . $fileNameNew;
+                $filePath = 'User Uploads/Profiles/' . $fileNameNew;
 
                 //Remove previous profile images if exists
-                $wildcardPath = 'images/profile/' . $userRegNo . '.*';
+                $wildcardPath = 'User Uploads/Profiles/' . $userRegNo . '.*';
                 array_map('unlink', glob($wildcardPath));
 
                 move_uploaded_file($fileTmpName, $filePath);
@@ -76,7 +76,7 @@ class ProfileController extends Controller
             }
             $user->updateProfile();
         }
-
+        $_SESSION['user'] = serialize($user);
         $params['user'] = $user;
         if($_SESSION['user-role'] == 'Admin'){
             return $this->render(
