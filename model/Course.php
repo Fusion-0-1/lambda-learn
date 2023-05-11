@@ -89,7 +89,6 @@ class Course
                 courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
-        var_dump($courses);
         return $courses;
     }
 
