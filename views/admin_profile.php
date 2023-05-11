@@ -40,7 +40,7 @@ if(isset($mssg)) { ?>
                         <div class="flex flex-wrap v-center h-center width-full">
                             <img id="preview" src="<?php
                             $userRegNo = str_replace('/', '', $user->getRegNo());
-                            $result = glob("./images/profile/{$userRegNo}.*");
+                            $result = glob("./User Uploads/Profiles/{$userRegNo}.*");
                             if(sizeof($result) > 0)
                                 $profilePicture = $result[0];
                             else
@@ -149,11 +149,17 @@ if(isset($mssg)) { ?>
                         <input type="password" name="password" class="input text-right width-full"><br>
                     </div>
                 </div>
+                <div id="password_error" class="error-message">
+                    <input type="hidden" id="invalid_error_message" value="<?php echo $mssg == 'ERROR' ? 'Invalid password' : ''; ?>">
+                </div>
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">New Password</label>
                     <div class="flex flex-responsive">
-                        <input type="password" name="new_password" class="input text-right width-full"><br>
+                        <input type="password" name="new_password" class="input text-right width-full" id="new_password">
+                        <br>
                     </div>
+                </div>
+                <div id="new_password_error" class="error-message">
                 </div>
                 <div class="margin-top flex flex-column">
                     <label class="margin-top">Confirm Password</label>
@@ -164,6 +170,8 @@ if(isset($mssg)) { ?>
                 <div id="error" class="error-message">
                     <?php if (isset($error)) echo $error; ?>
                 </div>
+                <p><b>Hint:</b><br> The password should be at least 8 characters long which contains uppercase
+                    letters, lowercase letters, numbers, and special characters</p>
                 <div class="flex flex-row h-end">
                     <button type="button" id="cancel_modal" class="flex half-width margin-top h-center v-center flex-responsive cancel-btn btn-border-green">Cancel</button>
                     <button type="submit" id="confirm_modal" class="flex confirm-btn half-width margin-top h-center v-center flex-responsive btn-confirm">Confirm</button>
@@ -173,15 +181,40 @@ if(isset($mssg)) { ?>
     </div>
     <?php }?>
 
-<!--Warn Modal-->
-<div id="warn-modal" class="modal" hidden>
+<!--Warn Modals-->
+<div id="warn-modal-contact" class="modal" hidden>
     <div id="warn_msg_email" class="modal-content warn-modal-content" >
         <div class="flex flex-column v-center h-center">
             <img src="images/primary_icons/warning.svg">
-            <h4 id="delete-warning">Invalid Email or contact number</h4>
+            <h4 id="delete-warning">Invalid contact number</h4>
             <div>
-                <p>Please check whether the format of the email address or the contact number is correct</p>
+                <p>Please enter a valid contact number in one of the following formats,</p>
+                <ul>
+                    <li>Starts with a "+" sign followed by exactly 11 digits</li>
+                    <li>Consists of exactly 10 digits</li>
+                </ul>
             </div>
+            <section class="flex flex-row two-button-row">
+                <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
+            </section>
+        </div>
+    </div>
+</div>
+
+<div id="warn-modal-email" class="modal" hidden>
+    <div id="warn_msg_email" class="modal-content warn-modal-content" >
+        <div class="flex flex-column v-center h-center">
+            <img src="images/primary_icons/warning.svg">
+            <h4 id="delete-warning">Invalid Email</h4>
+            <div>
+                <p>Please enter a valid email address following formats,</p>
+                <ul>
+                    <li>Starts with one or more characters</li>
+                    <li>Followed by the "@" symbol </li>
+                    <li>Followed by one or more characters</li>
+                    <li>Followed by a dot symbol (.)</li>
+                    <li>Ends with one or more characters </li>
+                </ul>            </div>
             <section class="flex flex-row two-button-row">
                 <button id="continue-btn" class="dark-btn cancel-btn warn-continue-btn">OK</button>
             </section>
