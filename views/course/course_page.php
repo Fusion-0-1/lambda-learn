@@ -110,7 +110,7 @@
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
                 <!-- TODO: Add course code here-->
-                <a href="/course_announcement?course_code=<?php echo ('CS 2001')?> " class="hyperlink"> View all </a>
+                <a href="/course_announcement?course_code=<?php echo $course->getCourseCode()?> " class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>
             <button class="inner-container border-radius text-left"> SCS2201_Rescheduling the lecture on 15/09/2022 </button>
@@ -121,7 +121,7 @@
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
                 <!-- TODO: Add course code here-->
-                <a href="/submissions?course_code=<?php echo ('CS 2001')?>" class="hyperlink"> View all </a>
+                <a href="/submissions?course_code=<?php echo $course->getCourseCode()?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>

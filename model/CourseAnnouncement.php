@@ -91,6 +91,14 @@ class CourseAnnouncement extends Announcement
         );
     }
 
+    public static function deleteCourseAnnouncement($announcementId,$courseCode)
+    {
+        Application::$db->delete(
+            table: 'courseannouncement',
+            where: ['announcement_id'=>$announcementId,'course_code' => $courseCode]
+        );
+    }
+
     /**
      * @return string
      */

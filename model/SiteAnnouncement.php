@@ -95,6 +95,14 @@ class SiteAnnouncement extends Announcement
          );
     }
 
+    public static function deleteSiteAnnouncement($announcementId)
+    {
+        Application::$db->delete(
+            table: 'siteannouncement',
+            where: ['announcement_id'=>$announcementId]
+        );
+    }
+
     /**
      * @return string
      */
