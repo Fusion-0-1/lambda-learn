@@ -300,38 +300,6 @@ class Course
         $this->lecsRegNo = $lecsRegNo;
     }
 
-//    /**
-//     * @return string
-//     */
-//    public function getLecFirstName(): string
-//    {
-//        return $this->lecFirstName;
-//    }
-//
-//    /**
-//     * @param string $lecFirstName
-//     */
-//    public function setLecFirstName(string $lecFirstName): void
-//    {
-//        $this->lecFirstName = $lecFirstName;
-//    }
-//
-//    /**
-//     * @return string
-//     */
-//    public function getLecLastName(): string
-//    {
-//        return $this->lecLastName;
-//    }
-
-//    /**
-//     * @param string $lecFirstName
-//     */
-//    public function setLecLastName(string $lecLastName): void
-//    {
-//        $this->lecLastName = $lecLastName;
-//    }
-//
     /**
      * @return array
      */
