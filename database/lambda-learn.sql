@@ -154,8 +154,8 @@ CREATE TABLE TimeTableEvent (
 DROP TABLE IF EXISTS SiteAnnouncement;
 CREATE TABLE SiteAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
-    heading VARCHAR(50) NOT NULL,
-    content VARCHAR(300) NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
     publish_date DATETIME NOT NULL,
     admin_reg_no VARCHAR(12),
     cord_reg_no VARCHAR(12),
@@ -165,8 +165,8 @@ CREATE TABLE SiteAnnouncement (
 DROP TABLE IF EXISTS CourseAnnouncement;
 CREATE TABLE CourseAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
-    heading VARCHAR(50) NOT NULL,
-    content VARCHAR(300) NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
     publish_date DATETIME NOT NULL,
     lec_reg_no VARCHAR(12),
     course_code VARCHAR(8),
