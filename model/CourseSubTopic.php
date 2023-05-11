@@ -148,6 +148,16 @@ class CourseSubTopic {
         }
     }
 
+    public static function editSubTopics($courseCode, $topicId, $subTopicId, $subTopicName) : bool
+    {
+        Application::$db->update(
+            table: 'CourseSubTopic',
+            columns: ['sub_topic' => $subTopicName],
+            where: ['course_code' => $courseCode, 'topic_id' => $topicId, 'sub_topic_id' => $subTopicId]
+        );
+        return true;
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**

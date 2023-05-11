@@ -60,7 +60,7 @@ class CSVFile
     // ----------------------------Custom Methods--------------------------------------
     /**
      * @description Read the CSV file
-     * two functionalities wrapped into this function.
+     * three functionalities wrapped into this function.
      *  1. Read user account creation csv upload
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
@@ -72,6 +72,10 @@ class CSVFile
      *       This will read attendance containing csv file. Will return false if course codes provided are wrong.
      *       This will update student update for each course as specified in the csv file. 10 points will be given for
      *       leaderboard ranking.
+     * 3. Assign Students to a course
+     *      @param bool $assignStudents true (this will enable assign students function)
+     *       This will read student registration numbers in the csv file. Will return invalid registration numbers as an array.
+     *       This will assign students to the course and the file should be renamed with the course code.
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location
      * @return array|bool|null

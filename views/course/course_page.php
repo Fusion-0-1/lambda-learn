@@ -5,7 +5,36 @@
     <div id="mssg-modal" class="error-mssg text-justify">
         <p>The subtopic is not being covered by the lecturer</p>
     </div>
-<?php } ?>
+<?php } elseif (isset($is_topic_edited) or isset($is_sub_topic_edited)) {
+    if($is_topic_edited == true and $is_sub_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course topics and subtopics updated successfully.</p>
+        </div>
+    <?php } elseif($is_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course topics updated successfully.</p>
+        </div>
+    <?php } elseif ($is_sub_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course subtopics updated successfully</p>
+        </div>
+    <?php } else { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Failed to update topics or subtopics</p>
+        </div>
+    <?php }
+} elseif (isset($add_topics)) {
+    if($add_topics) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>New course topics and sub topics added successfully</p>
+        </div>
+<?php } else { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Failed to add topics and subtopics</p>
+        </div>
+    <?php }
+}?>
+
 
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
@@ -132,7 +161,16 @@
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
-            <h5> Course Topics </h5>
+            <div class="flex flex-row h-justify">
+                <h5 class="flex"> Course Topics </h5>
+                <?php if($_SESSION['user-role'] == 'Lecturer') { ?>
+                        <a href="/course_edit?course_code=<?php echo $course->getCourseCode()?>">
+                            <button id="edit" type="button" class="edit-btn edit-btn-icon">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </a>
+                <?php } ?>
+            </div>
             <hr class="hr">
             <div class="topic-container flex flex-row item-gap flex-wrap">
                 <?php foreach ($course->getTopics() as $courseTopic) {?>
