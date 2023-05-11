@@ -56,30 +56,14 @@ class Course
         if ($table == 'Course') {
             $results = Application::$db->select(
                 table: $table,
-                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
-                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
-                join: [
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'AcademicStaff.reg_no = Course.cord_reg_no'
-                    ],
-                    [
-                        'table' => 'LecCourse',
-                        'on' => 'Course.course_code = LecCourse.course_code'
-                    ]
-                ],
-                where: ['Course.cord_reg_no'=>$user->getRegNo()],
+                columns: ['course_code', 'course_name', 'optional_flag'],
+                where: ['cord_reg_no'=>$user->getRegNo()],
             );
         } elseif ($table == 'LecCourse'){
             $results = Application::$db->select(
                 table: $table,
-                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag', 'LecCourse.lec_reg_no',
-                    'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                columns: ['Course.course_code', 'Course.course_name', 'Course.optional_flag'],
                 join: [
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
-                    ],
                     [
                         'table' => 'Course',
                         'on' => 'LecCourse.course_code = Course.course_code'
@@ -90,20 +74,11 @@ class Course
         } else {
             $results = Application::$db->select(
                 table: $table,
-                columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag',
-                    'LecCourse.lec_reg_no', 'AcademicStaff.first_name', 'AcademicStaff.last_name'],
+                columns: ['StuCourse.course_code', 'Course.course_name', 'Course.optional_flag'],
                 join: [
                     [
                         'table' => 'Course',
                         'on' => 'StuCourse.course_code = Course.course_code'
-                    ],
-                    [
-                        'table' => 'LecCourse',
-                        'on' => 'Course.course_code = LecCourse.course_code'
-                    ],
-                    [
-                        'table' => 'AcademicStaff',
-                        'on' => 'LecCourse.lec_reg_no = AcademicStaff.reg_no'
                     ]
                 ],
                 where: ['StuCourse.stu_reg_no' => $user->getRegNo()],
@@ -114,9 +89,9 @@ class Course
                 courseCode: $course['course_code'],
                 courseName: $course['course_name'],
                 optionalFlag: $course['optional_flag'],
-                lecRegNo: $course['lec_reg_no'],
-                lecFirstName: $course['first_name'],
-                lecLastName: $course['last_name'],
+//                lecRegNo: $course['lec_reg_no'],
+//                lecFirstName: $course['first_name'],
+//                lecLastName: $course['last_name'],
                 courseTopics: CourseTopic::getCourseTopics($course['course_code']),
             );
         }
