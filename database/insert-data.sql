@@ -304,7 +304,7 @@ INSERT INTO TimeTableEvent (course_code, location, start_datetime, end_datetime,
  
 INSERT INTO SiteAnnouncement (heading, content, publish_date, admin_reg_no, cord_reg_no) VALUES
     ("Commencement of New Academic Year", "Academic year 2022/23 willl be commenced on 21st of November 2022", "2022-11-18", "2009/AD/0005", NULL),
-    ("First year 2nd semester examination results", "Results of 2nd semester examination will be released in 2 weeks. Prepare your emotional support system :)", "2022-11-21", NULL, "2003/LC/0004");
+    ("First year 2nd semester examination results", "Results of 2nd semester examination will be released in 2 weeks.", "2022-11-21", NULL, "2003/LC/0004");
  
 INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, course_code) VALUES
     ("Lecture Materials", "New lecture materials are uploaded to the course page. Make sure to refer them before the lecture", "2022-11-21", "2014/LC/0034", "CS 2001"),
