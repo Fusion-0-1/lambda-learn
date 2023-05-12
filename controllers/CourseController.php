@@ -98,9 +98,25 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
         $params['submissions'] = Submission::getSubmission($params['course_code']);
+        var_dump($params['submissions']);
         return $this->render(
             view: '/submissions',
             allowedRoles: ['Lecturer','Student'],
+            params:  $params
+        );
+    }
+
+    public function displayStuAllSubmissions(Request $request){
+        $body = $request->getBody();
+        $params['course_code']=$body['course_code'];
+        $profile = unserialize($_SESSION['user']);
+        var_dump($profile->getIndexNo());
+        $params['submission_stu_id']=$body['submission_stu_id'];
+        $params['stu_submission'] = Submission::getStuSubmission($body['course_code'],$profile->getIndexNo(),$body['submission_stu_id']);
+        $params['showmodel'] = true;
+        return $this->render(
+            view: '/submissions',
+            allowedRoles: ['Student'],
             params:  $params
         );
     }
@@ -141,7 +157,6 @@ class CourseController extends Controller
         if (!file_exists($StudentAttachments)) {
             mkdir($StudentAttachments);
         }
-
         for ($i = 0; $i < $numFiles; $i++) {
             $fileName = $files['name'][$i];
             $tmpName = $files['tmp_name'][$i];
@@ -160,7 +175,7 @@ class CourseController extends Controller
 
     public function createStuSubmissions(Request $request){
         $body = $request->getBody();
-
+        $profile = unserialize($_SESSION['user']);
         $stu_submissions = Submission::createStuNewSubmission(
             courseCode: $body['course_code'],
             regNo: $body['stu_reg_no'],
@@ -171,14 +186,18 @@ class CourseController extends Controller
 
         $fileName = $_FILES['attachment']['name'];
         $fileTmpName = $_FILES['attachment']['tmp_name'];
+        $StudentReg = getcwd().'/User Uploads/Submissions/' . $body['course_code']. '/' .$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$profile->getIndexNo();
+        if (!file_exists($StudentReg)) {
+            mkdir($StudentReg);
+        }
+
         $fileExists = file_exists($body['course_code'].'/'.$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$fileName);
         if ($fileExists) {
             echo "Sorry, file already exists.";
         } else {
-            move_uploaded_file($fileTmpName, '/public/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$fileName);
+            move_uploaded_file($fileTmpName, getcwd() . '/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/'.'Student_Submissions'.'/'.$profile->getIndexNo().'/'.$fileName);
         }
-
-        $stu_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/' . 'Student_Submissions');
+        $stu_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$body['submission_stu_id'].'/' . 'Student_Submissions'.'/'.$profile->getIndexNo());
         $stu_submissions->stuSubmissionInsert();
         header("Location: /submissions?course_code=".$body['course_code']);
     }

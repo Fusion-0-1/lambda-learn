@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="css/course/course_page.css">
 <!--<link rel="stylesheet" href="css/submission_popup.css">-->
-
-<<<<<<< HEAD
 <!--<div class="modal hide" id="modal_submission">-->
 <!--    <div class="popup-card modal-content">-->
 <!--        <span class="close">&times;</span>-->
@@ -56,68 +54,68 @@
 <!--    </div>-->
 <!---->
 <!--</div>-->
-=======
+
 <?php if($mssg == 'Failed') { ?>
     <div id="mssg-modal" class="error-mssg text-justify">
         <p>The subtopic is not being covered by the lecturer</p>
     </div>
 <?php } ?>
 
-<div class="modal hide" id="modal_submission">
-    <div class="popup-card modal-content">
-        <span class="close">&times;</span>
-        <div class="course-name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
-        <div class="course-code flex h-center">CS 2003</div>
+<!--<div class="modal hide" id="modal_submission">-->
+<!--    <div class="popup-card modal-content">-->
+<!--        <span class="close">&times;</span>-->
+<!--        <div class="course-name flex h-center text-bold text-center">Data Structures and Algorithms III</div>-->
+<!--        <div class="course-code flex h-center">CS 2003</div>-->
+<!---->
+<!--        <div class="submission-topic text-bold">Submission 1 - String Matching</div>-->
+<!--        <div class="submissions-card-inside">-->
+<!--            <div class="due-date-div grid h-justify v-center">-->
+<!--                <div class="due-date-heading flex v-center" >-->
+<!--                    <img src="/images/submissions_popup/submission_pop_due_date.png">-->
+<!--                    <div>Due-Date</div>-->
+<!--                </div>-->
+<!--                <div class="due-date-contain">Wednesday, September 2, 2022       |   12.00 PM</div>-->
+<!--            </div>-->
+<!--            <div class="time-remaning-div grid h-justify v-center">-->
+<!--                <div class="due-date-heading flex v-center" >-->
+<!--                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">-->
+<!--                    <div>Time remaining</div>-->
+<!--                </div>-->
+<!--                <div class="due-date-contain flex h-center">-- --</div>-->
+<!--            </div>-->
+<!---->
+<!--            <div class="break-line"></div>-->
+<!---->
+<!--            <div class="time-remaning-div grid h-justify v-center">-->
+<!--                <div class="due-date-heading flex v-center" >-->
+<!--                    <img src="/images/submissions_popup/submission_pop_granding_status.png">-->
+<!--                    <div>Grading status</div>-->
+<!--                </div>-->
+<!--                <div class="due-date-contain flex h-center">Pending</div>-->
+<!--            </div>-->
+<!--            <div class="time-remaning-div grid h-justify v-center">-->
+<!--                <div class="due-date-heading flex v-center" >-->
+<!--                    <img src="/images/submissions_popup/submission_pop_file_submission.png">-->
+<!--                    <div>File submission</div>-->
+<!--                </div>-->
+<!--                <div class="due-date-contain flex h-center">StringMatching_01.zip</div>-->
+<!--            </div>-->
+<!--            <div class="time-remaning-div grid h-justify v-center">-->
+<!--                <div class="due-date-heading flex v-center" >-->
+<!--                    <img src="/images/submissions_popup/submission_pop_submitted-date.png">-->
+<!--                    <div>Submitted Date</div>-->
+<!--                </div>-->
+<!--                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>-->
+<!--            </div>-->
+<!--            <div class="submit-buttons grid h-center">-->
+<!--                <div class="edit-btn submission-btn text-center">Add submission</div>-->
+<!--                <div class="edit-btn submission-btn text-center">Edit submission</div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!---->
+<!--</div>-->
 
-        <div class="submission-topic text-bold">Submission 1 - String Matching</div>
-        <div class="submissions-card-inside">
-            <div class="due-date-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_due_date.png">
-                    <div>Due-Date</div>
-                </div>
-                <div class="due-date-contain">Wednesday, September 2, 2022       |   12.00 PM</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">
-                    <div>Time remaining</div>
-                </div>
-                <div class="due-date-contain flex h-center">-- --</div>
-            </div>
-
-            <div class="break-line"></div>
-
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_granding_status.png">
-                    <div>Grading status</div>
-                </div>
-                <div class="due-date-contain flex h-center">Pending</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_file_submission.png">
-                    <div>File submission</div>
-                </div>
-                <div class="due-date-contain flex h-center">StringMatching_01.zip</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_submitted-date.png">
-                    <div>Submitted Date</div>
-                </div>
-                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>
-            </div>
-            <div class="submit-buttons grid h-center">
-                <div class="edit-btn submission-btn text-center">Add submission</div>
-                <div class="edit-btn submission-btn text-center">Edit submission</div>
-            </div>
-        </div>
-    </div>
-
-</div>
->>>>>>> b1db0e913b80cfe415dd82993742689bfdd60029
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
@@ -178,7 +176,7 @@
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
                 <!-- TODO: Add course code here-->
-                <a href="/submissions?course_code=<?php echo ('CS 2001')?>" class="hyperlink"> View all </a>
+                <a href="/submissions?course_code=<?php echo ('CS 2003')?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>

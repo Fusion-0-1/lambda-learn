@@ -49,7 +49,13 @@
                             <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
                         <?php } ?>
                         <?php if ($_SESSION['user-role'] == 'Student') {?>
-                           <button class="btn dark-btn h-center v-center" id="submission_modal" onclick="uploadsubmission('<?php echo $sub->getDueDate()."','".$sub->getSubmissionId()."','".$sub->getAllocatedMark()."','".$sub->getAllocatedPoint()."'";?>)">Upload</button>
+<!--                                Form action stu_submissions/course_code=aadsa&submission_stu_id=afa-->
+                            <form action="stu_submissions?course_code=<?php echo str_replace(" ", "+", $sub->getCourseCode())?>&submission_id=<?php echo $sub->getSubmissionId()?>">
+                                <?php var_dump($sub) ?>
+                                <input value="<?php echo $sub->getCourseCode()?>" name="course_code">
+                                <input value="<?php echo $sub->getSubmissionId()?>" name="submission_stu_id">
+                                <button class="btn dark-btn h-center v-center" id="submission_modal" >Upload</button>
+                            </form>
                         <?php } ?>
                     </div>
             </div>
@@ -84,6 +90,10 @@
 </div>
 
 <div class="modal" id="modal_submission">
+    <?php
+    if(isset($showmodal)){ ?>
+    <?php
+    foreach ($stu_submission as $subs) { ?>
     <div class="popup-card modal-content">
         <form method="post" action="stu_submissions" id="stu_submission" enctype="multipart/form-data">
         <span class="close">&times;</span>
@@ -129,12 +139,11 @@
                     <img src="/images/submissions_popup/submission_pop_submitted-date.png">
                     <div>Submitted Date</div>
                 </div>
-                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>
+                <div class="due-date-contain flex h-center submitted-date"><?php echo $subs->getAllocatedMark()?></div>
             </div>
             <div class="submit-buttons flex h-center">
                 <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip" onchange="previewStuAttachment()" hidden >
                 <label for="upload_stu_attachment" class="edit-btn submission-btn text-center">Add submission</label>
-
                 <button class="edit-btn submission-btn text-center hide" id="edit-stu-submission" onclick="editAttachment()">Edit submission</button>
                 <button class="edit-btn submission-btn text-center hide" id="remove-stu-submission" onclick="removeAttachment()">Remove submission</button>
                 <button class="edit-btn submission-btn text-center hide" id="save-btn" onclick="saveAttachment()">Save</button>
@@ -151,6 +160,8 @@
             <input id="submission_stu_point" type="text" name="submission_stu_point" hidden>
         </form>
     </div>
+    <?php } ?>
+    <?php } ?>
 </div>
 
 <script type="text/javascript">
