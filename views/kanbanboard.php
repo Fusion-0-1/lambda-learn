@@ -90,6 +90,30 @@
             </div>
 
             <div class="droppable" data-state="1">
+                <?php foreach ($submissions as $submission) {?>
+                    <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="false" data-id="<?php echo $submission->getSubmissionId()?>">
+                        <div class="card-header card-border-radius text-bold">Assignment: <?php echo $submission->getTopic()?></div>
+                        <div class="card-body border card-border-radius">
+                            <p> <?php echo $submission->getDescription()?> </p>
+                        </div>
+                        <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
+                            <div class="card-priority" id="card-priority">High</div>
+                            <div class="card-deadline"><?php echo $submission->getDueDate()?></div>
+                            <div class="card-options flex flex-row h-justify">
+                                <div>
+                                    <button type="submit" name="card-update" class="card-button card-update" disabled>
+                                        <span class="fa fa-pen"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="submit" name="card-delete" class="card-button" disabled>
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php } ?>
                 <?php foreach ($toDo as $toDoTask) {?>
                     <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="true" data-id="<?php echo $toDoTask->getTaskId()?>">
                         <div class="card-header card-border-radius text-bold"><?php echo $toDoTask->getTitle()?></div>
