@@ -60,7 +60,7 @@
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
-                        <div class="view-lecture-name-and-datetime"><?php echo Lecturer::getLecturerName($ann->getLecRegNo())?>></div>
+                        <div class="view-lecture-name-and-datetime"><?php echo Lecturer::getLecturerName($ann->getLecRegNo())?></div>
                         <div class="view-lecture-name-and-datetime text-right">
                         <?php
                             $utcTime = $ann->getPublishDate();
