@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\core\Application;
+use app\core\User;
 
 class Submission
 {
@@ -124,6 +125,32 @@ class Submission
             table: 'coursesubmission',
             where: ['course_code' => $courseCode,'submission_id'=>$submissionId]
         );
+    }
+
+    public static function getUserSubmissions(User $user): array
+    {
+        $assignmentSubmissions = [];
+        $results = Application::$db->select(
+            table: 'CourseSubmission CS',
+            columns: ['CS.course_code', 'CS.topic', 'CS.description', 'CS.due_date', 'CS.submission_id'],
+            join: [
+                [
+                    'table' => 'StuCourse SC',
+                    'on' => 'CS.course_code = SC.course_code'
+                ]
+            ],
+            where: ['CS.visibility' => 1, 'SC.stu_reg_no' => $user->getRegNo()],
+        );
+        while ($submission = Application::$db->fetch($results)) {
+            $assignmentSubmissions[] = self::createNewSubmission(
+                courseCode: $submission['course_code'],
+                topic: $submission['topic'],
+                description: $submission['description'],
+                dueDate: $submission['due_date'],
+                submissionId: $submission['submission_id']
+            );
+        }
+        return $assignmentSubmissions;
     }
 
     /**
