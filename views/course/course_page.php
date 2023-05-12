@@ -1,3 +1,4 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
 
@@ -35,7 +36,6 @@
         </div>
     <?php }
 }?>
-
 
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
@@ -139,18 +139,20 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
-                <!-- TODO: Add course code here-->
                 <a href="/course_announcement?course_code=<?php echo $course->getCourseCode()?> " class="hyperlink"> View all </a>
             </div>
-            <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>
-            <button class="inner-container border-radius text-left"> SCS2201_Rescheduling the lecture on 15/09/2022 </button>
-            <button class="inner-container border-radius text-left"> Assignment 1 Details - String Matching </button>
+            <?php $count = 1;
+                foreach ($courseAnnouncements as $c_ann) {
+                    $count++; ?>
+                    <button class="inner-container border-radius text-left" id="latest-course-announcement"> <?php echo $c_ann->getHeading()?> </button>
+                    <?php if ($count>3)
+                        break;
+                }?>
         </div>
 
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <!-- TODO: Add course code here-->
                 <a href="/submissions?course_code=<?php echo $course->getCourseCode()?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
