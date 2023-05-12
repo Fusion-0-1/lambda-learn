@@ -143,4 +143,18 @@ for (let i = 0; i < cardpriority.length; i++) {
     }
 }
 
+// --------------------------- Due Date Styling -----------------------------------
+
+const cardduedate = document.querySelectorAll('.card-deadline');
+console.log(cardduedate);
+for (let i = 2; i < cardduedate.length; i++) {
+    const carddate = cardduedate[i].innerText;
+    const duedate = new Date(Date.parse(carddate.replace(/-/g, "/").split(" ")[0]));
+    const currentDate = new Date();
+
+    if (currentDate > duedate) {
+        cardduedate[i].style.color = '#ff0000';
+        cardduedate[i].style.fontWeight = 'bold';
+    }
+}
 
