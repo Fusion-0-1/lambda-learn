@@ -7,6 +7,7 @@ use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
+use app\model\CourseAnnouncement;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\Submission;
@@ -41,6 +42,7 @@ class CourseController extends Controller
                 params: $params
             );
         } else {
+            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
             return $this->render(
                 view: '/course/course_page',
                 allowedRoles: ['Lecturer', 'Student'],
