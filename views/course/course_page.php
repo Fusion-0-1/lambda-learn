@@ -37,6 +37,22 @@
     <?php }
 }?>
 
+<div class="modal hide" id="announcement-modal">
+    <div class="announcement-view border border-radius">
+        <input type="hidden" id="c-ann-id">
+        <div class="header-container grid v-center h-justify">
+            <div class="header-content text-bold text-justify" id="c-ann-heading"> </div>
+        </div>
+        <div class="announcement-view-inside border">
+            <div class="lec-datetime grid h-justify v-center">
+                <div id="c-ann-lec"> </div>
+                <div class="text-right" id="c-ann-date"></div>
+            </div>
+            <p class="text-justify" id="c-ann-content"></p>
+        </div>
+    </div>
+</div>
+
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
         <span class="close">&times;</span>
@@ -144,7 +160,11 @@
             <?php $count = 1;
                 foreach ($courseAnnouncements as $c_ann) {
                     $count++; ?>
-                    <button class="inner-container border-radius text-left" id="latest-course-announcement"> <?php echo $c_ann->getHeading()?> </button>
+                    <button class="inner-container border-radius text-left" id="latest-course-announcement"
+                            onclick="announcementview(<?php echo $c_ann->getAnnouncementId().", '".$c_ann->getHeading()."','"
+                                .Lecturer::getLecturerName($c_ann->getLecRegNo())."','".$c_ann->getPublishDate()."','"
+                                .$c_ann->getContent()."'";?>)">
+                        <?php echo $c_ann->getHeading()?> </button>
                     <?php if ($count>3)
                         break;
                 }?>
@@ -243,5 +263,21 @@
                 modal_submission.style.display = "none";
             }
         }
+
+        const announcementmodal = document.getElementById('announcement-modal');
+        function announcementview(c_ann_id, c_ann_heading, c_ann_lec, c_ann_date, c_ann_content) {
+            announcementmodal.style.display = 'block';
+            document.getElementById('c-ann-id').value = c_ann_id;
+            document.getElementById('c-ann-heading').innerText = c_ann_heading;
+            document.getElementById('c-ann-lec').innerText = c_ann_lec;
+            document.getElementById('c-ann-date').innerText = c_ann_date;
+            document.getElementById('c-ann-content').innerText = c_ann_content;
+        }
+
+        window.addEventListener("click", function(event) {
+            if (event.target === announcementmodal) {
+                announcementmodal.style.display = 'none';
+            }
+        });
     </script>
 </div>
