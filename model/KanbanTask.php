@@ -30,6 +30,11 @@ class KanbanTask
         return $task;
     }
 
+    /**
+     * @description Retrieves all to do tasks of a user
+     * @param User $user
+     * @return array
+     */
     public static function getToDoTasks(User $user): array
     {
         $kanbanTasks = [];
@@ -53,6 +58,11 @@ class KanbanTask
         return $kanbanTasks;
     }
 
+    /**
+     * @description Retrieves all in progress tasks of a user
+     * @param User $user
+     * @return array
+     */
     public static function getInProgressTasks(User $user): array
     {
         $kanbanTasks = [];
@@ -76,6 +86,11 @@ class KanbanTask
         return $kanbanTasks;
     }
 
+    /**
+     * @description Retrieves all done tasks of a user
+     * @param User $user
+     * @return array
+     */
     public static function getDoneTasks(User $user): array
     {
         $kanbanTasks = [];
@@ -99,6 +114,10 @@ class KanbanTask
         return $kanbanTasks;
     }
 
+    /**
+     * @description Inserts a new kanban task into the database
+     * @return void
+     */
     public function insertKanbanTask()
     {
         Application::$db->insert(
@@ -114,6 +133,11 @@ class KanbanTask
         );
     }
 
+    /**
+     * @description Deletes a kanban task from the database
+     * @param $taskIdDlt
+     * @return void
+     */
     public static function deleteKanbanTask($taskIdDlt)
     {
         Application::$db->delete(
@@ -122,6 +146,10 @@ class KanbanTask
         );
     }
 
+    /**
+     * @description Updates a kanban task in the database
+     * @return void
+     */
     public function updateKanbanTask()
     {
         Application::$db->update(
@@ -137,6 +165,12 @@ class KanbanTask
         );
     }
 
+    /**
+     * @description Updates the state of a kanban task in the database
+     * @param $taskId
+     * @param $state
+     * @return void
+     */
     public static function updateKanbanTaskState($taskId, $state)
     {
         Application::$db->update(

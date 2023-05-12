@@ -127,6 +127,11 @@ class Submission
         );
     }
 
+    /**
+     * @description Get all the submissions assigned to a given user
+     * @param User $user
+     * @return array
+     */
     public static function getUserSubmissions(User $user): array
     {
         $assignmentSubmissions = [];

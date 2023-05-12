@@ -92,6 +92,11 @@ class Course
         return $courses;
     }
 
+    /**
+     * @description Returns the registration numbers of the lecturers of a given course
+     * @param string $courseCode
+     * @return array
+     */
     public static function getCourseLecturers(string $courseCode): array
     {
         $results = Application::$db->select(
