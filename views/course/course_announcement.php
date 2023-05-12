@@ -1,3 +1,4 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="css/announcement.css">
 
 <div class="main-container border v-center flex-gap responsive-container">
@@ -59,7 +60,7 @@
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
-                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime"><?php echo Lecturer::getLecturerName($ann->getLecRegNo())?>></div>
                         <div class="view-lecture-name-and-datetime text-right">
                         <?php
                             $utcTime = $ann->getPublishDate();
@@ -83,7 +84,7 @@
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
-                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime"><?php echo Lecturer::getLecturerName($ann->getLecRegNo())?></div>
                         <div class="view-lecture-name-and-datetime text-right">
                             <?php
                             $utcTime = $ann->getPublishDate();
