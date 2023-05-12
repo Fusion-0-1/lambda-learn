@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\model\KanbanTask;
 use app\core\User;
+use app\model\Submission;
 
 class KanbanboardController extends Controller
 {
@@ -15,6 +16,7 @@ class KanbanboardController extends Controller
         $params['toDo'] = KanbanTask::getToDoTasks($user);
         $params['inProgress'] = KanbanTask::getInProgressTasks($user);
         $params['done'] = KanbanTask::getDoneTasks($user);
+        $params['submissions'] = Submission::getUserSubmissions($user);
         return $this->render(
             view: '/kanbanboard',
             allowedRoles: ['Lecturer', 'Student'],
