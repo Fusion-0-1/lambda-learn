@@ -107,11 +107,6 @@ class Lecturer extends User
         return $lecturerExists;
     }
 
-    /**
-     * @description Returns the name of the lecturer
-     * @param string $regNo
-     * @return string
-     */
     public static function getLecturerName(string $regNo)
     {
         $results = Application::$db->select(

@@ -4,7 +4,6 @@
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3> Kanban Board </h3>    
 
-<!--    Modal for adding a new card-->
     <div class="modal" id="card-add-modal">
         <div class="card-add-modal modal-content border border-radius flex flex-column">
             <form method="post" action="insert_task">
@@ -37,7 +36,6 @@
         </div>
     </div>
 
-<!--    Modal for editing a card-->
     <div class="modal" id="card-edit-modal">
         <div class="card-edit-modal modal-content border border-radius flex flex-column">
             <form method="post" action="update_task">
@@ -67,7 +65,6 @@
         </div>
     </div>
 
-<!--    Modal for deleting a card-->
     <div class="modal" id="delete-modal">
         <div class="modal-content error-modal-content">
             <form action="delete_task" method="post">
@@ -86,7 +83,6 @@
 
     <div class="card-container flex flex-row h-around item-gap">
 
-<!--        To Do Column-->
         <div class="card-list border border-radius flex flex-column">
             <div class="list-header flex h-justify v-center">
                     <h5>To Do</h5>
@@ -124,7 +120,6 @@
 
         </div>
 
-<!--        In Progress Column-->
         <div class="card-list border border-radius flex flex-column">
             <div class="list-header flex h-justify v-center">
                     <h5> In Progress</h5>
@@ -162,7 +157,6 @@
 
         </div>
 
-<!--        Done Column-->
         <div class="card-list border border-radius flex flex-column">
             <div class="list-header flex h-justify v-center">
                     <h5> Done </h5>
