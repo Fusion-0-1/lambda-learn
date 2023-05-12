@@ -6,8 +6,7 @@
     <div id="mssg-modal" class="error-mssg text-justify">
         <p>The subtopic is not yet covered by the lecturer</p>
     </div>
-<<<<<<< Updated upstream
-<?php } elseif (isset($is_topic_edited) or isset($is_sub_topic_edited)) {
+<?php } } elseif (isset($is_topic_edited) or isset($is_sub_topic_edited)) {
     if($is_topic_edited == true and $is_sub_topic_edited == true) { ?>
         <div id="mssg-modal" class="success-mssg text-justify">
             <p>Course topics and subtopics updated successfully.</p>
@@ -37,10 +36,6 @@
     <?php }
 }?>
 
-=======
-<?php }
-} ?>
->>>>>>> Stashed changes
 
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
