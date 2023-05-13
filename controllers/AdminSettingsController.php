@@ -44,6 +44,33 @@ class AdminSettingsController extends Controller
         );
     }
 
+    public function updateAcademicSettings(Request $request)
+    {
+        $body = $request->getBody();
+        $config = [
+            [
+                'sem_start_date' => $body['sem_start_date'],
+                'sem_end_date' => $body['sem_end_date'],
+                'sem_count_year' => $body['sem_count_year'],
+            ]
+        ];
+        $is_settings_setup = Application::$admin_config->updateAcademicSettings($config);
+
+        $params = $this->getParameters();
+        $params['is_settings_setup'] = $is_settings_setup;
+
+        if ($is_settings_setup) {
+            $params['msg'] = "Academic settings updated successfully";
+        } else {
+            $params['msg'] = "Error updating academic settings. Please try again later.";
+        }
+
+        return $this->render(
+            view: 'admin_settings',
+            allowedRoles: ['Admin'],
+            params: $params
+        );
+    }
 
     private function getParameters(): array {
         $users = Student::fetchStudents();
