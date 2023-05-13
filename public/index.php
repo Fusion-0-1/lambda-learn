@@ -112,6 +112,7 @@ $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV'
 $app->router->get('/admin_settings', [AdminSettingsController::class, "displayAdminSettings"]);
 $app->router->post('/update_coord_options', [AdminSettingsController::class, "coordinatorOptions"]);
 $app->router->post('/update_academic_settings', [AdminSettingsController::class, "updateAcademicSettings"]);
+$app->router->post('/start_new_sem', [AdminSettingsController::class, "startNewSemester"]);
 
 // -------------------------------------------------------------------------
 

@@ -101,10 +101,23 @@ if(isset($msg)){
             </div>
         </form>
     </div>
-</div>
+
+    <form class="main-container border flex flex-column" action="/start_new_sem" method="post">
+        <h3>Start a new academic semester</h3>
+        <p class="csv-header-format">
+            Starting new semester will&nbsp; <b>unassigned all students</b> &nbsp;from the <b>
+                currently assigned courses</b>.
+            Course content and lecturers will be remained unchanged.
+            <br>
+            <b>This action is irreversible.</b>
+        </p>
+
+        <div class="flex flex-column flex-gap">
+            <br><button class="edit-btn-text margin-top" <?php if($isSemesterEnd) echo "disabled";?>>Start new semester</button>
+        </div>
+    </form>
 
 <script>
-
     // @description coordinatorRegNos and coordinatorDegreeCode are arrays of coordinator
     // reg nos and degree codes **in order**
     let coordinatorRegNos = <?php echo json_encode($coordinatorRegNos); ?>;
@@ -145,5 +158,4 @@ if(isset($msg)){
     }
 
     enableBtns();
-
 </script>

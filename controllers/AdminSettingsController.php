@@ -8,6 +8,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\model\User\Lecturer;
 use app\model\User\Student;
+use DateTime;
 
 class AdminSettingsController extends Controller
 {
@@ -87,6 +88,13 @@ class AdminSettingsController extends Controller
         );
     }
 
+
+    public function startNewSemester(Request $request)
+    {
+
+    }
+
+
     private function getParameters(): array {
         $users = Student::fetchStudents();
 
@@ -98,16 +106,21 @@ class AdminSettingsController extends Controller
         }
 
         $coordinators = Lecturer::fetchCoordinators();
+        $isSemesterEnd =  !(new DateTime() > new DateTime(Application::$admin_config->getSemEndDate())
+        and new DateTime() < new DateTime(Application::$admin_config->getSemStartDate()));
 
         return [
+            // config file/ object params
             'batch_years' => Student::getBatchYears($regNos),
             'degree_programs' => Student::getDegreePrograms($degreePrograms),
             'sem_start' => Application::$admin_config->getSemStartDate(),
             'sem_end' => Application::$admin_config->getSemEndDate(),
             'sem_count_year' => Application::$admin_config->getSemCountYear(),
+            // other params
             'lecturers' => Lecturer::fetchLecturers(),
             'coordinatorRegNos' => $coordinators['reg_no'],
             'coordinatorDegreeCode' => $coordinators['degree_program_code'],
+            'isSemesterEnd' => $isSemesterEnd,
         ];
     }
 }
