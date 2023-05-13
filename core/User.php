@@ -17,6 +17,11 @@ abstract class User
     protected bool $activeStatus;
     protected string $profilePicture;
 
+    /**
+     * @description Get user data from database
+     * @param $regNo
+     * @return array
+     */
     protected function getUserData($regNo): array
     {
         $userType = self::getUserType($regNo);
@@ -29,6 +34,11 @@ abstract class User
         return Application::$db->setEmptyToNullColumns($table);
     }
 
+    /**
+     * @description Get user type from registration number
+     * @param string $regNo
+     * @return false|string
+     */
     public static function getUserType(string $regNo)
     {
         // 20xx/cs/xxxx - Students
@@ -46,12 +56,23 @@ abstract class User
         return false;
     }
 
+    /**
+     * @description Get user table name from registration number
+     * @param $regNo
+     * @return string
+     */
     private static function getUserTable($regNo): string
     {
         $userType = self::getUserType($regNo);
         return $userType=='Lecturer'? 'AcademicStaff': $userType;
     }
 
+    /**
+     * @description Authenticate user with registration number and password
+     * @param $regNo
+     * @param $password
+     * @return bool
+     */
     public static function authenticateUser($regNo, $password): bool
     {
         $result = Application::$db->select(
@@ -66,6 +87,12 @@ abstract class User
         return false;
     }
 
+    /**
+     * @description Set user login time and active status of a user
+     * @param $time
+     * @param $activeStatus
+     * @return void
+     */
     public function setLogin($time=null, $activeStatus=1): void
     {
         $time = $time ?? date('Y-m-d H:i:s', time());
@@ -76,6 +103,12 @@ abstract class User
         );
     }
 
+    /**
+     * @description Set user logout time and active status of a user
+     * @param $time
+     * @param $activeStatus
+     * @return void
+     */
     public function setLogout($time=null, $activeStatus=0): void
     {
         $time = $time ?? date('Y-m-d H:i:s', time());
@@ -86,6 +119,11 @@ abstract class User
         );
     }
 
+    /**
+     * @description Check whether a user exists in the database
+     * @param $regNo
+     * @return bool
+     */
     public static function userExists($regNo): bool
     {
         return Application::$db->checkExists(
@@ -94,6 +132,10 @@ abstract class User
         );
     }
 
+    /**
+     * @description Update user profile
+     * @return void
+     */
     public function updateProfile():void
     {
         $userData = [
@@ -109,6 +151,11 @@ abstract class User
         );
     }
 
+    /**
+     * @description Update user password
+     * @param $newPassword
+     * @return void
+     */
     public function updatePassword($newPassword){
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
         Application::$db->update(
@@ -120,10 +167,10 @@ abstract class User
 
 
     /**
+     * @description : Unwrap csv file line. Break into an associative array
      * @param array $line: array of strings
      * !IMPORTANT: follow the order of the keys as in the code when passing as an associative array.
      * @return array : array of User objects
-     * @description : unwrap csv file line. Break into an associative array.
      */
     public static function unwrapData(array $line): array
     {
@@ -139,9 +186,9 @@ abstract class User
 
 
     /**
+     * @description: Generate a random password of given length
      * @param int $length: length of the password
      * @return string: random password
-     * @description: generate a random password
      */
     protected function generateRandomPassword(int $length = 8) {
         $alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
@@ -164,6 +211,10 @@ abstract class User
 
 
     // -------------------------Field validation methods---------------------------------
+    /**
+     * @param $name
+     * @return bool
+     */
     public static function validateName($name): bool
     {
         /*
@@ -175,11 +226,20 @@ abstract class User
         return preg_match("/^[a-zA-Z-' ]*$/",$name);
     }
 
+    /**
+     * @description Validate email address
+     * @param $email
+     * @return bool
+     */
     public static function validateEmail($email): bool
     {
         return filter_var($email, FILTER_VALIDATE_EMAIL);
     }
 
+    /**
+     * @param $regNo
+     * @return bool
+     */
     public static function validateRegNo($regNo): bool
     {
         /*
@@ -194,6 +254,10 @@ abstract class User
         return preg_match("/^\d{4}\/.*\/\d{4}$/", $regNo);
     }
 
+    /**
+     * @param $contactNo
+     * @return bool
+     */
     public static function validateContactNo($contactNo): bool
     {
         /*
@@ -218,6 +282,17 @@ abstract class User
         return false;
     }
 
+    /**
+     * @description Validate user attributes
+     * @params $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail
+     * @param $regNo
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $contactNo
+     * @param null $personalEmail
+     * @return bool
+     */
     public static function validateUserAttributes(
         $regNo, $firstName, $lastName, $email, $contactNo, $personalEmail=null
     ): bool
@@ -254,6 +329,11 @@ abstract class User
         return true;
     }
 
+    /**
+     * @description Validate user attributes from array
+     * @param array $data
+     * @return bool
+     */
     public static function validateUserAttrFromArray(array $data): bool
     {
         return self::validateUserAttributes(

@@ -8,6 +8,10 @@ use app\core\Request;
 
 class ReportController extends Controller
 {
+    /**
+     * @description Display utilization report
+     * @return array|false|string|string[]
+     */
     public function displayUtilizationReport()
     {
         return $this->render(
@@ -16,6 +20,11 @@ class ReportController extends Controller
         );
     }
 
+    /**
+     * @description Display attendance report
+     * @param Request $request
+     * @return array|false|string|string[]|void
+     */
     public function uploadAttendance(Request $request)
     {
         if ($request->isGet()){

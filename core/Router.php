@@ -9,6 +9,9 @@ namespace app\core;
  */
 class Router
 {
+    /**
+     * @var array
+     */
     protected array $routes = [];
     public Request $request;
     public Response $response;
@@ -23,16 +26,32 @@ class Router
         $this->request = $request;
     }
 
+    /**
+     * @description Add get route
+     * @param $path
+     * @param $callback
+     * @return void
+     */
     public function get($path, $callback)
     {
         $this->routes['get'][$path] = $callback;
     }
 
+    /**
+     * @description Add post route
+     * @param $path
+     * @param $callback
+     * @return void
+     */
     public function post($path, $callback)
     {
         $this->routes['post'][$path] = $callback;
     }
 
+    /**
+     * @description Resolve route
+     * @return array|false|mixed|string|string[]
+     */
     public function resolve()
     {
         $path = $this->request->getPath();
@@ -51,6 +70,12 @@ class Router
         return call_user_func($callback, $this->request);
     }
 
+    /**
+     * @description Render the view with layout
+     * @param $view
+     * @param $params
+     * @return array|false|string|string[]
+     */
     public function renderView($view, $params = [])
     {
         $layout_content = $this->layoutContent();
@@ -58,12 +83,19 @@ class Router
         return str_replace('{{content}}', $view_content, $layout_content);
     }
 
+    /**
+     * @param $view_content
+     * @return array|false|string|string[]
+     */
     public function renderContent($view_content)
     {
         $layout_content = $this->layoutContent();
         return str_replace('{{content}}', $view_content, $layout_content);
     }
 
+    /**
+     * @return false|string
+     */
     protected function layoutContent()
     {
         ob_start();
@@ -71,6 +103,12 @@ class Router
         return ob_get_clean();
     }
 
+    /**
+     * @description Render the view without layout
+     * @param $view
+     * @param $params
+     * @return false|string
+     */
     public function renderOnlyView($view, $params = [])
     {
         foreach ($params as $key => $value) {
