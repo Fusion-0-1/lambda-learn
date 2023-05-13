@@ -63,6 +63,7 @@ CREATE TABLE Course (
     optional_flag BOOLEAN NOT NULL,
     cord_reg_no VARCHAR(12),
     date_created DATE,
+    exam_marks_report_path VARCHAR(255),
     CONSTRAINT PK_Course PRIMARY KEY (course_code),
     CONSTRAINT FK_Course_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
 );
