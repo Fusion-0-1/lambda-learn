@@ -355,4 +355,52 @@ class CourseController extends Controller
             params: $params
         );
     }
+
+    public function uploadRecording(Request $request){
+        $body = $request->getBody();
+        $records = $_FILES['recattachment'];
+        $numRecords = count($records['name']);
+
+        for ($i = 0; $i < $numRecords; $i++) { // error msg display
+            if ($records['error'][$i] !== UPLOAD_ERR_OK) {
+                // Handle upload error
+                // For example, you could redirect the user back to the upload page with an error message
+                header("Location: /upload_recording?error=upload_failed");
+                exit;
+            }
+        }
+        // create course and submission folders if they don't exist
+        $course_dir = 'User Uploads/lecturerUploads/' . $body['rec_course_code'];
+        if (!file_exists($course_dir)) {
+            mkdir($course_dir);
+        }
+        $topic_dir = $course_dir . '/' . $body['rec_course_topic'];
+        if (!file_exists($topic_dir)) {
+            mkdir($topic_dir);
+        }
+        $subtopic_dir = $topic_dir . '/' . $body['rec_course_subtopic'];
+        if (!file_exists($subtopic_dir)) {
+            mkdir($subtopic_dir);
+        }
+
+        for ($i = 0; $i < $numRecords; $i++) {
+            $fileName = $records['name'][$i];
+            $tmpName = $records['tmp_name'][$i];
+            $fileType = $records['type'][$i];
+
+            $allowedTypes = ['video/mp4', 'video/mpeg', 'video/ogg', 'video/webm'];
+            if (!in_array($fileType, $allowedTypes)) {
+                // handle invalid file type error here
+                die('Invalid file type'); // error msg display
+            }
+            if (!move_uploaded_file($tmpName, $subtopic_dir.'/'.$fileName)) {
+                echo 'file upload failed';  // error msg display
+                return;
+            }
+        }
+        if (!CourseSubTopic::lecturerRecordingExits($body['rec_course_code'], $body['rec_course_topic'], $body['rec_course_subtopic'], getcwd().'/User Uploads/lecturerUploads/' . $body['rec_course_code'] . '/' . $body['rec_course_topic'] . '/' . $body['rec_course_subtopic'])) {
+            CourseSubTopic::insertLecturerRecording($body['rec_course_code'], $body['rec_course_topic'], $body['rec_course_subtopic'], getcwd().'/User Uploads/lecturerUploads/' . $body['rec_course_code'] . '/' . $body['rec_course_topic'] . '/' . $body['rec_course_subtopic']);
+        }
+        header("Location: /course_page?course_code=" . $body['rec_course_code']);
+    }
 }

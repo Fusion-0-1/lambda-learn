@@ -7,61 +7,6 @@
     </div>
 <?php } ?>
 
-<div class="modal hide" id="modal_submission">
-    <div class="popup-card modal-content">
-        <span class="close">&times;</span>
-        <div class="course-name flex h-center text-bold text-center">Data Structures and Algorithms III</div>
-        <div class="course-code flex h-center">CS 2003</div>
-
-        <div class="submission-topic text-bold">Submission 1 - String Matching</div>
-        <div class="submissions-card-inside">
-            <div class="due-date-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_due_date.png">
-                    <div>Due-Date</div>
-                </div>
-                <div class="due-date-contain">Wednesday, September 2, 2022       |   12.00 PM</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_time_remaining.png">
-                    <div>Time remaining</div>
-                </div>
-                <div class="due-date-contain flex h-center">-- --</div>
-            </div>
-
-            <div class="break-line"></div>
-
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_granding_status.png">
-                    <div>Grading status</div>
-                </div>
-                <div class="due-date-contain flex h-center">Pending</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_file_submission.png">
-                    <div>File submission</div>
-                </div>
-                <div class="due-date-contain flex h-center">StringMatching_01.zip</div>
-            </div>
-            <div class="time-remaning-div grid h-justify v-center">
-                <div class="due-date-heading flex v-center" >
-                    <img src="/images/submissions_popup/submission_pop_submitted-date.png">
-                    <div>Submitted Date</div>
-                </div>
-                <div class="due-date-contain flex h-center submitted-date">Wednesday, September 2, 2022  |  10.01 PM</div>
-            </div>
-            <div class="submit-buttons grid h-center">
-                <div class="edit-btn submission-btn text-center">Add submission</div>
-                <div class="edit-btn submission-btn text-center">Edit submission</div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
     <h3><?php echo $course->getCourseCode()?></h3>
@@ -176,8 +121,12 @@
                                     <div class="course-sub-topic-content border-radius">
                                         <!--TODO: Retrieve recordings and lecture notes from the database-->
                                         <p><span class="icons fas fa-atom"></span> Sample Recording 1 </p>
-                                        <p><span class="icons fas fa-atom"></span> Sample Recording 2 </p>
-                                        <p><span class="icons fas fa-atom"></span> Sample Lecture Note </p>
+                                        <div class="flex h-justify">
+                                            <button class="lecturer-uploads"><img src="/images/course_page/Eye.png"></button>
+                                            <button class="lecturer-uploads" onclick="uploadrecording(<?php echo $courseTopic->getTopicId().",".$courseSubTopic->getSubTopicId().",'".$course->getCourseCode()."'";?>)"><img src="/images/course_page/Video Record.png"></button>
+                                            <button class="lecturer-uploads"><img src="/images/course_page/Presentation.png"></button>
+                                            <button class="lecturer-uploads"><img src="/images/course_page/Text.png"></button>
+                                        </div>
                                     </div>
                                 </div>
                             <?php } ?>
@@ -186,6 +135,28 @@
             </div>
         </div>
     </div>
+
+    <div class="modal" id="upload_recording_modal" hidden>
+        <div class="card-edit-modal">
+            <form method="post" action="lecturer_upload_recording" enctype="multipart/form-data">
+                <div class="flex uploads-details">
+                    <input id="upload_attachment_recording" type="file" name="recattachment[]" accept="video/mp4,video/mpeg,video/ogg,video/webm" multiple onchange="previewAttachmentRecording()" hidden >
+                    <label for="upload_attachment_recording" class="dark-btn flex-end h-center attach-btn">Add Attachments</label>
+                    <div id="num-of-recording">No Files Chosen</div>
+                    <div id="display-recording" class="flex"></div>
+                </div>
+
+                <div class="modal-btns flex h-center">
+                    <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
+                    <button type="button" id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
+                </div>
+                <input id="rec_course_code" name="rec_course_code" hidden>
+                <input id="rec_course_subtopic" name="rec_course_subtopic" hidden>
+                <input id="rec_course_topic" name="rec_course_topic" hidden>
+            </form>
+        </div>
+    </div>
+</div>
     <script>
         var modal_submission = document.getElementById("modal_submission");
         var btn = document.getElementById("submission1");
@@ -202,5 +173,38 @@
                 modal_submission.style.display = "none";
             }
         }
+
+        let numOfFilesEdit = document.getElementById("num-of-recording");
+
+        function previewAttachmentRecording() {
+            let fileInputEdit = document.getElementById("upload_attachment_recording");
+            let fileContainerEdit = document.getElementById("display-recording");
+            let numOfFilesEdit = document.getElementById("num-of-recording");
+
+            fileContainerEdit.innerHTML = "";
+            numOfFilesEdit.textContent = `${fileInputEdit.files.length} Files Selected`;
+
+            for(i of fileInputEdit.files){
+                let reader = new FileReader();
+                let figure = document.createElement("figure");
+                let figCap = document.createElement("figcaption");
+                figCap.innerText = i.name;
+                figure.appendChild(figCap);
+                reader.onload=()=>{
+                    let fileBlob = new Blob([reader.result], { type: 'video/mp4' });
+                    let fileUrl = URL.createObjectURL(fileBlob);
+                    figCap.addEventListener('click', () => window.open(fileUrl));
+                }
+                fileContainerEdit.appendChild(figure);
+                reader.readAsArrayBuffer(i);
+            }
+        }
+
+        function uploadrecording(topicId,subTopicId,courseCode){
+            const editmodal = document.getElementById('upload_recording_modal')
+            editmodal.style.display='block';
+            document.getElementById('rec_course_topic').value = topicId;
+            document.getElementById('rec_course_subtopic').value = subTopicId;
+            document.getElementById('rec_course_code').value = courseCode;
+        }
     </script>
-</div>
