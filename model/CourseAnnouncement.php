@@ -9,6 +9,7 @@ use app\core\Application;
  */
 class CourseAnnouncement extends Announcement
 {
+    private static string $tableName = "CourseAnnouncement";
     private string $lecRegNo;
     private string $courseCode;
 
@@ -49,7 +50,7 @@ class CourseAnnouncement extends Announcement
      */
     private static function getCourseAnnouncementData($id): array
     {
-        return parent::getAnnouncementData($id,'courseannouncement');
+        return parent::getAnnouncementData($id, self::$tableName);
     }
 
     /**
@@ -61,7 +62,7 @@ class CourseAnnouncement extends Announcement
     {
         $courseAnnouncements = [];
         $results = Application::$db->select(
-            table: 'courseannouncement',
+            table: self::$tableName,
             where: ['course_code' => $course_code],
             order: 'announcement_id DESC'
         );
@@ -88,7 +89,7 @@ class CourseAnnouncement extends Announcement
     public function CourseAnnouncementInsert()
     {
         Application::$db->insert(
-            table: 'courseAnnouncement',
+            table: self::$tableName,
             values: [
                 'heading' => $this->heading,
                 'content' => $this->content,
@@ -109,7 +110,7 @@ class CourseAnnouncement extends Announcement
     public static function CourseAnnouncementsUpdate($announcementId, $heading, $content)
     {
         Application::$db->update(
-            table: 'courseannouncement',
+            table: self::$tableName,
             columns: ['heading'=>$heading,'content'=>$content],
             where: ['announcement_id'=>$announcementId]
         );
@@ -124,11 +125,19 @@ class CourseAnnouncement extends Announcement
     public static function deleteCourseAnnouncement($announcementId, $courseCode)
     {
         Application::$db->delete(
-            table: 'courseannouncement',
+            table: self::$tableName,
             where: ['announcement_id'=>$announcementId,'course_code' => $courseCode]
         );
     }
 
+    /**
+     * @description Delete all course announcements of a course from database
+     */
+    public static function truncateCourseAnnouncements()
+    {
+        Application::$db->truncateTable(self::$tableName);
+    }
+    
     /**
      * @return string
      */
