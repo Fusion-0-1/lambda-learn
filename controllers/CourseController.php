@@ -177,8 +177,6 @@ class CourseController extends Controller
         $stu_submissions = Submission::createStuNewSubmission(
             courseCode: $body['course_code'],
             regNo: $body['stu_reg_no'],
-            allocatedMark: $body['submission_stu_mark'],
-            allocatedPoint: $body['submission_stu_point'],
             submissionId: $body['submission_stu_id'],
         );
 

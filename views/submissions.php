@@ -49,12 +49,7 @@
                             <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
                         <?php } ?>
                         <?php if ($_SESSION['user-role'] == 'Student') {?>
-<!--                                Form action stu_submissions/course_code=aadsa&submission_stu_id=afa-->
-                            <form action="stu_submissions?course_code=<?php echo str_replace(" ", "+", $sub->getCourseCode())?>&submission_id=<?php echo $sub->getSubmissionId()?>">
-                                <input value="<?php echo $sub->getCourseCode()?>" name="course_code" hidden>
-                                <input value="<?php echo $sub->getSubmissionId()?>" name="submission_stu_id" hidden>
-                                <button class="btn dark-btn h-center v-center" id="submission_modal" >Upload</button>
-                            </form>
+                           <button class="btn dark-btn h-center v-center" id="submission_modal" onclick="uploadsubmission('<?php echo $sub->getDueDate()."','".$sub->getSubmissionId()."'";?>)">Upload</button>
                         <?php } ?>
                     </div>
             </div>
@@ -79,8 +74,8 @@
                         foreach ($attachmentFiles as $file) { ?>
                             <div class="files-views"><a href="../../User Uploads/Submissions/<?php echo $sub->getCourseCode()."/".$sub->getSubmissionId()."/Lecturer_Attachments/".$file ?>" class="text-no-decoration" download="<?php echo $file ?>" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
-                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>" hidden >
-                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>" hidden >
+                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
+                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >
                 </form>
             </div>
         </div>
@@ -89,10 +84,6 @@
 </div>
 
 <div class="modal" id="modal_submission">
-    <?php
-    if(isset($showmodal)){ ?>
-    <?php
-    foreach ($stu_submission as $subs) { ?>
     <div class="popup-card modal-content">
         <form method="post" action="stu_submissions" id="stu_submission" enctype="multipart/form-data">
         <span class="close">&times;</span>
@@ -138,29 +129,27 @@
                     <img src="/images/submissions_popup/submission_pop_submitted-date.png">
                     <div>Submitted Date</div>
                 </div>
-                <div class="due-date-contain flex h-center submitted-date"><?php echo $subs->getAllocatedMark()?></div>
+                <div class="due-date-contain flex h-center submitted-date"> - - </div>
             </div>
             <div class="submit-buttons flex h-center">
                 <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip" onchange="previewStuAttachment()" hidden >
                 <label for="upload_stu_attachment" class="edit-btn submission-btn text-center">Add submission</label>
+
                 <button class="edit-btn submission-btn text-center hide" id="edit-stu-submission" onclick="editAttachment()">Edit submission</button>
                 <button class="edit-btn submission-btn text-center hide" id="remove-stu-submission" onclick="removeAttachment()">Remove submission</button>
                 <button class="edit-btn submission-btn text-center hide" id="save-btn" onclick="saveAttachment()">Save</button>
                 <button class="edit-btn submission-btn text-center hide" onclick="cancelStuAttachment()" id="stu-cancel-btn">Cancel</button>
             </div>
         </div>
+
             <input id="submission_stu_id" type="text" name="submission_stu_id" hidden>
             <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>" hidden>
             <input id="stu_reg_no" type="text" name="stu_reg_no" value="<?php
                 $profile = unserialize($_SESSION['user']);
                 echo $profile->getRegNo();
                 ?>" hidden>
-            <input id="submission_stu_mark" type="text" name="submission_stu_mark" hidden>
-            <input id="submission_stu_point" type="text" name="submission_stu_point" hidden>
         </form>
     </div>
-    <?php } ?>
-    <?php } ?>
 </div>
 
 <script type="text/javascript">
@@ -274,10 +263,10 @@
 
     function saveAttachment() {
         // Hide the Save and Cancel buttons, show the Edit and Remove buttons
-        document.getElementById("save-btn").classList.add("hide");
-        document.getElementById("stu-cancel-btn").classList.add("hide");
-        document.getElementById("edit-stu-submission").classList.remove("hide");
-        document.getElementById("remove-stu-submission").classList.remove("hide");
+        // document.getElementById("save-btn").classList.add("hide");
+        // document.getElementById("stu-cancel-btn").classList.add("hide");
+        // document.getElementById("edit-stu-submission").classList.remove("hide");
+        // document.getElementById("remove-stu-submission").classList.remove("hide");
     }
 
     function removeAttachment() {
@@ -301,12 +290,10 @@
         document.getElementById("remove-stu-submission").classList.add("hide");
     }
 
-    function uploadsubmission(due_date,announcement_id,stu_mark,stu_point){
+    function uploadsubmission(due_date,submission_id){
         const modal_submission = document.getElementById('modal_submission')
         modal_submission.style.display='block';
-        document.getElementById('submission_stu_id').value = announcement_id;
-        document.getElementById('submission_stu_mark').value = stu_mark;
-        document.getElementById('submission_stu_point').value = stu_point;
+        document.getElementById('submission_stu_id').value = submission_id;
 
         // Set the due date
         const dueDate = new Date(due_date);
