@@ -107,6 +107,17 @@ class Lecturer extends User
         return $lecturerExists;
     }
 
+    public static function assignCoordinator(string $regNo, string $degreeProgramCode)
+    {
+        Application::$db->update(
+            table: 'AcademicStaff',
+            columns: ['degree_program_code' => $degreeProgramCode],
+            where: ['reg_no' => $regNo]
+        );
+        return true;
+    }
+
+    // ---------------------------Getters and Setters-----------------------------------
     public static function getLecturerName(string $regNo)
     {
         $results = Application::$db->select(
@@ -118,7 +129,6 @@ class Lecturer extends User
         return $row['first_name'] . ' ' . $row['last_name'];
     }
 
-    // ---------------------------Getters and Setters-----------------------------------
     public function isCoordinator(): bool
     {
         return $this->degreeProgramCode != '';
