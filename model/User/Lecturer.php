@@ -118,6 +118,20 @@ class Lecturer extends User
         return $row['first_name'] . ' ' . $row['last_name'];
     }
 
+    public static function removeLecturersFromCourse($lecturer, $courseCode)
+    {
+        $primaryKeys = ['lec_reg_no' => $lecturer,'course_code' => $courseCode];
+        if(Application::$db->checkExists('LecCourse', $primaryKeys)){
+            Application::$db->delete(
+                table: 'LecCourse',
+                where: ['course_code'=>$courseCode, 'lec_reg_no'=>$lecturer]
+            );
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
     public function isCoordinator(): bool
     {

@@ -300,8 +300,14 @@ class CourseController extends Controller
         $courseCode = trim(explode("-", $body['course'])[0]);
 
         if(isset($body['assign_lecturer'])){
-            $lecturer = $body['lecturer'];
-            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            if(isset($body['assign'])){
+                $lecturer = $body['lecturer'];
+                $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            }
+            elseif(isset($body['delete'])) {
+                $lecturer = $body['lecturer'];
+                $params['is_deleted'] = Lecturer::removeLecturersFromCourse($lecturer, $courseCode);
+            }
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
             $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
