@@ -80,6 +80,7 @@ class CourseAnnouncement extends Announcement
                 'course_code' => $this->courseCode ?? ''
             ]
         );
+        return true;
     }
 
     public static function CourseAnnouncementsUpdate($announcementId,$heading,$content)
@@ -89,6 +90,7 @@ class CourseAnnouncement extends Announcement
             columns: ['heading'=>$heading,'content'=>$content],
             where: ['announcement_id'=>$announcementId]
         );
+        return true;
     }
 
     /**

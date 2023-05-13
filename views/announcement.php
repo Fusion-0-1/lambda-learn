@@ -1,5 +1,27 @@
 <link rel="stylesheet" href="css/announcement.css">
 
+<?php if(isset($create_announcement)) {
+    if($create_announcement){?>
+    <div id="mssg-modal" class="success-mssg text-justify">
+        <p>Announcement Created successfully.</p>
+    </div>
+    <?php } elseif (isset($errors) && !empty($errors)) { ?>
+    <div id="mssg-modal" class="error-mssg text-justify">
+        <p>Heading and Content Required</p>
+    </div>
+<?php }
+} elseif(isset($update_announcement)) {
+    if($update_announcement) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Announcement updated successfully.</p>
+        </div>
+    <?php } elseif (isset($error) && !empty($error)) { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Heading and Content Required</p>
+        </div>
+    <?php }
+}?>
+
 <div class="main-container border v-center flex-gap responsive-container">
     <h3>Site Announcements</h3>
 
@@ -100,6 +122,7 @@
                 <button id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
+            <input id="edit_publish_date" type="text" name="edit_publish_date" hidden>
         </form>
     </div>
 </div>
@@ -123,12 +146,13 @@
     }
 
     const editmodal = document.getElementById('card_edit_modal')
-    function announcementupdate(edit_heading,edit_content,edit_btn_id){
+    function announcementupdate(edit_heading,edit_content,edit_btn_id,publish_date){
 
         editmodal.style.display='block';
         document.getElementById('heading_textarea_edit').value = edit_heading;
         document.getElementById('content_textarea_edit').value = edit_content;
         document.getElementById('announcement_id').value = edit_btn_id;
+        document.getElementById('edit_publish_date').value = publish_date;
     }
     modal_cancel(editmodal);
 
