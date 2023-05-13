@@ -23,7 +23,7 @@ class AdminSettingsController extends Controller
     public function coordinatorOptions(Request $request)
     {
         $body = $request->getBody();
-        $params = $this->getParameters();
+        $msg = "";
         $is_coordinator_updated = false;
 
         if (isset($body['assign'])) { // Assign coordinator
@@ -33,22 +33,25 @@ class AdminSettingsController extends Controller
             );
 
             if ($is_coordinator_updated) {
-                $params['msg'] = "Coordinator assigned successfully";
+                $msg = "Coordinator assigned successfully";
             } else {
-                $params['msg'] = "Error assigning coordinator. Please try again later.";
+                $msg = "Error assigning coordinator. Please try again later.";
             }
         } else if (isset($body['remove'])) { // remove coordinator
             $is_coordinator_updated = Lecturer::removeCoordinator(
                 regNo: explode("-", $body['lecturer_regno_name'])[0]);
 
             if ($is_coordinator_updated) {
-                $params['msg'] = "Coordinator removed successfully";
+                $msg = "Coordinator removed successfully";
             } else {
-                $params['msg'] = "Error removing coordinator. Please try again later.";
+                $msg = "Error removing coordinator. Please try again later.";
             }
         }
 
+        $params = $this->getParameters();
+        $params['msg'] = $msg;
         $params['is_coordinator_updated'] = $is_coordinator_updated;
+
         return $this->render(
             view: 'admin_settings',
             allowedRoles: ['Admin'],

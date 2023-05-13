@@ -110,7 +110,7 @@ $app->router->get('/account_creation', [ProfileController::class, 'displayAccoun
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
 
 $app->router->get('/admin_settings', [AdminSettingsController::class, "displayAdminSettings"]);
-$app->router->post('/assign_coordinator', [AdminSettingsController::class, "assignCoordinator"]);
+$app->router->post('/update_coord_options', [AdminSettingsController::class, "coordinatorOptions"]);
 $app->router->post('/update_academic_settings', [AdminSettingsController::class, "updateAcademicSettings"]);
 
 // -------------------------------------------------------------------------

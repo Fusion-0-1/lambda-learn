@@ -4,8 +4,8 @@
 <?php use app\model\User\Lecturer;
 
 if(isset($msg)){
-    if(isset($is_assigned_coordinator)){?>
-        <div id="mssg-modal" class="<?php if ($is_assigned_coordinator) echo "success-mssg"; else echo "error-mssg";?> text-justify">
+    if(isset($is_coordinator_updated)){?>
+        <div id="mssg-modal" class="<?php if ($is_coordinator_updated) echo "success-mssg"; else echo "error-mssg";?> text-justify">
             <p><?php echo $msg ?></p>
         </div>
     <?php } elseif(isset($is_settings_setup)){?>
@@ -18,15 +18,15 @@ if(isset($msg)){
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
     <div class="flex flex-row h-justify responsive-card">
-        <form action="/assign_coordinator" method="post" name="assign_coordinator_form"
+        <form action="/update_coord_options" method="post" name="assign_coordinator_form"
               class="main-container border flex flex-column flex-gap width-full" id="assign_coordinator">
             <h3>Assign Coordinator</h3>
 
             <div class="flex flex-column flex-gap">
                 <label>Lecturer</label>
                 <label for="lecturer_regno_name"></label>
-                <select class="input" name="lecturer_regno_name" required>
-                    <option value="" disabled selected hidden>Select a batch...</option>
+                <select class="input" id="lecSelect" name="lecturer_regno_name" required>
+                    <option value="" disabled hidden>Select a batch...</option>
                     <?php
                     foreach ($lecturers as $lecturer) {
                         echo "<option>" . $lecturer['reg_no'] . "-" .
@@ -37,8 +37,9 @@ if(isset($msg)){
 
             <div class="flex flex-column flex-gap">
                 <label>Batch year</label>
-                <label for="batch_year"></label><select class="input" name="batch_year" required>
-                    <option value="" disabled selected hidden>Select a batch...</option>
+                <label for="batch_year"></label>
+                <select class="input" id="batchYearSelect" name="batch_year" required>
+                    <option value="" disabled hidden>Select a batch...</option>
                     <?php
                     foreach($batch_years as $year) { ?>
                     <option><?php echo $year?></option>
@@ -48,8 +49,8 @@ if(isset($msg)){
 
             <div class="flex flex-column flex-gap">
                 <label>Degree Program</label>
-                <select class="input" name="degree_program" onchange="filterCourses()" required>
-                    <option value="" disabled selected hidden>Select a degree program...</option>
+                <select class="input" id="degreeProgramSelect" name="degree_program" required>
+                    <option value="" disabled hidden>Select a degree program...</option>
                     <?php
                     foreach($degree_programs as $degree_program) {
                         echo "<option>$degree_program</option>";
@@ -58,7 +59,12 @@ if(isset($msg)){
             </div>
 
             <div class="flex flex-column flex-gap ">
-                <br><button type="submit" class="edit-btn-text margin-top">Assign</button>
+                <div class="flex flex-row flex-gap ">
+                    <br><button type="submit" id="assignCoordinatorBtn"
+                                name="assign" class="edit-btn-text margin-top">Assign</button>
+                    <button type="submit" id="removeCoordinatorBtn"
+                            name="remove" class="edit-btn-text margin-top" disabled>Remove</button>
+                </div>
             </div>
         </form>
 
@@ -97,4 +103,47 @@ if(isset($msg)){
     </div>
 </div>
 
+<script>
 
+    // @description coordinatorRegNos and coordinatorDegreeCode are arrays of coordinator
+    // reg nos and degree codes **in order**
+    let coordinatorRegNos = <?php echo json_encode($coordinatorRegNos); ?>;
+    let coordinatorDegreeCode = <?php echo json_encode($coordinatorDegreeCode); ?>;
+
+    let lec_select_element = document.getElementById("lecSelect");
+    let batch_year_element = document.getElementById("batchYearSelect");
+    let degree_program_select = document.getElementById("degreeProgramSelect");
+
+    lec_select_element.addEventListener("change", function () {
+        enableBtns();
+    });
+    batch_year_element.addEventListener("change", function () {
+        enableBtns();
+    });
+    degree_program_select.addEventListener("change", function () {
+        enableBtns();
+    });
+
+
+    // @description Enable or disable buttons according to the selected values
+    //              This being checked by comparing the index of the selected value
+    // @return void
+    function enableBtns() {
+        const reg_no = document.getElementById("lecSelect").value.split("-")[0];
+        const batchYear = document.getElementById("batchYearSelect").value;
+        const degreeProgram = document.getElementById("degreeProgramSelect").value;
+
+        let selectedRegNoIndex = coordinatorRegNos.indexOf(reg_no)
+        let selectedDegreeIndex = coordinatorDegreeCode.indexOf(degreeProgram + " " + batchYear)
+
+        let enableRemoveBtn = selectedRegNoIndex === selectedDegreeIndex && selectedRegNoIndex !== -1
+        document.getElementById("removeCoordinatorBtn").disabled =
+            !(enableRemoveBtn);
+
+        document.getElementById("assignCoordinatorBtn").disabled =
+            enableRemoveBtn;
+    }
+
+    enableBtns();
+
+</script>
