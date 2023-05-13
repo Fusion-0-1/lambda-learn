@@ -18,6 +18,10 @@ use DateTimeZone;
 
 class CourseController extends Controller
 {
+    /**
+     * @description Display all courses in the overview page
+     * @return array|false|string|string[]
+     */
     public function displayCourses()
     {
         $user = unserialize($_SESSION['user']);
@@ -29,6 +33,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display course page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayCourse(Request $request)
     {
         $body = $request->getBody();
@@ -51,6 +60,11 @@ class CourseController extends Controller
         }
     }
 
+    /**
+     * @description Update course page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function updateCoursePage(Request $request)
     {
         $body = $request->getBody();
@@ -96,6 +110,11 @@ class CourseController extends Controller
         }
     }
 
+    /**
+     * @description Display all submissions for a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayAllSubmissions(Request $request)
     {
         $body = $request->getBody();
@@ -108,6 +127,12 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Create a course submission
+     * @param Request $request
+     * @return void
+     * @throws \Exception
+     */
     public function CreateSubmission(Request $request)
     {
         $body = $request->getBody();
@@ -157,6 +182,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Update submission visibility
+     * @param Request $request
+     * @return void
+     */
     public function changeSubmissionVisibility(Request $request)
     {
         $body = $request->getBody();
@@ -164,6 +194,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Update all submissions
+     * @param Request $request
+     * @return void
+     */
     public function updateAllSubmissions(Request $request)
     {
         $body = $request->getBody();
@@ -202,6 +237,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Delete a submission
+     * @param Request $request
+     * @return void
+     */
     public function deleteCourseSubmission(Request $request)
     {
         $body = $request->getBody();
@@ -209,6 +249,10 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Display course marks upload page
+     * @return array|false|string|string[]
+     */
     public function displayCourseMarkUpload()
     {
         return $this->render(
@@ -217,6 +261,10 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display course creation page
+     * @return array|false|string|string[]
+     */
     public function displayCourseCreation()
     {
         $params['courses'] = Course::fetchAllCourses();
@@ -227,6 +275,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Create a new course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function createNewCourse(Request $request)
     {
         $body = $request->getBody();
@@ -246,6 +299,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Edit a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function editCourse(Request $request)
     {
         $body = $request->getBody();
@@ -260,6 +318,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Delete a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function deleteCourse(Request $request)
     {
         $body = $request->getBody();
@@ -272,6 +335,10 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display assign users to courses page
+     * @return array|false|string|string[]
+     */
     public function displayAssignUsersToCourses()
     {
         $users = Student::fetchStudents();
@@ -294,6 +361,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Update assign users to courses page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function updateAssignUsersToCourses(Request $request)
     {
         $body = $request->getBody();
@@ -327,6 +399,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Upload assign users to courses page CSV file
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function uploadAssignUsersToCourses(Request $request)
     {
         $file = new CSVFile($request->getFile());
@@ -359,6 +436,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display course edits
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayCourseEdit(Request $request)
     {
         $body = $request->getBody();
@@ -372,6 +454,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Edit course topics and sub topics
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function editCourseTopicsAndSubTopics(Request $request)
     {
         $body = $request->getBody();
@@ -407,6 +494,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Add new course topics and sub topics
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function addNewCourseTopicsAndSubTopics(Request $request)
     {
         $body = $request->getBody();

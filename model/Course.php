@@ -36,6 +36,11 @@ class Course
 
 
     // -----------------------------Basic Methods-------------------------------------
+    /**
+     * @description Get the course detail table relevant to the user based on the user type
+     * @param User $user
+     * @return string|void
+     */
     private static function getUserTable(User $user){
         $type = $user::getUserType($user->getRegNo());
         if ($type == 'Student') {
@@ -45,6 +50,11 @@ class Course
         }
     }
 
+    /**
+     * @description Get all the courses relevant to the user
+     * @param User $user
+     * @return array
+     */
     public static function getUserCourses(User $user): array
     {
         $courses = [];
@@ -92,6 +102,11 @@ class Course
         return $courses;
     }
 
+    /**
+     * @description Get course lecturer registration numbers of a given course
+     * @param string $courseCode
+     * @return array
+     */
     public static function getCourseLecturers(string $courseCode): array
     {
         $results = Application::$db->select(
@@ -107,11 +122,21 @@ class Course
         return $courseLecturers;
     }
 
+    /**
+     * @description Check whether a course exists
+     * @param string $course
+     * @return bool
+     */
     public static function checkExists(string $course) : bool
     {
         return Application::$db->checkExists('Course', ['course_code' => $course]);
     }
 
+    /**
+     * @description Get the course details of a given course
+     * @param string $courseCode
+     * @return Course
+     */
     public static function getCourse(string $courseCode): Course
     {
         $results = Application::$db->select(
@@ -130,6 +155,10 @@ class Course
 
     }
 
+    /**
+     * @description Get details of all the courses in the database
+     * @return array
+     */
     public static function fetchAllCourses() : array
     {
         $results = Application::$db->select(
@@ -144,7 +173,14 @@ class Course
         return $courses;
     }
 
-    public static function insertCourse(string $courseCode,string $courseName,int $isOptional) : bool
+    /**
+     * @description Insert a new course to the database
+     * @param string $courseCode
+     * @param string $courseName
+     * @param int $isOptional
+     * @return bool
+     */
+    public static function insertCourse(string $courseCode, string $courseName, int $isOptional) : bool
     {
         if(!self::checkExists($courseCode)) {
             Application::$db->insert(
@@ -161,7 +197,13 @@ class Course
         return false;
     }
 
-    public static function UpdateCourse(string $courseCode,string $courseName) : bool
+    /**
+     * @description Update the course details of a given course
+     * @param string $courseCode
+     * @param string $courseName
+     * @return bool
+     */
+    public static function UpdateCourse(string $courseCode, string $courseName) : bool
     {
         Application::$db->update(
             table: 'Course',
@@ -171,6 +213,11 @@ class Course
         return true;
     }
 
+    /**
+     * @description Delete a course from the database
+     * @param string $courseCode
+     * @return bool
+     */
     public static function deleteCourse(string $courseCode) : bool
     {
         $lecCount = Application::$db->select(
@@ -194,6 +241,11 @@ class Course
         return true;
     }
 
+    /**
+     * @description Get the number of topics of a given course
+     * @param string $courseCode
+     * @return int
+     */
     public static function getTopicCount(string $courseCode) : int
     {
         $results = Application::$db->select(
@@ -204,6 +256,14 @@ class Course
         return Application::$db->rowCount($results);
     }
 
+    /**
+     * @description Add new topics and sub topics to a given course
+     * @param $courseCode
+     * @param $topics
+     * @param $subTopics
+     * @param $lecRegNo
+     * @return true
+     */
     public static function addNewTopicsAndSubTopics($courseCode, $topics, $subTopics, $lecRegNo)
     {
         $lastTopicId = Application::$db->select(
@@ -238,6 +298,11 @@ class Course
 
     // ---------------------------Getters and Setters-----------------------------------
 
+    /**
+     * @description Get total topic completion progress
+     * @param bool $stu
+     * @return int
+     */
     private function getTotalTopicCompletionProgress(bool $stu):int
     {
         $count = 0;
@@ -252,6 +317,7 @@ class Course
     }
 
     /**
+     * @description Get total topic completion progress for lecturer
      * @return int
      */
     public function getLecTotalTopicCompletionProgress(): int
@@ -260,6 +326,7 @@ class Course
     }
 
     /**
+     * @description Get total topic completion progress for student
      * @return int
      */
     public function getStuTotalTopicCompletionProgress(): int

@@ -51,7 +51,10 @@ class Lecturer extends User
     // --------------------------------------------------------------------------------
 
 
-
+    /**
+     * @description Insert new lecturer to database
+     * @return string
+     */
     public function insert(): string
     {
         $password = $this->generateRandomPassword();
@@ -76,6 +79,10 @@ class Lecturer extends User
         return $password;
     }
 
+    /**
+     * @description Fetch all lecturers from database
+     * @return array
+     */
     public static function fetchLecturers()
     {
         $results = Application::$db->select(
@@ -89,6 +96,12 @@ class Lecturer extends User
         return $users;
     }
 
+    /**
+     * @description Assign lecturers to courses
+     * @param string $lecturer
+     * @param string $courseCode
+     * @return array
+     */
     public static function assignLecturersToCourse(string $lecturer, string $courseCode)
     {
         $lecturerExists = [];
@@ -107,6 +120,11 @@ class Lecturer extends User
         return $lecturerExists;
     }
 
+    /**
+     * @description Get lecturer name from database using regNo
+     * @param string $regNo
+     * @return string
+     */
     public static function getLecturerName(string $regNo)
     {
         $results = Application::$db->select(
@@ -119,6 +137,11 @@ class Lecturer extends User
     }
 
     // ---------------------------Getters and Setters-----------------------------------
+
+    /**
+     * @description Check if the user is a coordinator
+     * @return bool
+     */
     public function isCoordinator(): bool
     {
         return $this->degreeProgramCode != '';

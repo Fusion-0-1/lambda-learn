@@ -46,6 +46,10 @@ class Admin extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
+    /**
+     * @description Insert new admin to database
+     * @return string
+     */
     public function insert(): string
     {
         $password = $this->generateRandomPassword();
@@ -69,6 +73,11 @@ class Admin extends User
     }
     // --------------------------------------------------------------------------------
 
+    /**
+     * @description Get admin name from database according to reg_no
+     * @param string $regNo
+     * @return string
+     */
     public static function getAdminName(string $regNo)
     {
         $results = Application::$db->select(

@@ -23,6 +23,11 @@ class DbConnection
         $conn->select_db($db_name);
     }
 
+    /**
+     * @description Get database instance
+     * @param $db
+     * @return DbConnection
+     */
     public static function getDatabaseInstance($db): DbConnection
     {
         if (!isset(static::$instance)) {
@@ -38,6 +43,11 @@ class DbConnection
      *      'on' => 'table_name.column_name = table_name.column_name'
      *  ],
      * ]
+     */
+    /**
+     * @description Select data from database
+     * @params $table, $columns, $join, $where, $like, $order, $limit
+     * @return bool|\mysqli_result
      */
     public function select($table, $columns = '*', $join = null, $where = null, $like = null, $order = null, $limit = null)
     {
@@ -70,6 +80,12 @@ class DbConnection
         return $this->db->query($sql);
     }
 
+    /**
+     * @description Insert data into database
+     * @param $table
+     * @param $values
+     * @return bool|\mysqli_result
+     */
     public function insert($table, $values)
     {
         $columns = "(" . implode(", ", array_keys($values)) . ")";
@@ -78,6 +94,12 @@ class DbConnection
         return $this->db->query($sql);
     }
 
+    /**
+     * @description Check whether given data exists in database
+     * @param $table
+     * @param $primaryKey
+     * @return bool
+     */
     public function checkExists($table, $primaryKey): bool
     {
         $result = $this->select(
@@ -88,6 +110,14 @@ class DbConnection
         return $this->rowCount($result) > 0;
     }
 
+    /**
+     * @description Update data in database
+     * @param $table
+     * @param $columns
+     * @param $where
+     * @param bool $math_formulae
+     * @return bool|\mysqli_result
+     */
     public function update($table, $columns, $where, $math_formulae = false): bool|\mysqli_result
     {
         $sql = "UPDATE $table";
@@ -106,6 +136,12 @@ class DbConnection
         return $this->db->query($sql);
     }
 
+    /**
+     * @description Delete data from database
+     * @param $table
+     * @param $where
+     * @return bool|\mysqli_result
+     */
     public function delete($table, $where): bool|\mysqli_result
     {
         $sql = "DELETE FROM $table";
@@ -113,16 +149,30 @@ class DbConnection
         return $this->db->query($sql);
     }
 
+    /**
+     * @param $result
+     * @return bool|array|null
+     */
     public function fetch($result): bool|array|null
     {
         return $result->fetch_assoc();
     }
 
+    /**
+     * @description Get number of rows in result
+     * @param $result
+     * @return int|string
+     */
     public function rowCount($result): int|string
     {
         return $result->num_rows;
     }
 
+    /**
+     * @description If value is null, set it to empty string
+     * @param $table
+     * @return array
+     */
     public function setEmptyToNullColumns($table): array
     {
         foreach ($table as $key => $value) {
@@ -133,6 +183,12 @@ class DbConnection
         return $table;
     }
 
+    /**
+     * @description Add WHERE clause to SQL query
+     * @param $where
+     * @param $operator
+     * @return string
+     */
     private function addSQLWhere($where, $operator = 'AND')
     {
         $sql = " WHERE " . array_keys($where)[0] . "='" . array_values($where)[0] . "'";
@@ -143,6 +199,11 @@ class DbConnection
         return $sql;
     }
 
+    /**
+     * @description Add LIKE clause to SQL query
+     * @param $like
+     * @return string
+     */
     private function addSQLLike($like)
     {
         $sql = "";
