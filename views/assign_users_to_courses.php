@@ -1,7 +1,9 @@
 <link rel="stylesheet" href="css/assign_users.css">
 
 <!--Success and error message model on the bottom right to display whether user assigned successfully-->
-<?php if(isset($exists)){
+<?php use app\model\Course;
+
+if(isset($exists)){
     if(isset($invalid_course)){
         if(sizeof($invalid_course) > 0){?>
             <div id="mssg-modal" class="error-mssg text-justify">
@@ -66,8 +68,8 @@
                     <?php
                     $topicCounts = array();
                     foreach ($courses as $course) {
-                        $topicCounts[$course['course_code']] = \app\model\Course::getTopicCount($course['course_code']);
-                        if(\app\model\Course::getTopicCount($course['course_code']) > 0){?>
+                        $topicCounts[$course['course_code']] = Course::getTopicCount($course['course_code']);
+                        if(Course::getTopicCount($course['course_code']) > 0){?>
                         <option><?php echo $course['course_code'] . ' - ' . $course['course_name']?></option>
                     <?php }
                     }?>
