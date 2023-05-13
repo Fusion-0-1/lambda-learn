@@ -73,10 +73,13 @@ class CSVFile
      *       This will update student update for each course as specified in the csv file. 10 points will be given for
      *       leaderboard ranking.
      * 3. Assign Students to a course
-     *      @param bool $assignStudents true (this will enable upload exam marks function)
+     *      @param bool $assignStudents (this will enable assign students function)
+     *       This will read student registration numbers in the csv file. Will return invalid registration numbers as an array.
+     *       This will assign students to the course and the file should be renamed with the course code.
+     *  4: Upload Exam Marks
+     *       @param bool $uploadExamMarks true (this will enable upload exam marks function)
      *       Reads the CSV file containing exam marks.
      *       Returns an array of valid registration numbers and their corresponding exam marks.
-     *  4: Upload Exam Marks
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location
      * @return array|bool|null
