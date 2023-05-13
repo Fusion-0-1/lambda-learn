@@ -137,6 +137,21 @@ class Lecturer extends User
     }
 
     /**
+     * @description Remove singed coordinator
+     * @param string $regNo
+     * @return bool
+     */
+    public static function removeCoordinator(string $regNo)
+    {
+        Application::$db->update(
+            table: 'AcademicStaff',
+            columns: ['degree_program_code' => NULL],
+            where: ['reg_no' => $regNo]
+        );
+        return true;
+    }
+
+    /**
      * @description Get all coordinators
      * @return array
      */
