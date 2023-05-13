@@ -97,6 +97,7 @@ class CourseAnnouncement extends Announcement
                 'course_code' => $this->courseCode ?? ''
             ]
         );
+        return true;
     }
 
     /**
@@ -113,6 +114,7 @@ class CourseAnnouncement extends Announcement
             columns: ['heading'=>$heading,'content'=>$content],
             where: ['announcement_id'=>$announcementId]
         );
+        return true;
     }
 
     /**

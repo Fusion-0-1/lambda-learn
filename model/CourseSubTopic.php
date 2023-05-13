@@ -15,16 +15,19 @@ class CourseSubTopic {
     private int $isBeingTracked;
     private int $isCovered;
     private int $stuIsCompleted;
+    private string $location;
 
     public function __construct() {}
 
-    public static function createNewSubTopic($subTopicId, $subTopicName, $isBeingTracked, $isCovered, $stuIsCompleted=0) {
+    public static function createNewSubTopic($subTopicId, $subTopicName, $isBeingTracked, $isCovered, $stuIsCompleted=0, $location='') {
         $subTopic = new CourseSubTopic();
-        subTopicId: $subTopic->subTopicId = $subTopicId;
-        subTopicName: $subTopic->subTopicName = $subTopicName;
-        isBeingTracked: $subTopic->isBeingTracked = $isBeingTracked;
-        isCovered: $subTopic->isCovered = $isCovered;
-        stuIsCompleted: $subTopic->stuIsCompleted = $stuIsCompleted;
+        $subTopic->subTopicId = $subTopicId;
+        $subTopic->subTopicName = $subTopicName;
+        $subTopic->isBeingTracked = $isBeingTracked;
+        $subTopic->isCovered = $isCovered;
+        $subTopic->stuIsCompleted = $stuIsCompleted;
+        $subTopic->location = $location;
+
         return $subTopic;
     }
 
@@ -191,6 +194,30 @@ class CourseSubTopic {
         return true;
     }
 
+
+    public static function lecturerRecordingExits($courseCode, $courseTopic, $courseSubTopic, $location): bool
+    {
+        return Application::$db->checkExists(
+            table: 'coursesubtopicrec',
+            primaryKey: ['course_code'=>$courseCode,'topic_id'=>$courseTopic,'sub_topic_id'=>$courseSubTopic,'recording'=>$location]
+        );
+    }
+
+    public static function insertLecturerRecording($courseCode, $topicId, $subtopicId, $location)
+    {
+        Application::$db->insert(
+            table: 'coursesubtopicrec',
+            values: [
+                'course_code' => $courseCode,
+                'topic_id' => $topicId,
+                'sub_topic_id' => $subtopicId,
+                'recording'=>$location
+            ]
+        );
+    }
+
+
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
@@ -288,4 +315,13 @@ class CourseSubTopic {
     {
         $this->stuIsCompleted = $stuIsCompleted;
     }
+
+    /**
+     * @return string
+     */
+    public function getLocation(): string
+    {
+        return $this->location;
+    }
+
 }

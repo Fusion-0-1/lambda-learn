@@ -96,6 +96,8 @@ class SiteAnnouncement extends Announcement
                 'cord_reg_no' => $this->cordRegNo ?? ''
             ]
         );
+
+        return true;
     }
 
     //-----------------Update SiteAnnouncement------------------
@@ -114,6 +116,7 @@ class SiteAnnouncement extends Announcement
              columns: ['heading'=>$heading,'content'=>$content],
              where: ['announcement_id'=>$announcementId]
          );
+         return true;
     }
 
     /**

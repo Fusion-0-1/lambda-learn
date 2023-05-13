@@ -3,6 +3,27 @@
 
 <div class="main-container border v-center flex-gap responsive-container">
     <h3><?php echo $course_code?></h3>
+    <?php if(isset($create_course_announcement)) {
+        if($create_course_announcement){?>
+            <div id="mssg-modal" class="success-mssg text-justify">
+                <p>Announcement Created successfully.</p>
+            </div>
+        <?php } else { ?>
+            <div id="mssg-modal" class="error-mssg text-justify">
+                <p>Failed to create announcement</p>
+            </div>
+        <?php }
+    } elseif(isset($update_announcement)) {
+        if($update_announcement) { ?>
+            <div id="mssg-modal" class="success-mssg text-justify">
+                <p>Announcement updated successfully.</p>
+            </div>
+        <?php } elseif (isset($error) && !empty($error)) { ?>
+            <div id="mssg-modal" class="error-mssg text-justify">
+                <p>Heading and Content Required</p>
+            </div>
+        <?php }
+    }?>
     <?php if ($_SESSION['user-role'] == 'Lecturer' or $_SESSION['user-role'] == 'Coordinator') {?>
         <form method="post" action="course_announcement" class="announcement-card border">
             <input type="text" value="<?php echo $course_code?>" name="course_code" hidden>
@@ -132,7 +153,11 @@
                 <button type="button" value="Cancel" id="edit-cancel-btn" class="cancel-btn h-center v-center cancel-btn-edit-modal">Cancel</button>
             </div>
             <input id="announcement_id" type="text" name="announcement_id" hidden>
+<<<<<<< HEAD
             <input id="publish_date_time" type="text" name="publish_date_time" hidden>
+=======
+            <input id="edit_publish_date" type="text" name="edit_publish_date" hidden>
+>>>>>>> 603e0d52c3f1d4c3f9750f92871b355bcd423992
         </form>
     </div>
 </div>
@@ -186,13 +211,13 @@
         this.style.height = this.scrollHeight + 'px';
     }
 
-    const editmodal = document.getElementById('card_edit_modal');
-    function announcementupdate(edit_heading,edit_content,edit_btn_id){
-
+    const editmodal = document.getElementById('card_edit_modal')
+    function announcementupdate(edit_heading,edit_content,edit_btn_id,publish_date){
         editmodal.style.display='block';
         document.getElementById('heading_textarea_edit').value = edit_heading;
         document.getElementById('content_textarea_edit').value = edit_content;
         document.getElementById('announcement_id').value = edit_btn_id;
+        document.getElementById('edit_publish_date').value = publish_date;
     }
 
     const cancelbtn = document.getElementById('edit-cancel-btn');

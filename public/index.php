@@ -53,6 +53,7 @@ $app->router->post('/update_task', [KanbanboardController::class, 'updateKanbanT
 $app->router->post('/update_task_state', [KanbanboardController::class, 'updateKanbanTasksState']);
 
 $app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
+$app->router->post('/lecturer_upload_recording', [CourseController::class, 'uploadRecording']);
 
 $app->router->get('/course_edit', [CourseController::class, 'displayCourseEdit']);
 $app->router->post('/edit_topics', [CourseController::class, 'editCourseTopicsAndSubTopics']);
