@@ -35,7 +35,7 @@ CREATE TABLE AcademicStaff (
     password VARCHAR(60) NOT NULL,
     active_status BOOLEAN,
     profile_picture VARCHAR(100),
-    degree_program_code VARCHAR(5),
+    degree_program_code VARCHAR(10),
     position VARCHAR(20) NOT NULL,
     CONSTRAINT PK_AcademicStaff PRIMARY KEY (reg_no)
 );
