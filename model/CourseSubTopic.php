@@ -191,6 +191,15 @@ class CourseSubTopic {
         return true;
     }
 
+    /**
+     * @description Delete student course sub topics from the database
+     * @return void
+     */
+    public static function truncateStuCourseSubTopics()
+    {
+        Application::$db->truncateTable('StuCourseSubTopic');
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
