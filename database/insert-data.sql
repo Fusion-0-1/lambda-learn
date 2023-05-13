@@ -22,8 +22,8 @@ INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, pas
     ("2020/LC/0026", "Ramindu", "Walgama", "2020lc0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG", "Senior Professor"),
     ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC", "Lecturer");
 
-UPDATE AcademicStaff SET degree_program_code = "CS" WHERE reg_no = "2003/LC/0004";
-UPDATE AcademicStaff SET degree_program_code = "IS" WHERE reg_no = "1998/LC/0019";
+UPDATE AcademicStaff SET degree_program_code = "CS 2020" WHERE reg_no = "2003/LC/0004";
+UPDATE AcademicStaff SET degree_program_code = "IS 2020" WHERE reg_no = "1998/LC/0019";
 
 INSERT INTO Admin (reg_no, first_name, last_name, email, contact_no, password) VALUES
     ("2020/AD/0026", "Ramindu", "Walgama", "2020ad0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG"),

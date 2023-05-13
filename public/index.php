@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AdminSettingsController;
 use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
 use app\controllers\KanbanboardController;
@@ -107,6 +108,12 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 // -------------------------------------------------------------------------
 $app->router->get('/account_creation', [ProfileController::class, 'displayAccountCreation']);
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+
+$app->router->get('/admin_settings', [AdminSettingsController::class, "displayAdminSettings"]);
+$app->router->post('/update_coord_options', [AdminSettingsController::class, "coordinatorOptions"]);
+$app->router->post('/update_academic_settings', [AdminSettingsController::class, "updateAcademicSettings"]);
+$app->router->post('/start_new_sem', [AdminSettingsController::class, "startNewSemester"]);
+
 // -------------------------------------------------------------------------
 
 // Coordinator routes
