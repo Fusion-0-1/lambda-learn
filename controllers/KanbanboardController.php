@@ -6,6 +6,7 @@ use app\core\Controller;
 use app\core\Request;
 use app\model\KanbanTask;
 use app\core\User;
+use app\model\Submission;
 
 class KanbanboardController extends Controller
 {
@@ -66,5 +67,27 @@ class KanbanboardController extends Controller
     {
         $body = $request->getBody();
         KanbanTask::updateKanbanTaskState($body['card-id'], $body['card-state']);
+    }
+
+    public function displayCalender()
+    {
+        $user = unserialize($_SESSION['user']);
+        if ($_SESSION['user-role'] == 'Student') {
+            $params['submissions'] = Submission::getUserSubmissions($user);
+            return $this->render(
+                view: '/calender',
+                params: $params
+            );
+        } else if ($_SESSION['user-role'] == 'Lecturer') {
+            $params['tasks'] = KanbanTask::getToDoTasks($user);
+            return $this->render(
+                view: '/calender',
+                params: $params
+            );
+        } else {
+            return $this->render(
+                view: '/calender'
+            );
+        }
     }
 }
