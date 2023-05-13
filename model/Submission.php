@@ -158,6 +158,14 @@ class Submission
         return $assignmentSubmissions;
     }
 
+    /*
+     * @description Delete all the student submissions of a given course
+     */
+    public static function truncateStuCourseSubmissioms()
+    {
+        Application::$db->truncateTable('StuCourseSubmission');
+    }
+
     /**
      * @return int
      */
