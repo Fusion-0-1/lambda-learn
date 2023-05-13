@@ -7,6 +7,7 @@ use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
+use app\model\CourseAnnouncement;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\Submission;
@@ -41,6 +42,7 @@ class CourseController extends Controller
                 params: $params
             );
         } else {
+            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
             return $this->render(
                 view: '/course/course_page',
                 allowedRoles: ['Lecturer', 'Student'],
@@ -61,6 +63,7 @@ class CourseController extends Controller
 
             $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
+            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
 
             return $this->render(
                 view: '/course/course_page',
@@ -402,6 +405,7 @@ class CourseController extends Controller
     {
         $body = $request->getBody();
         $params['course'] = Course::getCourse($body['course_code']);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
 
         return $this->render(
             view: '/course/course_edit',
@@ -437,6 +441,7 @@ class CourseController extends Controller
         }
 
         $params['course'] = Course::getCourse($courseCode);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
@@ -455,6 +460,7 @@ class CourseController extends Controller
         $params['add_topics'] = Course::addNewTopicsAndSubTopics($courseCode, $newTopics, $newSubTopics, $lecRegNo);
 
         $params['course'] = Course::getCourse($courseCode);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
