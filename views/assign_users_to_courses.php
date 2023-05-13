@@ -9,7 +9,7 @@ if(isset($exists)){
             <div id="mssg-modal" class="error-mssg text-justify">
                 <p>Please check whether you have renamed the CSV file with the correct course code.</p>
             </div>
-        <?php } elseif(sizeof($invalid_reg_no) > 0){?>
+        <?php } elseif((isset($invalid_reg_no)) and sizeof($invalid_reg_no) > 0){?>
             <div id="mssg-modal" class="error-mssg text-justify">
                 <p>Invalid registration numbers (<?php foreach ($invalid_reg_no as $regNo){
                         echo $regNo . ", " ;
@@ -30,7 +30,19 @@ if(isset($exists)){
             <p>Users have been assigned already</p>
         </div>
     <?php }
+}
+if(isset($is_deleted)) {
+    if($is_deleted) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>User deleted successfully</p>
+        </div>
+   <?php }  else { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+        <p>User not assigned for the course</p>
+        </div>
+    <?php }
 }?>
+
 
 
 <div id="file-upload-container" class="border main-container v-center flex-gap">
@@ -113,9 +125,13 @@ if(isset($exists)){
                 </select>
             </div>
 
-            <div class="flex flex-column flex-gap ">
-                <br><button class="edit-btn-text margin-top">Assign</button>
+            <div class="flex flex-column flex-gap">
+                <div class="flex flex-row flex-gap">
+                    <br><button class="edit-btn-text margin-top" name="assign" value="assign">Assign</button>
+                    <button class="edit-btn-text margin-top" name="delete" value="assign">Delete</button>
+                </div>
             </div>
+
         </form>
     </div>
 
