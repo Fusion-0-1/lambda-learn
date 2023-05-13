@@ -141,6 +141,12 @@ class Student extends User
         return $users;
     }
 
+    public static function checkStudentAssignedToCourse($studentRegNo, $courseCode)
+    {
+        $primaryKeys = [$studentRegNo, $courseCode];
+        return Application::$db->checkExists('StuCourse', $primaryKeys);
+    }
+
     /**
      * @description Assign students to a course
      * @param string $regNoLike
