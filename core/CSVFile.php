@@ -29,6 +29,10 @@ class CSVFile
 
 
     // -----------------------------Basic Methods-------------------------------------
+    /**
+     * @description Retrieve attendance reports details from the database
+     * @return array
+     */
     public static function getAttendanceReports()
     {
         $csvFiles = [];
@@ -42,6 +46,12 @@ class CSVFile
         return $csvFiles;
     }
 
+    /**
+     * @description Insert attendance report details into the database
+     * @param $path
+     * @param $date
+     * @return void
+     */
     public function insertAttendanceReport($path, $date): void
     {
         Application::$db->insert(

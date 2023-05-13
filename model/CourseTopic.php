@@ -4,6 +4,9 @@ namespace app\model;
 
 use app\core\Application;
 
+/**
+ *
+ */
 class CourseTopic {
     private string $courseCode;
     private string $topicId;
@@ -22,6 +25,12 @@ class CourseTopic {
         return $topic;
     }
 
+    /**
+     * @description Insert course topics to the database
+     * @param $courseCode
+     * @param $topicsArray
+     * @return void
+     */
     public function insertCourseTopics($courseCode, $topicsArray)
     {
         $topicId = 1;
@@ -42,6 +51,11 @@ class CourseTopic {
         }
     }
 
+    /**
+     * @description Get course topics from the database together with its sub topics
+     * @param $courseCode
+     * @return array
+     */
     public static function getCourseTopics($courseCode): array
     {
         $topics = [];
@@ -62,6 +76,13 @@ class CourseTopic {
         return $topics;
     }
 
+    /**
+     * @description Edit course topics
+     * @param $courseCode
+     * @param $topicId
+     * @param $topicName
+     * @return bool
+     */
     public static function editTopics($courseCode, $topicId, $topicName) : bool
     {
         Application::$db->update(
@@ -75,6 +96,7 @@ class CourseTopic {
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
+     * @description Get completion percentage of sub topics for a lecturer
      * @return int
      */
     public function getLecSubTopicCompletePercentage(): int
@@ -82,6 +104,11 @@ class CourseTopic {
         return ($this->getLecSubTopicCompleteCount() / sizeof($this->subTopics)) * 100;
     }
 
+    /**
+     * @description Get completed sub topic count
+     * @param bool $stu
+     * @return int
+     */
     private function getSubTopicCompleteCount(bool $stu): int
     {
         return count(array_filter($this->subTopics, function ($subTopic) use ($stu) {
@@ -90,6 +117,7 @@ class CourseTopic {
     }
 
     /**
+     * @description Get completed sub topic count for a student
      * @return int
      */
     public function getStuSubTopicCompleteCount(): int
@@ -98,6 +126,7 @@ class CourseTopic {
     }
 
     /**
+     * @description Get completed sub topic count for a lecturer
      * @return int
      */
     public function getLecSubTopicCompleteCount(): int

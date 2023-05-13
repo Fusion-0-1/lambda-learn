@@ -40,7 +40,7 @@ $app = new Application(dirname(__DIR__), $config, $admin_config);
 // Public routes
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
-$app->router->get('/calender', 'calender');
+$app->router->get('/calender', [KanbanboardController::class, 'displayCalender']);
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);

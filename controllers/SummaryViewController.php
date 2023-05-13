@@ -7,6 +7,10 @@ use app\model\Performance;
 
 class SummaryViewController extends Controller
 {
+    /**
+     * @description Display coordinator charts
+     * @return array|false|string|string[]
+     */
     public function displayCoordinatorCharts()
     {
         return $this->render(
@@ -15,6 +19,10 @@ class SummaryViewController extends Controller
         );
     }
 
+    /**
+     * @description Display utilization charts
+     * @return array|false|string|string[]
+     */
     public function displayUtilizationReport()
     {
         $performanceData = Performance::getPerformance();
