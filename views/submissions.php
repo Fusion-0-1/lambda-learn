@@ -1,3 +1,4 @@
+<?php use app\model\Submission?>
 <link rel="stylesheet" href="css/submissions.css">
 <link rel="stylesheet" href="css/submission_popup.css">
 
@@ -48,9 +49,14 @@
                             <a href="" class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
                             <a href="" class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image"></a>
                         <?php } ?>
-                        <?php if ($_SESSION['user-role'] == 'Student') {?>
-                           <button class="btn dark-btn h-center v-center" id="submission_modal" onclick="uploadsubmission('<?php echo $sub->getDueDate()."','".$sub->getSubmissionId()."'";?>)">Upload</button>
-                        <?php } ?>
+                        <?php if ($_SESSION['user-role'] == 'Student') {
+                            $profile = unserialize($_SESSION['user']);
+                            if(Submission::stuSubExists($profile->getRegNo(), $sub->getCourseCode(), $sub->getSubmissionId())) {?>
+<!--                                Display already existing submission with submitted datetime, edit and delete buttons and NO update button -->
+                            <?php } else {?>
+                                    <button class="btn dark-btn h-center v-center" id="submission_modal" onclick="uploadsubmission('<?php echo $sub->getDueDate()."','".$sub->getSubmissionId()."'";?>)">Upload</button>
+                        <?php }
+                        } ?>
                     </div>
             </div>
             <div class="submissions-card-inside border">
