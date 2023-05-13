@@ -6,7 +6,6 @@
     <div class="card">
 
         <?php foreach ($courses as $course) { ?>
-<!--            <a --><?php //if ($_SESSION['user-role'] != 'Coordinator') { echo 'href="/course_page?course_code='.$course->getCourseCode().'"';} ?><!-- class="link">-->
             <?php if ($_SESSION['user-role'] != 'Coordinator') { ?>
                 <a href="<?php echo "/course_page?course_code=" . $course->getCourseCode() ?>" class="link">
             <?php } else { ?>
