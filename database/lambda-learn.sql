@@ -63,6 +63,7 @@ CREATE TABLE Course (
     optional_flag BOOLEAN NOT NULL,
     cord_reg_no VARCHAR(12),
     date_created DATE,
+    exam_marks_report_path VARCHAR(255),
     CONSTRAINT PK_Course PRIMARY KEY (course_code),
     CONSTRAINT FK_Course_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
 );
@@ -82,7 +83,7 @@ CREATE TABLE CourseSubTopic (
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
     sub_topic VARCHAR(50) NOT NULL,
-    is_being_tracked BOOLEAN NOT NULL,
+    is_being_tracked BOOLEAN DEFAULT 0,
     lec_reg_no VARCHAR(12) NOT NULL,
     is_covered BOOLEAN DEFAULT 0,
     CONSTRAINT PK_CourseSubTopic PRIMARY KEY (course_code, topic_id, sub_topic_id),

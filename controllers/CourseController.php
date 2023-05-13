@@ -253,11 +253,53 @@ class CourseController extends Controller
      * @description Display course marks upload page
      * @return array|false|string|string[]
      */
-    public function displayCourseMarkUpload()
+    public function displayCourseMarkUpload(Request $request)
     {
+        $body = $request->getBody();
+        $params['course'] = Course::getCourse($body['course_code']);
         return $this->render(
             view: '/marks_upload',
-            allowedRoles: ['Lecturer', 'Coordinator']
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
+        );
+    }
+
+    public function updateCourseMarks(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $params['course'] = Course::getCourse($body['course_code']);
+
+        $file = new CSVFile($request->getFile());
+        $marks_dir = 'User Uploads/Exam marks/' . $body['course_code'];
+        if (!file_exists($marks_dir)) {
+            mkdir($marks_dir);
+        }
+        $categorizedData = $file->readCSV(
+            uploadExamMarks: true
+        );
+
+        $path = 'User Uploads/Exam marks/'.$courseCode;
+        $params['invalid_user'] = false;
+        for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+            if((!User::userExists($categorizedData['reg_no'][$i])) || (Student::checkStudentAssignedToCourse($categorizedData['reg_no'][$i], $courseCode))){
+                $params['invalid_user'] = true;
+            }
+        }
+        if(!$params['invalid_user']){
+            for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+                Course::updateExamMarks($categorizedData['reg_no'][$i], $courseCode, $categorizedData['exam_mark'][$i], $path);
+            }
+            $file_path = $marks_dir . '/' . date('Y') . '.csv';
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            $file->saveFileOnServer($path = $marks_dir . '/' . date('Y') . '.csv');
+        }
+        return $this->render(
+            view: '/marks_upload',
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
         );
     }
 
@@ -426,8 +468,14 @@ class CourseController extends Controller
         $courseCode = trim(explode("-", $body['course'])[0]);
 
         if(isset($body['assign_lecturer'])){
-            $lecturer = $body['lecturer'];
-            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            if(isset($body['assign'])){
+                $lecturer = $body['lecturer'];
+                $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            }
+            elseif(isset($body['delete'])) {
+                $lecturer = $body['lecturer'];
+                $params['is_deleted'] = Lecturer::removeLecturersFromCourse($lecturer, $courseCode);
+            }
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
             $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
