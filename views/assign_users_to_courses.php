@@ -32,7 +32,7 @@
 if(isset($is_deleted)) {
     if($is_deleted) { ?>
         <div id="mssg-modal" class="success-mssg text-justify">
-            <p>User deleted successfully</p>
+            <p>User removed from the course successfully</p>
         </div>
    <?php }  else { ?>
         <div id="mssg-modal" class="error-mssg text-justify">
