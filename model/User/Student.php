@@ -57,6 +57,10 @@ class Student extends User
 
 
     // -----------------------------Basic Methods-------------------------------------
+    /**
+     * @description Insert new student to database
+     * @return string
+     */
     public function insert(): string
     {
         $password = $this->generateRandomPassword();
@@ -86,6 +90,11 @@ class Student extends User
 
 
     // -----------------------------Custom Methods-------------------------------------
+    /**
+     * @description Update course attendance of a student
+     * @param $courseCode
+     * @return void
+     */
     public function updateCourseAttendance($courseCode)
     {
         Application::$db->update(
@@ -100,6 +109,12 @@ class Student extends User
         );
     }
 
+    /**
+     * @description Update attendance of all courses
+     * @param $courses
+     * @param $attendance
+     * @return void
+     */
     public function updateAllCoursesAttendance($courses, $attendance)
     {
         for ($i = 0; $i < count($courses); $i++) {
@@ -109,6 +124,10 @@ class Student extends User
         }
     }
 
+    /**
+     * @description Fetch students according to the given degree program code
+     * @return array
+     */
     public static function fetchStudents()
     {
         $results = Application::$db->select(
@@ -122,6 +141,18 @@ class Student extends User
         return $users;
     }
 
+    public static function checkStudentAssignedToCourse($studentRegNo, $courseCode)
+    {
+        $primaryKeys = [$studentRegNo, $courseCode];
+        return Application::$db->checkExists('StuCourse', $primaryKeys);
+    }
+
+    /**
+     * @description Assign students to a course
+     * @param string $regNoLike
+     * @param string $courseCode
+     * @return array
+     */
     public static function assignStudentsToCourse(string $regNoLike, string $courseCode)
     {
         $semester = explode(' ', $courseCode);
@@ -153,6 +184,17 @@ class Student extends User
 
 
     // -------------------------Field validation methods---------------------------------
+    /**
+     * @param $regNo
+     * @param $firstName
+     * @param $lastName
+     * @param $email
+     * @param $contactNo
+     * @param $personalEmail
+     * @param $indexNo
+     * @param $degreeProgramCode
+     * @return bool
+     */
     public static function validateUserAttributes($regNo, $firstName, $lastName, $email, $contactNo,
                                                   $personalEmail=null, $indexNo=null, $degreeProgramCode=null): bool
     {
@@ -174,6 +216,10 @@ class Student extends User
         return parent::validateUserAttributes($regNo, $firstName, $lastName, $email, $contactNo);
     }
 
+    /**
+     * @param $indexNo
+     * @return bool
+     */
     public static function validateIndexNo($indexNo): bool
     {
         /*
@@ -188,6 +234,10 @@ class Student extends User
 
 
     // ---------------------------Getters and Setters-----------------------------------
+    /**
+     * @param array $regNos
+     * @return array
+     */
     public static function getBatchYears(array $regNos)
     {
         $uniqueYears = []; // Array to store unique years
@@ -201,6 +251,11 @@ class Student extends User
         return $uniqueYears;
     }
 
+    /**
+     * @description Get unique degree programs
+     * @param array $degreePrograms
+     * @return array
+     */
     public static function getDegreePrograms(array $degreePrograms)
     {
         $uniqueDegreePrograms = [];
@@ -212,11 +267,19 @@ class Student extends User
         return $uniqueDegreePrograms;
     }
 
+    /**
+     * @param $regNo
+     * @return string
+     */
     public static function getDegreeProgramCodeByRegNo($regNo): string
     {
         return strtoupper(explode('/', $regNo, 3)[1]);
     }
 
+    /**
+     * @param $regNo
+     * @return int
+     */
     public static function getIndexNoByRegNo($regNo): int
     {
         $splits = explode('/', $regNo, 3);

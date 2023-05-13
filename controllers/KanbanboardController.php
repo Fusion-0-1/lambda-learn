@@ -10,6 +10,10 @@ use app\model\Submission;
 
 class KanbanboardController extends Controller
 {
+    /**
+     * @description Display kanbanboard with all tasks
+     * @return array|false|string|string[]
+     */
     public function displayKanbanboard()
     {
         $user = unserialize($_SESSION['user']);
@@ -23,6 +27,11 @@ class KanbanboardController extends Controller
         );
     }
 
+    /**
+     * @description Insert new kanban task
+     * @param Request $request
+     * @return void
+     */
     public function insertKanbanTasks(Request $request)
     {
         $body = $request->getBody();
@@ -39,6 +48,11 @@ class KanbanboardController extends Controller
         header("Location: /kanbanboard");
     }
 
+    /**
+     * @description Delete kanban task
+     * @param Request $request
+     * @return void
+     */
     public function deleteKanbanTasks(Request $request)
     {
         $body = $request->getBody();
@@ -46,6 +60,11 @@ class KanbanboardController extends Controller
         header("Location: /kanbanboard");
     }
 
+    /**
+     * @description Update kanban task
+     * @param Request $request
+     * @return void
+     */
     public function updateKanbanTasks(Request $request)
     {
         $body = $request->getBody();
@@ -63,12 +82,23 @@ class KanbanboardController extends Controller
         header("Location: /kanbanboard");
     }
 
+    /**
+     * @description Update kanban task state
+     * @param Request $request
+     * @return void
+     */
     public function updateKanbanTasksState(Request $request)
     {
         $body = $request->getBody();
         KanbanTask::updateKanbanTaskState($body['card-id'], $body['card-state']);
     }
 
+    //-------------------------------- Calender --------------------------------------------------
+
+    /**
+     * @description Display calender
+     * @return array|false|string|string[]
+     */
     public function displayCalender()
     {
         $user = unserialize($_SESSION['user']);

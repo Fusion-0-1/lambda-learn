@@ -10,6 +10,10 @@ namespace app\core;
 
 class Request
 {
+    /**
+     * @description Get path from url
+     * @return mixed|string
+     */
     public function getPath()
     {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
@@ -20,21 +24,37 @@ class Request
         return substr($path, 0, $position);
     }
 
+    /**
+     * @description Get method from url
+     * @return string
+     */
     public function method(): string
     {
         return strtolower($_SERVER['REQUEST_METHOD']);
     }
 
+    /**
+     * @description Check if request is get
+     * @return bool
+     */
     public function isGet(): bool
     {
         return $this->method() === 'get';
     }
 
+    /**
+     * @description Check if request is post
+     * @return bool
+     */
     public function isPost(): bool
     {
         return $this->method() === 'post';
     }
 
+    /**
+     * @description Get body from url
+     * @return array
+     */
     public function getBody()
     {
         $body = [];
@@ -55,6 +75,10 @@ class Request
         return $body;
     }
 
+    /**
+     * @param $array
+     * @return array
+     */
     private function sanitizeArray($array)
     {
         $result = [];
@@ -70,6 +94,9 @@ class Request
         return $result;
     }
 
+    /**
+     * @return mixed
+     */
     public function getFile()
     {
         return $_FILES['file'];
