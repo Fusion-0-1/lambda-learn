@@ -4,6 +4,9 @@ namespace app\model;
 
 use app\core\Application;
 
+/**
+ *
+ */
 class CourseAnnouncement extends Announcement
 {
     private string $lecRegNo;
@@ -39,11 +42,21 @@ class CourseAnnouncement extends Announcement
 
     //--------------------Display Course-announcement------------------------------
 
+    /**
+     * @description Get course announcement data from database
+     * @param $id
+     * @return array
+     */
     private static function getCourseAnnouncementData($id): array
     {
         return parent::getAnnouncementData($id,'courseannouncement');
     }
 
+    /**
+     * @description Get all course announcements from database for a given course
+     * @param $course_code
+     * @return array
+     */
     public static function getCourseAnnouncements($course_code): array
     {
         $courseAnnouncements = [];
@@ -68,6 +81,10 @@ class CourseAnnouncement extends Announcement
 
     //---------------Insert CourseAnnouncement------------------
 
+    /**
+     * @description Insert course announcement data into database
+     * @return void
+     */
     public function CourseAnnouncementInsert()
     {
         Application::$db->insert(
@@ -82,7 +99,14 @@ class CourseAnnouncement extends Announcement
         );
     }
 
-    public static function CourseAnnouncementsUpdate($announcementId,$heading,$content)
+    /**
+     * @description Update course announcement data in database
+     * @param $announcementId
+     * @param $heading
+     * @param $content
+     * @return void
+     */
+    public static function CourseAnnouncementsUpdate($announcementId, $heading, $content)
     {
         Application::$db->update(
             table: 'courseannouncement',
@@ -91,7 +115,13 @@ class CourseAnnouncement extends Announcement
         );
     }
 
-    public static function deleteCourseAnnouncement($announcementId,$courseCode)
+    /**
+     * @description Delete course announcement data from database
+     * @param $announcementId
+     * @param $courseCode
+     * @return void
+     */
+    public static function deleteCourseAnnouncement($announcementId, $courseCode)
     {
         Application::$db->delete(
             table: 'courseannouncement',

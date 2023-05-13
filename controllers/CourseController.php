@@ -7,6 +7,7 @@ use app\core\CSVFile;
 use app\core\Request;
 use app\core\User;
 use app\model\Course;
+use app\model\CourseAnnouncement;
 use app\model\CourseSubTopic;
 use app\model\CourseTopic;
 use app\model\Submission;
@@ -17,6 +18,10 @@ use DateTimeZone;
 
 class CourseController extends Controller
 {
+    /**
+     * @description Display all courses in the overview page
+     * @return array|false|string|string[]
+     */
     public function displayCourses()
     {
         $user = unserialize($_SESSION['user']);
@@ -28,6 +33,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display course page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayCourse(Request $request)
     {
         $body = $request->getBody();
@@ -41,6 +51,7 @@ class CourseController extends Controller
                 params: $params
             );
         } else {
+            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
             return $this->render(
                 view: '/course/course_page',
                 allowedRoles: ['Lecturer', 'Student'],
@@ -49,6 +60,11 @@ class CourseController extends Controller
         }
     }
 
+    /**
+     * @description Update course page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function updateCoursePage(Request $request)
     {
         $body = $request->getBody();
@@ -61,6 +77,7 @@ class CourseController extends Controller
 
             $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
+            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
 
             return $this->render(
                 view: '/course/course_page',
@@ -93,6 +110,11 @@ class CourseController extends Controller
         }
     }
 
+    /**
+     * @description Display all submissions for a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayAllSubmissions(Request $request)
     {
         $body = $request->getBody();
@@ -105,6 +127,12 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Create a course submission
+     * @param Request $request
+     * @return void
+     * @throws \Exception
+     */
     public function CreateSubmission(Request $request)
     {
         $body = $request->getBody();
@@ -154,6 +182,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Update submission visibility
+     * @param Request $request
+     * @return void
+     */
     public function changeSubmissionVisibility(Request $request)
     {
         $body = $request->getBody();
@@ -161,6 +194,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Update all submissions
+     * @param Request $request
+     * @return void
+     */
     public function updateAllSubmissions(Request $request)
     {
         $body = $request->getBody();
@@ -199,6 +237,11 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Delete a submission
+     * @param Request $request
+     * @return void
+     */
     public function deleteCourseSubmission(Request $request)
     {
         $body = $request->getBody();
@@ -206,14 +249,64 @@ class CourseController extends Controller
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
-    public function displayCourseMarkUpload()
+    /**
+     * @description Display course marks upload page
+     * @return array|false|string|string[]
+     */
+    public function displayCourseMarkUpload(Request $request)
     {
+        $body = $request->getBody();
+        $params['course'] = Course::getCourse($body['course_code']);
         return $this->render(
             view: '/marks_upload',
-            allowedRoles: ['Lecturer', 'Coordinator']
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
         );
     }
 
+    public function updateCourseMarks(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $params['course'] = Course::getCourse($body['course_code']);
+
+        $file = new CSVFile($request->getFile());
+        $marks_dir = 'User Uploads/Exam marks/' . $body['course_code'];
+        if (!file_exists($marks_dir)) {
+            mkdir($marks_dir);
+        }
+        $categorizedData = $file->readCSV(
+            uploadExamMarks: true
+        );
+
+        $path = 'User Uploads/Exam marks/'.$courseCode;
+        $params['invalid_user'] = false;
+        for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+            if((!User::userExists($categorizedData['reg_no'][$i])) || (Student::checkStudentAssignedToCourse($categorizedData['reg_no'][$i], $courseCode))){
+                $params['invalid_user'] = true;
+            }
+        }
+        if(!$params['invalid_user']){
+            for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+                Course::updateExamMarks($categorizedData['reg_no'][$i], $courseCode, $categorizedData['exam_mark'][$i], $path);
+            }
+            $file_path = $marks_dir . '/' . date('Y') . '.csv';
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            $file->saveFileOnServer($path = $marks_dir . '/' . date('Y') . '.csv');
+        }
+        return $this->render(
+            view: '/marks_upload',
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
+        );
+    }
+
+    /**
+     * @description Display course creation page
+     * @return array|false|string|string[]
+     */
     public function displayCourseCreation()
     {
         $params['courses'] = Course::fetchAllCourses();
@@ -224,6 +317,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Create a new course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function createNewCourse(Request $request)
     {
         $body = $request->getBody();
@@ -243,6 +341,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Edit a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function editCourse(Request $request)
     {
         $body = $request->getBody();
@@ -257,6 +360,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Delete a course
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function deleteCourse(Request $request)
     {
         $body = $request->getBody();
@@ -269,6 +377,10 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display assign users to courses page
+     * @return array|false|string|string[]
+     */
     public function displayAssignUsersToCourses()
     {
         $users = Student::fetchStudents();
@@ -291,6 +403,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Update assign users to courses page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function updateAssignUsersToCourses(Request $request)
     {
         $body = $request->getBody();
@@ -324,6 +441,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Upload assign users to courses page CSV file
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function uploadAssignUsersToCourses(Request $request)
     {
         $file = new CSVFile($request->getFile());
@@ -356,10 +478,16 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Display course edits
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayCourseEdit(Request $request)
     {
         $body = $request->getBody();
         $params['course'] = Course::getCourse($body['course_code']);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
 
         return $this->render(
             view: '/course/course_edit',
@@ -368,6 +496,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Edit course topics and sub topics
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function editCourseTopicsAndSubTopics(Request $request)
     {
         $body = $request->getBody();
@@ -395,6 +528,7 @@ class CourseController extends Controller
         }
 
         $params['course'] = Course::getCourse($courseCode);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
@@ -402,6 +536,11 @@ class CourseController extends Controller
         );
     }
 
+    /**
+     * @description Add new course topics and sub topics
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function addNewCourseTopicsAndSubTopics(Request $request)
     {
         $body = $request->getBody();
@@ -413,6 +552,7 @@ class CourseController extends Controller
         $params['add_topics'] = Course::addNewTopicsAndSubTopics($courseCode, $newTopics, $newSubTopics, $lecRegNo);
 
         $params['course'] = Course::getCourse($courseCode);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],

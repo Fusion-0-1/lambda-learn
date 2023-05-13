@@ -1,3 +1,8 @@
+<?php
+    use app\core\User;
+    use \app\model\User\Lecturer;
+    use \app\model\User\Admin;
+    ?>
 <link rel="stylesheet" href="css/announcement.css">
 
 <div class="main-container border v-center flex-gap responsive-container">
@@ -64,7 +69,13 @@
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
-                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime">
+                            <?php if($ann->getAdminRegNo() == NULL) {
+                                echo Lecturer::getLecturerName($ann->getCordRegNo());
+                            } else if($ann->getCordRegNo() == NULL) {
+                                echo Admin::getAdminName($ann->getAdminRegNo());
+                            } ?>
+                        </div>
                         <div class="view-lecture-name-and-datetime text-right">
                             <?php
                                 $utcTime = $ann->getPublishDate();
@@ -89,7 +100,13 @@
                 </div>
                 <div class="announcement-card-inside border">
                     <div class="container-heading grid h-justify v-center">
-                        <div class="view-lecture-name-and-datetime">Mr. Nimal Kodikara</div>
+                        <div class="view-lecture-name-and-datetime">
+                            <?php if($ann->getAdminRegNo() == NULL) {
+                                echo Lecturer::getLecturerName($ann->getCordRegNo());
+                            } else if($ann->getCordRegNo() == NULL) {
+                                echo Admin::getAdminName($ann->getAdminRegNo());
+                            } ?>
+                        </div>
                         <div class="view-lecture-name-and-datetime text-right">
                             <?php
                                 $utcTime = $ann->getPublishDate();

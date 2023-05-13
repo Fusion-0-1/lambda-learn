@@ -20,23 +20,35 @@ class AdminSettingsController extends Controller
         );
     }
 
-    public function assignCoordinator(Request $request)
+    public function coordinatorOptions(Request $request)
     {
         $body = $request->getBody();
-        $is_assigned_coordinator = Lecturer::assignCoordinator(
-            regNo: explode("-", $body['lecturer_regno_name'])[0],
-            degreeProgramCode: $body['degree_program'] . " " . $body['batch_year']
-        );
-
         $params = $this->getParameters();
-        $params['is_assigned_coordinator'] = $is_assigned_coordinator;
+        $is_coordinator_updated = false;
 
-        if ($is_assigned_coordinator) {
-            $params['msg'] = "Coordinator assigned successfully";
-        } else {
-            $params['msg'] = "Error assigning coordinator. Please try again later.";
+        if (isset($body['assign'])) { // Assign coordinator
+            $is_coordinator_updated = Lecturer::assignCoordinator(
+                regNo: explode("-", $body['lecturer_regno_name'])[0],
+                degreeProgramCode: $body['degree_program'] . " " . $body['batch_year']
+            );
+
+            if ($is_coordinator_updated) {
+                $params['msg'] = "Coordinator assigned successfully";
+            } else {
+                $params['msg'] = "Error assigning coordinator. Please try again later.";
+            }
+        } else if (isset($body['remove'])) { // remove coordinator
+            $is_coordinator_updated = Lecturer::removeCoordinator(
+                regNo: explode("-", $body['lecturer_regno_name'])[0]);
+
+            if ($is_coordinator_updated) {
+                $params['msg'] = "Coordinator removed successfully";
+            } else {
+                $params['msg'] = "Error removing coordinator. Please try again later.";
+            }
         }
 
+        $params['is_coordinator_updated'] = $is_coordinator_updated;
         return $this->render(
             view: 'admin_settings',
             allowedRoles: ['Admin'],
@@ -82,6 +94,8 @@ class AdminSettingsController extends Controller
             $degreePrograms[] = $user['degree_program_code'];
         }
 
+        $coordinators = Lecturer::fetchCoordinators();
+
         return [
             'batch_years' => Student::getBatchYears($regNos),
             'degree_programs' => Student::getDegreePrograms($degreePrograms),
@@ -89,6 +103,8 @@ class AdminSettingsController extends Controller
             'sem_end' => Application::$admin_config->getSemEndDate(),
             'sem_count_year' => Application::$admin_config->getSemCountYear(),
             'lecturers' => Lecturer::fetchLecturers(),
+            'coordinatorRegNos' => $coordinators['reg_no'],
+            'coordinatorDegreeCode' => $coordinators['degree_program_code'],
         ];
     }
 }

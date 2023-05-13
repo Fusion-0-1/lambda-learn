@@ -14,6 +14,10 @@ use app\model\Course;
 
 class ProfileController extends Controller
 {
+    /**
+     * @description Display profile
+     * @return array|false|string|string[]
+     */
     public function displayProfile()
     {
         $profile = unserialize($_SESSION['user']);
@@ -31,6 +35,11 @@ class ProfileController extends Controller
         );
     }
 
+    /**
+     * @description Edit profile
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function editProfile(Request $request)
     {
         $body = $request->getBody();
@@ -94,6 +103,11 @@ class ProfileController extends Controller
     }
 
 
+    /**
+     * @description Display account creation page
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayAccountCreation(Request $request)
     {
         $body = $request->getBody();
@@ -105,6 +119,12 @@ class ProfileController extends Controller
     }
 
     // POST request
+
+    /**
+     * @description Upload CSV file and create accounts
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function uploadCSV(Request $request)
     {
         $file = new CSVFile($request->getFile());
@@ -122,7 +142,6 @@ class ProfileController extends Controller
         $categorizedData = $file->readCSV(
             constructor: $readCSVParams,
             readUserData: true,
-            location: 'User Uploads/Profiles/' . $file->getFilename() . "_" . date('YmdHis')
         );
         if ($categorizedData != false) {
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
