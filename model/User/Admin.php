@@ -68,4 +68,15 @@ class Admin extends User
         return $password;
     }
     // --------------------------------------------------------------------------------
+
+    public static function getAdminName(string $regNo)
+    {
+        $results = Application::$db->select(
+            table: 'Admin',
+            columns: ['first_name', 'last_name'],
+            where: ['reg_no' => $regNo]
+        );
+        $row = Application::$db->fetch($results);
+        return $row['first_name'] . ' ' . $row['last_name'];
+    }
 }
