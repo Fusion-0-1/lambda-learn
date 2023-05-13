@@ -51,9 +51,8 @@
                         <?php if ($_SESSION['user-role'] == 'Student') {?>
 <!--                                Form action stu_submissions/course_code=aadsa&submission_stu_id=afa-->
                             <form action="stu_submissions?course_code=<?php echo str_replace(" ", "+", $sub->getCourseCode())?>&submission_id=<?php echo $sub->getSubmissionId()?>">
-                                <?php var_dump($sub) ?>
-                                <input value="<?php echo $sub->getCourseCode()?>" name="course_code">
-                                <input value="<?php echo $sub->getSubmissionId()?>" name="submission_stu_id">
+                                <input value="<?php echo $sub->getCourseCode()?>" name="course_code" hidden>
+                                <input value="<?php echo $sub->getSubmissionId()?>" name="submission_stu_id" hidden>
                                 <button class="btn dark-btn h-center v-center" id="submission_modal" >Upload</button>
                             </form>
                         <?php } ?>
@@ -80,8 +79,8 @@
                         foreach ($attachmentFiles as $file) { ?>
                             <div class="files-views"><a href="../../User Uploads/Submissions/<?php echo $sub->getCourseCode()."/".$sub->getSubmissionId()."/Lecturer_Attachments/".$file ?>" class="text-no-decoration" download="<?php echo $file ?>" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
-                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
-                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >
+                    <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>" hidden >
+                    <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>" hidden >
                 </form>
             </div>
         </div>

@@ -98,7 +98,6 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
         $params['submissions'] = Submission::getSubmission($params['course_code']);
-        var_dump($params['submissions']);
         return $this->render(
             view: '/submissions',
             allowedRoles: ['Lecturer','Student'],
@@ -110,7 +109,6 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course_code']=$body['course_code'];
         $profile = unserialize($_SESSION['user']);
-        var_dump($profile->getIndexNo());
         $params['submission_stu_id']=$body['submission_stu_id'];
         $params['stu_submission'] = Submission::getStuSubmission($body['course_code'],$profile->getIndexNo(),$body['submission_stu_id']);
         $params['showmodel'] = true;

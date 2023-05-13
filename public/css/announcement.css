@@ -49,6 +49,12 @@
     margin: 10px;
 }
 
+.cancel-btn-edit{
+    border: var(--error-btn) 1px solid;
+    margin: 0 auto;
+    color: var(--error-btn);
+}
+
 .edit-delete-timeremaining{
     grid-template-columns: 60% 20% 20%;
     padding: 0.5% 1%;
