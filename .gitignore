@@ -12,5 +12,7 @@ index.php-e
 /public/User Uploads/
 scripts/logs/
 
+admin_configuration.ini
+
 # Mac OS
 .DS_Store
