@@ -66,9 +66,11 @@ $app->router->get('/utilization', [SummaryViewController::class, 'displayUtiliza
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
 $app->router->post('/update_submissions', [CourseController::class, 'updateAllSubmissions']);
 $app->router->post('/delete_course_submission', [CourseController::class, 'deleteCourseSubmission']);
-$app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
 $app->router->post('/submissions', [CourseController::class, 'CreateSubmission']);
 $app->router->post('/submission_visibility', [CourseController::class, 'changeSubmissionVisibility']);
+
+$app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
+$app->router->post('/marks_upload', [CourseController::class, 'updateCourseMarks']);
 
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
