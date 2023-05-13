@@ -17,7 +17,6 @@ class Course
     private array $courseTopics = [];
 
 
-
     // -------------------------------Constructors---------------------------------------
     private function __construct() {}
 
@@ -233,6 +232,30 @@ class Course
                 $topicId++;
             }
         }
+        return true;
+    }
+
+    public static function unwrapExamMarks(array $line): array
+    {
+        return[
+            'regNo' => trim($line[0]),
+            'marks' => trim($line[1])
+        ];
+    }
+
+    public static function updateExamMarks($regNo, $courseCode, $marks, $path): bool
+    {
+        Application::$db->update(
+            table: 'StuCourse',
+            columns: ['exam_marks' => $marks],
+            where: ['stu_reg_no' => $regNo, 'course_code' => $courseCode]
+        );
+
+        Application::$db->update(
+            table: 'Course',
+            columns: ['exam_marks_report_path' => $path],
+            where: ['course_code' => $courseCode]
+        );
         return true;
     }
 
