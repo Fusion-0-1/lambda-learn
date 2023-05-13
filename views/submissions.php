@@ -1,4 +1,4 @@
-<?php use app\model\Submission?>
+<?php use app\model\Submission;?>
 <link rel="stylesheet" href="css/submissions.css">
 <link rel="stylesheet" href="css/submission_popup.css">
 
