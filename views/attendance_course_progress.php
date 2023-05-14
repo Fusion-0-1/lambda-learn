@@ -127,22 +127,17 @@
     });
 
     // ----------------- Attendance Chart -----------------
+    let courseCodes = JSON.parse('<?php echo json_encode($courseCodes);?>');
+    let progress = JSON.parse('<?php echo json_encode($progress);?>');
+
     var course_progress_chart = document.getElementById("course_progress_chart").getContext("2d");
     var myChart = new Chart(course_progress_chart, {
         type: 'bar',
         data: {
-            labels: ["SCS 2201", "SCS 2202", "SCS 2203", "SCS 2204", "SCS 2205", "SCS 2206", "SCS 2207"],
+            labels: courseCodes,
             datasets: [{
                 label: 'Course Progress Percentage',
-                data: [
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100)
-                ],
+                data: progress,
                 backgroundColor: [
                     createLinearGradient(ctx, [
                         {offset: 0, color: '#2AB514'},
