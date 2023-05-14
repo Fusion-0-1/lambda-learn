@@ -82,6 +82,7 @@ class CourseController extends Controller
         $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
             and $today < new DateTime(Application::$admin_config->getSemStartDate()));
         $params['isSemesterEnd'] = $isSemesterEnd;
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
 
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
@@ -90,7 +91,6 @@ class CourseController extends Controller
 
             $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
-            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
 
             return $this->render(
                 view: '/course/course_page',
@@ -102,7 +102,8 @@ class CourseController extends Controller
             $subTopicsArray = $body['subtopic'];
 
             for ($i = 0; $i<count($topicsArray); $i++) {
-                $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
+                $checkboxKey = 'checkbox_'.$i;
+                $checkboxes[$i] = isset($body[$checkboxKey]) && $body[$checkboxKey] == 'on';
             }
 
             $courseCode = $_POST['course_code'];
