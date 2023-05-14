@@ -22,8 +22,8 @@ INSERT INTO AcademicStaff (reg_no, first_name, last_name, email, contact_no, pas
     ("2020/LC/0026", "Ramindu", "Walgama", "2020lc0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG", "Senior Professor"),
     ("1998/LC/0019", "Sandya", "Kumari", "1998lc0019@fusion.ac.lk", "782645352", "19980019@LC", "Lecturer");
 
-UPDATE AcademicStaff SET degree_program_code = "CS" WHERE reg_no = "2003/LC/0004";
-UPDATE AcademicStaff SET degree_program_code = "IS" WHERE reg_no = "1998/LC/0019";
+UPDATE AcademicStaff SET degree_program_code = "CS 2020" WHERE reg_no = "2003/LC/0004";
+UPDATE AcademicStaff SET degree_program_code = "IS 2020" WHERE reg_no = "1998/LC/0019";
 
 INSERT INTO Admin (reg_no, first_name, last_name, email, contact_no, password) VALUES
     ("2020/AD/0026", "Ramindu", "Walgama", "2020ad0026@fusion.ac.lk", "716461434", "$2y$10$4z8Q1Gu8TeXp45Ou/zpdxeef2Wf8LEdjUZi.XifgLBGjQhgjf02CG"),
@@ -307,13 +307,13 @@ INSERT INTO SiteAnnouncement (heading, content, publish_date, admin_reg_no, cord
     ("First year 2nd semester examination results", "Results of 2nd semester examination will be released in 2 weeks.", "2022-11-21", NULL, "2003/LC/0004");
  
 INSERT INTO CourseAnnouncement (heading, content, publish_date, lec_reg_no, course_code) VALUES
-    ("Lecture Materials", "New lecture materials are uploaded to the course page. Make sure to refer them before the lecture", "2022-11-21", "2014/LC/0034", "CS 2001"),
-    ("Assessment", "There will be an inclass assessment based on prepositions and sets you learned. Date will be informed later.", "2022-11-23", "2006/LC/0014", "CS 2002"),
-    ("Practical Session", "The lecture on 22nd will be conducted as a practical session. Bringing your laptops will be beneficial", "2022-11-19", "2018/LC/0022", "CS 2003"),
-    ("Assessment 01", "Assessment 01 is now uploaded to the course page. Make sure to submit on or before deadline", "2022-11-25", "2003/LC/0004", "CS 2004"),
-    ("Lecture Recordings", "New lecture recordings are uploaded to the course page for extra knowledge", "2022-11-22", "1999/LC/0008", "IS 2001"),
-    ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2002"),
-    ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2003");
+    ("Lecture Materials", "New lecture materials are uploaded to the course page. Make sure to refer them before the lecture", "2022-11-21", "2014/LC/0034", "CS 2101"),
+    ("Assessment", "There will be an inclass assessment based on prepositions and sets you learned. Date will be informed later.", "2022-11-23", "2006/LC/0014", "CS 2102"),
+    ("Practical Session", "The lecture on 22nd will be conducted as a practical session. Bringing your laptops will be beneficial", "2022-11-19", "2018/LC/0022", "CS 2103"),
+    ("Assessment 01", "Assessment 01 is now uploaded to the course page. Make sure to submit on or before deadline", "2022-11-25", "2003/LC/0004", "CS 2104"),
+    ("Lecture Recordings", "New lecture recordings are uploaded to the course page for extra knowledge", "2022-11-22", "1999/LC/0008", "IS 2101"),
+    ("References", "Reference book is now uploaded to the course page. Please read it before attending lectures", "2022-11-19", "2016/LC/0015", "IS 2102"),
+    ("Cancellation of Lectures", "This week's lecture has to be cancelled due to unavoidable reasons. See you next week", "2022-11-24", "1998/LC/0019", "IS 2103");
 
 INSERT INTO ProgressReport (title, report_date, course_code) VALUES
     ("Progress CS 2101 25/11", "2022-11-26", "CS 2101"),
