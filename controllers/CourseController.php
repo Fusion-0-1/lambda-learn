@@ -170,7 +170,7 @@ class CourseController extends Controller
         $params['submissions'] = Submission::getSubmission($params['course_code']);
         return $this->render(
             view: '/submissions',
-            allowedRoles: ['Lecturer'],
+            allowedRoles: ['Lecturer', 'Student'],
             params:  $params
         );
     }
