@@ -138,7 +138,6 @@ class CourseController extends Controller
         $body = $request->getBody();
         $dueDateStr = $body['duetime'];
         $dueDate = new DateTime($dueDateStr);
-
         $course_submissions = Submission::createNewSubmission(
             courseCode: $body['course_code'],
             topic: $body['heading'],
@@ -177,7 +176,7 @@ class CourseController extends Controller
                 move_uploaded_file($tmpName, $LecturerAttachments.'/'.$fileName);
             }
         }
-        $course_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
+        $course_submissions->setLocation(getcwd() . '/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
         $course_submissions->submissionInsert();
         header("Location: /submissions?course_code=".$body['course_code']);
     }
