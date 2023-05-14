@@ -77,12 +77,12 @@ if(isset($msg)){
             <input type="hidden" name="assign_lecturer">
             <h3>Academic Semester</h3>
             <div class="flex flex-column flex-gap">
-                <label>Semester Starts</label>
+                <label>Next Semester Starting Date</label>
                 <input type="date" class="input" name="sem_start_date" value="<?php echo $sem_start?>" required>
             </div>
 
             <div class="flex flex-column flex-gap">
-                <label>Semester End</label>
+                <label>Current Semester End Date</label>
                 <input type="date" class="input" name="sem_end_date" value="<?php echo $sem_end?>" required>
             </div>
 
