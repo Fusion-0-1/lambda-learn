@@ -82,7 +82,7 @@ class CourseController extends Controller
         $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
             and $today < new DateTime(Application::$admin_config->getSemStartDate()));
         $params['isSemesterEnd'] = $isSemesterEnd;
-        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
 
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];

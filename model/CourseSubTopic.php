@@ -99,23 +99,25 @@ class CourseSubTopic {
     {
         $topicId = 1;
         foreach ($topicsArray as $index => $topic) {
-            $subTopicId = 1;
-            foreach ($subTopicsArray[$index] as $subTopic) {
-                if($subTopic != ''){
-                    $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
-                    Application::$db->insert(
-                        table: 'CourseSubTopic',
-                        values: [
-                            'course_code' => $courseCode,
-                            'topic_id' => $topicId,
-                            'sub_topic_id' => $subTopicIdFormatted,
-                            'sub_topic' => $subTopic,
-                            'is_being_tracked' =>(int)$chekboxes[$topicId-1],
-                            'lec_reg_no' => $lec_reg_no
-                        ]
-                    );
+            if (isset($subTopicsArray[$index]) && is_array($subTopicsArray[$index])) {
+                $subTopicId = 1;
+                foreach ($subTopicsArray[$index] as $subTopic) {
+                    if ($subTopic != '') {
+                        $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
+                        Application::$db->insert(
+                            table: 'CourseSubTopic',
+                            values: [
+                                'course_code' => $courseCode,
+                                'topic_id' => $topicId,
+                                'sub_topic_id' => $subTopicIdFormatted,
+                                'sub_topic' => $subTopic,
+                                'is_being_tracked' => (int)$chekboxes[$topicId - 1],
+                                'lec_reg_no' => $lec_reg_no
+                            ]
+                        );
+                    }
+                    $subTopicId++;
                 }
-                $subTopicId++;
             }
             $topicId++;
         }
