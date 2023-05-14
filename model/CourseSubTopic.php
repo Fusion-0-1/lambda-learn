@@ -200,6 +200,18 @@ class CourseSubTopic {
         Application::$db->truncateTable('StuCourseSubTopic');
     }
 
+    public static function removeSlidesAndRecordings($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopicRec',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseSubTopicSlide',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**

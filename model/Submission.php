@@ -127,6 +127,15 @@ class Submission
         );
     }
 
+    public static function deleteAllSubmissions($courseCode)
+    {
+        self::deleteLecAttachmentFolders();
+        Application::$db->delete(
+            table: 'CourseSubmission',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
     /**
      * @description Get all the submissions of a given student
      * @param User $user
@@ -182,6 +191,30 @@ class Submission
                     foreach ($submissionFolders as $submissionFolder) {
                         if (!in_array($submissionFolder, ['.', '..'])) {
                             $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Student_Submissions";
+                            if (is_dir($stuSubmissionFolder))
+                                rmdir($stuSubmissionFolder);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    * @description Delete all the student submission folders
+    */
+    private static function deleteLecAttachmentFolders()
+    {
+        if (is_dir(getcwd(). "/User Uploads/Submissions/")) {
+            //pwd - lambda-learn/public
+            $submissions = scandir(getcwd() . "/User Uploads/Submissions/");
+            // rmdir - User Uploads/Submissions/<course_code>/<sub_id>/Lecturer_Attachments
+            foreach ($submissions as $submission) {
+                if (!in_array($submission, ['.', '..'])) {
+                    $submissionFolders = scandir(getcwd() . "/User Uploads/Submissions/$submission");
+                    foreach ($submissionFolders as $submissionFolder) {
+                        if (!in_array($submissionFolder, ['.', '..'])) {
+                            $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Lecturer_Attachments";
                             if (is_dir($stuSubmissionFolder))
                                 rmdir($stuSubmissionFolder);
                         }
