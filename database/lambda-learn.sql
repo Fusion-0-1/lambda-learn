@@ -35,7 +35,7 @@ CREATE TABLE AcademicStaff (
     password VARCHAR(60) NOT NULL,
     active_status BOOLEAN,
     profile_picture VARCHAR(100),
-    degree_program_code VARCHAR(5),
+    degree_program_code VARCHAR(10),
     position VARCHAR(20) NOT NULL,
     CONSTRAINT PK_AcademicStaff PRIMARY KEY (reg_no)
 );
@@ -61,7 +61,9 @@ CREATE TABLE Course (
     course_code VARCHAR(8) NOT NULL,
     course_name VARCHAR(50) NOT NULL,
     optional_flag BOOLEAN NOT NULL,
-    cord_reg_no VARCHAR(12) NOT NULL,
+    cord_reg_no VARCHAR(12),
+    date_created DATE,
+    exam_marks_report_path VARCHAR(255),
     CONSTRAINT PK_Course PRIMARY KEY (course_code),
     CONSTRAINT FK_Course_AcademicStaff FOREIGN KEY (cord_reg_no) REFERENCES AcademicStaff(reg_no)
 );
@@ -81,7 +83,7 @@ CREATE TABLE CourseSubTopic (
     topic_id INT NOT NULL,
     sub_topic_id DECIMAL(4,2) NOT NULL,
     sub_topic VARCHAR(50) NOT NULL,
-    is_being_tracked BOOLEAN NOT NULL,
+    is_being_tracked BOOLEAN DEFAULT 0,
     lec_reg_no VARCHAR(12) NOT NULL,
     is_covered BOOLEAN DEFAULT 0,
     CONSTRAINT PK_CourseSubTopic PRIMARY KEY (course_code, topic_id, sub_topic_id),
@@ -133,6 +135,7 @@ CREATE TABLE KanbanTask (
     description VARCHAR(300),
     due_date VARCHAR(20),
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
+    priority ENUM ("Low", "Medium", "High") NOT NULL DEFAULT "Low",
     reg_no VARCHAR(12),
     CONSTRAINT PK_KanbanTask PRIMARY KEY (task_id)
 );
@@ -152,8 +155,8 @@ CREATE TABLE TimeTableEvent (
 DROP TABLE IF EXISTS SiteAnnouncement;
 CREATE TABLE SiteAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
-    heading VARCHAR(50) NOT NULL,
-    content VARCHAR(300) NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
     publish_date DATETIME NOT NULL,
     admin_reg_no VARCHAR(12),
     cord_reg_no VARCHAR(12),
@@ -163,8 +166,8 @@ CREATE TABLE SiteAnnouncement (
 DROP TABLE IF EXISTS CourseAnnouncement;
 CREATE TABLE CourseAnnouncement (
     announcement_id INT NOT NULL AUTO_INCREMENT,
-    heading VARCHAR(50) NOT NULL,
-    content VARCHAR(300) NOT NULL,
+    heading VARCHAR(255) NOT NULL,
+    content VARCHAR(1000) NOT NULL,
     publish_date DATETIME NOT NULL,
     lec_reg_no VARCHAR(12),
     course_code VARCHAR(8),
@@ -269,6 +272,6 @@ CREATE TABLE StuCourseSubmission (
     stu_attachments VARCHAR(300),
     CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),
-    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id)
+    CONSTRAINT FK_StuCourseSubmission_CourseSubmission FOREIGN KEY (course_code, submission_id) REFERENCES CourseSubmission(course_code, submission_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 

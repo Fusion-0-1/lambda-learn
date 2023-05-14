@@ -6,36 +6,19 @@ const newbtninprogress = document.getElementById('card-add-inprogress');
 const newbtndone = document.getElementById('card-add-done');
 
 const newmodal = document.getElementById('card-add-modal');
-const savebutton = document.getElementById('card-add-save');
-const cardtitle = document.getElementById('card-header-modal');
-const cancelbtnnew = document.getElementById('card-save-cancel');
+const editmodal = document.getElementById('card-edit-modal');
+const deletemodal = document.getElementById("delete-modal");
 
 const radiotodo = document.getElementById('radio-todo');
 const radioinprogress = document.getElementById('radio-inprogress')
 const radiodone = document.getElementById('radio-done');
 
-newbtntodo.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radiotodo.innerHTML = '<input type="radio" name="card-status" value="To Do" checked> To Do';
-});
-newbtninprogress.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radioinprogress.innerHTML = '<input type="radio" name="card-status" value="In Progress" checked> In Progress';
-});
-newbtndone.addEventListener('click', function () {
-    newmodal.style.display = 'block';
-    radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
-});
+const cancelbtnnew = document.getElementById('card-save-cancel');
+const canceleditbtn = document.getElementById('card-edit-cancel');
+const canceldltbtn = document.getElementById('card-dlt-cancel');
 
-cancelbtnnew.addEventListener('click', function () {
-    newmodal.style.display = 'none';
-});
+// --------------------------- Drag and Drop -----------------------------------
 
-window.onclick = function(event) {
-    if (event.target === newmodal) {
-        newmodal.style.display = 'none';
-    }
-}
 document.addEventListener('dragstart', e=> {
     if(e.target.classList.contains('draggable')) {
         e.target.classList.add('dragging');
@@ -79,29 +62,85 @@ function getClosestFrontSibling(droppable, draggingY) {
     return result;
 }
 
-const editmodal = document.getElementById('card-edit-modal');
-const editbtn = document.getElementsByName('card-update');
-const saveeditbutton = document.getElementById('card-edit-save');
-const canceleditbtn = document.getElementById('card-edit-cancel');
+// --------------------------- Modal Open -----------------------------------
 
-function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskdeadline) {
+newbtntodo.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radiotodo.innerHTML = '<input type="radio" name="card-status" value="To Do" checked> To Do';
+});
+
+newbtninprogress.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radioinprogress.innerHTML = '<input type="radio" name="card-status" value="In Progress" checked> In Progress';
+});
+
+newbtndone.addEventListener('click', function () {
+    newmodal.style.display = 'block';
+    radiodone.innerHTML = '<input type="radio" name="card-status" value="Done" checked> Done';
+});
+
+function kanbanupdate(taskid, tasktitle, taskdescription, taskstate, taskpriority, taskdeadline) {
     editmodal.style.display = 'block';
     document.getElementById('card-header-edit-modal').value = tasktitle;
     document.getElementById('card-body-edit-modal').value = taskdescription;
     document.getElementById('card-deadline-edit-modal').value = taskdeadline;
-    document.getElementById('card-state').value = taskstate;
-    document.getElementById('card-id').value = taskid;
+    document.getElementById('card-state-edit-modal').value = taskstate;
+    document.getElementById('card-priority-edit-modal').value = taskpriority;
+    document.getElementById('card-id-edit-modal').value = taskid;
 }
 
-saveeditbutton.addEventListener('click', function () {
-        editmodal.style.display = 'none';
+function deletecard(taskid) {
+    deletemodal.style.display = 'block';
+    document.getElementById('card-delete-id').value = taskid;
+}
+
+// --------------------------- Modal Close with Cancel Button -----------------------------------
+
+cancelbtnnew.addEventListener('click', function () {
+    newmodal.style.display = 'none';
 });
+
 canceleditbtn.addEventListener('click', function () {
     editmodal.style.display = 'none';
 });
 
-window.onclick = function(event) {
+canceldltbtn.addEventListener('click', function () {
+    deletemodal.style.display = 'none';
+});
+
+// --------------------------- Modal Close when clicked outside Window -----------------------------------
+
+window.addEventListener("click", function(event) {
+    if (event.target === newmodal) {
+        newmodal.style.display = 'none';
+    }
+});
+
+window.addEventListener("click", function(event) {
     if (event.target === editmodal) {
         editmodal.style.display = 'none';
     }
+});
+
+window.addEventListener("click", function(event) {
+    if (event.target === deletemodal) {
+        deletemodal.style.display = 'none';
+    }
+});
+
+// --------------------------- Task Priority -----------------------------------
+
+const cardpriority = document.querySelectorAll('.card-priority');
+
+for (let i = 0; i < cardpriority.length; i++) {
+    const priorityvalue = cardpriority[i].textContent;
+    if (priorityvalue === 'High') {
+        cardpriority[i].style.color = '#ff0000';
+    } else if (priorityvalue === 'Medium') {
+        cardpriority[i].style.color = '#b36e15';
+    } else if (priorityvalue === 'Low') {
+        cardpriority[i].style.color = '#2ba512';
+    }
 }
+
+

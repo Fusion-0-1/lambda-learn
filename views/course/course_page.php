@@ -1,10 +1,56 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="css/course/course_page.css">
 
-<?php if($mssg == 'Failed') { ?>
+<?php if (isset($mssg)) {
+    if($mssg == 'Failed') { ?>
     <div id="mssg-modal" class="error-mssg text-justify">
-        <p>The subtopic is not being covered by the lecturer</p>
+        <p>The subtopic is not yet covered by the lecturer</p>
     </div>
-<?php } ?>
+<?php } } elseif (isset($is_topic_edited) or isset($is_sub_topic_edited)) {
+    if($is_topic_edited == true and $is_sub_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course topics and subtopics updated successfully.</p>
+        </div>
+    <?php } elseif($is_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course topics updated successfully.</p>
+        </div>
+    <?php } elseif ($is_sub_topic_edited == true) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>Course subtopics updated successfully</p>
+        </div>
+    <?php } else { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Failed to update topics or subtopics</p>
+        </div>
+    <?php }
+} elseif (isset($add_topics)) {
+    if($add_topics) { ?>
+        <div id="mssg-modal" class="success-mssg text-justify">
+            <p>New course topics and sub topics added successfully</p>
+        </div>
+<?php } else { ?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>Failed to add topics and subtopics</p>
+        </div>
+    <?php }
+}?>
+
+<div class="modal hide" id="announcement-modal">
+    <div class="announcement-view border border-radius">
+        <input type="hidden" id="c-ann-id">
+        <div class="header-container grid v-center h-justify">
+            <div class="header-content text-bold text-justify" id="c-ann-heading"> </div>
+        </div>
+        <div class="announcement-view-inside border">
+            <div class="lec-datetime grid h-justify v-center">
+                <div id="c-ann-lec"> </div>
+                <div class="text-right" id="c-ann-date"></div>
+            </div>
+            <p class="text-justify" id="c-ann-content"></p>
+        </div>
+    </div>
+</div>
 
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
@@ -53,19 +99,26 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
-                <!-- TODO: Add course code here-->
-                <a href="/course_announcement?course_code=<?php echo ('CS 2001')?> " class="hyperlink"> View all </a>
+                <a href="/course_announcement?course_code=<?php echo $course->getCourseCode()?> " class="hyperlink"> View all </a>
             </div>
-            <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>
-            <button class="inner-container border-radius text-left"> SCS2201_Rescheduling the lecture on 15/09/2022 </button>
-            <button class="inner-container border-radius text-left"> Assignment 1 Details - String Matching </button>
+            <?php $count = 1;
+                foreach ($courseAnnouncements as $c_ann) {
+                    $count++; ?>
+                    <button class="inner-container border-radius text-left" id="latest-course-announcement"
+                            onclick="announcementview(<?php echo $c_ann->getAnnouncementId().", '".$c_ann->getHeading()."','"
+                                .Lecturer::getLecturerName($c_ann->getLecRegNo())."','".$c_ann->getPublishDate()."','"
+                                .$c_ann->getContent()."'";?>)">
+                        <?php echo $c_ann->getHeading()?> </button>
+                    <?php if ($count>3)
+                        break;
+                }?>
         </div>
 
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
                 <!-- TODO: Add course code here-->
-                <a href="/submissions?course_code=<?php echo ('CS 2003')?>" class="hyperlink"> View all </a>
+                <a href="/submissions?course_code=<?php echo $course->getCourseCode()?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
             <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>
@@ -76,7 +129,16 @@
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
-            <h5> Course Topics </h5>
+            <div class="flex flex-row h-justify">
+                <h5 class="flex"> Course Topics </h5>
+                <?php if($_SESSION['user-role'] == 'Lecturer') { ?>
+                        <a href="/course_edit?course_code=<?php echo $course->getCourseCode()?>">
+                            <button id="edit" type="button" class="edit-btn edit-btn-icon">
+                                <i class="fa-solid fa-pen"></i>
+                            </button>
+                        </a>
+                <?php } ?>
+            </div>
             <hr class="hr">
             <div class="topic-container flex flex-row item-gap flex-wrap">
                 <?php foreach ($course->getTopics() as $courseTopic) {?>
@@ -131,5 +193,20 @@
         </div>
     </div>
     <script>
+        const announcementmodal = document.getElementById('announcement-modal');
+        function announcementview(c_ann_id, c_ann_heading, c_ann_lec, c_ann_date, c_ann_content) {
+            announcementmodal.style.display = 'block';
+            document.getElementById('c-ann-id').value = c_ann_id;
+            document.getElementById('c-ann-heading').innerText = c_ann_heading;
+            document.getElementById('c-ann-lec').innerText = c_ann_lec;
+            document.getElementById('c-ann-date').innerText = c_ann_date;
+            document.getElementById('c-ann-content').innerText = c_ann_content;
+        }
+
+        window.addEventListener("click", function(event) {
+            if (event.target === announcementmodal) {
+                announcementmodal.style.display = 'none';
+            }
+        });
     </script>
 </div>

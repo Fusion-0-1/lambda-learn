@@ -4,8 +4,12 @@ namespace app\model;
 
 use app\core\Application;
 
+/**
+ *
+ */
 class CourseAnnouncement extends Announcement
 {
+    private static string $tableName = "CourseAnnouncement";
     private string $lecRegNo;
     private string $courseCode;
 
@@ -39,17 +43,27 @@ class CourseAnnouncement extends Announcement
 
     //--------------------Display Course-announcement------------------------------
 
+    /**
+     * @description Get course announcement data from database
+     * @param $id
+     * @return array
+     */
     private static function getCourseAnnouncementData($id): array
     {
-        return parent::getAnnouncementData($id,'courseannouncement');
+        return parent::getAnnouncementData($id, self::$tableName);
     }
 
+    /**
+     * @description Get all course announcements from database for a given course
+     * @param $course_code
+     * @return array
+     */
     public static function getCourseAnnouncements($course_code): array
     {
         $courseAnnouncements = [];
         $results = Application::$db->select(
-            table: 'courseannouncement',
-            where: ['course_code' => $course_code,'active' => 1],
+            table: self::$tableName,
+            where: ['course_code' => $course_code],
             order: 'announcement_id DESC'
         );
         while ($ann = Application::$db->fetch($results)){
@@ -68,10 +82,14 @@ class CourseAnnouncement extends Announcement
 
     //---------------Insert CourseAnnouncement------------------
 
+    /**
+     * @description Insert course announcement data into database
+     * @return void
+     */
     public function CourseAnnouncementInsert()
     {
         Application::$db->insert(
-            table: 'courseAnnouncement',
+            table: self::$tableName,
             values: [
                 'heading' => $this->heading,
                 'content' => $this->content,
@@ -82,24 +100,44 @@ class CourseAnnouncement extends Announcement
         );
     }
 
-    public static function CourseAnnouncementsUpdate($announcementId,$heading,$content)
+    /**
+     * @description Update course announcement data in database
+     * @param $announcementId
+     * @param $heading
+     * @param $content
+     * @return void
+     */
+    public static function CourseAnnouncementsUpdate($announcementId, $heading, $content)
     {
         Application::$db->update(
-            table: 'courseannouncement',
-            columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+            table: self::$tableName,
+            columns: ['heading'=>$heading,'content'=>$content],
             where: ['announcement_id'=>$announcementId]
         );
     }
 
-    public static function deleteCourseAnnouncement($announcementId,$courseCode)
+    /**
+     * @description Delete course announcement data from database
+     * @param $announcementId
+     * @param $courseCode
+     * @return void
+     */
+    public static function deleteCourseAnnouncement($announcementId, $courseCode)
     {
-        Application::$db->update(
-            table: 'courseannouncement',
-            columns: ['active' => 0],
+        Application::$db->delete(
+            table: self::$tableName,
             where: ['announcement_id'=>$announcementId,'course_code' => $courseCode]
         );
     }
 
+    /**
+     * @description Delete all course announcements of a course from database
+     */
+    public static function truncateCourseAnnouncements()
+    {
+        Application::$db->truncateTable(self::$tableName);
+    }
+    
     /**
      * @return string
      */

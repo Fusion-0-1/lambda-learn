@@ -28,10 +28,6 @@
     border-radius: 15px;
 }
 
-.modal{
-    display: none;
-}
-
 .modal-btns{
     margin: auto;
 }
@@ -40,7 +36,7 @@
     margin: 10px;
 }
 
-.cancel-btn{
+.cancel-btn-edit-modal{
     border: var(--green) 1px solid;
     border-radius: 10px;
     color: var(--green);

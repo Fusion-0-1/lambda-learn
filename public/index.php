@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AdminSettingsController;
 use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
 use app\controllers\KanbanboardController;
@@ -40,7 +41,7 @@ $app = new Application(dirname(__DIR__), $config, $admin_config);
 // Public routes
 // -------------------------------------------------------------------------
 $app->router->get('/', 'dashboard');
-$app->router->get('/calender', 'calender');
+$app->router->get('/calender', [KanbanboardController::class, 'displayCalender']);
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
@@ -54,24 +55,38 @@ $app->router->post('/update_task_state', [KanbanboardController::class, 'updateK
 
 $app->router->post('/course_page', [CourseController::class, 'updateCoursePage']);
 
+$app->router->get('/course_edit', [CourseController::class, 'displayCourseEdit']);
+$app->router->post('/edit_topics', [CourseController::class, 'editCourseTopicsAndSubTopics']);
+$app->router->post('/add_new_topics', [CourseController::class, 'addNewCourseTopicsAndSubTopics']);
+
 $app->router->get('/attendance_upload', [ReportController::class, 'uploadAttendance']);
 $app->router->post('/attendance_upload', [ReportController::class, 'uploadAttendance']);
 
 $app->router->get('/utilization', [SummaryViewController::class, 'displayUtilizationReport']);
 
 $app->router->get('/submissions', [CourseController::class, 'displayAllSubmissions']);
+
 $app->router->get('/stu_submissions', [CourseController::class, 'displayStuAllSubmissions']);
 
 $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
+$app->router->post('/update_submissions', [CourseController::class, 'updateAllSubmissions']);
+$app->router->post('/delete_course_submission', [CourseController::class, 'deleteCourseSubmission']);
+
 $app->router->post('/submissions', [CourseController::class, 'CreateSubmission']);
 $app->router->post('/submission_visibility', [CourseController::class, 'changeSubmissionVisibility']);
 $app->router->post('/stu_submissions', [CourseController::class, 'createStuSubmissions']);
 $app->router->post('/update_stu_submission', [CourseController::class, 'updateStuSubmission']);
 
 
+$app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
+$app->router->post('/marks_upload', [CourseController::class, 'updateCourseMarks']);
+
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
-$app->router->get('/course_creation', [CourseController::class, 'courseCreation']);
+$app->router->get('/course_creation', [CourseController::class, 'displayCourseCreation']);
+$app->router->post('/create_course', [CourseController::class, 'createNewCourse']);
+$app->router->post('/edit_course', [CourseController::class, 'editCourse']);
+$app->router->post('/delete_course', [CourseController::class, 'deleteCourse']);
 
 $app->router->get('/attendance_course_progress', [SummaryViewController::class, 'displayCoordinatorCharts']);
 
@@ -101,6 +116,12 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 // -------------------------------------------------------------------------
 $app->router->get('/account_creation', [ProfileController::class, 'displayAccountCreation']);
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+
+$app->router->get('/admin_settings', [AdminSettingsController::class, "displayAdminSettings"]);
+$app->router->post('/update_coord_options', [AdminSettingsController::class, "coordinatorOptions"]);
+$app->router->post('/update_academic_settings', [AdminSettingsController::class, "updateAcademicSettings"]);
+$app->router->post('/start_new_sem', [AdminSettingsController::class, "startNewSemester"]);
+
 // -------------------------------------------------------------------------
 
 // Coordinator routes

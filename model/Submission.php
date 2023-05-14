@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\core\Application;
+use app\core\User;
 
 class Submission
 {
@@ -21,7 +22,7 @@ class Submission
 
     private function __construct() {}
 
-    public static function createNewSubmission($courseCode, $topic, $description, $allocatedMark, $allocatedPoint, $dueDate, $visibility, $location="",$submissionId="") {
+    public static function createNewSubmission($courseCode, $topic, $description, $dueDate, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
         $submission = new Submission();
         if ($submissionId != ""){
             $submission->submissionId = $submissionId;
@@ -43,8 +44,6 @@ class Submission
             $stuSubmission->submissionId = $submissionId;
         }
         $stuSubmission->courseCode = $courseCode;
-//        $stuSubmission->allocatedMark = $allocatedMark;
-//        $stuSubmission->allocatedPoint = $allocatedPoint;
         $stuSubmission->submittedDate = $submittedDate ;
         $stuSubmission->regNo = $regNo;
         $stuSubmission->location = $location;
@@ -64,9 +63,9 @@ class Submission
                 courseCode: $sub['course_code'],
                 topic: $sub['topic'],
                 description: $sub['description'],
+                dueDate: $sub['due_date'],
                 allocatedMark: $sub['allocated_mark'],
                 allocatedPoint: $sub['allocated_point'],
-                dueDate: $sub['due_date'],
                 visibility: $sub['visibility'],
                 location: $sub['attachments']?? '',
                 submissionId: $sub['submission_id']
@@ -86,8 +85,6 @@ class Submission
             $assignmentSubmissions[] = self::createStuNewSubmission(
                 courseCode: $subStu['course_code'],
                 regNo: $subStu['stu_reg_no'],
-//                allocatedMark: $subStu['stu_submission_mark'],
-//                allocatedPoint: $subStu['stu_submission_point'],
                 submissionId: $subStu['submission_id'],
                 submittedDate: $subStu['submitted_date'],
                 location: $subStu['stu_attachments']?? ''
@@ -181,7 +178,86 @@ class Submission
         );
     }
 
+    public static function updateSubmission($courseCode,$submissionId,$topic,$allocatedMark,$dueDate,$description)
+    {
+        Application::$db->update(
+            table: 'coursesubmission',
+            columns: ['topic'=>$topic,'allocated_mark'=>$allocatedMark,'due_date'=> $dueDate, 'description'=>$description],
+            where: ['course_code'=>$courseCode,'submission_id'=>$submissionId]
+        );
+    }
 
+    public static function deleteCourseSubmission($courseCode,$submissionId)
+    {
+        Application::$db->delete(
+            table: 'coursesubmission',
+            where: ['course_code' => $courseCode,'submission_id'=>$submissionId]
+        );
+    }
+
+    /**
+     * @description Get all the submissions of a given student
+     * @param User $user
+     * @return array
+     */
+    public static function getUserSubmissions(User $user): array
+    {
+        $assignmentSubmissions = [];
+        $results = Application::$db->select(
+            table: 'CourseSubmission CS',
+            columns: ['CS.course_code', 'CS.topic', 'CS.description', 'CS.due_date', 'CS.submission_id'],
+            join: [
+                [
+                    'table' => 'StuCourse SC',
+                    'on' => 'CS.course_code = SC.course_code'
+                ]
+            ],
+            where: ['CS.visibility' => 1, 'SC.stu_reg_no' => $user->getRegNo()],
+        );
+        while ($submission = Application::$db->fetch($results)) {
+            $assignmentSubmissions[] = self::createNewSubmission(
+                courseCode: $submission['course_code'],
+                topic: $submission['topic'],
+                description: $submission['description'],
+                dueDate: $submission['due_date'],
+                submissionId: $submission['submission_id']
+            );
+        }
+        return $assignmentSubmissions;
+    }
+
+    /*
+     * @description Delete all the student submissions of a given course
+     */
+    public static function truncateStuCourseSubmissioms()
+    {
+        self::deleteStuSubmissionFolders();
+        Application::$db->truncateTable('StuCourseSubmission');
+    }
+
+    /*
+     * @description Delete all the student submission folders
+     */
+    private static function deleteStuSubmissionFolders()
+    {
+        if (is_dir(getcwd(). "/User Uploads/Submissions/")) {
+            //pwd - lambda-learn/public
+            $submissions = scandir(getcwd() . "/User Uploads/Submissions/");
+            // rmdir - User Uploads/Submissions/<course_code>/<sub_id>/Student_Submissions
+            foreach ($submissions as $submission) {
+                if (!in_array($submission, ['.', '..'])) {
+                    $submissionFolders = scandir(getcwd() . "/User Uploads/Submissions/$submission");
+                    foreach ($submissionFolders as $submissionFolder) {
+                        if (!in_array($submissionFolder, ['.', '..'])) {
+                            $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Student_Submissions";
+                            if (is_dir($stuSubmissionFolder))
+                                rmdir($stuSubmissionFolder);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * @return int

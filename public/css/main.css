@@ -410,6 +410,10 @@ td{
     padding: 8px 20px;
 }
 
+tr:nth-child(odd) > td > a {
+    color: var(--white);
+}
+
 @media(max-width: 425px) {
     table{
         font-size: 13px;
@@ -440,7 +444,7 @@ td{
 
 .error-btn {
     color: var(--white);
-    border: var(--error-btn) 1px solid;
+    border: none;
     background-color: var(--error-btn);
 }
 

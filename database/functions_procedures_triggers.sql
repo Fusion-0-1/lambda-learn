@@ -5,7 +5,7 @@ CREATE OR REPLACE TRIGGER createCourseAttendanceSubmission
     BEGIN
         INSERT INTO CourseSubmission(course_code, submission_id, topic, allocated_point, visibility)
         VALUES (NEW.course_code, 'A001', 'Attendance', 0, FALSE);
-    END;
+    END $$
 DELIMITER ;
 
 DELIMITER $$
@@ -32,7 +32,8 @@ BEGIN
         VALUES (stu_reg_no_, NEW.course_code, NEW.submission_id);
     END LOOP;
     CLOSE get_stu_reg_no;
-END;
+END $$
+DELIMITER ;
 
 DELIMITER $$
 CREATE OR REPLACE TRIGGER createStuToStuCourseAttendSubm
@@ -41,7 +42,8 @@ CREATE OR REPLACE TRIGGER createStuToStuCourseAttendSubm
 BEGIN
     INSERT INTO StuCourseSubmission(stu_reg_no, course_code, submission_id, stu_submission_point, state)
     VALUES (NEW.stu_reg_no, NEW.course_code, 'A001', 0, 'Done');
-END;
+END $$
+DELIMITER ;
 
 DELIMITER $$
 CREATE TRIGGER compositeKey
@@ -81,7 +83,19 @@ BEGIN
         VALUES (NEW.stu_reg_no, NEW.course_code, topic_id_, sub_topic_id_);
     END LOOP;
     CLOSE get_subtopics;
-END;
+END $$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS `delete_submissions`;
+DELIMITER $$
+CREATE TRIGGER `delete_submissions`
+AFTER DELETE ON `coursesubmission`
+FOR EACH ROW
+BEGIN
+DELETE FROM StuCourseSubmission WHERE submission_id=OLD.submission_id AND course_code=OLD.course_code;
+END $$
+DELIMITER ;
+
 
 -- DELIMITER $$
 -- CREATE OR REPLACE FUNCTION validateRegNoInSiteAnnouncement(reg_no_ VARCHAR(12)) RETURNS BOOLEAN

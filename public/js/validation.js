@@ -12,12 +12,13 @@ function validate_course_code(course_code) {
     /*
     ^ matches the start of the string
     [A-Z] matches any uppercase letter
-    {3} specifies that exactly 3 uppercase letters should be matched
+    {2} specifies that exactly 2 uppercase letters should be matched
+    \s matches any whitespace character
     \d matches any digit
     {4} specifies that exactly 4 digits should be matched
     $ matches the end of the string
      */
-    const re = new  RegExp("^[A-Z]{3}\\d{4}$");
+    const re = new  RegExp("^[A-Z]{2}\\s\\d{4}$");
     return re.test(course_code);
 }
 
@@ -66,20 +67,43 @@ function validate_email(email){
 
 /**
  * @param contact - the phone number to validate
- * @returns - boolean
+ * @returns {boolean} - true if the phone number is valid, false otherwise
  * @description
- * Returns `true` if the phone number is valid
- * return `false` otherwise.
+ * Returns true if the phone number is valid in one of the following formats:
+ * Starts with a "+" sign followed by exactly 11 digits
+ * Consists of exactly 10 digits
+ * Returns false otherwise.
  * @example
- * "0715674327" - true
- * "05D5357543we" - false
+ * validate_contact("0715674327") - true
+ * validate_contact("05D5357543we") - false
  */
 function validate_contact(contact){
     /*
     \d matches any digit
     {10} specifies that exactly 10 digits should be matched
+    ^ matches the start of the string
     $ matches the end of the string
      */
-    const re = new RegExp("^\\d{10}$");
+    const re = /^(?:\+\d{11}|\d{10})$/;
     return re.test(contact);
+}
+
+/**
+ * @param {string} password - The password to validate.
+ * @returns {boolean} - `true` if the password meets the criteria, `false` otherwise.
+ * @description Returns `true` if the password meets the following criteria, and `false` otherwise:
+ * @example
+ * validate_password("P@ssw0rd") - true
+ * validate_password("password") - false
+ */
+function validate_password(password) {
+     /*
+    ^[^\s@]+ - Matches one or more characters that are not whitespace or "@"
+    @ - Matches the "@" symbol
+    [^\s@]+ - Matches one or more characters that are not whitespace or "@"
+    \. - Matches the dot symbol
+    [^\s@]+$ - Matches one or more characters that are not whitespace or "@", at the end of the string
+     */
+    const re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return re.test(password);
 }

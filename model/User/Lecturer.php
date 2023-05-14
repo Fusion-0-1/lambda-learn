@@ -51,7 +51,10 @@ class Lecturer extends User
     // --------------------------------------------------------------------------------
 
 
-
+    /**
+     * @description Insert new lecturer to database
+     * @return string
+     */
     public function insert(): string
     {
         $password = $this->generateRandomPassword();
@@ -76,6 +79,10 @@ class Lecturer extends User
         return $password;
     }
 
+    /**
+     * @description Fetch all lecturers from database
+     * @return array
+     */
     public static function fetchLecturers()
     {
         $results = Application::$db->select(
@@ -89,6 +96,12 @@ class Lecturer extends User
         return $users;
     }
 
+    /**
+     * @description Assign lecturers to courses
+     * @param string $lecturer
+     * @param string $courseCode
+     * @return array
+     */
     public static function assignLecturersToCourse(string $lecturer, string $courseCode)
     {
         $lecturerExists = [];
@@ -107,7 +120,101 @@ class Lecturer extends User
         return $lecturerExists;
     }
 
+    /**
+     * @description Remove lecturer from course
+     * @param $lecturer
+     * @param $courseCode
+     * @return bool
+     */
+    public static function removeLecturersFromCourse($lecturer, $courseCode)
+    {
+        $primaryKeys = ['lec_reg_no' => $lecturer,'course_code' => $courseCode];
+        if(Application::$db->checkExists('LecCourse', $primaryKeys)){
+            Application::$db->delete(
+                table: 'LecCourse',
+                where: ['course_code'=>$courseCode, 'lec_reg_no'=>$lecturer]
+            );
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * @description Get all coordinators
+     * @return array
+     */
+    public static function fetchCoordinators(): array
+    {
+        $results = Application::$db->select(
+            table: 'AcademicStaff',
+            columns: ['reg_no', 'degree_program_code'],
+            where: ['NOT degree_program_code' => ""]
+        );
+
+        $regNos = [];
+        $degreeProgramCode = [];
+        while ($row = Application::$db->fetch($results)) {
+            $regNos[] = $row['reg_no'];
+            $degreeProgramCode[] = $row['degree_program_code'];
+        }
+        return ['reg_no' => $regNos, 'degree_program_code' => $degreeProgramCode];
+    }
+
+    /**
+     * @description Assign coordinator
+     * @param string $regNo
+     * @param string $degreeProgramCode
+     * @return bool
+     */
+    public static function assignCoordinator(string $regNo, string $degreeProgramCode)
+    {
+        Application::$db->update(
+            table: 'AcademicStaff',
+            columns: ['degree_program_code' => $degreeProgramCode],
+            where: ['reg_no' => $regNo]
+        );
+        return true;
+    }
+
+    /**
+     * @description Remove singed coordinator
+     * @param string $regNo
+     * @return bool
+     */
+    public static function removeCoordinator(string $regNo)
+    {
+        Application::$db->update(
+            table: 'AcademicStaff',
+            columns: ['degree_program_code' => NULL],
+            where: ['reg_no' => $regNo]
+        );
+        return true;
+    }
+
+
     // ---------------------------Getters and Setters-----------------------------------
+    /**
+     * @description Get lecturer name from database using regNo
+     * @param string $regNo
+     * @return string
+     */
+    public static function getLecturerName(string $regNo)
+    {
+        $results = Application::$db->select(
+            table: 'AcademicStaff',
+            columns: ['first_name', 'last_name'],
+            where: ['reg_no' => $regNo]
+        );
+        $row = Application::$db->fetch($results);
+        return $row['first_name'] . ' ' . $row['last_name'];
+    }
+
+    /**
+     * @description Check if the user is a coordinator
+     * @return bool
+     */
     public function isCoordinator(): bool
     {
         return $this->degreeProgramCode != '';

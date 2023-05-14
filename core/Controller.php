@@ -7,6 +7,13 @@ namespace app\core;
 */
 class Controller
 {
+    /**
+     * @description Render view with layout
+     * @param $view
+     * @param $allowedRoles
+     * @param $params
+     * @return array|false|string|string[]
+     */
     public function render($view, $allowedRoles = [], $params = [])
     {
         if (self::isAuthorised($allowedRoles)) {
@@ -15,6 +22,14 @@ class Controller
             return Application::$app->router->renderView('error_404');
         }
     }
+
+    /**
+     * @description Render view without layout
+     * @param $view
+     * @param $allowedRoles
+     * @param $params
+     * @return array|false|string|string[]
+     */
     public function renderOnlyView($view, $allowedRoles = [], $params = [])
     {
         if (self::isAuthorised($allowedRoles)) {
@@ -24,6 +39,11 @@ class Controller
         }
     }
 
+    /**
+     * @description Check if user is authorised
+     * @param $allowedRoles
+     * @return bool
+     */
     private function isAuthorised($allowedRoles = []) : bool
     {
         if (isset($_SESSION['user-role'])) {

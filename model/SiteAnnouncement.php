@@ -43,11 +43,21 @@ class SiteAnnouncement extends Announcement
         return $announcement;
     }
     //--------------------Display Site-announcement------------------------------
+
+    /**
+     * @description Get site announcement data from database
+     * @param $id
+     * @return array
+     */
     private static function getSiteAnnouncementData($id): array
     {
         return parent::getAnnouncementData($id,'SiteAnnouncement');
     }
 
+    /**
+     * @description Get all site announcements from database
+     * @return array
+     */
     public static function getSiteAnnouncements(): array
     {
         $siteAnnouncements = [];
@@ -71,6 +81,10 @@ class SiteAnnouncement extends Announcement
 
     //---------------Insert SiteAnnouncement------------------
 
+    /**
+     * @description Insert site announcement into database
+     * @return void
+     */
     public function SiteAnnouncementInsert()
     {
         Application::$db->insert(
@@ -87,11 +101,18 @@ class SiteAnnouncement extends Announcement
 
     //-----------------Update SiteAnnouncement------------------
 
-    public static function updateAnnouncements($announcementId,$heading,$content)
+    /**
+     * @description Update site announcement in database
+     * @param $announcementId
+     * @param $heading
+     * @param $content
+     * @return void
+     */
+    public static function updateAnnouncements($announcementId, $heading, $content)
     {
          Application::$db->update(
              table: 'siteannouncement',
-             columns: ['heading'=>$heading,'content'=>$content,'publish_date'=> date('Y-m-d H:i:s')],
+             columns: ['heading'=>$heading,'content'=>$content],
              where: ['announcement_id'=>$announcementId]
          );
     }
@@ -101,6 +122,19 @@ class SiteAnnouncement extends Announcement
         Application::$db->update(
             table: 'siteannouncement',
             columns: ['active' => 0],
+            where: ['announcement_id'=>$announcementId]
+        );
+    }
+
+    /**
+     * @description Delete site announcement from database
+     * @param $announcementId
+     * @return void
+     */
+    public static function deleteSiteAnnouncement($announcementId)
+    {
+        Application::$db->delete(
+            table: 'siteannouncement',
             where: ['announcement_id'=>$announcementId]
         );
     }
