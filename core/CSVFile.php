@@ -135,9 +135,15 @@ class CSVFile
 
     public function saveFileOnServer($location): void
     {
+        if (!file_exists($location)) {
+            // remove file name and create folder structure
+            $location_ = explode('/', $location);
+            array_pop($location_);
+            $location_ = implode('/', $location_);
+            mkdir($location_, recursive: true);
+        }
         move_uploaded_file($this->filepath, $location);
     }
-
     /**
      * @description Create user accounts. This function must be used inside readCSV. This is a passive function.
      * i.e. function itself can not run.
