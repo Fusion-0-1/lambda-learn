@@ -126,7 +126,8 @@ if(isset($msg)){
     // reg nos and degree codes **in order**
     let coordinatorRegNos = <?php echo json_encode($coordinatorRegNos); ?>;
     let coordinatorDegreeCode = <?php echo json_encode($coordinatorDegreeCode); ?>;
-
+console.log(coordinatorRegNos);
+console.log(coordinatorDegreeCode);
     let lec_select_element = document.getElementById("lecSelect");
     let batch_year_element = document.getElementById("batchYearSelect");
     let degree_program_select = document.getElementById("degreeProgramSelect");
@@ -151,9 +152,9 @@ if(isset($msg)){
         const degreeProgram = document.getElementById("degreeProgramSelect").value;
 
         let selectedRegNoIndex = coordinatorRegNos.indexOf(reg_no)
-        let selectedDegreeIndex = coordinatorDegreeCode.indexOf(degreeProgram + " " + batchYear)
+        let selectedDegree = coordinatorDegreeCode[selectedRegNoIndex]
 
-        let enableRemoveBtn = selectedRegNoIndex === selectedDegreeIndex && selectedRegNoIndex !== -1
+        let enableRemoveBtn = (selectedDegree === degreeProgram + " " + batchYear) && selectedRegNoIndex !== -1
         document.getElementById("removeCoordinatorBtn").disabled =
             !(enableRemoveBtn);
 
