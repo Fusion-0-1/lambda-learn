@@ -163,7 +163,32 @@ class Submission
      */
     public static function truncateStuCourseSubmissioms()
     {
+        self::deleteStuSubmissionFolders();
         Application::$db->truncateTable('StuCourseSubmission');
+    }
+
+    /*
+     * @description Delete all the student submission folders
+     */
+    private static function deleteStuSubmissionFolders()
+    {
+        if (is_dir(getcwd(). "/User Uploads/Submissions/")) {
+            //pwd - lambda-learn/public
+            $submissions = scandir(getcwd() . "/User Uploads/Submissions/");
+            // rmdir - User Uploads/Submissions/<course_code>/<sub_id>/Student_Submissions
+            foreach ($submissions as $submission) {
+                if (!in_array($submission, ['.', '..'])) {
+                    $submissionFolders = scandir(getcwd() . "/User Uploads/Submissions/$submission");
+                    foreach ($submissionFolders as $submissionFolder) {
+                        if (!in_array($submissionFolder, ['.', '..'])) {
+                            $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Student_Submissions";
+                            if (is_dir($stuSubmissionFolder))
+                                rmdir($stuSubmissionFolder);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**
