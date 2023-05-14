@@ -184,6 +184,16 @@ class DbConnection
     }
 
     /**
+     * @description truncate table
+     * @return bool|\mysqli_result
+     */
+    public function truncateTable(string $table)
+    {
+        $sql = "TRUNCATE TABLE $table";
+        return $this->db->query($sql);
+    }
+
+    /**
      * @description Add WHERE clause to SQL query
      * @param $where
      * @param $operator

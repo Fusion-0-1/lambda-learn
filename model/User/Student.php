@@ -179,6 +179,14 @@ class Student extends User
         }
         return $studentExists;
     }
+
+    public static function removeStudentsFromCourse($courseCode)
+    {
+        Application::$db->delete(
+            table: 'StuCourseSubTopic',
+            where: ['course_code'=>$courseCode]
+        );
+    }
     // --------------------------------------------------------------------------------
 
 

@@ -20,6 +20,16 @@ class CourseSubTopic {
 
     public function __construct() {}
 
+    /**
+     * @param $subTopicId
+     * @param $subTopicName
+     * @param $isBeingTracked
+     * @param $isCovered
+     * @param $stuIsCompleted
+     * @param $subTopicRecs
+     * @param $location
+     * @return CourseSubTopic
+     */
     public static function createNewSubTopic($subTopicId, $subTopicName='', $isBeingTracked=0, $isCovered=0, $stuIsCompleted=0, $subTopicRecs = [], $location=''): CourseSubTopic {
         $subTopic = new CourseSubTopic();
         $subTopic->subTopicId = $subTopicId;
@@ -198,7 +208,14 @@ class CourseSubTopic {
         return true;
     }
 
-
+    /**
+     * @description Check if a lecture recording exists in the database
+     * @param $courseCode
+     * @param $courseTopic
+     * @param $courseSubTopic
+     * @param $location
+     * @return bool
+     */
     public static function lecturerRecordingExits($courseCode, $courseTopic, $courseSubTopic, $location): bool
     {
         return Application::$db->checkExists(
@@ -207,6 +224,13 @@ class CourseSubTopic {
         );
     }
 
+    /**
+     * @description Get all the recordings of a sub topic
+     * @param $subTopicId
+     * @param $topicId
+     * @param $courseCode
+     * @return array
+     */
     public static function getCourseSubTopicRecs($subTopicId, $topicId, $courseCode): array
     {
         $recordings = [];
@@ -224,6 +248,14 @@ class CourseSubTopic {
          return $recordings;
     }
 
+    /**
+     * @description Insert a lecturer recording into the database
+     * @param $courseCode
+     * @param $topicId
+     * @param $subtopicId
+     * @param $location
+     * @return void
+     */
     public static function insertLecturerRecording($courseCode, $topicId, $subtopicId, $location)
     {
         Application::$db->insert(
@@ -237,7 +269,30 @@ class CourseSubTopic {
         );
     }
 
+    /**
+     * @description Delete student course sub topics from the database
+     * @return void
+     */
+    public static function truncateStuCourseSubTopics()
+    {
+        Application::$db->truncateTable('StuCourseSubTopic');
+    }
 
+    /**
+     * @param $courseCode
+     * @return void
+     */
+    public static function removeSlidesAndRecordings($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopicRec',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseSubTopicSlide',
+            where: ['course_code'=>$courseCode]
+        );
+    }
 
     // ---------------------------Getters and Setters-----------------------------------
 

@@ -1,5 +1,6 @@
 <?php
 
+use app\controllers\AdminSettingsController;
 use app\controllers\AnnouncementController;
 use app\controllers\AuthController;
 use app\controllers\KanbanboardController;
@@ -44,7 +45,7 @@ $app->router->get('/calender', [KanbanboardController::class, 'displayCalender']
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
-
+$app->router->post('/reset_course', [CourseController::class, 'resetCoursePage']);
 
 $app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanboard']);
 $app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
@@ -108,6 +109,12 @@ $app->router->get('/logout', [AuthController::class, 'logout']);
 // -------------------------------------------------------------------------
 $app->router->get('/account_creation', [ProfileController::class, 'displayAccountCreation']);
 $app->router->post('/upload_student_csv', [ProfileController::class, 'uploadCSV']);
+
+$app->router->get('/admin_settings', [AdminSettingsController::class, "displayAdminSettings"]);
+$app->router->post('/update_coord_options', [AdminSettingsController::class, "coordinatorOptions"]);
+$app->router->post('/update_academic_settings', [AdminSettingsController::class, "updateAcademicSettings"]);
+$app->router->post('/start_new_sem', [AdminSettingsController::class, "startNewSemester"]);
+
 // -------------------------------------------------------------------------
 
 // Coordinator routes

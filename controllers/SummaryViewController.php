@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\core\Controller;
+use app\model\Course;
 use app\model\Performance;
 
 class SummaryViewController extends Controller
@@ -13,9 +14,22 @@ class SummaryViewController extends Controller
      */
     public function displayCoordinatorCharts()
     {
+        $user = unserialize($_SESSION['user']);
+        $courses = Course::getUserCourses($user);
+
+        $courseCodes = [];
+        $progress = [];
+        foreach ($courses as $course) {
+            $courseCodes[] = $course->getCourseCode();
+            $progress[] = $course->getLecTotalTopicCompletionProgress();
+        }
         return $this->render(
             view: '/attendance_course_progress',
-            allowedRoles: ['Coordinator']
+            allowedRoles: ['Coordinator'],
+            params: [
+                'courseCodes' => $courseCodes,
+                'progress' => $progress
+            ]
         );
     }
 

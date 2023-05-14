@@ -144,7 +144,6 @@ class CSVFile
         }
         move_uploaded_file($this->filepath, $location);
     }
-
     /**
      * @description Create user accounts. This function must be used inside readCSV. This is a passive function.
      * i.e. function itself can not run.

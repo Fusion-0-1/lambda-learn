@@ -1,6 +1,12 @@
 <link rel="stylesheet" href="css/course/course_initialization.css">
 <script src="js/course/course_initialization.js" defer></script>
 
+<?php if (isset($mssg_reset)) { ?>
+<div id="mssg-modal" class="success-mssg text-justify">
+    <p><?php echo $mssg_reset?></p>
+</div>
+<?php }?>
+
 <div class="border main-container v-center flex-gap">
 
     <h3><?php echo $course->getCourseName()?></h3>

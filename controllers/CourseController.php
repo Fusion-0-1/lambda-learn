@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
@@ -44,6 +45,12 @@ class CourseController extends Controller
         $courseCode = $body['course_code'];
         $params['course'] = Course::getCourse($courseCode);
         $topics = CourseTopic::getCourseTopics($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         if(empty($topics) and $_SESSION['user-role'] == 'Lecturer'){
             return $this->render(
                 view: '/course/course_initialization',
@@ -70,6 +77,12 @@ class CourseController extends Controller
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getregNo();
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
             $subTopicId = $body['course_subtopic'];
@@ -110,6 +123,41 @@ class CourseController extends Controller
         }
     }
 
+    public function resetCoursePage(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        Student::removeStudentsFromCourse($courseCode);
+        Course::removeCourseAnnouncements($courseCode);
+        CourseSubTopic::removeSlidesAndRecordings($courseCode);
+        Submission::deleteAllSubmissions($courseCode);
+        Course::removeCourseSubToicsAndTopics($courseCode);
+
+        $params['mssg_reset'] = "Course reset successfully";
+
+        $params['course'] = Course::getCourse($courseCode);
+        $topics = CourseTopic::getCourseTopics($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
+        if(empty($topics) and $_SESSION['user-role'] == 'Lecturer'){
+            return $this->render(
+                view: '/course/course_initialization',
+                allowedRoles: ['Lecturer'],
+                params: $params
+            );
+        }
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        return $this->render(
+            view: '/course/course_page',
+            allowedRoles: ['Lecturer', 'Student'],
+            params: $params
+        );
+    }
+
     /**
      * @description Display all submissions for a course
      * @param Request $request
@@ -138,7 +186,6 @@ class CourseController extends Controller
         $body = $request->getBody();
         $dueDateStr = $body['duetime'];
         $dueDate = new DateTime($dueDateStr);
-
         $course_submissions = Submission::createNewSubmission(
             courseCode: $body['course_code'],
             topic: $body['heading'],
@@ -177,7 +224,7 @@ class CourseController extends Controller
                 move_uploaded_file($tmpName, $LecturerAttachments.'/'.$fileName);
             }
         }
-        $course_submissions->setLocation('C:/xampp/htdocs/lambda-learn/public/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
+        $course_submissions->setLocation(getcwd() . '/User Uploads/Submissions/'.$body['course_code'].'/'.$submission_id.'/' . 'Lecturer_Attachments');
         $course_submissions->submissionInsert();
         header("Location: /submissions?course_code=".$body['course_code']);
     }
@@ -309,7 +356,20 @@ class CourseController extends Controller
      */
     public function displayCourseCreation()
     {
-        $params['courses'] = Course::fetchAllCourses();
+        $user = unserialize($_SESSION['user'])->getRegNo();
+
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
+
+        $params['courses'] = [];
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], $params['degree_program'])) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: 'course/course_creation',
             allowedRoles: ['Coordinator'],
@@ -325,6 +385,12 @@ class CourseController extends Controller
     public function createNewCourse(Request $request)
     {
         $body = $request->getBody();
+        $user = unserialize($_SESSION['user'])->getRegNo();
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
+
         $courseCode = $body['course_code'];
         $courseName = $body['course_name'];
         if($body['course_type'] == 'Optional'){
@@ -332,8 +398,20 @@ class CourseController extends Controller
         } else {
             $isOptional = 0;
         }
-        $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional);
-        $params['courses'] = Course::fetchAllCourses();
+
+        if((str_starts_with($courseCode, $params['degree_program'])) and
+            (str_starts_with(explode(" ", $courseCode)[1], (string)$year))){
+            $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional, $user);
+        } else {
+            $params['invalid_course'] = true;
+        }
+
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], $params['degree_program'])) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: 'course/course_creation',
             allowedRoles: ['Coordinator'],
@@ -349,10 +427,21 @@ class CourseController extends Controller
     public function editCourse(Request $request)
     {
         $body = $request->getBody();
-        $courseCode = $body['course_code'];
-        $courseName = $body['course_name'];
-        $params['course_update'] = Course::UpdateCourse($courseCode, $courseName);
-        $params['courses'] = Course::fetchAllCourses();
+        $user = unserialize($_SESSION['user'])->getRegNo();
+
+        $params['course_update'] = Course::UpdateCourse($body['course_code'], $body['course_name']);
+
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
+
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], $params['degree_program'])) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: 'course/course_creation',
             allowedRoles: ['Coordinator'],
@@ -369,7 +458,19 @@ class CourseController extends Controller
     {
         $body = $request->getBody();
         $params['course_delete'] = Course::deleteCourse($body['course_code']);
-        $params['courses'] = Course::fetchAllCourses();
+        $user = unserialize($_SESSION['user'])->getRegNo();
+
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
+
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], $params['degree_program'])) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: 'course/course_creation',
             allowedRoles: ['Coordinator'],
@@ -383,19 +484,19 @@ class CourseController extends Controller
      */
     public function displayAssignUsersToCourses()
     {
-        $users = Student::fetchStudents();
-
-        $regNos = [];
-        $degreePrograms = [];
-        foreach ($users as $user) {
-            $regNos[] = $user["reg_no"];
-            $degreePrograms[] = $user['degree_program_code'];
-        }
-        $params['batch_years'] = Student::getBatchYears($regNos);
-        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $user = unserialize($_SESSION['user'])->getRegNo();
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();
 
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], $params['degree_program'])) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
@@ -414,26 +515,32 @@ class CourseController extends Controller
         $courseCode = trim(explode("-", $body['course'])[0]);
 
         if(isset($body['assign_lecturer'])){
-            $lecturer = $body['lecturer'];
-            $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            if(isset($body['assign'])){
+                $lecturer = $body['lecturer'];
+                $params['exists'] = Lecturer::assignLecturersToCourse($lecturer, $courseCode);
+            }
+            elseif(isset($body['delete'])) {
+                $lecturer = $body['lecturer'];
+                $params['is_deleted'] = Lecturer::removeLecturersFromCourse($lecturer, $courseCode);
+            }
         } else {
             $regNoLike = $body['batch_year'] . '/' . $body['degree_program'];
             $params['exists'] = Student::assignStudentsToCourse($regNoLike, $courseCode);
         }
 
-        $users = Student::fetchStudents();
-
-        $regNos = [];
-        $degreePrograms = [];
-        foreach ($users as $user) {
-            $regNos[] = $user["reg_no"];
-            $degreePrograms[] = $user['degree_program_code'];
-        }
-        $params['batch_years'] = Student::getBatchYears($regNos);
-        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $user = unserialize($_SESSION['user'])->getRegNo();
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();
 
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], 'CS')) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
@@ -458,19 +565,19 @@ class CourseController extends Controller
             $params['exists'] = $categorizedData['exist'];
         }
 
-        $users = Student::fetchStudents();
-
-        $regNos = [];
-        $degreePrograms = [];
-        foreach ($users as $user) {
-            $regNos[] = $user["reg_no"];
-            $degreePrograms[] = $user['degree_program_code'];
-        }
-        $params['batch_years'] = Student::getBatchYears($regNos);
-        $params['degree_programs'] = Student::getDegreePrograms($degreePrograms);
+        $user = unserialize($_SESSION['user'])->getRegNo();
+        $degreeProgramCode = Lecturer::fetchLecFromDb($user)->getDegreeProgramCode();
+        $params['degree_program'] = explode(" ", $degreeProgramCode)[0];
+        $params['year_of_coordinating'] = explode(" ", $degreeProgramCode)[1];
+        $year = date('Y') - $params['year_of_coordinating'] - 1;
         $params['lecturers'] = Lecturer::fetchLecturers();
-        $params['courses'] = Course::fetchAllCourses();
 
+        foreach (Course::fetchAllCourses() as $course){
+            if((str_starts_with($course['course_code'], 'CS')) and
+                (str_starts_with(explode(" ", $course['course_code'])[1], (string)$year))){
+                $params['courses'][] = $course;
+            }
+        }
         return $this->render(
             view: '/assign_users_to_courses',
             allowedRoles: ['Coordinator'],
@@ -528,6 +635,11 @@ class CourseController extends Controller
             $topicCount++;
         }
 
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
@@ -555,6 +667,12 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
