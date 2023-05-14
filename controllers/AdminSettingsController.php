@@ -6,6 +6,10 @@ use app\core\AdminConfiguration;
 use app\core\Application;
 use app\core\Controller;
 use app\core\Request;
+use app\model\Course;
+use app\model\CourseAnnouncement;
+use app\model\CourseSubTopic;
+use app\model\Submission;
 use app\model\User\Lecturer;
 use app\model\User\Student;
 use DateTime;
@@ -91,7 +95,20 @@ class AdminSettingsController extends Controller
 
     public function startNewSemester(Request $request)
     {
+        CourseAnnouncement::truncateCourseAnnouncements();
+        Course::truncateStuCourses();
+        Submission::truncateStuCourseSubmissioms();
+        CourseSubTopic::truncateStuCourseSubTopics();
 
+        $params = $this->getParameters();
+        $params['msg'] = "New semester started successfully";
+        $params['is_semester_started'] = true;
+
+        return $this->render(
+            view: 'admin_settings',
+            allowedRoles: ['Admin'],
+            params: $params
+        );
     }
 
 
