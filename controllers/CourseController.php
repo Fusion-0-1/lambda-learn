@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\Controller;
 use app\core\CSVFile;
 use app\core\Request;
@@ -44,6 +45,12 @@ class CourseController extends Controller
         $courseCode = $body['course_code'];
         $params['course'] = Course::getCourse($courseCode);
         $topics = CourseTopic::getCourseTopics($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         if(empty($topics) and $_SESSION['user-role'] == 'Lecturer'){
             return $this->render(
                 view: '/course/course_initialization',
