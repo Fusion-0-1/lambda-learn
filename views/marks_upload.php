@@ -45,6 +45,9 @@
                     </tr>
                     <?php
                     $path = 'User Uploads/Exam marks/' . $course->getCourseCode();
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
+                    }
                     $files = scandir($path);
                     foreach ($files as $file) {
                         if ($file != '.' && $file != '..' && is_file($path . '/' . $file)) {
