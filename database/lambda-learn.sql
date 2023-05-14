@@ -61,7 +61,7 @@ CREATE TABLE Course (
     course_code VARCHAR(8) NOT NULL,
     course_name VARCHAR(50) NOT NULL,
     optional_flag BOOLEAN NOT NULL,
-    cord_reg_no VARCHAR(12),
+    cord_reg_no VARCHAR(12) NOT NULL,
     date_created DATE,
     exam_marks_report_path VARCHAR(255),
     CONSTRAINT PK_Course PRIMARY KEY (course_code),
@@ -259,7 +259,7 @@ CREATE TABLE LecCourse (
     CONSTRAINT FK_LecCourse_AcademicStaff FOREIGN KEY (lec_reg_no) REFERENCES AcademicStaff(reg_no),
     CONSTRAINT FK_LecCourse_Course FOREIGN KEY (course_code) REFERENCES Course(course_code)
 );  
- 
+
 DROP TABLE IF EXISTS StuCourseSubmission;
 CREATE TABLE StuCourseSubmission (
     stu_reg_no VARCHAR(12) NOT NULL,
