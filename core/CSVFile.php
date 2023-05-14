@@ -95,7 +95,7 @@ class CSVFile
      * @return array|bool|null
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, bool $assignStudents = false, bool $uploadExamMarks = false, string $location = null)
+                            bool $updateAttendance = false, bool $assignStudents = false, bool $uploadExamMarks = false, $uploadSubmissionMarks = false,  string $location = null)
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
@@ -107,9 +107,10 @@ class CSVFile
                     $output = $this->updateAttendance($csvFile);
                 } else if ($assignStudents) {
                     $output = $this->assignStudents($csvFile);
-                }
-                elseif($uploadExamMarks) {
+                } elseif($uploadExamMarks) {
                     $output = $this->uploadExamMarks($csvFile);
+                } elseif($uploadSubmissionMarks){
+                    $output = $this->uploadSubmissionMarks($csvFile);
                 }
                 fclose($csvFile);
                 // Save the file in the server
@@ -262,6 +263,20 @@ class CSVFile
             $unwrappedData = Course::unwrapExamMarks($line);
             $student['reg_no'][] = $unwrappedData['regNo'];
             $student['exam_mark'][] = $unwrappedData['marks'];
+        }
+        return $student;
+    }
+
+    public function uploadSubmissionMarks($csvFile) : array
+    {
+        $student = [];
+        $invalidStudent = [];
+
+        $header = fgetcsv($csvFile);
+        while (($line = fgetcsv($csvFile)) !== FALSE) {
+            $unwrappedData = Course::unwrapExamMarks($line);
+            $student['reg_no'][] = $unwrappedData['regNo'];
+            $student['submission_mark'][] = $unwrappedData['marks'];
         }
         return $student;
     }

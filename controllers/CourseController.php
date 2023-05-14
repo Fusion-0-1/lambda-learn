@@ -311,6 +311,59 @@ class CourseController extends Controller
         );
     }
 
+    public function displaySubmissionMarksUpload(Request $request)
+    {
+        $body = $request->getBody();
+        $params = [
+            'course' => Course::getCourse($body['course_code']),
+            'submission_id' => $body['submission_id']
+        ];
+        return $this->render(
+            view: '/submission_marks_upload',
+            allowedRoles: ['Lecturer'],
+            params: $params
+        );
+    }
+
+    public function updateSubmissionMarksUpload(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $submissionId = $body['submission_id'];
+        $params['course'] = Course::getCourse($courseCode);
+
+        $file = new CSVFile($request->getFile());
+        $marks_dir = 'User Uploads/Submission marks/' . $courseCode;
+        if (!file_exists($marks_dir)) {
+            mkdir($marks_dir);
+        }
+        $categorizedData = $file->readCSV(
+            uploadSubmissionMarks: true
+        );
+        $params['invalid_user'] = false;
+        for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+            if((!User::userExists($categorizedData['reg_no'][$i])) || (Student::checkStudentAssignedToCourse($categorizedData['reg_no'][$i], $courseCode))){
+                $params['invalid_user'] = true;
+            }
+        }
+        if(!$params['invalid_user']){
+            for($i=0; $i<sizeof($categorizedData['reg_no']); $i++) {
+                Course::updateSubmissionMarks($categorizedData['reg_no'][$i], $courseCode, $submissionId, $categorizedData['submission_mark'][$i]);
+            }
+
+            $file_path = $marks_dir . '/' . date('Y-m-d') . '.csv';
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            $file->saveFileOnServer($path = $marks_dir . '/' . date('Y-m-d') . '.csv');
+        }
+        return $this->render(
+            view: '/submission_marks_upload',
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
+        );
+    }
+
     public function updateCourseMarks(Request $request)
     {
         $body = $request->getBody();
