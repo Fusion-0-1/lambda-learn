@@ -1,0 +1,300 @@
+{
+  "id": "77fd833a-ac22-47f6-8e29-446e61f89f4c",
+  "version": "2.0",
+  "name": "lambda-CreateUsers",
+  "url": "http://127.0.0.1:8080",
+  "tests": [{
+    "id": "872dbca1-4aab-437a-915b-011b2ae2196a",
+    "name": "CreateUser",
+    "commands": [{
+      "id": "2ef38ede-cf8e-43e3-8ffc-b392c225272c",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b6e0e342-81f1-4e67-8119-4628adea4c24",
+      "comment": "",
+      "command": "click",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4985b3c6-9cf7-4d26-ae4b-039574724111",
+      "comment": "",
+      "command": "type",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2020/AD/0026"
+    }, {
+      "id": "e79d27bf-6b4d-43db-9306-bb5eb380c3e7",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "~123456~"
+    }, {
+      "id": "04dbf66c-0e6d-4a98-b4f7-225fbd395221",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn",
+      "targets": [
+        ["id=btn", "id"],
+        ["name=login", "name"],
+        ["css=#btn", "css:finder"],
+        ["xpath=//input[@id='btn']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "09800f80-93a3-4ec8-a469-923901b6969a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(4) img",
+      "targets": [
+        ["css=.link:nth-child(4) img", "css:finder"],
+        ["xpath=//img[@alt='User Accounts']", "xpath:img"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[4]/div/div/img", "xpath:idRelative"],
+        ["xpath=//a[4]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3adfb502-bcae-42d2-be1c-df7fc4204979",
+      "comment": "",
+      "command": "click",
+      "target": "css=#admin-dashboard-2 .link:nth-child(1) img",
+      "targets": [
+        ["css=#admin-dashboard-2 .link:nth-child(1) img", "css:finder"],
+        ["xpath=//img[@alt='Student Account']", "xpath:img"],
+        ["xpath=//div[@id='admin-dashboard-2']/div/a/div/div/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/a/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4625649a-0889-4e85-903f-f596ddf5d0c0",
+      "comment": "",
+      "command": "click",
+      "target": "id=upload-file-text",
+      "targets": [
+        ["id=upload-file-text", "id"],
+        ["css=#upload-file-text", "css:finder"],
+        ["xpath=//p[@id='upload-file-text']", "xpath:attributes"],
+        ["xpath=//div[@id='file-upload-button']/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "09f1bdc4-a54a-4e12-875b-b173e5bbfa97",
+      "comment": "",
+      "command": "type",
+      "target": "id=file-input-field",
+      "targets": [
+        ["id=file-input-field", "id"],
+        ["name=file", "name"],
+        ["css=#file-input-field", "css:finder"],
+        ["xpath=//input[@id='file-input-field']", "xpath:attributes"],
+        ["xpath=//form[@id='student-csv-upload-form']/input", "xpath:idRelative"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "C:\\fakepath\\Student.csv"
+    }, {
+      "id": "a92a4d3c-cc69-413c-9513-8d652fb09841",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa",
+      "targets": [
+        ["css=.fa", "css:finder"],
+        ["xpath=//div[@id='file-upload-button']/i", "xpath:idRelative"],
+        ["xpath=//div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d0e5818-f055-4e81-9b81-7401b9f812ab",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-link-bottom:nth-child(3) > #sidenav-element",
+      "targets": [
+        ["css=.nav-link-bottom:nth-child(3) > #sidenav-element", "css:finder"],
+        ["xpath=(//img[@id='sidenav-element'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='sidebar']/a[3]/img", "xpath:idRelative"],
+        ["xpath=//a[3]/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f67173c-f4d6-48ef-84ee-c83ea45ad4cc",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(4) img",
+      "targets": [
+        ["css=.link:nth-child(4) img", "css:finder"],
+        ["xpath=//img[@alt='User Accounts']", "xpath:img"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[4]/div/div/img", "xpath:idRelative"],
+        ["xpath=//a[4]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "412effed-6d2c-476e-b589-5407a0e77fb8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#admin-dashboard-2 .link:nth-child(2) img",
+      "targets": [
+        ["css=#admin-dashboard-2 .link:nth-child(2) img", "css:finder"],
+        ["xpath=//img[@alt='Lecturer Account']", "xpath:img"],
+        ["xpath=//div[@id='admin-dashboard-2']/div/a[2]/div/div/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/a[2]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "298c6ac4-ff40-4736-a0fe-6e65277e8155",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa",
+      "targets": [
+        ["css=.fa", "css:finder"],
+        ["xpath=//div[@id='file-upload-button']/i", "xpath:idRelative"],
+        ["xpath=//div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "db2f049a-0feb-4ac3-8291-d73480bda409",
+      "comment": "",
+      "command": "click",
+      "target": "id=upload-file-text",
+      "targets": [
+        ["id=upload-file-text", "id"],
+        ["css=#upload-file-text", "css:finder"],
+        ["xpath=//p[@id='upload-file-text']", "xpath:attributes"],
+        ["xpath=//div[@id='file-upload-button']/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d2804460-42d1-44e7-960b-919cb9dacb44",
+      "comment": "",
+      "command": "type",
+      "target": "id=file-input-field",
+      "targets": [
+        ["id=file-input-field", "id"],
+        ["name=file", "name"],
+        ["css=#file-input-field", "css:finder"],
+        ["xpath=//input[@id='file-input-field']", "xpath:attributes"],
+        ["xpath=//form[@id='student-csv-upload-form']/input", "xpath:idRelative"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "C:\\fakepath\\Lecturer.csv"
+    }, {
+      "id": "ce7c1fb0-a900-4352-847c-d77059a643c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa",
+      "targets": [
+        ["css=.fa", "css:finder"],
+        ["xpath=//div[@id='file-upload-button']/i", "xpath:idRelative"],
+        ["xpath=//div/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "31aa357e-f961-4920-b223-91fcad0ff576",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-link-bottom:nth-child(3) > #sidenav-element",
+      "targets": [
+        ["css=.nav-link-bottom:nth-child(3) > #sidenav-element", "css:finder"],
+        ["xpath=(//img[@id='sidenav-element'])[3]", "xpath:attributes"],
+        ["xpath=//div[@id='sidebar']/a[3]/img", "xpath:idRelative"],
+        ["xpath=//a[3]/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0df5c90f-73f9-4baf-9c96-3a36be9ca8c2",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(4) .cards-inside",
+      "targets": [
+        ["css=.link:nth-child(4) .cards-inside", "css:finder"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[4]/div/div", "xpath:idRelative"],
+        ["xpath=//a[4]/div/div", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f7ba1a1c-df30-4afb-9315-a1addb082cac",
+      "comment": "",
+      "command": "click",
+      "target": "css=#admin-dashboard-2 .link:nth-child(3) img",
+      "targets": [
+        ["css=#admin-dashboard-2 .link:nth-child(3) img", "css:finder"],
+        ["xpath=//img[@alt='Administrator Account']", "xpath:img"],
+        ["xpath=//div[@id='admin-dashboard-2']/div/a[3]/div/div/img", "xpath:idRelative"],
+        ["xpath=//div[3]/div/a[3]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46c879b7-6826-4e92-b6c0-cf2fbd3dd0a4",
+      "comment": "",
+      "command": "click",
+      "target": "id=upload-file-text",
+      "targets": [
+        ["id=upload-file-text", "id"],
+        ["css=#upload-file-text", "css:finder"],
+        ["xpath=//p[@id='upload-file-text']", "xpath:attributes"],
+        ["xpath=//div[@id='file-upload-button']/p", "xpath:idRelative"],
+        ["xpath=//p", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4624b1bd-619d-437d-9f09-1bdc0bed9731",
+      "comment": "",
+      "command": "type",
+      "target": "id=file-input-field",
+      "targets": [
+        ["id=file-input-field", "id"],
+        ["name=file", "name"],
+        ["css=#file-input-field", "css:finder"],
+        ["xpath=//input[@id='file-input-field']", "xpath:attributes"],
+        ["xpath=//form[@id='student-csv-upload-form']/input", "xpath:idRelative"],
+        ["xpath=//form/input", "xpath:position"]
+      ],
+      "value": "C:\\fakepath\\Admin.csv"
+    }, {
+      "id": "312035ff-b298-45f4-a4d6-e1a0763f8e34",
+      "comment": "",
+      "command": "click",
+      "target": "css=.fa",
+      "targets": [
+        ["css=.fa", "css:finder"],
+        ["xpath=//div[@id='file-upload-button']/i", "xpath:idRelative"],
+        ["xpath=//div/i", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "4fe49693-ce14-4b2b-87ec-b9be67d5c1c8",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["872dbca1-4aab-437a-915b-011b2ae2196a"]
+  }],
+  "urls": ["http://127.0.0.1:8080/"],
+  "plugins": []
+}

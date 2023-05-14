@@ -1,0 +1,298 @@
+{
+  "id": "ff18b8fd-c316-43c0-bace-550b7b62feb7",
+  "version": "2.0",
+  "name": "lambda-KanbanBoard",
+  "url": "http://127.0.0.1:8080",
+  "tests": [{
+    "id": "8297776a-bf1b-4acd-bc4e-cd784e01289e",
+    "name": "Untitled",
+    "commands": [{
+      "id": "3c0a8387-33a1-4537-acf7-d9e66d8bf543",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1708558f-72ce-462e-a2f3-9b861fe75165",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "bb77e6bb-bf8f-4724-b4ff-7ebefbe0b596",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "20000011@CS"
+    }, {
+      "id": "6b468a6a-c0f3-4763-8c0e-00f03486c65e",
+      "comment": "",
+      "command": "click",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "87c3b88d-58ab-459e-9410-52e5cff10746",
+      "comment": "",
+      "command": "type",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2020/CS/0011"
+    }, {
+      "id": "873496b6-e487-47b1-839f-825ccc017e0c",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn",
+      "targets": [
+        ["id=btn", "id"],
+        ["name=login", "name"],
+        ["css=#btn", "css:finder"],
+        ["xpath=//input[@id='btn']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1d404305-5f78-4b1d-9de9-28d974c9a36e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(4) img",
+      "targets": [
+        ["css=.link:nth-child(4) img", "css:finder"],
+        ["xpath=//img[@alt='Kanban Board']", "xpath:img"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[4]/div/div/img", "xpath:idRelative"],
+        ["xpath=//a[4]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "35a2c073-a61f-4f55-81d6-2cca188950d8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#card-add-todo > .fa",
+      "targets": [
+        ["css=#card-add-todo > .fa", "css:finder"],
+        ["xpath=//button[@id='card-add-todo']/span", "xpath:idRelative"],
+        ["xpath=//button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2948ea0d-505b-44e9-a8ef-8bd030aac033",
+      "comment": "",
+      "command": "click",
+      "target": "id=card-header-modal",
+      "targets": [
+        ["id=card-header-modal", "id"],
+        ["name=card-header", "name"],
+        ["css=#card-header-modal", "css:finder"],
+        ["xpath=//input[@id='card-header-modal']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "34755127-0e98-4bd5-8a74-17cb29187d2c",
+      "comment": "",
+      "command": "type",
+      "target": "id=card-header-modal",
+      "targets": [
+        ["id=card-header-modal", "id"],
+        ["name=card-header", "name"],
+        ["css=#card-header-modal", "css:finder"],
+        ["xpath=//input[@id='card-header-modal']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div/input", "xpath:idRelative"],
+        ["xpath=//form/div/input", "xpath:position"]
+      ],
+      "value": "Project Demonstration"
+    }, {
+      "id": "bc5fbf96-7777-4d39-a566-d378951eb201",
+      "comment": "",
+      "command": "click",
+      "target": "name=card-body",
+      "targets": [
+        ["name=card-body", "name"],
+        ["css=.flex:nth-child(2) > .card-body-modal", "css:finder"],
+        ["xpath=//textarea[@name='card-body']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4df8664d-42a9-4a3d-9aba-1f39b01cd447",
+      "comment": "",
+      "command": "type",
+      "target": "name=card-body",
+      "targets": [
+        ["name=card-body", "name"],
+        ["css=.flex:nth-child(2) > .card-body-modal", "css:finder"],
+        ["xpath=//textarea[@name='card-body']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//textarea", "xpath:position"]
+      ],
+      "value": "Get ready for demo and rehearsal the presentation"
+    }, {
+      "id": "1f2112fe-be80-4e42-9d25-3ab18b06c099",
+      "comment": "",
+      "command": "click",
+      "target": "name=card-priority",
+      "targets": [
+        ["name=card-priority", "name"],
+        ["css=.card-footer:nth-child(3) > div > .card-priority", "css:finder"],
+        ["xpath=//select[@name='card-priority']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[3]/div/select", "xpath:idRelative"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1b20045-6946-4324-b3ad-7a7913e5cda9",
+      "comment": "",
+      "command": "select",
+      "target": "name=card-priority",
+      "targets": [],
+      "value": "label=High"
+    }, {
+      "id": "574b70fa-7686-40ca-aae9-4d4ee227f89f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card-footer:nth-child(3) option:nth-child(3)",
+      "targets": [
+        ["css=.card-footer:nth-child(3) option:nth-child(3)", "css:finder"],
+        ["xpath=//option[@value='High']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[3]/div/select/option[3]", "xpath:idRelative"],
+        ["xpath=//option[3]", "xpath:position"],
+        ["xpath=//option[contains(.,'High')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb8305b1-2ca8-4e07-9f67-c332feaefaf6",
+      "comment": "",
+      "command": "click",
+      "target": "name=card-deadline",
+      "targets": [
+        ["name=card-deadline", "name"],
+        ["css=.card-footer:nth-child(3) > .card-deadline-label > .card-deadline", "css:finder"],
+        ["xpath=//input[@name='card-deadline']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dee435e3-d8e5-4336-a12c-3d308276fa99",
+      "comment": "",
+      "command": "click",
+      "target": "name=card-deadline",
+      "targets": [
+        ["name=card-deadline", "name"],
+        ["css=.card-footer:nth-child(3) > .card-deadline-label > .card-deadline", "css:finder"],
+        ["xpath=//input[@name='card-deadline']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6aedb954-f246-4280-92d5-84f816d0decf",
+      "comment": "",
+      "command": "type",
+      "target": "name=card-deadline",
+      "targets": [
+        ["name=card-deadline", "name"],
+        ["css=.card-footer:nth-child(3) > .card-deadline-label > .card-deadline", "css:finder"],
+        ["xpath=//input[@name='card-deadline']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "2023-05-15"
+    }, {
+      "id": "863634ec-f10b-436a-8400-b37c64801e91",
+      "comment": "",
+      "command": "click",
+      "target": "id=card-add-save",
+      "targets": [
+        ["id=card-add-save", "id"],
+        ["css=#card-add-save", "css:finder"],
+        ["xpath=//input[@id='card-add-save']", "xpath:attributes"],
+        ["xpath=//div[@id='card-add-modal']/div/form/div[5]/input[2]", "xpath:idRelative"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93f2faa3-5602-40ff-8735-0b79b38e1cdf",
+      "comment": "",
+      "command": "click",
+      "target": "css=.card-list:nth-child(1) .draggable:nth-child(2) div:nth-child(1) .fa",
+      "targets": [
+        ["css=.card-list:nth-child(1) .draggable:nth-child(2) div:nth-child(1) .fa", "css:finder"],
+        ["xpath=//div[2]/div[3]/div[3]/div/button/span", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "61904807-d37f-4ee9-9d79-fab1f490f4a5",
+      "comment": "",
+      "command": "click",
+      "target": "id=card-body-edit-modal",
+      "targets": [
+        ["id=card-body-edit-modal", "id"],
+        ["css=#card-body-edit-modal", "css:finder"],
+        ["xpath=//textarea[@id='card-body-edit-modal']", "xpath:attributes"],
+        ["xpath=//div[@id='card-edit-modal']/div/form/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//div[2]/div/form/div[2]/textarea", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e68b193a-451d-4dd7-8465-68b10fe9d2be",
+      "comment": "",
+      "command": "type",
+      "target": "id=card-body-edit-modal",
+      "targets": [
+        ["id=card-body-edit-modal", "id"],
+        ["css=#card-body-edit-modal", "css:finder"],
+        ["xpath=//textarea[@id='card-body-edit-modal']", "xpath:attributes"],
+        ["xpath=//div[@id='card-edit-modal']/div/form/div[2]/textarea", "xpath:idRelative"],
+        ["xpath=//div[2]/div/form/div[2]/textarea", "xpath:position"]
+      ],
+      "value": "Prepare presentation flow and practice demonstration"
+    }, {
+      "id": "986fdb6c-d26e-44db-bded-3e1e29e4abfa",
+      "comment": "",
+      "command": "click",
+      "target": "id=card-edit-save",
+      "targets": [
+        ["id=card-edit-save", "id"],
+        ["css=#card-edit-save", "css:finder"],
+        ["xpath=//input[@id='card-edit-save']", "xpath:attributes"],
+        ["xpath=//div[@id='card-edit-modal']/div/form/div[4]/input[2]", "xpath:idRelative"],
+        ["xpath=//div[4]/input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "1fe0c953-3a87-4544-9a6f-4ab9a3c28e5a",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["8297776a-bf1b-4acd-bc4e-cd784e01289e"]
+  }],
+  "urls": ["http://127.0.0.1:8080/"],
+  "plugins": []
+}

@@ -1,0 +1,190 @@
+{
+  "id": "164822f4-3110-4fe1-bdd5-15b515f4e809",
+  "version": "2.0",
+  "name": "lambda-AdminSettings",
+  "url": "http://127.0.0.1:8080",
+  "tests": [{
+    "id": "2c8e03bd-3741-460d-8d3c-98a9ff0b5053",
+    "name": "Admin Settings",
+    "commands": [{
+      "id": "24618d05-0036-4b2e-b499-d432cc226718",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "02878a08-a273-4bd2-bd45-0390bf289fd6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "801c76c1-f4fc-46b4-bd04-56ae14cfc565",
+      "comment": "",
+      "command": "click",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69ad7ee6-8556-46cb-b36f-ce4d8a3d7796",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "~123456~"
+    }, {
+      "id": "d7068a78-d801-4748-b704-cf2200fba542",
+      "comment": "",
+      "command": "type",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2020/AD/0026"
+    }, {
+      "id": "9f46899d-f0e3-4080-a123-d01c839b91a2",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn",
+      "targets": [
+        ["id=btn", "id"],
+        ["name=login", "name"],
+        ["css=#btn", "css:finder"],
+        ["xpath=//input[@id='btn']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f2b27b08-f78d-4630-a476-27a297e25239",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(6) img",
+      "targets": [
+        ["css=.link:nth-child(6) img", "css:finder"],
+        ["xpath=//img[@alt='Settings']", "xpath:img"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[6]/div/div/img", "xpath:idRelative"],
+        ["xpath=//a[6]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "714f0914-0b07-4904-9f46-dfacaef68965",
+      "comment": "",
+      "command": "select",
+      "target": "id=lecSelect",
+      "targets": [],
+      "value": "label=2020/LC/0026-Ramindu Walgama"
+    }, {
+      "id": "b0b72289-6f31-40f3-8579-801d40ae1e5c",
+      "comment": "",
+      "command": "click",
+      "target": "css=option:nth-child(11)",
+      "targets": [
+        ["css=option:nth-child(11)", "css:finder"],
+        ["xpath=//select[@id='lecSelect']/option[11]", "xpath:idRelative"],
+        ["xpath=//option[11]", "xpath:position"],
+        ["xpath=//option[contains(.,'2020/LC/0026-Ramindu Walgama')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "33f620e9-d86f-487a-a049-3dcb89e6a0b6",
+      "comment": "",
+      "command": "click",
+      "target": "css=#batchYearSelect > option:nth-child(2)",
+      "targets": [
+        ["css=#batchYearSelect > option:nth-child(2)", "css:finder"],
+        ["xpath=//select[@id='batchYearSelect']/option[2]", "xpath:idRelative"],
+        ["xpath=//div[2]/select/option[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c44dda46-a429-41e4-b6bc-76bd22e4c8c8",
+      "comment": "",
+      "command": "click",
+      "target": "css=#degreeProgramSelect > option:nth-child(2)",
+      "targets": [
+        ["css=#degreeProgramSelect > option:nth-child(2)", "css:finder"],
+        ["xpath=//select[@id='degreeProgramSelect']/option[2]", "xpath:idRelative"],
+        ["xpath=//div[3]/select/option[2]", "xpath:position"],
+        ["xpath=//option[contains(.,'CS')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "8dff9b30-9581-4149-b103-672ff0bb8798",
+      "comment": "",
+      "command": "click",
+      "target": "id=assignCoordinatorBtn",
+      "targets": [
+        ["id=assignCoordinatorBtn", "id"],
+        ["name=assign", "name"],
+        ["css=#assignCoordinatorBtn", "css:finder"],
+        ["xpath=//button[@id='assignCoordinatorBtn']", "xpath:attributes"],
+        ["xpath=//form[@id='assign_coordinator']/div[4]/div/button", "xpath:idRelative"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Assign')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e3551b6d-a81c-4ccb-b6de-43ab2106f5b1",
+      "comment": "",
+      "command": "select",
+      "target": "id=lecSelect",
+      "targets": [],
+      "value": "label=2020/LC/0026-Ramindu Walgama"
+    }, {
+      "id": "08858f51-ea39-420f-b561-7657dc74f98e",
+      "comment": "",
+      "command": "click",
+      "target": "css=option:nth-child(11)",
+      "targets": [
+        ["css=option:nth-child(11)", "css:finder"],
+        ["xpath=//select[@id='lecSelect']/option[11]", "xpath:idRelative"],
+        ["xpath=//option[11]", "xpath:position"],
+        ["xpath=//option[contains(.,'2020/LC/0026-Ramindu Walgama')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "9d317289-2b62-4cc9-a808-9b58bd1dca00",
+      "comment": "",
+      "command": "click",
+      "target": "id=removeCoordinatorBtn",
+      "targets": [
+        ["id=removeCoordinatorBtn", "id"],
+        ["name=remove", "name"],
+        ["css=#removeCoordinatorBtn", "css:finder"],
+        ["xpath=//button[@id='removeCoordinatorBtn']", "xpath:attributes"],
+        ["xpath=//form[@id='assign_coordinator']/div[4]/div/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'Remove')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "69408251-ee0d-4215-88c3-f6b7b81ef9f8",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["2c8e03bd-3741-460d-8d3c-98a9ff0b5053"]
+  }],
+  "urls": ["http://127.0.0.1:8080/"],
+  "plugins": []
+}
