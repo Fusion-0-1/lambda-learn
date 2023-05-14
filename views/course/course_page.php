@@ -111,6 +111,11 @@
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
     <h3><?php echo $course->getCourseCode()?></h3>
+    <?php if ($isSemesterEnd) {?>
+        <form action="" method="post" class="flex flex-row flex-h-end" id="reset-course-form">
+            <button type="submit" name="reset" class="edit-btn btn-border-blue" id="reset-course-btn">Reset Course</button>
+        </form>
+    <?php } ?>
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
