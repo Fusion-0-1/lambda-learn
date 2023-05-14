@@ -34,7 +34,7 @@ if(isset($exists)){
 if(isset($is_deleted)) {
     if($is_deleted) { ?>
         <div id="mssg-modal" class="success-mssg text-justify">
-            <p>User deleted successfully</p>
+            <p>User removed from the course successfully</p>
         </div>
    <?php }  else { ?>
         <div id="mssg-modal" class="error-mssg text-justify">
@@ -53,24 +53,12 @@ if(isset($is_deleted)) {
 
             <div class="flex flex-column flex-gap">
                 <label>Batch year</label>
-                <select class="input" id="degreeProgramSelect" name="batch_year" required>
-                    <option value="" disabled selected hidden>Select a batch...</option>
-                    <?php
-                    foreach ($batch_years as $batch_year) {?>
-                    <option><?php echo $batch_year ?></option>
-                   <?php } ?>
-                </select>
+                <input class="input" type="text" value="<?php echo $year_of_coordinating?>" readonly>
             </div>
 
             <div class="flex flex-column flex-gap">
                 <label>Degree Program</label>
-                <select class="input" id="courseSelect" name="degree_program" onchange="filterCourses()" required>
-                    <option value="" disabled selected hidden>Select a degree program...</option>
-                    <?php
-                    foreach ($degree_programs as $degree_program) {?>
-                        <option><?php echo $degree_program ?></option>
-                    <?php } ?>
-                </select>
+                <input class="input" type="text" value="<?php echo $degree_program?>" readonly>
             </div>
 
             <div class="flex flex-column flex-gap">
@@ -156,40 +144,6 @@ if(isset($is_deleted)) {
 </div>
 
 <script>
-    var topicCounts = <?php echo json_encode($topicCounts); ?>;
-
-    function filterCourses() {
-        var selectedDegreeProgram = document.getElementById('courseSelect').value;
-        var course = document.getElementById('course');
-        course.innerHTML = '';
-        <?php foreach ($courses as $course) {?>
-        if (parseInt(topicCounts['<?php echo $course['course_code']; ?>']) > 0) {
-            var option = document.createElement('option');
-            option.text = '<?php echo $course['course_code'] . ' - ' . $course['course_name']?>';
-            if (option.text.startsWith(selectedDegreeProgram)) {
-                course.add(option);
-            }
-        }
-        <?php } ?>
-        for (var i = 0; i < course.options.length; i++) {
-            if (course.options[i].text.startsWith(selectedDegreeProgram)) {
-                course.selectedIndex = i;
-                break;
-            }
-        }
-    }
-
-    function filterDegreeProgram() {
-        var selectedCourseCode = document.getElementById('course').value;
-        var degreeProgramSelect = document.getElementById('courseSelect');
-        for (var i = 0; i < degreeProgramSelect.options.length; i++) {
-            if (degreeProgramSelect.options[i].value === selectedCourseCode.substring(0, 2)) {
-                degreeProgramSelect.options[i].selected = true;
-                break;
-            }
-        }
-    }
-
     var lecturers = <?php echo json_encode($lecturers); ?>;
     function onLecturerSelectChange() {
         var selectElement = document.querySelector('select[name="lecturer"]');

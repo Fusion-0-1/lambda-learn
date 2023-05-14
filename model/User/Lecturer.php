@@ -219,5 +219,21 @@ class Lecturer extends User
     {
         return $this->degreeProgramCode != '';
     }
+
+    /**
+     * @return string
+     */
+    public function getDegreeProgramCode(): string
+    {
+        return $this->degreeProgramCode;
+    }
+
+    /**
+     * @param string $degreeProgramCode
+     */
+    public function setDegreeProgramCode(string $degreeProgramCode): void
+    {
+        $this->degreeProgramCode = $degreeProgramCode;
+    }
     // --------------------------------------------------------------------------------
 }
