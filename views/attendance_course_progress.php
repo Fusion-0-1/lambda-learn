@@ -3,15 +3,6 @@
 <div class="main-container border">
     <div class="flex flex-row h-center">
         <h3>Student Attendance</h3>
-        <div class="selector flex flex-row v-center">
-            <p>Academic Year : </p>
-            <select>
-                <option value="1">Year 1</option>
-                <option value="2">Year 2</option>
-                <option value="3">Year 3</option>
-                <option value="4">Year 4</option>
-            </select>
-        </div>
     </div>
     <div class="main-container border overflow-x">
         <div class="chart flex h-center v-center main-container">
