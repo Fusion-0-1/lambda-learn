@@ -98,23 +98,11 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course_code'] = $body['course_code'];
         $params['submissions'] = Submission::getSubmission($params['course_code']);
+        $profile = unserialize($_SESSION['user']);
+        $params['stu_submission'] = Submission::getStuSubmission($params['course_code'],$profile->getRegNo());
         return $this->render(
             view: '/submissions',
             allowedRoles: ['Lecturer','Student'],
-            params:  $params
-        );
-    }
-
-    public function displayStuAllSubmissions(Request $request){
-        $body = $request->getBody();
-        $params['course_code']=$body['course_code'];
-        $profile = unserialize($_SESSION['user']);
-        $params['submission_stu_id']=$body['submission_stu_id'];
-        $params['stu_submission'] = Submission::getStuSubmission($body['course_code'],$profile->getIndexNo(),$body['submission_stu_id']);
-        $params['showmodel'] = true;
-        return $this->render(
-            view: '/submissions',
-            allowedRoles: ['Student'],
             params:  $params
         );
     }

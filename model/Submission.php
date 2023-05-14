@@ -75,12 +75,12 @@ class Submission
         return $assignmentSubmissions;
     }
 
-    public static function getStuSubmission($course_code,$regNo,$submissionId): array
+    public static function getStuSubmission($courseCode,$regNo): array
     {
         $assignmentSubmissions = [];
         $results = Application::$db->select(
             table: 'stucoursesubmission',
-            where: ['course_code' => $course_code,'stu_reg_no'=>$regNo,'submission_id'=>$submissionId]
+            where: ['course_code' => $courseCode,'stu_reg_no'=>$regNo]
         );
         while ($subStu = Application::$db->fetch($results)){
             $assignmentSubmissions[] = self::createStuNewSubmission(

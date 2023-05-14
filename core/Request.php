@@ -74,4 +74,8 @@ class Request
     {
         return $_FILES['file'];
     }
+
+    public function query()
+    {
+    }
 }

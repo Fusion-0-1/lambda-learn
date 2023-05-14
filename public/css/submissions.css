@@ -139,13 +139,16 @@ figure{
     resize: none;
 }
 
-.modal{
-    display: none;
-}
-
 .close{
     font-size: 40px;
     float: right;
+}
+
+.card-edit-modal {
+    width: 80%;
+    margin: 15% auto;
+    background-color: var(--white);
+    border-radius: 15px;
 }
 
 .close:hover,

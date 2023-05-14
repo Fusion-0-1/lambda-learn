@@ -27,7 +27,6 @@
     <?php } ?>
 
     <?php foreach ($announcements as $ann) { ?>
-<<<<<<< Updated upstream
         <div class="announcement-card border">
             <div class="topic-container grid v-center h-justify">
                 <h4 class="heading-content text-bold text-justify"><?php echo $ann->getHeading()?></h4>
@@ -36,7 +35,6 @@
                         <div class="edit-time" id="timeremaning"><b>30</b><span> mins left</span></div>
                         <a href="" class="deletebtn link" id="deletebtn"><img src="./images/announcement/Delete.png" alt="Delete image"></a>
                         <button class="editbtn link" id="editbtn"><img src="./images/announcement/Edit.png" alt="Edit image" onclick="announcementupdate(' <?php echo $ann->getHeading()."','".$ann->getContent()."','".$ann->getAnnouncementId()."','".$ann->getPublishDate()."'";?>)"></button>
-=======
         <?php
         // Calculate the remaining time in minutes
         $publishTime = strtotime($ann->getPublishDate());
@@ -75,7 +73,6 @@
                                 echo $sriLankanDateAndTime;
                             ?>
                         </div>
->>>>>>> Stashed changes
                     </div>
                 <?php } ?>
             </div>
@@ -172,8 +169,6 @@
         document.getElementById('announcement_id').value = edit_btn_id;
     }
     modal_cancel(editmodal);
-<<<<<<< Updated upstream
-=======
 
     function updateRemainingTime() {
         var elements = document.getElementsByClassName("edit-time");
@@ -196,6 +191,5 @@
         deletemodal.style.display='block';
         document.getElementById('announcement_id_delete').value = announcement_id;
     }
-    modal_cancel(deletemodal)
->>>>>>> Stashed changes
+
 </script>
