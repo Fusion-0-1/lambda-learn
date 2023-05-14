@@ -116,7 +116,7 @@
                     <?php foreach ($courses as $course) { ?>
                         <tr>
                             <td>
-                                <?php if(\app\model\Course::getTopicCount($course['course_code'])==0){?>
+                                <?php if(\app\model\Course::getTopicCount($course['course_code'])==0 and \app\model\Course::getStuAssignedCount($course['course_code'])==0){?>
                                 <button class='error-btn error-btn-icon'
                                         onclick='delete_course(this, "<?php echo $course['course_code']?>")'>
                                     <i class='fa fa-trash' aria-hidden='true'></i>
