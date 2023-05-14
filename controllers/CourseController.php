@@ -77,6 +77,12 @@ class CourseController extends Controller
         $body = $request->getBody();
         $user = unserialize($_SESSION['user']);
         $regNo = $user->getregNo();
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
             $subTopicId = $body['course_subtopic'];
@@ -115,6 +121,41 @@ class CourseController extends Controller
                 params:$params
             );
         }
+    }
+
+    public function resetCoursePage(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        Student::removeStudentsFromCourse($courseCode);
+        Course::removeCourseAnnouncements($courseCode);
+        CourseSubTopic::removeSlidesAndRecordings($courseCode);
+        Submission::deleteAllSubmissions($courseCode);
+        Course::removeCourseSubToicsAndTopics($courseCode);
+
+        $params['mssg_reset'] = "Course reset successfully";
+
+        $params['course'] = Course::getCourse($courseCode);
+        $topics = CourseTopic::getCourseTopics($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
+        if(empty($topics) and $_SESSION['user-role'] == 'Lecturer'){
+            return $this->render(
+                view: '/course/course_initialization',
+                allowedRoles: ['Lecturer'],
+                params: $params
+            );
+        }
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        return $this->render(
+            view: '/course/course_page',
+            allowedRoles: ['Lecturer', 'Student'],
+            params: $params
+        );
     }
 
     /**
@@ -594,6 +635,11 @@ class CourseController extends Controller
             $topicCount++;
         }
 
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
         return $this->render(
@@ -620,6 +666,12 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+
+        $today = new DateTime();
+        $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
+            and $today < new DateTime(Application::$admin_config->getSemStartDate()));
+        $params['isSemesterEnd'] = $isSemesterEnd;
+
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
