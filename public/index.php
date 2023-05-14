@@ -45,7 +45,7 @@ $app->router->get('/calender', [KanbanboardController::class, 'displayCalender']
 
 $app->router->get('/course_overview', [CourseController::class, 'displayCourses']);
 $app->router->get('/course_page', [CourseController::class, 'displayCourse']);
-
+$app->router->post('/reset_course', [CourseController::class, 'resetCoursePage']);
 
 $app->router->get('/kanbanboard', [KanbanboardController::class, 'displayKanbanboard']);
 $app->router->post('/insert_task', [KanbanboardController::class, 'insertKanbanTasks']);
