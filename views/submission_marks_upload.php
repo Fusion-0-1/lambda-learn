@@ -34,34 +34,6 @@
         <div class="chart flex h-center v-center main-container">
             <canvas id="course_progress_chart"></canvas>
         </div>
-
-        <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
-            <div class="main-container border">
-                <div>
-                    <table class="download-table">
-                        <tr>
-                            <th>Year</th>
-                            <th>Download</th>
-                        </tr>
-                        <?php
-                        $path = 'User Uploads/Exam marks/' . $course->getCourseCode();
-                        $files = scandir($path);
-                        foreach ($files as $file) {
-                            if ($file != '.' && $file != '..' && is_file($path . '/' . $file)) {
-                                echo "<tr>";
-                                echo "<td>" . $file . "</td>";
-                                echo "<td><a href='" . $path . '/' . $file . "' target='blank'
-                                    <i class=\"fa fa-download download-icon\" aria-hidden=\"true\"></i>
-                                    </a>
-                                    </td>";
-                                echo "</tr>";
-                            }
-                        }
-                        ?>
-                    </table>
-                </div>
-            </div>
-        <?php }?>
     </div>
 
 
