@@ -16,16 +16,18 @@ class CourseSubTopic {
     private int $isCovered;
     private int $stuIsCompleted;
     private string $location;
+    private array $subTopicRecs = [];
 
     public function __construct() {}
 
-    public static function createNewSubTopic($subTopicId, $subTopicName, $isBeingTracked, $isCovered, $stuIsCompleted=0, $location='') {
+    public static function createNewSubTopic($subTopicId, $subTopicName='', $isBeingTracked=0, $isCovered=0, $stuIsCompleted=0, $subTopicRecs = [], $location=''): CourseSubTopic {
         $subTopic = new CourseSubTopic();
         $subTopic->subTopicId = $subTopicId;
         $subTopic->subTopicName = $subTopicName;
         $subTopic->isBeingTracked = $isBeingTracked;
         $subTopic->isCovered = $isCovered;
         $subTopic->stuIsCompleted = $stuIsCompleted;
+        $subTopic->subTopicRecs = $subTopicRecs;
         $subTopic->location = $location;
 
         return $subTopic;
@@ -37,13 +39,13 @@ class CourseSubTopic {
      * @param $courseCode
      * @return array
      */
-    public static function getCourseSubTopics($topicId, $courseCode): array {
+    public static function getCourseSubTopics($topicId, $courseCode): array
+    {
         $subTopics = [];
-
         $results = Application::$db->select(
             table: 'CourseSubTopic',
             columns: ['sub_topic_id', 'sub_topic', 'is_being_tracked', 'is_covered'],
-            where: ['course_code' => $courseCode, 'topic_id' => $topicId],
+            where: ['course_code' => $courseCode, 'topic_id' => $topicId]
         );
 
         // Fetch stuCourseSubTopic to an array
@@ -65,24 +67,26 @@ class CourseSubTopic {
             while ($subTopic = Application::$db->fetch($results)) {
                 // Check if subTopicId exists in completedSubTopicIds
                 $stuIsCompleted = in_array($subTopic['sub_topic_id'], $completedSubTopicIds) ? 1 : 0;
-
+                $subTopicRecs = CourseSubTopic::getCourseSubTopicRecs($subTopic['sub_topic_id'], $topicId, $courseCode);
                 $subTopics[] = self::createNewSubTopic(
-                    $subTopic['sub_topic_id'],
-                    $subTopic['sub_topic'],
-                    $subTopic['is_being_tracked'],
-                    $subTopic['is_covered'],
-                    $stuIsCompleted
+                    subTopicId: $subTopic['sub_topic_id'],
+                    subTopicName: $subTopic['sub_topic'],
+                    isBeingTracked: $subTopic['is_being_tracked'],
+                    isCovered: $subTopic['is_covered'],
+                    stuIsCompleted: $stuIsCompleted,
+                    subTopicRecs: $subTopicRecs
                 );
             }
 
         } else {
             while ($subTopic = Application::$db->fetch($results)){
-
+                $subTopicRecs = CourseSubTopic::getCourseSubTopicRecs($subTopic['sub_topic_id'], $topicId, $courseCode);
                 $subTopics[] = self::createNewSubTopic(
-                    $subTopic['sub_topic_id'],
-                    $subTopic['sub_topic'],
-                    $subTopic['is_being_tracked'],
-                    $subTopic['is_covered'],
+                    subTopicId: $subTopic['sub_topic_id'],
+                    subTopicName: $subTopic['sub_topic'],
+                    isBeingTracked: $subTopic['is_being_tracked'],
+                    isCovered: $subTopic['is_covered'],
+                    subTopicRecs: $subTopicRecs
                 );
             }
         }
@@ -201,6 +205,23 @@ class CourseSubTopic {
             table: 'coursesubtopicrec',
             primaryKey: ['course_code'=>$courseCode,'topic_id'=>$courseTopic,'sub_topic_id'=>$courseSubTopic,'recording'=>$location]
         );
+    }
+
+    public static function getCourseSubTopicRecs($subTopicId, $topicId, $courseCode): array
+    {
+        $recordings = [];
+        $results = Application::$db->select(
+            table: 'coursesubtopicrec',
+            columns: ['sub_topic_id', 'recording'],
+            where: ['sub_topic_id'=>$subTopicId,'topic_id'=>$topicId,'course_code'=>$courseCode]
+        );
+       while ($recording = Application::$db->fetch($results)){
+           $recordings[] = self::createNewSubTopic(
+               subTopicId: $recording['sub_topic_id'],
+               location: $recording['recording']
+           );
+       }
+         return $recordings;
     }
 
     public static function insertLecturerRecording($courseCode, $topicId, $subtopicId, $location)
@@ -324,4 +345,19 @@ class CourseSubTopic {
         return $this->location;
     }
 
+    /**
+     * @return array
+     */
+    public function getSubTopicRecs(): array
+    {
+        return $this->subTopicRecs;
+    }
+
+    /**
+     * @param array $subTopicRecs
+     */
+    public function setSubTopicRecs(array $subTopicRecs): void
+    {
+        $this->subTopicRecs = $subTopicRecs;
+    }
 }
