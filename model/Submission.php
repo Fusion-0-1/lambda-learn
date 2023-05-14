@@ -69,7 +69,8 @@ class Submission
                     $files[] = $file;
                 }
             }
-        }return $files;
+        }
+        return $files;
     }
 
     public function submissionInsert()
@@ -98,7 +99,7 @@ class Submission
             limit: 1
         );
         $lastInsertId = Application::$db->fetch($result);
-        return $lastInsertId['submission_id'];
+        return $lastInsertId['submission_id'] ?? 0;
     }
 
     public static function updateVisibility($courseCode,$submissionId,$visibility)
