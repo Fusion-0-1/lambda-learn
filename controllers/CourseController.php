@@ -273,7 +273,7 @@ class CourseController extends Controller
         $file = new CSVFile($request->getFile());
         $marks_dir = 'User Uploads/Exam marks/' . $body['course_code'];
         if (!file_exists($marks_dir)) {
-            mkdir($marks_dir);
+            mkdir($marks_dir, recursive: true);
         }
         $categorizedData = $file->readCSV(
             uploadExamMarks: true
