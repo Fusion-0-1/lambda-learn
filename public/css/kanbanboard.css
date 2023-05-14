@@ -74,6 +74,11 @@
     color: #0B2273;
 }
 
+.card-options button:disabled {
+    color: #c4c4c4;
+    background-color: #ffffff;
+}
+
 .card-border-radius {
     border-radius: 15px;
 }

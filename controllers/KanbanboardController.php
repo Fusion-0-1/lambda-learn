@@ -20,6 +20,7 @@ class KanbanboardController extends Controller
         $params['toDo'] = KanbanTask::getToDoTasks($user);
         $params['inProgress'] = KanbanTask::getInProgressTasks($user);
         $params['done'] = KanbanTask::getDoneTasks($user);
+        $params['submissions'] = Submission::getUserSubmissions($user);
         return $this->render(
             view: '/kanbanboard',
             allowedRoles: ['Lecturer', 'Student'],

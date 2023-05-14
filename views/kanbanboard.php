@@ -1,3 +1,4 @@
+<?php use app\model\Submission;?>
 <link rel="stylesheet" href="css/kanbanboard.css">
 <script src="js/kanbanboard.js" defer></script>
 
@@ -90,6 +91,34 @@
             </div>
 
             <div class="droppable" data-state="1">
+                <?php
+                $profile = unserialize($_SESSION['user']);
+                foreach ($submissions as $submission) {
+                    if (!Submission::stuSubExists($profile->getRegNo(), $submission->getCourseCode(), $submission->getSubmissionId())) { ?>
+                    <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="false" data-id="<?php echo $submission->getSubmissionId()?>">
+                        <div class="card-header card-border-radius text-bold"> <?php echo $submission->getCourseCode().' : '.$submission->getTopic()?></div>
+                        <div class="card-body border card-border-radius">
+                            <p> <?php echo $submission->getDescription()?> </p>
+                        </div>
+                        <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
+                            <div class="card-priority" id="card-priority">High</div>
+                            <div class="card-deadline"><?php echo $submission->getDueDate()?></div>
+                            <div class="card-options flex flex-row h-justify">
+                                <div>
+                                    <button type="submit" name="card-update" class="card-button card-update" disabled>
+                                        <span class="fa fa-pen"></span>
+                                    </button>
+                                </div>
+                                <div>
+                                    <button type="submit" name="card-delete" class="card-button" disabled>
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php }
+                } ?>
                 <?php foreach ($toDo as $toDoTask) {?>
                     <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="true" data-id="<?php echo $toDoTask->getTaskId()?>">
                         <div class="card-header card-border-radius text-bold"><?php echo $toDoTask->getTitle()?></div>
@@ -164,6 +193,32 @@
             </div>
 
             <div class="droppable" data-state="3">
+                <?php foreach ($submissions as $submission) {
+                    if (Submission::stuSubExists($profile->getRegNo(), $submission->getCourseCode(), $submission->getSubmissionId())) { ?>
+                        <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="false" data-id="<?php echo $submission->getSubmissionId()?>">
+                            <div class="card-header card-border-radius text-bold"> <?php echo $submission->getCourseCode().' : '.$submission->getTopic()?></div>
+                            <div class="card-body border card-border-radius">
+                                <p> <?php echo $submission->getDescription()?> </p>
+                            </div>
+                            <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
+                                <div class="card-priority" id="card-priority">High</div>
+                                <div class="card-deadline-done"><?php echo $submission->getDueDate()?></div>
+                                <div class="card-options flex flex-row h-justify">
+                                    <div>
+                                        <button type="submit" name="card-update" class="card-button card-update" disabled>
+                                            <span class="fa fa-pen"></span>
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <button type="submit" name="card-delete" class="card-button" disabled>
+                                            <span class="fa fa-trash"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php }
+                } ?>
                 <?php foreach ($done as $doneTask) {?>
                     <div class="draggable flex flex-column align-stretch h-center border card-border-radius" draggable="true" data-id="<?php echo $doneTask->getTaskId()?>">
                         <div class="card-header card-border-radius text-bold"><?php echo $doneTask->getTitle()?></div>
@@ -172,7 +227,7 @@
                         </div>
                         <div class="card-footer border card-border-radius flex flex-row h-justify v-center">
                             <div class="card-priority"><?php echo $doneTask->getPriority()?></div>
-                            <div class="card-deadline"><?php echo $doneTask->getDueDate()?></div>
+                            <div class="card-deadline-done"><?php echo $doneTask->getDueDate()?></div>
                             <div class="card-options flex flex-row h-justify">
                                 <div>
                                     <button type="submit" name="card-update" class="card-button card-update"
