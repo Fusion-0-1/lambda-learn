@@ -58,7 +58,9 @@
                     <label for="visibility2"> Visibility </label><br>
                     <input type="hidden" name="visibility" value="0">
                     <input type="checkbox" onchange="this.form.submit()" id="visibility2" name="visibility" value="1" <?php echo $sub->getVisibility() ? 'checked' : ''; ?>>
-                    <button class="marks-btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
+                    <a href="/submission_marks_upload?course_code=<?php echo $course_code . '&submission_id=' . $sub->getSubmissionId()?>">
+                        <button type="button" class="marks-btn dark-btn" value="<?php echo $sub->getSubmissionId()?>" onclick="location.href='marks_upload'" name="assignment_mark_upload">Upload Marks</button>
+                    </a>
                     <button class="marks-btn dark-btn">Download All Submissions</button>
                     <?php
                         $attachmentPath = $sub->getLocation();
