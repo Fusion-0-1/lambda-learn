@@ -354,7 +354,7 @@ class CourseController extends Controller
 
         if((str_starts_with($courseCode, $params['degree_program'])) and
             (str_starts_with(explode(" ", $courseCode)[1], (string)$year))){
-            $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional);
+            $params['course_insert'] = Course::insertCourse($courseCode, $courseName, $isOptional, $user);
         } else {
             $params['invalid_course'] = true;
         }

@@ -179,7 +179,7 @@ class Course
      * @param int $isOptional
      * @return bool
      */
-    public static function insertCourse(string $courseCode, string $courseName, int $isOptional) : bool
+    public static function insertCourse(string $courseCode, string $courseName, int $isOptional, string $cordRegNo) : bool
     {
         if(!self::checkExists($courseCode)) {
             Application::$db->insert(
@@ -188,6 +188,7 @@ class Course
                     'course_code' => $courseCode,
                     'course_name' => $courseName,
                     'optional_flag' => $isOptional,
+                    'cord_reg_no' => $cordRegNo,
                     'date_created' => date('Y-m-d')
                 ]
             );
