@@ -127,6 +127,27 @@
 
     </div>
 
+    <div class="modal" id="upload_recording_modal" hidden>
+        <div class="card-edit-modal">
+            <form method="post" action="lecturer_upload_recording" enctype="multipart/form-data">
+                <div class="flex uploads-details">
+                    <input id="upload_attachment_recording" type="file" name="recattachment[]" accept="video/mp4,video/mpeg,video/ogg,video/webm" multiple onchange="previewAttachmentRecording()" hidden >
+                    <label for="upload_attachment_recording" class="dark-btn flex-end h-center attach-btn">Add Attachments</label>
+                    <div id="num-of-recording">No Files Chosen</div>
+                    <div id="display-recording" class="flex"></div>
+                </div>
+
+                <div class="modal-btns flex h-center">
+                    <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
+                    <button type="button" id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
+                </div>
+                <input id="rec_course_code" name="rec_course_code" hidden>
+                <input id="rec_course_subtopic" name="rec_course_subtopic" hidden>
+                <input id="rec_course_topic" name="rec_course_topic" hidden>
+            </form>
+        </div>
+    </div>
+
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify">
@@ -180,8 +201,9 @@
                                         </form>
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
-                                        <!--TODO: Retrieve recordings and lecture notes from the database-->
-                                        <p><span class="icons fas fa-atom"></span> Sample Recording 1 </p>
+                                        <?php foreach ($courseSubTopic->getSubTopicRecs() as $courseSubTopicRecs) {?>
+                                            <p><span class="icons far fa-file-video"></span> <?php echo $courseSubTopicRecs->getLocation() ?> </p>
+                                        <?php } ?>
                                         <div class="flex h-justify">
                                             <button class="lecturer-uploads"><img src="/images/course_page/Eye.png"></button>
                                             <button class="lecturer-uploads" onclick="uploadrecording(<?php echo $courseTopic->getTopicId().",".$courseSubTopic->getSubTopicId().",'".$course->getCourseCode()."'";?>)"><img src="/images/course_page/Video Record.png"></button>
@@ -197,26 +219,6 @@
         </div>
     </div>
 
-    <div class="modal" id="upload_recording_modal" hidden>
-        <div class="card-edit-modal">
-            <form method="post" action="lecturer_upload_recording" enctype="multipart/form-data">
-                <div class="flex uploads-details">
-                    <input id="upload_attachment_recording" type="file" name="recattachment[]" accept="video/mp4,video/mpeg,video/ogg,video/webm" multiple onchange="previewAttachmentRecording()" hidden >
-                    <label for="upload_attachment_recording" class="dark-btn flex-end h-center attach-btn">Add Attachments</label>
-                    <div id="num-of-recording">No Files Chosen</div>
-                    <div id="display-recording" class="flex"></div>
-                </div>
-
-                <div class="modal-btns flex h-center">
-                    <button type="submit" id="publishbtn" class="btn confirm-btn h-center v-center modal-publish-btn">Publish</button>
-                    <button type="button" id="cancelbtn" class="cancel-btn h-center v-center">Cancel</button>
-                </div>
-                <input id="rec_course_code" name="rec_course_code" hidden>
-                <input id="rec_course_subtopic" name="rec_course_subtopic" hidden>
-                <input id="rec_course_topic" name="rec_course_topic" hidden>
-            </form>
-        </div>
-    </div>
 </div>
     <script>
         var modal_submission = document.getElementById("modal_submission");
@@ -278,8 +280,8 @@
         }
 
         function uploadrecording(topicId,subTopicId,courseCode){
-            const editmodal = document.getElementById('upload_recording_modal')
-            editmodal.style.display='block';
+            const uploadrecmodal = document.getElementById('upload_recording_modal');
+            uploadrecmodal.style.display='block';
             document.getElementById('rec_course_topic').value = topicId;
             document.getElementById('rec_course_subtopic').value = subTopicId;
             document.getElementById('rec_course_code').value = courseCode;
