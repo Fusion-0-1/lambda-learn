@@ -191,6 +191,27 @@ class CourseSubTopic {
         return true;
     }
 
+    /**
+     * @description Delete student course sub topics from the database
+     * @return void
+     */
+    public static function truncateStuCourseSubTopics()
+    {
+        Application::$db->truncateTable('StuCourseSubTopic');
+    }
+
+    public static function removeSlidesAndRecordings($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopicRec',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseSubTopicSlide',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**

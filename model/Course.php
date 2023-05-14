@@ -17,7 +17,6 @@ class Course
     private array $courseTopics = [];
 
 
-
     // -------------------------------Constructors---------------------------------------
     private function __construct() {}
 
@@ -180,7 +179,7 @@ class Course
      * @param int $isOptional
      * @return bool
      */
-    public static function insertCourse(string $courseCode, string $courseName, int $isOptional) : bool
+    public static function insertCourse(string $courseCode, string $courseName, int $isOptional, string $cordRegNo) : bool
     {
         if(!self::checkExists($courseCode)) {
             Application::$db->insert(
@@ -189,6 +188,7 @@ class Course
                     'course_code' => $courseCode,
                     'course_name' => $courseName,
                     'optional_flag' => $isOptional,
+                    'cord_reg_no' => $cordRegNo,
                     'date_created' => date('Y-m-d')
                 ]
             );
@@ -294,6 +294,58 @@ class Course
             }
         }
         return true;
+    }
+
+    public static function unwrapExamMarks(array $line): array
+    {
+        return[
+            'regNo' => trim($line[0]),
+            'marks' => trim($line[1])
+        ];
+    }
+
+    public static function updateExamMarks($regNo, $courseCode, $marks, $path): bool
+    {
+        Application::$db->update(
+            table: 'StuCourse',
+            columns: ['exam_marks' => $marks],
+            where: ['stu_reg_no' => $regNo, 'course_code' => $courseCode]
+        );
+
+        Application::$db->update(
+            table: 'Course',
+            columns: ['exam_marks_report_path' => $path],
+            where: ['course_code' => $courseCode]
+        );
+        return true;
+    }
+
+    /*
+     * @description delete all the stu courses
+     */
+    public static function truncateStuCourses()
+    {
+        Application::$db->truncateTable('StuCourse');
+    }
+
+    public static function removeCourseAnnouncements($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseAnnouncement',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
+    public static function removeCourseSubToicsAndTopics($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopic',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseTopic',
+            where: ['course_code'=>$courseCode]
+        );
     }
 
     // ---------------------------Getters and Setters-----------------------------------

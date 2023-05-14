@@ -142,7 +142,6 @@ class ProfileController extends Controller
         $categorizedData = $file->readCSV(
             constructor: $readCSVParams,
             readUserData: true,
-            location: 'User Uploads/Profiles/' . $file->getFilename() . "_" . date('YmdHis')
         );
         if ($categorizedData != false) {
             if (count($categorizedData['update']) > 0 or count($categorizedData['invalid']) > 0) {
