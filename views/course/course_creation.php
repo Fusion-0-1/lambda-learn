@@ -33,7 +33,13 @@
         <p>Failed to delete course.</p>
     </div>
 <?php }
-    }?>
+    } elseif(isset($invalid_course)) {
+    if($invalid_course){?>
+        <div id="mssg-modal" class="error-mssg text-justify">
+            <p>You are not authorized to create the course</p>
+        </div>
+    <?php }
+}?>
 
 <div class="main-container outer border flex flex-column v-center h-center">
     <div class="main-container inner border flex flex-column h-center">
