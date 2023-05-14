@@ -59,6 +59,7 @@ class CourseController extends Controller
             );
         } else {
             $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+            $params['courseSubmissions'] = Submission::getSubmission($courseCode);
             return $this->render(
                 view: '/course/course_page',
                 allowedRoles: ['Lecturer', 'Student'],
@@ -83,6 +84,7 @@ class CourseController extends Controller
             and $today < new DateTime(Application::$admin_config->getSemStartDate()));
         $params['isSemesterEnd'] = $isSemesterEnd;
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
+        $params['courseSubmissions'] = Submission::getSubmission($body['course_code']);
 
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
@@ -152,6 +154,7 @@ class CourseController extends Controller
             );
         }
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer', 'Student'],
@@ -596,6 +599,7 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course'] = Course::getCourse($body['course_code']);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
+        $params['courseSubmissions'] = Submission::getSubmission($body['course_code']);
 
         return $this->render(
             view: '/course/course_edit',
@@ -642,6 +646,7 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
@@ -666,6 +671,7 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
 
         $today = new DateTime();
         $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
