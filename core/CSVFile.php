@@ -70,7 +70,7 @@ class CSVFile
     // ----------------------------Custom Methods--------------------------------------
     /**
      * @description Read the CSV file
-     * three functionalities wrapped into this function.
+     * five functionalities wrapped into this function.
      *  1. Read user account creation csv upload
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
@@ -89,6 +89,10 @@ class CSVFile
      *  4: Upload Exam Marks
      *       @param bool $uploadExamMarks true (this will enable upload exam marks function)
      *       Reads the CSV file containing exam marks.
+     *       Returns an array of valid registration numbers and their corresponding exam marks.
+     *  5. Upload Submission marks
+     *       @param bool $uploadSubmissionMarks true (this will enable upload submission marks function)
+     *       Reads the CSV file containing submission marks.
      *       Returns an array of valid registration numbers and their corresponding exam marks.
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location

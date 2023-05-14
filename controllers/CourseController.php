@@ -280,7 +280,8 @@ class CourseController extends Controller
             }
         }
 
-        Submission::updateSubmission($body['course_code'],$body['submission_id_edit'],$body['edit_heading'],$body['edit_mark'],$body['edit_duetime'],$body['edit_content']);
+        Submission::updateSubmission($body['course_code'],$body['submission_id_edit'],$body['edit_heading'],
+            $body['edit_mark'],$body['edit_duetime'],$body['edit_content']);
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
@@ -348,7 +349,8 @@ class CourseController extends Controller
         }
         if(!$params['invalid_user']){
             for($i=0; $i<sizeof($categorizedData['reg_no']); $i++) {
-                Course::updateSubmissionMarks($categorizedData['reg_no'][$i], $courseCode, $submissionId, $categorizedData['submission_mark'][$i]);
+                Course::updateSubmissionMarks($categorizedData['reg_no'][$i], $courseCode, $submissionId,
+                    $categorizedData['submission_mark'][$i]);
             }
 
             $file_path = $marks_dir . '/' . date('Y-m-d') . '.csv';
