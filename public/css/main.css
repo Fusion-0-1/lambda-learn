@@ -260,6 +260,10 @@ a:active {
     align-items: flex-end;
 }
 
+.flex-h-end {
+    justify-content: flex-end;
+}
+
 .v-center {
     align-items: center;
 }

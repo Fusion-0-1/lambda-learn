@@ -328,6 +328,26 @@ class Course
         Application::$db->truncateTable('StuCourse');
     }
 
+    public static function removeCourseAnnouncements($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseAnnouncement',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
+    public static function removeCourseSubToicsAndTopics($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopic',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseTopic',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**

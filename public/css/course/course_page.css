@@ -163,6 +163,15 @@
     margin: 0;
 }
 
+#reset-course-form {
+    width: 100%;
+}
+
+#reset-course-btn {
+    padding: 8px 30px;
+    margin-bottom: 15px;
+}
+
 @media (max-width: 425px) {
     .progress-bar-outer {
         margin: 10px 0 20px 0;
