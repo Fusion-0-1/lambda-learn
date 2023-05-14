@@ -73,6 +73,9 @@ $app->router->post('/submission_visibility', [CourseController::class, 'changeSu
 $app->router->get('/marks_upload', [CourseController::class, 'displayCourseMarkUpload']);
 $app->router->post('/marks_upload', [CourseController::class, 'updateCourseMarks']);
 
+$app->router->get('/submission_marks_upload', [CourseController::class, 'displaySubmissionMarksUpload']);
+$app->router->post('/submission_marks_upload', [CourseController::class, 'updateSubmissionMarksUpload']);
+
 $app->router->get('/leaderboard', [LeaderboardController::class, 'displayLeaderboard']);
 
 $app->router->get('/course_creation', [CourseController::class, 'displayCourseCreation']);
