@@ -34,6 +34,11 @@ class Performance
         return $performance;
     }
 
+    /**
+     * @description Get performance data from database
+     * @param $limit
+     * @return array
+     */
     public static function getPerformance($limit = 100): array
     {
         $performance = [];
@@ -57,6 +62,11 @@ class Performance
         return $performance;
     }
 
+    /**
+     * @description Split performance data into arrays
+     * @param $performanceData
+     * @return array|array[]
+     */
     public static function splitData($performanceData){
         $performance = [        'recordDate' => [],
             'cpuUsage' => [],

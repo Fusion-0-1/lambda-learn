@@ -3,15 +3,6 @@
 <div class="main-container border">
     <div class="flex flex-row h-center">
         <h3>Student Attendance</h3>
-        <div class="selector flex flex-row v-center">
-            <p>Academic Year : </p>
-            <select>
-                <option value="1">Year 1</option>
-                <option value="2">Year 2</option>
-                <option value="3">Year 3</option>
-                <option value="4">Year 4</option>
-            </select>
-        </div>
     </div>
     <div class="main-container border overflow-x">
         <div class="chart flex h-center v-center main-container">
@@ -127,22 +118,17 @@
     });
 
     // ----------------- Attendance Chart -----------------
+    let courseCodes = JSON.parse('<?php echo json_encode($courseCodes);?>');
+    let progress = JSON.parse('<?php echo json_encode($progress);?>');
+
     var course_progress_chart = document.getElementById("course_progress_chart").getContext("2d");
     var myChart = new Chart(course_progress_chart, {
         type: 'bar',
         data: {
-            labels: ["SCS 2201", "SCS 2202", "SCS 2203", "SCS 2204", "SCS 2205", "SCS 2206", "SCS 2207"],
+            labels: courseCodes,
             datasets: [{
                 label: 'Course Progress Percentage',
-                data: [
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100),
-                    Math.floor(Math.random() * 100)
-                ],
+                data: progress,
                 backgroundColor: [
                     createLinearGradient(ctx, [
                         {offset: 0, color: '#2AB514'},

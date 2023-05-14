@@ -1,3 +1,4 @@
+<?php use \app\model\User\Lecturer; ?>
 <link rel="stylesheet" href="css/course/course_page.css">
 <link rel="stylesheet" href="css/submission_popup.css">
 
@@ -34,8 +35,23 @@
             <p>Failed to add topics and subtopics</p>
         </div>
     <?php }
-}?>
+} ?>
 
+<div class="modal hide" id="announcement-modal">
+    <div class="announcement-view border border-radius">
+        <input type="hidden" id="c-ann-id">
+        <div class="header-container grid v-center h-justify">
+            <div class="header-content text-bold text-justify" id="c-ann-heading"> </div>
+        </div>
+        <div class="announcement-view-inside border">
+            <div class="lec-datetime grid h-justify v-center">
+                <div id="c-ann-lec"> </div>
+                <div class="text-right" id="c-ann-date"></div>
+            </div>
+            <p class="text-justify" id="c-ann-content"></p>
+        </div>
+    </div>
+</div>
 
 <div class="modal hide" id="modal_submission">
     <div class="popup-card modal-content">
@@ -95,6 +111,12 @@
 <div class="border main-container v-center flex flex-column flex-gap responsive-container">
     <h3 class="text-bold"><?php echo $course->getCourseName()?></h3>
     <h3><?php echo $course->getCourseCode()?></h3>
+    <?php if ($isSemesterEnd and $_SESSION['user-role'] == 'Lecturer') {?>
+        <form action="<?php echo "/reset_course?course_code=" . $course->getCourseCode()?>" method="post" class="flex flex-row flex-h-end" id="reset-course-form">
+            <input type="hidden" value="<?php echo $course->getCourseCode() ?>" name="course_code">
+            <button type="submit" name="reset" class="edit-btn btn-border-blue" id="reset-course-btn">Reset Course</button>
+        </form>
+    <?php } ?>
 
     <div class="outer-secondary-container">
         <div class="secondary-container border border-radius flex flex-column">
@@ -139,18 +161,24 @@
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Announcements </h5>
-                <!-- TODO: Add course code here-->
                 <a href="/course_announcement?course_code=<?php echo $course->getCourseCode()?> " class="hyperlink"> View all </a>
             </div>
-            <button class="inner-container border-radius text-left"> DSA - Tutorial Session </button>
-            <button class="inner-container border-radius text-left"> SCS2201_Rescheduling the lecture on 15/09/2022 </button>
-            <button class="inner-container border-radius text-left"> Assignment 1 Details - String Matching </button>
+            <?php $count = 1;
+                foreach ($courseAnnouncements as $c_ann) {
+                    $count++; ?>
+                    <button class="inner-container border-radius text-left" id="latest-course-announcement"
+                            onclick="announcementview(<?php echo $c_ann->getAnnouncementId().", '".$c_ann->getHeading()."','"
+                                .Lecturer::getLecturerName($c_ann->getLecRegNo())."','".$c_ann->getPublishDate()."','"
+                                .$c_ann->getContent()."'";?>)">
+                        <?php echo $c_ann->getHeading()?> </button>
+                    <?php if ($count>3)
+                        break;
+                }?>
         </div>
 
         <div class="inner-secondary-container border border-radius flex flex-column">
             <div class="flex flex-row h-justify v-center">
                 <h5> Submissions </h5>
-                <!-- TODO: Add course code here-->
                 <a href="/submissions?course_code=<?php echo $course->getCourseCode()?>" class="hyperlink"> View all </a>
             </div>
             <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
@@ -241,5 +269,21 @@
                 modal_submission.style.display = "none";
             }
         }
+
+        const announcementmodal = document.getElementById('announcement-modal');
+        function announcementview(c_ann_id, c_ann_heading, c_ann_lec, c_ann_date, c_ann_content) {
+            announcementmodal.style.display = 'block';
+            document.getElementById('c-ann-id').value = c_ann_id;
+            document.getElementById('c-ann-heading').innerText = c_ann_heading;
+            document.getElementById('c-ann-lec').innerText = c_ann_lec;
+            document.getElementById('c-ann-date').innerText = c_ann_date;
+            document.getElementById('c-ann-content').innerText = c_ann_content;
+        }
+
+        window.addEventListener("click", function(event) {
+            if (event.target === announcementmodal) {
+                announcementmodal.style.display = 'none';
+            }
+        });
     </script>
 </div>

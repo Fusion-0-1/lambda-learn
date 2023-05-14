@@ -45,3 +45,21 @@ prevNextIcon.forEach(icon =>{
     });
 })
 
+// --------------------------- Due Date Styling -----------------------------------
+
+const taskduedate = document.querySelectorAll('.task-date');
+
+console.log(taskduedate);
+for (let i = 0; i < taskduedate.length; i++) {
+    const taskdate = taskduedate[i].innerText;
+    console.log(taskdate);
+    const duedate = new Date(Date.parse(taskdate.replace(/-/g, "/").split(" ")[0]));
+    console.log(duedate);
+    const currentDate = new Date();
+
+    if (currentDate > duedate) {
+        taskduedate[i].style.color = '#ff0000';
+        taskduedate[i].style.fontWeight = 'bold';
+    }
+}
+

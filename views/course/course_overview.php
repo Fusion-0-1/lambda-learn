@@ -6,7 +6,11 @@
     <div class="card">
 
         <?php foreach ($courses as $course) { ?>
-            <a <?php if ($_SESSION['user-role'] != 'Coordinator') { echo 'href="/course_page?course_code='.$course->getCourseCode().'"';} ?> class="link">
+            <?php if ($_SESSION['user-role'] != 'Coordinator') { ?>
+                <a href="<?php echo "/course_page?course_code=" . $course->getCourseCode() ?>" class="link">
+            <?php } else { ?>
+                <a href="<?php echo "/marks_upload?course_code=" . $course->getCourseCode() ?>" class="link">
+            <?php }?>
                 <div class="cards">
                     <div class="cards-inside">
                         <div class="course-name"><?php echo $course->getCourseName()?></div>
@@ -27,10 +31,14 @@
                     <div class="grid-content">
                         <div class="course-code"><?php echo $course->getCourseCode()?></div>
                         <div class="lecturer-name">
-                            <?php foreach ($course->getLecsRegNo() as $lecRegNo) {
-                                echo Lecturer::getLecturerName($lecRegNo); ?>
-                            <br>
-                            <?php }?>
+                            <?php
+                            $lecRegNos = $course->getLecsRegNo();
+                            $names = "";
+                            for($i = 0; $i < min(2, sizeof($lecRegNos)); $i++) {
+                                $names .= Lecturer::getLecturerName($lecRegNos[$i]) . ", ";
+                            }
+                            echo substr($names, 0, -2);
+                            ?>
                         </div>
 
                         <?php if ($_SESSION['user-role'] == 'Student') {
