@@ -12,6 +12,10 @@ if(isset($msg)){
         <div id="mssg-modal" class="<?php if ($is_settings_setup) echo "success-mssg"; else echo "error-mssg";?> text-justify">
             <p><?php echo $msg ?></p>
         </div>
+    <?php } elseif(isset($is_semester_started)){?>
+        <div id="mssg-modal" class="<?php if ($is_semester_started) echo "success-mssg"; else echo "error-mssg";?> text-justify">
+            <p><?php echo $msg ?></p>
+        </div>
     <?php }
 }?>
 
