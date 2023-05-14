@@ -169,6 +169,14 @@ class Submission
         return $assignmentSubmissions;
     }
 
+    public static function stuSubExists($regNo, $courseCode, $submissionId): bool
+    {
+        return Application::$db->checkExists(
+            table: 'stucoursesubmission',
+            primaryKey: ['stu_reg_no'=> $regNo,'course_code'=>$courseCode,'submission_id'=>$submissionId]
+        );
+    }
+
     /*
      * @description Delete all the student submissions of a given course
      */
