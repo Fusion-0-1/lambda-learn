@@ -319,6 +319,14 @@ class Course
         return true;
     }
 
+    /*
+     * @description delete all the stu courses
+     */
+    public static function truncateStuCourses()
+    {
+        Application::$db->truncateTable('StuCourse');
+    }
+
     // ---------------------------Getters and Setters-----------------------------------
 
     /**
