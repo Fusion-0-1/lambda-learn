@@ -135,6 +135,13 @@ class CSVFile
 
     public function saveFileOnServer($location): void
     {
+        if (!file_exists($location)) {
+            // remove file name and create folder structure
+            $location_ = explode('/', $location);
+            array_pop($location_);
+            $location_ = implode('/', $location_);
+            mkdir($location_, recursive: true);
+        }
         move_uploaded_file($this->filepath, $location);
     }
 
