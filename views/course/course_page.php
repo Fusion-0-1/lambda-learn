@@ -207,13 +207,21 @@
                                         </form>
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
-                                        <?php foreach ($courseSubTopic->getSubTopicRecs() as $courseSubTopicRecs) {?>
-                                            <p><span class="icons far fa-file-video"></span> <?php echo $courseSubTopicRecs->getLocation() ?> </p>
+
+                                        <?php foreach ($courseSubTopic->getSubTopicRecs() as $courseSubTopicRecs) { ?>
+                                            <?php
+                                            $attachmentPath = $courseSubTopicRecs->getLocation();
+                                            $attachmentFiles = $courseSubTopicRecs->getAttachmentFileNames($attachmentPath);
+                                            $attachmentPath = explode(getcwd(), $attachmentPath)[1];
+                                            foreach ($attachmentFiles as $file) { ?>
+                                                <p><span class="icons far fa-file-video"></span> <?php echo $courseSubTopicRecs->getLocation(); ?> </p>
+                                            <?php } ?>
                                         <?php } ?>
+
                                         <div class="flex h-justify">
                                             <button class="lecturer-uploads"><img src="/images/course_page/Eye.png"></button>
                                             <button class="lecturer-uploads" onclick="uploadrecording(<?php echo $courseTopic->getTopicId().",".$courseSubTopic->getSubTopicId().",'".$course->getCourseCode()."'";?>)"><img src="/images/course_page/Video Record.png"></button>
-                                            <button class="lecturer-uploads"><img src="/images/course_page/Presentation.png"></button>
+                                            <button class="lecturer-uploads" onclick="uploadslides(<?php echo $courseTopic->getTopicId().",".$courseSubTopic->getSubTopicId().",'".$course->getCourseCode()."'";?>)"><img src="/images/course_page/Presentation.png"></button>
                                             <button class="lecturer-uploads"><img src="/images/course_page/Text.png"></button>
                                         </div>
                                     </div>
