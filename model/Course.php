@@ -256,6 +256,16 @@ class Course
         return Application::$db->rowCount($results);
     }
 
+    public static function getStuAssignedCount(string $courseCode)
+    {
+        $students = Application::$db->select(
+            table: 'StuCourse',
+            columns: ['stu_reg_no'],
+            where: ['course_code'=>$courseCode]
+        );
+        return Application::$db->rowCount($students);
+    }
+
     /**
      * @description Add new topics and sub topics to a given course
      * @param $courseCode
@@ -316,6 +326,23 @@ class Course
             table: 'Course',
             columns: ['exam_marks_report_path' => $path],
             where: ['course_code' => $courseCode]
+        );
+        return true;
+    }
+
+    public static function updateSubmissionMarks($regNo, $courseCode, $submissionId, $marks): bool
+    {
+        $allocatedMarksAndPoints = Application::$db->select(
+            table: 'CourseSubmission',
+            columns: ['allocated_mark', 'allocated_point'],
+            where: ['course_code'=>$courseCode, 'submission_id'=>$submissionId]
+        );
+        $markAndPoint = Application::$db->fetch($allocatedMarksAndPoints);
+        $points = ((int)$marks / (int)$markAndPoint['allocated_mark'] ) * (int)$markAndPoint['allocated_point'];
+        Application::$db->update(
+            table: 'StuCourseSubmission',
+            columns: ['stu_submission_point' => $points,'stu_submission_mark' => $marks],
+            where: ['stu_reg_no' => $regNo, 'course_code' => $courseCode, 'submission_id'=>$submissionId]
         );
         return true;
     }

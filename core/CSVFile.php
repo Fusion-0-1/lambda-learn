@@ -70,7 +70,7 @@ class CSVFile
     // ----------------------------Custom Methods--------------------------------------
     /**
      * @description Read the CSV file
-     * three functionalities wrapped into this function.
+     * five functionalities wrapped into this function.
      *  1. Read user account creation csv upload
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
@@ -90,12 +90,16 @@ class CSVFile
      *       @param bool $uploadExamMarks true (this will enable upload exam marks function)
      *       Reads the CSV file containing exam marks.
      *       Returns an array of valid registration numbers and their corresponding exam marks.
+     *  5. Upload Submission marks
+     *       @param bool $uploadSubmissionMarks true (this will enable upload submission marks function)
+     *       Reads the CSV file containing submission marks.
+     *       Returns an array of valid registration numbers and their corresponding exam marks.
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location
      * @return array|bool|null
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, bool $assignStudents = false, bool $uploadExamMarks = false, string $location = null)
+                            bool $updateAttendance = false, bool $assignStudents = false, bool $uploadExamMarks = false, $uploadSubmissionMarks = false,  string $location = null)
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
@@ -107,9 +111,10 @@ class CSVFile
                     $output = $this->updateAttendance($csvFile);
                 } else if ($assignStudents) {
                     $output = $this->assignStudents($csvFile);
-                }
-                elseif($uploadExamMarks) {
+                } elseif($uploadExamMarks) {
                     $output = $this->uploadExamMarks($csvFile);
+                } elseif($uploadSubmissionMarks){
+                    $output = $this->uploadSubmissionMarks($csvFile);
                 }
                 fclose($csvFile);
                 // Save the file in the server
@@ -262,6 +267,20 @@ class CSVFile
             $unwrappedData = Course::unwrapExamMarks($line);
             $student['reg_no'][] = $unwrappedData['regNo'];
             $student['exam_mark'][] = $unwrappedData['marks'];
+        }
+        return $student;
+    }
+
+    public function uploadSubmissionMarks($csvFile) : array
+    {
+        $student = [];
+        $invalidStudent = [];
+
+        $header = fgetcsv($csvFile);
+        while (($line = fgetcsv($csvFile)) !== FALSE) {
+            $unwrappedData = Course::unwrapExamMarks($line);
+            $student['reg_no'][] = $unwrappedData['regNo'];
+            $student['submission_mark'][] = $unwrappedData['marks'];
         }
         return $student;
     }
