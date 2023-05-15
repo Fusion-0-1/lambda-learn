@@ -273,6 +273,7 @@ class Submission
      * @param User $user
      * @return array
      */
+
     public static function getUserSubmissions(User $user): array
     {
         $assignmentSubmissions = [];
@@ -297,6 +298,14 @@ class Submission
             );
         }
         return $assignmentSubmissions;
+    }
+
+    public static function stuSubExists($regNo, $courseCode, $submissionId): bool
+    {
+        return Application::$db->checkExists(
+            table: 'stucoursesubmission',
+            primaryKey: ['stu_reg_no'=> $regNo,'course_code'=>$courseCode,'submission_id'=>$submissionId]
+        );
     }
 
     /*

@@ -34,9 +34,8 @@
             <canvas id="course_progress_chart"></canvas>
         </div>
 
-        <div class="main-container border">
-
-            <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
+        <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
+            <div class="main-container border">
             <div>
                 <table class="download-table">
                     <tr>
@@ -45,6 +44,9 @@
                     </tr>
                     <?php
                     $path = 'User Uploads/Exam marks/' . $course->getCourseCode();
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
+                    }
                     $files = scandir($path);
                     foreach ($files as $file) {
                         if ($file != '.' && $file != '..' && is_file($path . '/' . $file)) {

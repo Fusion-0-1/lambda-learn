@@ -59,6 +59,7 @@ class CourseController extends Controller
             );
         } else {
             $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+            $params['courseSubmissions'] = Submission::getSubmission($courseCode);
             return $this->render(
                 view: '/course/course_page',
                 allowedRoles: ['Lecturer', 'Student'],
@@ -82,6 +83,8 @@ class CourseController extends Controller
         $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())
             and $today < new DateTime(Application::$admin_config->getSemStartDate()));
         $params['isSemesterEnd'] = $isSemesterEnd;
+        $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
+        $params['courseSubmissions'] = Submission::getSubmission($body['course_code']);
 
         if(isset($body['update_progress_bar'])){
             $courseCode = $body['course_code'];
@@ -90,7 +93,6 @@ class CourseController extends Controller
 
             $params['mssg'] = CourseSubTopic::updateProgress($courseCode, $topicId, $subTopicId);
             $params['course'] = Course::getCourse($courseCode);
-            $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
 
             return $this->render(
                 view: '/course/course_page',
@@ -102,7 +104,8 @@ class CourseController extends Controller
             $subTopicsArray = $body['subtopic'];
 
             for ($i = 0; $i<count($topicsArray); $i++) {
-                $checkboxes[$i] = $body['checkbox_'.$i] == 'on';
+                $checkboxKey = 'checkbox_'.$i;
+                $checkboxes[$i] = isset($body[$checkboxKey]) && $body[$checkboxKey] == 'on';
             }
 
             $courseCode = $_POST['course_code'];
@@ -151,6 +154,7 @@ class CourseController extends Controller
             );
         }
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer', 'Student'],
@@ -308,7 +312,8 @@ class CourseController extends Controller
             }
         }
 
-        Submission::updateSubmission($body['course_code'],$body['submission_id_edit'],$body['edit_heading'],$body['edit_mark'],$body['edit_duetime'],$body['edit_content']);
+        Submission::updateSubmission($body['course_code'],$body['submission_id_edit'],$body['edit_heading'],
+            $body['edit_mark'],$body['edit_duetime'],$body['edit_content']);
         header("Location: /submissions?course_code=".$body['course_code']);
     }
 
@@ -339,6 +344,60 @@ class CourseController extends Controller
         );
     }
 
+    public function displaySubmissionMarksUpload(Request $request)
+    {
+        $body = $request->getBody();
+        $params = [
+            'course' => Course::getCourse($body['course_code']),
+            'submission_id' => $body['submission_id']
+        ];
+        return $this->render(
+            view: '/submission_marks_upload',
+            allowedRoles: ['Lecturer'],
+            params: $params
+        );
+    }
+
+    public function updateSubmissionMarksUpload(Request $request)
+    {
+        $body = $request->getBody();
+        $courseCode = $body['course_code'];
+        $submissionId = $body['submission_id'];
+        $params['course'] = Course::getCourse($courseCode);
+
+        $file = new CSVFile($request->getFile());
+        $marks_dir = 'User Uploads/Submission marks/' . $courseCode;
+        if (!file_exists($marks_dir)) {
+            mkdir($marks_dir);
+        }
+        $categorizedData = $file->readCSV(
+            uploadSubmissionMarks: true
+        );
+        $params['invalid_user'] = false;
+        for($i=0; $i<sizeof($categorizedData['reg_no']); $i++){
+            if((!User::userExists($categorizedData['reg_no'][$i])) || (Student::checkStudentAssignedToCourse($categorizedData['reg_no'][$i], $courseCode))){
+                $params['invalid_user'] = true;
+            }
+        }
+        if(!$params['invalid_user']){
+            for($i=0; $i<sizeof($categorizedData['reg_no']); $i++) {
+                Course::updateSubmissionMarks($categorizedData['reg_no'][$i], $courseCode, $submissionId,
+                    $categorizedData['submission_mark'][$i]);
+            }
+
+            $file_path = $marks_dir . '/' . date('Y-m-d') . '.csv';
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            $file->saveFileOnServer($path = $marks_dir . '/' . date('Y-m-d') . '.csv');
+        }
+        return $this->render(
+            view: '/submission_marks_upload',
+            allowedRoles: ['Lecturer', 'Coordinator'],
+            params: $params
+        );
+    }
+
     public function updateCourseMarks(Request $request)
     {
         $body = $request->getBody();
@@ -348,7 +407,7 @@ class CourseController extends Controller
         $file = new CSVFile($request->getFile());
         $marks_dir = 'User Uploads/Exam marks/' . $body['course_code'];
         if (!file_exists($marks_dir)) {
-            mkdir($marks_dir);
+            mkdir($marks_dir, recursive: true);
         }
         $categorizedData = $file->readCSV(
             uploadExamMarks: true
@@ -623,6 +682,7 @@ class CourseController extends Controller
         $body = $request->getBody();
         $params['course'] = Course::getCourse($body['course_code']);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($body['course_code']);
+        $params['courseSubmissions'] = Submission::getSubmission($body['course_code']);
 
         return $this->render(
             view: '/course/course_edit',
@@ -669,6 +729,7 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
         return $this->render(
             view: '/course/course_page',
             allowedRoles: ['Lecturer'],
@@ -693,6 +754,7 @@ class CourseController extends Controller
 
         $params['course'] = Course::getCourse($courseCode);
         $params['courseAnnouncements'] = CourseAnnouncement::getCourseAnnouncements($courseCode);
+        $params['courseSubmissions'] = Submission::getSubmission($courseCode);
 
         $today = new DateTime();
         $isSemesterEnd = ($today > new DateTime(Application::$admin_config->getSemEndDate())

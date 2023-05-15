@@ -1,0 +1,184 @@
+{
+  "id": "2387fc75-cc06-4bca-98cb-d8da7fa20869",
+  "version": "2.0",
+  "name": "lambda-EditProfile",
+  "url": "http://127.0.0.1:8080",
+  "tests": [{
+    "id": "b92b4788-69f1-4825-9d70-acf28ea4d4c4",
+    "name": "Edit Profile",
+    "commands": [{
+      "id": "fe8e6564-daac-41be-9d6e-e8b5b53e0d66",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "29aecb15-ad28-4ac5-bca9-5472cfd5699e",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1440x900",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "52974865-d86d-458d-b05d-8ce3cfe9730d",
+      "comment": "",
+      "command": "click",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "24022e4a-ba58-4565-9dfb-38dba2a08fb9",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "~123456~"
+    }, {
+      "id": "b4a91c81-82c5-43b0-8f92-a4e44e9180f3",
+      "comment": "",
+      "command": "type",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2020/AD/0026"
+    }, {
+      "id": "da5d36d5-fa65-40f3-870c-477a6141b59a",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn",
+      "targets": [
+        ["id=btn", "id"],
+        ["name=login", "name"],
+        ["css=#btn", "css:finder"],
+        ["xpath=//input[@id='btn']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8398959f-433f-44f2-bdaa-5f89dbf5c337",
+      "comment": "",
+      "command": "click",
+      "target": "id=name",
+      "targets": [
+        ["id=name", "id"],
+        ["linkText=Ramindu Walgama", "linkText"],
+        ["css=#name", "css:finder"],
+        ["xpath=//a[contains(text(),'Ramindu Walgama')]", "xpath:link"],
+        ["xpath=//a[@id='name']", "xpath:attributes"],
+        ["xpath=//a[contains(@href, '/profile')]", "xpath:href"],
+        ["xpath=//div[3]/div/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Ramindu Walgama')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "eddf3b4d-8d38-45fd-a5a6-d1740ed7c326",
+      "comment": "",
+      "command": "click",
+      "target": "css=#edit > .fa-solid",
+      "targets": [
+        ["css=#edit > .fa-solid", "css:finder"],
+        ["xpath=//button[@id='edit']/i", "xpath:idRelative"],
+        ["xpath=//button[2]/i", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "34bbc544-f7e0-45f2-9980-16ca023cfa87",
+      "comment": "",
+      "command": "click",
+      "target": "id=contact",
+      "targets": [
+        ["id=contact", "id"],
+        ["name=contact", "name"],
+        ["css=#contact", "css:finder"],
+        ["xpath=//input[@id='contact']", "xpath:attributes"],
+        ["xpath=//form[@id='profile']/div[2]/div[2]/div[2]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b6184dd2-36c0-4686-a87e-fd6eacdfaff5",
+      "comment": "",
+      "command": "type",
+      "target": "id=contact",
+      "targets": [
+        ["id=contact", "id"],
+        ["name=contact", "name"],
+        ["css=#contact", "css:finder"],
+        ["xpath=//input[@id='contact']", "xpath:attributes"],
+        ["xpath=//form[@id='profile']/div[2]/div[2]/div[2]/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "0716461434"
+    }, {
+      "id": "ef664019-52b1-47d5-98ab-4df9d3aee25a",
+      "comment": "",
+      "command": "click",
+      "target": "id=personal_email",
+      "targets": [
+        ["id=personal_email", "id"],
+        ["name=personal_email", "name"],
+        ["css=#personal_email", "css:finder"],
+        ["xpath=//input[@id='personal_email']", "xpath:attributes"],
+        ["xpath=//form[@id='profile']/div[2]/div[2]/div[2]/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "67b99401-c243-41d4-9a7b-30d5914ce810",
+      "comment": "",
+      "command": "type",
+      "target": "id=personal_email",
+      "targets": [
+        ["id=personal_email", "id"],
+        ["name=personal_email", "name"],
+        ["css=#personal_email", "css:finder"],
+        ["xpath=//input[@id='personal_email']", "xpath:attributes"],
+        ["xpath=//form[@id='profile']/div[2]/div[2]/div[2]/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "rrwalgama@gmail.com"
+    }, {
+      "id": "3de48540-3edd-413f-8583-e0e9fcbe0e5c",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn_confirm",
+      "targets": [
+        ["id=btn_confirm", "id"],
+        ["css=#btn_confirm", "css:finder"],
+        ["xpath=//button[@id='btn_confirm']", "xpath:attributes"],
+        ["xpath=//form[@id='profile']/div/div[2]/button[3]", "xpath:idRelative"],
+        ["xpath=//button[3]", "xpath:position"],
+        ["xpath=//button[contains(.,'Confirm')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "84dd371f-0bb9-4b76-98ab-bdeb010dfc92",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["b92b4788-69f1-4825-9d70-acf28ea4d4c4"]
+  }],
+  "urls": ["http://127.0.0.1:8080/"],
+  "plugins": []
+}
