@@ -40,7 +40,7 @@
                         foreach ($submissions as $submission) {
                             $count++; ?>
                             <tr>
-                                <td class="task-content"> <?php echo $submission->getTopic() ?> </td>
+                                <td class="task-content"> <?php echo $submission->getCourseCode().' : '.$submission->getTopic()?> </td>
                                 <td class="task-date"> <?php echo $submission->getDueDate() ?> </td>
                             </tr>
                             <?php if ($count>5)

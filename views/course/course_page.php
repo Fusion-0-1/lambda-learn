@@ -184,7 +184,7 @@
             <?php $count = 1;
             foreach ($courseSubmissions as $c_sub) {
             $count++; ?>
-                <button class="inner-container border-radius text-left" id="submission1">
+                <button class="inner-container border-radius text-left">
                     <?php echo $c_sub->getTopic()?>
                 </button>
                 <?php if ($count>3)
@@ -248,9 +248,9 @@
                                     </div>
                                     <div class="course-sub-topic-content border-radius">
                                         <!--TODO: Retrieve recordings and lecture notes from the database-->
-                                        <p><span class="icons fas fa-atom"></span> Sample Recording 1 </p>
-                                        <p><span class="icons fas fa-atom"></span> Sample Recording 2 </p>
-                                        <p><span class="icons fas fa-atom"></span> Sample Lecture Note </p>
+                                        <p><span class="icons fas fa-atom"></span> Recording 1 </p>
+                                        <p><span class="icons fas fa-atom"></span> Recording 2 </p>
+                                        <p><span class="icons fas fa-atom"></span> Lecture Note </p>
                                     </div>
                                 </div>
                             <?php } ?>
