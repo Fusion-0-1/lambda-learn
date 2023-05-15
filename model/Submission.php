@@ -16,7 +16,10 @@ class Submission
     private string $dueDate;
     private bool $visibility;
     private string $location;
-
+    // stu
+    private string $regNo;
+    private string $submittedDate;
+    private string $attachment;
 
     private function __construct() {}
 
@@ -36,7 +39,65 @@ class Submission
         return $submission;
     }
 
-    public static function getSubmission($course_code): array
+    public static function createStuNewSubmission($courseCode, $topic, $description, $dueDate, $regNo, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
+        $stuSubmission = self::createNewSubmission($courseCode, $topic, $description, $dueDate, $allocatedMark, $allocatedPoint, $visibility, $location,$submissionId);
+        $stuSubmission->regNo = $regNo;
+        $stuSubmission->submittedDate = self::getSubmittedDate_($stuSubmission->regNo, $stuSubmission->courseCode, $stuSubmission->submissionId);
+        $stuSubmission->attachment = self::getAttachment_($stuSubmission->regNo, $stuSubmission->courseCode, $stuSubmission->submissionId);
+        return $stuSubmission;
+    }
+
+    public static function getSubmittedDate_($stu_reg_no, $course_code, $submission_id)
+    {
+        $result = Application::$db->select(
+            table: 'StuCourseSubmission',
+            where: ['stu_reg_no' => $stu_reg_no, 'course_code' => $course_code, 'submission_id' => $submission_id],
+            limit: 1
+        );
+        $sub = Application::$db->fetch($result);
+        return $sub['submitted_date'] ?? '';
+    }
+
+    public static function getAttachment_($stu_reg_no, $course_code, $submission_id)
+    {
+        $result = Application::$db->select(
+            table: 'StuCourseSubmission',
+            where: ['stu_reg_no' => $stu_reg_no, 'course_code' => $course_code, 'submission_id' => $submission_id],
+            limit: 1
+        );
+        $sub = Application::$db->fetch($result);
+        return $sub['stu_attachments'] ?? '';
+    }
+
+    public function isSubmitted()
+    {
+        return $this->attachment != '';
+    }
+
+    public static function getStuSubmission($regNo, $course_code, $submission_id): Submission
+    {
+        $result = Application::$db->select(
+            table: 'coursesubmission',
+            where: ['course_code' => $course_code, 'submission_id' => $submission_id],
+            limit: 1
+        );
+        $sub = Application::$db->fetch($result);
+        return self::createStuNewSubmission(
+            courseCode: $sub['course_code'],
+            topic: $sub['topic'],
+            description: $sub['description'],
+            dueDate: $sub['due_date'],
+            regNo: $regNo,
+            allocatedMark: $sub['allocated_mark'],
+            allocatedPoint: $sub['allocated_point'],
+            visibility: $sub['visibility'],
+            location: $sub['attachments']?? '',
+            submissionId: $sub['submission_id']
+        );
+    }
+
+
+    public static function getSubmissions($course_code): array
     {
         $assignmentSubmissions = [];
         $results = Application::$db->select(
@@ -60,6 +121,17 @@ class Submission
         return $assignmentSubmissions;
     }
 
+    public function getFileNameFromPath()
+    {
+        $path = explode('/',$this->attachment);
+        return $path[count($path)-1];
+    }
+
+    public function getAttachmentPath()
+    {
+        return explode("/public", $this->getAttachment_($this->regNo, $this->courseCode, $this->submissionId))[1];
+    }
+
     public function getAttachmentFileNames($path) {
         $files = [];
         if (is_dir($path)) {
@@ -75,7 +147,7 @@ class Submission
 
     public function submissionInsert()
     {
-        $db = Application::$db->insert(
+        Application::$db->insert(
             table: 'coursesubmission',
             values: [
                 'course_code' => $this->courseCode,
@@ -90,6 +162,57 @@ class Submission
         );
     }
 
+    public function stuSubmissionInsert()
+    {
+        if($this->checkExistsStuSubmission()){
+            $this->stuSubmissionUpdate();
+        } else {
+            Application::$db->insert(
+                table: 'StuCourseSubmission',
+                values: [
+                    'stu_reg_no' => $this->regNo,
+                    'submission_id' => $this->submissionId,
+                    'course_code' => $this->courseCode,
+                    'submitted_date' => date('Y-m-d H:i:s'),
+                    'stu_attachments' => $this->attachment
+                ]
+            );
+        }
+    }
+
+    public function stuSubmissionUpdate()
+    {
+        Application::$db->update(
+            table: 'StuCourseSubmission',
+            columns: [
+                'submitted_date' => date('Y-m-d H:i:s'),
+                'stu_attachments' => $this->attachment
+            ],
+            where: ['stu_reg_no' => $this->regNo, 'submission_id' => $this->submissionId, 'course_code' => $this->courseCode]
+        );
+    }
+
+    public function createStuSubmissionFolders($files)
+    {
+        $dir = 'User Uploads/Submissions/' . str_replace("/", " ", $this->courseCode) . '/' . $this->submissionId .'/'. 'Student_Attachments/' . $this->regNo;
+        if (!file_exists($dir)) {
+            mkdir($dir, recursive: true);
+        }
+//        var_dump($files);
+//        for ($i = 0; $i < count($files['name']); $i++) {
+            $fileName = $files['name'];
+            $tmpName = $files['tmp_name'];
+            $savedPath = $dir.'/'.$fileName;
+            $fileExists = file_exists($savedPath);
+
+            if ($fileExists) {
+                unlink($savedPath);
+            }
+            move_uploaded_file($tmpName, $savedPath);
+//        }
+        $this->setAttachment(getcwd() . $savedPath);
+    }
+
     public function getLastSubmissionId(){
         $result = Application::$db->select(
             table: 'coursesubmission',
@@ -100,6 +223,14 @@ class Submission
         );
         $lastInsertId = Application::$db->fetch($result);
         return $lastInsertId['submission_id'] ?? 0;
+    }
+
+    public function checkExistsStuSubmission(): bool
+    {
+        return Application::$db->checkExists(
+            table: 'StuCourseSubmission',
+            primaryKey: ['stu_reg_no' => $this->regNo, 'course_code' => $this->courseCode, 'submission_id' => $this->submissionId]
+        );
     }
 
     public static function updateVisibility($courseCode,$submissionId,$visibility)
@@ -314,5 +445,29 @@ class Submission
         $this->location = $location;
     }
 
+    /**
+     * @param string $attachment
+     */
+    public function setAttachment(string $attachment): void
+    {
+        $this->attachment = $attachment;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getSubmittedDate(): string
+    {
+        return $this->submittedDate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAttachment(): string
+    {
+        return $this->attachment;
+    }
 
 }

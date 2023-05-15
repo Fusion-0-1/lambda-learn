@@ -267,6 +267,8 @@ CREATE TABLE StuCourseSubmission (
     submission_id INT NOT NULL,
     stu_submission_point INT,
     stu_submission_mark INT,
+    submitted_date DATETIME,
+    stu_attachments VARCHAR(300),
     state ENUM ("To Do", "In Progress", "Done") NOT NULL DEFAULT "To Do",
     CONSTRAINT PK_StuCourseSubmission PRIMARY KEY (stu_reg_no, course_code, submission_id),
     CONSTRAINT FK_StuCourseSubmission_Student FOREIGN KEY (stu_reg_no) REFERENCES Student(reg_no),

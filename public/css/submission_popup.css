@@ -1,9 +1,9 @@
 .popup-card{
-    width: 60%;
+    width: 50%;
     height: auto;
     background: var(--blue-white);
     border-radius: 40px 0 0 40px;
-    padding-bottom: 10%;
+    padding-bottom: 5%;
 }
 .course-name{
     font-size: 1.7rem;
@@ -18,14 +18,14 @@
     border-bottom: 3px solid var(--black);
     font-size: 1.2rem;
 }
-.submissions-card-inside{
+.submissions-card-insides{
     background: var(--white);
     width: 85%;
     height: auto;
     margin: auto;
     border-radius: 15px;
     border: 3px solid var(--border-white);
-    padding: 12% 0;
+    padding: 6% 0;
 }
 .due-date-div{
     padding: 0 6%;
@@ -55,6 +55,11 @@
     grid-template-columns: 40% 57%;
     margin: 4% 0;
 }
+.time-remaning-div-filesize{
+    padding:  0 6%;
+    grid-template-columns: 40% 57%;
+    margin: 0 0 4%;
+}
 .break-line{
     width: 60%;
     height: 5px;
@@ -66,6 +71,7 @@
 }
 .modal-content{
     float: right;
+    margin: 0 auto;
 }
 .submit-buttons{
     grid-template-columns: 30% 30%;
@@ -73,8 +79,15 @@
     margin-top: 6%;
 }
 .submission-btn{
-    padding: 8px 0;
+    padding: 8px 12px;
     border-radius: 8px;
+}
+.overdue {
+    color: var(--error);
+}
+.file-size-text{
+    padding: 0 6%;
+    font-size: 12px;
 }
 
 @media(max-width:768px){
@@ -88,7 +101,7 @@
         font-size: 1.1rem;
         margin: 4% 5%;
     }
-    .submissions-card-inside{
+    .submissions-card-insides{
         width: 90%;
         padding: 12% 0;
     }
@@ -105,6 +118,12 @@
         margin: 4% 0;
         font-size: 0.75rem;
         grid-template-columns: 35% 62%;
+    }
+    .time-remaning-div-filesize{
+        padding:  0 4%;
+        font-size: 0.75rem;
+        grid-template-columns: 35% 62%;
+        margin: 0 0 4%;
     }
     .due-date-heading img{
         width: 25px;
@@ -136,7 +155,7 @@
         font-size: 0.9rem;
         margin: 4% 5%;
     }
-    .submissions-card-inside{
+    .submissions-card-insides{
         width: 90%;
         padding: 12% 0;
     }
@@ -154,6 +173,12 @@
         margin: 4% 0;
         font-size: 0.75rem;
         grid-template-columns: 38% 60%;
+    }
+    .time-remaning-div-filesize{
+        padding:  0 4%;
+        font-size: 0.75rem;
+        grid-template-columns: 38% 60%;
+        margin: 0 0 4%;
     }
     .due-date-heading img{
         width: 20px;
@@ -184,10 +209,17 @@
     .time-remaning-div{
         font-size: 0.6rem;
     }
+    time-remaning-div-filesize{
+        font-size: 0.6rem;
+    }
     .due-date-heading img {
         margin-right: 1px;
     }
     .submission-btn{
         padding: 5px 0;
     }
+}
+
+#popup_submission{
+    height: 89%;
 }
