@@ -223,10 +223,12 @@
                     <div class="due-date-contain flex h-center submitted-date"> <?php echo $current_submission->getSubmittedDate() ?></div>
                 </div>
                 <form action="stu_submissions" enctype="multipart/form-data" method="post" class="submit-buttons flex h-center">
-                    <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip"
-                           onchange="previewStuAttachment()" hidden>
-                    <label for="upload_stu_attachment" id="upload_stu_attachment_label" class="edit-btn submission-btn text-center">Add
-                        submission</label>
+                    <div class="flex h-center">
+                        <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip"
+                               onchange="previewStuAttachment()" hidden>
+                        <label for="upload_stu_attachment" id="upload_stu_attachment_label" class="edit-btn submission-btn text-center">Add
+                            submission</label>
+                    </div>
                     <input type="text" name="course_code" value="<?php echo $current_submission->getCourseCode()?>" hidden>
                     <input type="text" name="submission_id" value="<?php echo $current_submission->getSubmissionId()?>" hidden>
                     <button class="edit-btn submission-btn text-center hide" id="edit-stu-submission"
