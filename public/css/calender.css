@@ -41,7 +41,6 @@ header .icons span:last-child{
 .calendar .weeks li{
     font-weight: 500;
     color: #858585;
-    /*me color eka main ake na*/
 }
 .calendar .days li{
     cursor: pointer;
@@ -59,7 +58,6 @@ header .icons span:last-child{
 }
 .days li.inactive{
     color: #aaa;
-/*    me color ekath add krnna one*/
 }
 .days li.active{
     color: var(--white);
@@ -82,14 +80,16 @@ header .icons span:last-child{
 }
 
 .card{
-    margin: 2%;
+    margin: 0 2%;
     width: 60%;
 }
 
 .task-heading{
     color: var(--blue);
-    text-align: left;
+    text-align: center;
     padding-left: 50px;
+    font-size: 1.2rem;
+    font-weight: 500;
 }
 
 .task-date{

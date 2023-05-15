@@ -75,6 +75,7 @@
                 </div>
             </a>
 
+
             <a onclick="displayAdminDashboard()" class="link">
                 <div class="cards">
                     <div class="cards-inside">
@@ -91,6 +92,16 @@
                         <img src="./images/dashboard/storage.svg" alt="Storage Utilization">
                     </div>
                     <div class="card-name">Storage Utilization</div>
+                </div>
+            </a>
+
+
+            <a href="/admin_settings" class="link">
+                <div class="cards">
+                    <div class="cards-inside">
+                        <img src="./images/dashboard/Services.svg" alt="Settings">
+                    </div>
+                    <div class="card-name">Settings</div>
                 </div>
             </a>
         <?php } ?>

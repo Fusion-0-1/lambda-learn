@@ -1,19 +1,32 @@
 <link rel="stylesheet" href="css/marks_upload.css">
 
+<?php if(isset($invalid_user)){
+        if($invalid_user){?>
+            <div id="mssg-modal" class="error-mssg text-justify">
+                <p>The CSV file contains invalid Registration Numbers or Users Not Assigned to the Course.</p>
+            </div>
+        <?php } else { ?>
+            <div id="mssg-modal" class="success-mssg text-justify">
+                <p>Marks uploaded successfully.</p>
+            </div>
+        <?php }
+    } ?>
+
 <div id="file-upload-container" class="border main-container v-center flex-gap responsive-container">
     <form id="file-upload-form" class="main-container border flex flex-column"
-          action="" method="post" enctype="multipart/form-data">
+          action="<?php "/marks_upload?course_code=" . $course->getCourseCode()?>" method="post" enctype="multipart/form-data">
+        <input type="hidden" value="<?php echo $course->getCourseCode(); ?>" name="course_code">
         <input id="file-input-field" type="file" name="file" id="file" accept=".csv" hidden>
-        <h3>Data Structures and Algorithms Submission Marks</h3>
+        <h3><?php echo $course->getCourseName()?></h3>
         <button type="button" class="x-dark-btn">
             <div id="file-upload-button" class="flex v-center">
-                <p id="upload-file-text" onclick='update_existing_stu()'>Upload submission marks csv file here</p>
+                <p id="upload-file-text" onclick='update_exam_marks()'>Upload exam marks csv file here</p>
                 <i class="fa fa-upload upload-icon" aria-hidden="true"></i>
             </div>
         </button>
 
         <h4 class="csv-header-text">CSV Header Columns Format:</h4>
-        <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, marks</p>
+        <p class="csv-header-format flex v-center h-center">The CSV file should include reg_no, marks.</p>
     </form>
 
     <div class="main-container border">
@@ -21,28 +34,37 @@
             <canvas id="course_progress_chart"></canvas>
         </div>
 
-        <?php if ($_SESSION['user-role'] == 'Coordinator' or $_SESSION['user-role'] == 'Lecturer') {?>
-        <div class="download-table overflow-x">
-            <table class="main-container overflow-x">
-                <tr>
-                    <th>Year</th>
-                    <th>Date</th>
-                    <th>Download</th>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>08.10.2022</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>08.03.2022</td>
-                    <td><i class="fa fa-download download-icon" aria-hidden="true"></i></td>
-                </tr>
-            </table>
+        <div class="main-container border">
+
+            <?php if ($_SESSION['user-role'] == 'Coordinator') {?>
+            <div>
+                <table class="download-table">
+                    <tr>
+                        <th>Year</th>
+                        <th>Download</th>
+                    </tr>
+                    <?php
+                    $path = 'User Uploads/Exam marks/' . $course->getCourseCode();
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
+                    }
+                    $files = scandir($path);
+                    foreach ($files as $file) {
+                        if ($file != '.' && $file != '..' && is_file($path . '/' . $file)) {
+                            echo "<tr>";
+                            echo "<td>" . $file . "</td>";
+                            echo "<td><a href='" . $path . '/' . $file . "' target='blank'
+                                    <i class=\"fa fa-download download-icon\" aria-hidden=\"true\"></i>
+                                    </a>
+                                    </td>";
+                            echo "</tr>";
+                        }
+                    }
+                    ?>
+                </table>
+            </div>
         </div>
-    </div>
-    <?php }?>
+        <?php }?>
 </div>
 
 
@@ -84,5 +106,17 @@
     if(window.innerWidth <= 320) {
         document.getElementsByClassName("chart")[0].innerHTML =
             "<p>Please Rotate your mobile phone and refresh the page.</p>"
+    }
+
+    function update_exam_marks() {
+        let input = document.getElementById('file-input-field');
+        input.onchange = e => {
+            let file = Array.from(input.files);
+            document.getElementById('upload-file-text').innerText = 'File Name: ' + file[0]['name'];
+            document.getElementsByClassName('upload-icon')[0].addEventListener('click', function () {
+                document.getElementById('file-upload-form').submit();
+            });
+        }
+        input.click();
     }
 </script>

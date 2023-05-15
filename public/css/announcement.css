@@ -28,10 +28,6 @@
     border-radius: 15px;
 }
 
-.modal{
-    display: none;
-}
-
 .modal-btns{
     margin: auto;
 }
@@ -40,13 +36,19 @@
     margin: 10px;
 }
 
-.cancel-btn{
+.cancel-btn-edit-modal{
     border: var(--green) 1px solid;
     border-radius: 10px;
     color: var(--green);
     min-height: 35px;
     width: 100px;
     margin: 10px;
+}
+
+.cancel-btn-edit{
+    border: var(--error-btn) 1px solid;
+    margin: 0 auto;
+    color: var(--error-btn);
 }
 
 .edit-delete-timeremaining{

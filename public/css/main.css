@@ -260,6 +260,10 @@ a:active {
     align-items: flex-end;
 }
 
+.flex-h-end {
+    justify-content: flex-end;
+}
+
 .v-center {
     align-items: center;
 }
@@ -408,6 +412,10 @@ tr:nth-child(odd) > td {
 
 td{
     padding: 8px 20px;
+}
+
+tr:nth-child(odd) > td > a {
+    color: var(--white);
 }
 
 @media(max-width: 425px) {

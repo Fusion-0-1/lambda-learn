@@ -8,9 +8,12 @@ use app\model\Course;
 use app\model\SiteAnnouncement;
 use app\model\CourseAnnouncement;
 
-
 class AnnouncementController extends Controller
 {
+    /**
+     * @description Display site announcements
+     * @return array|false|string|string[]
+     */
     public function displaySiteAnnouncements()
     {
         $announcements = ['announcements'=>SiteAnnouncement::getSiteAnnouncements()];
@@ -20,6 +23,11 @@ class AnnouncementController extends Controller
         );
     }
 
+    /**
+     * @description Display course announcements
+     * @param Request $request
+     * @return array|false|string|string[]
+     */
     public function displayCourseAnnouncements(Request $request)
     {
         $body = $request->getBody();
@@ -33,6 +41,11 @@ class AnnouncementController extends Controller
 
     }
 
+    /**
+     * @description Create site announcements
+     * @param Request $request
+     * @return void
+     */
     public function createSiteAnnouncements(Request $request)
     {
         $body = $request->getBody();
@@ -55,7 +68,11 @@ class AnnouncementController extends Controller
         header("Location: /site_announcement");
     }
 
-
+    /**
+     * @description Create course announcements
+     * @param Request $request
+     * @return void
+     */
     public function createCourseAnnouncements(Request $request)
     {
         $body = $request->getBody();
@@ -70,6 +87,11 @@ class AnnouncementController extends Controller
         header("Location: /course_announcement?course_code=".$body['course_code']);
     }
 
+    /**
+     * @description Update site announcements
+     * @param Request $request
+     * @return void
+     */
     public function updateSiteAnnouncements(Request $request)
     {
         $body = $request->getBody();
@@ -77,10 +99,39 @@ class AnnouncementController extends Controller
         header("Location: /site_announcement?announcement_id=".$body['announcement_id']);
     }
 
+    /**
+     * @description Update course announcements
+     * @param Request $request
+     * @return void
+     */
     public function updateCourseAnnouncements(Request $request)
     {
         $body = $request->getBody();
         CourseAnnouncement::CourseAnnouncementsUpdate($body['announcement_id'],$body['heading'],$body['content']);
         header("Location: /course_announcement?course_code=".$body['course_code']);
+    }
+
+    /**
+     * @description Delete site announcements
+     * @param Request $request
+     * @return void
+     */
+    public function deleteSiteAnnouncements(Request $request)
+    {
+        $body = $request->getBody();
+        SiteAnnouncement::deleteSiteAnnouncement($body['announcement_id_delete']);
+        header("Location: /site_announcement");
+    }
+
+    /**
+     * @description Delete course announcements
+     * @param Request $request
+     * @return void
+     */
+    public function deleteCourseAnnouncements(Request $request)
+    {
+        $body = $request->getBody();
+        CourseAnnouncement::deleteCourseAnnouncement($body['announcement_id_delete'],$body['course_code_delete']);
+        header("Location: /course_announcement?course_code=".$body['course_code_delete']);
     }
 }

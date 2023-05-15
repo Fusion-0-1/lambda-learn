@@ -30,29 +30,43 @@
                 </div>
             </div>
 
-            <div class="card">
-                <table>
-                    <tr>
-                        <th class="task-heading"> Tuesday </th>
-                        <th class="task-date"> January 4 2023 </th>
-                    </tr>
-                    <tr>
-                        <td class="task-content"> CS 2003 Assignment 1 </td>
-                        <td class="task-time"> 08:30 </td>
-                    </tr>
-                    <tr>
-                        <td class="task-content"> CS 2001 Labsheet 4 </td>
-                        <td class="task-time"> 09:30 </td>
-                    </tr>
-                    <tr>
-                        <td class="task-content"> CS 2002 Tutorial </td>
-                        <td class="task-time"> 10:30 </td>
-                    </tr>
-                    <tr>
-                        <td class="task-content"> CS 2004 Online Quiz </td>
-                        <td class="task-time"> 11:30 </td>
-                    </tr>
-            </div>
+            <?php if ($_SESSION['user-role'] == 'Student') {?>
+                <div class="card">
+                    <table>
+                        <tr>
+                            <th colspan="2" class="task-heading"> Upcoming Submissions </th>
+                        </tr>
+                        <?php $count = 1;
+                        foreach ($submissions as $submission) {
+                            $count++; ?>
+                            <tr>
+                                <td class="task-content"> <?php echo $submission->getTopic() ?> </td>
+                                <td class="task-date"> <?php echo $submission->getDueDate() ?> </td>
+                            </tr>
+                            <?php if ($count>5)
+                                break;
+                        }?>
+                    </table>
+                </div>
+            <?php } elseif ($_SESSION['user-role'] == 'Lecturer') {?>
+                <div class="card">
+                    <table>
+                        <tr>
+                            <th colspan="2" class="task-heading"> Upcoming Tasks </th>
+                        </tr>
+                        <?php $count = 1;
+                        foreach ($tasks as $task) {
+                            $count++; ?>
+                            <tr class="task-container">
+                                <td class="task-content"> <?php echo $task->getTitle() ?> </td>
+                                <td class="task-date"> <?php echo $task->getDueDate() ?> </td>
+                            </tr>
+                            <?php if ($count>5)
+                                break;
+                        }?>
+                    </table>
+                </div>
+            <?php } ?>
         </div>
     </div>
 </div>

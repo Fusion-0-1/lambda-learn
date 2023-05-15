@@ -4,6 +4,9 @@ namespace app\model;
 
 use app\core\Application;
 
+/**
+ *
+ */
 class CourseSubTopic {
     private string $courseCode;
     private string $topicId;
@@ -25,6 +28,12 @@ class CourseSubTopic {
         return $subTopic;
     }
 
+    /**
+     * @description Get course sub topics from the database
+     * @param $topicId
+     * @param $courseCode
+     * @return array
+     */
     public static function getCourseSubTopics($topicId, $courseCode): array {
         $subTopics = [];
 
@@ -77,32 +86,50 @@ class CourseSubTopic {
         return $subTopics;
     }
 
-    public function insertCourseSubTopics($courseCode,$lec_reg_no, $topicsArray, $subTopicsArray, $chekboxes)
+    /**
+     * @description Insert course sub topics to the database
+     * @param $courseCode
+     * @param $lec_reg_no
+     * @param $topicsArray
+     * @param $subTopicsArray
+     * @param $chekboxes
+     * @return void
+     */
+    public function insertCourseSubTopics($courseCode, $lec_reg_no, $topicsArray, $subTopicsArray, $chekboxes)
     {
         $topicId = 1;
         foreach ($topicsArray as $index => $topic) {
-            $subTopicId = 1;
-            foreach ($subTopicsArray[$index] as $subTopic) {
-                if($subTopic != ''){
-                    $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
-                    Application::$db->insert(
-                        table: 'CourseSubTopic',
-                        values: [
-                            'course_code' => $courseCode,
-                            'topic_id' => $topicId,
-                            'sub_topic_id' => $subTopicIdFormatted,
-                            'sub_topic' => $subTopic,
-                            'is_being_tracked' =>(int)$chekboxes[$topicId-1],
-                            'lec_reg_no' => $lec_reg_no
-                        ]
-                    );
+            if (isset($subTopicsArray[$index]) && is_array($subTopicsArray[$index])) {
+                $subTopicId = 1;
+                foreach ($subTopicsArray[$index] as $subTopic) {
+                    if ($subTopic != '') {
+                        $subTopicIdFormatted = $topicId . '.' . sprintf('%02d', $subTopicId);
+                        Application::$db->insert(
+                            table: 'CourseSubTopic',
+                            values: [
+                                'course_code' => $courseCode,
+                                'topic_id' => $topicId,
+                                'sub_topic_id' => $subTopicIdFormatted,
+                                'sub_topic' => $subTopic,
+                                'is_being_tracked' => (int)$chekboxes[$topicId - 1],
+                                'lec_reg_no' => $lec_reg_no
+                            ]
+                        );
+                    }
+                    $subTopicId++;
                 }
-                $subTopicId++;
             }
             $topicId++;
         }
     }
 
+    /**
+     * @description Update course sub topics progress in the database
+     * @param string $courseCode
+     * @param int $topicId
+     * @param $subTopicId
+     * @return string|void
+     */
     public static function updateProgress(string $courseCode, int $topicId, $subTopicId)
     {
         if($_SESSION['user-role']=='Lecturer'){
@@ -146,6 +173,45 @@ class CourseSubTopic {
                 }
             }
         }
+    }
+
+    /**
+     * @description Edit course sub topics in the database
+     * @param $courseCode
+     * @param $topicId
+     * @param $subTopicId
+     * @param $subTopicName
+     * @return bool
+     */
+    public static function editSubTopics($courseCode, $topicId, $subTopicId, $subTopicName) : bool
+    {
+        Application::$db->update(
+            table: 'CourseSubTopic',
+            columns: ['sub_topic' => $subTopicName],
+            where: ['course_code' => $courseCode, 'topic_id' => $topicId, 'sub_topic_id' => $subTopicId]
+        );
+        return true;
+    }
+
+    /**
+     * @description Delete student course sub topics from the database
+     * @return void
+     */
+    public static function truncateStuCourseSubTopics()
+    {
+        Application::$db->truncateTable('StuCourseSubTopic');
+    }
+
+    public static function removeSlidesAndRecordings($courseCode)
+    {
+        Application::$db->delete(
+            table: 'CourseSubTopicRec',
+            where: ['course_code'=>$courseCode]
+        );
+        Application::$db->delete(
+            table: 'CourseSubTopicSlide',
+            where: ['course_code'=>$courseCode]
+        );
     }
 
     // ---------------------------Getters and Setters-----------------------------------

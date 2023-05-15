@@ -11,6 +11,10 @@ use app\model\User\Student;
 
 class AuthController extends Controller
 {
+    /**
+     * @param Request $request
+     * @return array|false|string|string[]|void
+     */
     public function login(Request $request)
     {
         if ($request->isGet()) {
@@ -49,6 +53,9 @@ class AuthController extends Controller
         }
     }
 
+    /**
+     * @return array|false|string|string[]
+     */
     public function logout()
     {
         if (isset($_SESSION['user'])) {

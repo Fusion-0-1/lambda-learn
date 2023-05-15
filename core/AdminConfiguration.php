@@ -7,7 +7,6 @@ class AdminConfiguration
     private string $sem_start_date;
     private string $sem_end_date;
     private int $sem_count_year;
-    private int $total_sem_count;
 
     public function __construct(array $config)
     {
@@ -16,6 +15,37 @@ class AdminConfiguration
                 $this->{$key} = $value;
             }
         }
+    }
+
+    public function updateAcademicSettings(array $config)
+    {
+        // update object variables
+        foreach ($config as $setting){
+            foreach ($setting as $key => $value) {
+                $this->{$key} = $value;
+            }
+        }
+        // save in configuration file. admin_configuration.ini
+        $data = [
+            'semester' => [
+                'sem_start_date' => $this->sem_start_date,
+                'sem_end_date' => $this->sem_end_date,
+                'sem_count_year' => $this->sem_count_year,
+            ]
+        ];
+
+        $iniString = '';
+        foreach ($data as $section => $values) {
+            $iniString .= "[$section]\n";
+            foreach ($values as $key => $value) {
+                $iniString .= "$key=$value\n";
+            }
+            $iniString .= "\n";
+        }
+
+        file_put_contents('../admin_configuration.ini', $iniString);
+
+        return true;
     }
 
     /**
@@ -64,21 +94,5 @@ class AdminConfiguration
     public function setSemCountYear(int $sem_count_year): void
     {
         $this->sem_count_year = $sem_count_year;
-    }
-
-    /**
-     * @return int
-     */
-    public function getTotalSemCount(): int
-    {
-        return $this->total_sem_count;
-    }
-
-    /**
-     * @param int $total_sem_count
-     */
-    public function setTotalSemCount(int $total_sem_count): void
-    {
-        $this->total_sem_count = $total_sem_count;
     }
 }

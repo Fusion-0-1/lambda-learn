@@ -1,0 +1,198 @@
+{
+  "id": "3e2ee601-db35-4028-a0f3-550dfc388e61",
+  "version": "2.0",
+  "name": "lambda-AssignLec",
+  "url": "http://127.0.0.1:8080",
+  "tests": [{
+    "id": "47fb16f0-23c9-47ff-98b4-64b550715f22",
+    "name": "Assign Lecturer",
+    "commands": [{
+      "id": "06644641-806d-42c3-bd1e-100524077c98",
+      "comment": "",
+      "command": "open",
+      "target": "/login",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "98ef2a25-7916-4489-a140-67b51c70b2ea",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1400x839",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b9d75e85-7fa0-4e71-beea-326a315290c1",
+      "comment": "",
+      "command": "click",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "042567b5-53c9-4ba8-930a-469092553344",
+      "comment": "",
+      "command": "type",
+      "target": "id=password",
+      "targets": [
+        ["id=password", "id"],
+        ["name=password", "name"],
+        ["css=#password", "css:finder"],
+        ["xpath=//input[@id='password']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": "20030004@LC"
+    }, {
+      "id": "1254c4f5-72d5-405c-938f-5baa6d3c667a",
+      "comment": "",
+      "command": "type",
+      "target": "id=reg_no",
+      "targets": [
+        ["id=reg_no", "id"],
+        ["name=reg_no", "name"],
+        ["css=#reg_no", "css:finder"],
+        ["xpath=//input[@id='reg_no']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "2003/LC/0004"
+    }, {
+      "id": "fb7d871f-c6d9-4f4a-875c-6ab9d88f9a8f",
+      "comment": "",
+      "command": "click",
+      "target": "id=btn",
+      "targets": [
+        ["id=btn", "id"],
+        ["name=login", "name"],
+        ["css=#btn", "css:finder"],
+        ["xpath=//input[@id='btn']", "xpath:attributes"],
+        ["xpath=//input[3]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a14235ec-dfde-4651-a67f-a8c0149bb7e9",
+      "comment": "",
+      "command": "click",
+      "target": "css=.link:nth-child(4) img",
+      "targets": [
+        ["css=.link:nth-child(4) img", "css:finder"],
+        ["xpath=//img[@alt='Courses']", "xpath:img"],
+        ["xpath=//div[@id='primary-dashboard']/div[2]/a[4]/div/div/img", "xpath:idRelative"],
+        ["xpath=//a[4]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0b0b18bd-f729-44ab-8292-e64a2392b9c2",
+      "comment": "",
+      "command": "click",
+      "target": "css=#coordinator-dashboard-2 .link:nth-child(2) img",
+      "targets": [
+        ["css=#coordinator-dashboard-2 .link:nth-child(2) img", "css:finder"],
+        ["xpath=//img[@alt='Assign Users']", "xpath:img"],
+        ["xpath=//div[@id='coordinator-dashboard-2']/div/a[2]/div/div/img", "xpath:idRelative"],
+        ["xpath=//div[2]/div/a[2]/div/div/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9a70f16d-62be-45e6-b5af-9f552c442b70",
+      "comment": "",
+      "command": "click",
+      "target": "name=lecturer",
+      "targets": [
+        ["name=lecturer", "name"],
+        ["css=#assign_lecturers > .flex:nth-child(3) > .input", "css:finder"],
+        ["xpath=//select[@name='lecturer']", "xpath:attributes"],
+        ["xpath=//form[@id='assign_lecturers']/div/select", "xpath:idRelative"],
+        ["xpath=//form[2]/div/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b2537737-1631-483a-b2e4-a6b4ffe9fbf0",
+      "comment": "",
+      "command": "select",
+      "target": "name=lecturer",
+      "targets": [],
+      "value": "label=2014/LC/0034"
+    }, {
+      "id": "a53196d1-d2b5-40e7-9b34-063bcab1c6ae",
+      "comment": "",
+      "command": "click",
+      "target": "css=.flex:nth-child(3) option:nth-child(7)",
+      "targets": [
+        ["css=.flex:nth-child(3) option:nth-child(7)", "css:finder"],
+        ["xpath=//form[@id='assign_lecturers']/div/select/option[7]", "xpath:idRelative"],
+        ["xpath=//form[2]/div/select/option[7]", "xpath:position"],
+        ["xpath=//option[contains(.,'2014/LC/0034')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "e518ac59-759e-4d3c-a53c-0d248757c3e8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.input-field",
+      "targets": [
+        ["css=.input-field", "css:finder"],
+        ["xpath=(//select[@name='course'])[2]", "xpath:attributes"],
+        ["xpath=//form[@id='assign_lecturers']/div[3]/select", "xpath:idRelative"],
+        ["xpath=//form[2]/div[3]/select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "93b3b7cd-395a-4c66-ac61-f933b931a2ce",
+      "comment": "",
+      "command": "select",
+      "target": "css=.input-field",
+      "targets": [],
+      "value": "label=IS 5006 - Data Structures"
+    }, {
+      "id": "590ade68-20b7-4ac2-9f85-0d804a38e961",
+      "comment": "",
+      "command": "click",
+      "target": "css=option:nth-child(28)",
+      "targets": [
+        ["css=option:nth-child(28)", "css:finder"],
+        ["xpath=//form[@id='assign_lecturers']/div[3]/select/option[28]", "xpath:idRelative"],
+        ["xpath=//option[28]", "xpath:position"],
+        ["xpath=//option[contains(.,'IS 5006 - Data Structures')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffa8c041-3588-4c7d-a092-7d30a3b4608a",
+      "comment": "",
+      "command": "click",
+      "target": "name=assign",
+      "targets": [
+        ["name=assign", "name"],
+        ["css=.flex-row > .edit-btn-text:nth-child(2)", "css:finder"],
+        ["xpath=//button[@name='assign']", "xpath:attributes"],
+        ["xpath=//form[@id='assign_lecturers']/div[4]/div/button", "xpath:idRelative"],
+        ["xpath=//div[4]/div/button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b7655b1-98fb-4490-a1cc-506dc91cc17e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.elements #sidenav-element",
+      "targets": [
+        ["css=.elements #sidenav-element", "css:finder"],
+        ["xpath=(//img[@id='sidenav-element'])[6]", "xpath:attributes"],
+        ["xpath=//div[3]/a/img", "xpath:position"]
+      ],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "6a2cb3db-8e2b-4e41-b0c3-2970d06c393c",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["47fb16f0-23c9-47ff-98b4-64b550715f22"]
+  }],
+  "urls": ["http://127.0.0.1:8080/"],
+  "plugins": []
+}

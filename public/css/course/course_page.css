@@ -123,6 +123,55 @@
     font-weight: bold;
 }
 
+.announcement-view {
+    width: 90%;
+    padding-bottom: 30px;
+    margin: 15% auto;
+    background-color: #ffffff;
+}
+
+.header-container{
+    padding: 1% 2.5%;
+}
+
+.header-content{
+    overflow-wrap: break-word;
+    font-size: 20px;
+}
+
+.announcement-view-inside {
+    width: 95%;
+    height: 75%;
+    position: relative;
+    border-radius: 15px;
+    margin: auto;
+    background: var(--white);
+}
+
+.lec-datetime {
+    background: var(--blue);
+    display: grid;
+    grid-template-columns: 60% auto;
+    color: var(--white);
+    border-radius: inherit;
+    padding: 10px 20px;
+}
+
+.announcement-view-inside p{
+    padding: 2%;
+    overflow-wrap: break-word;
+    margin: 0;
+}
+
+#reset-course-form {
+    width: 100%;
+}
+
+#reset-course-btn {
+    padding: 8px 30px;
+    margin-bottom: 15px;
+}
+
 @media (max-width: 425px) {
     .progress-bar-outer {
         margin: 10px 0 20px 0;
@@ -152,6 +201,7 @@
     .inner-container {
         font-size: 12px;
     }
+
     .topic-container {
         flex-direction: column;
     }

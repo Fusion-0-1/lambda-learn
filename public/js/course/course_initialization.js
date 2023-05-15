@@ -57,7 +57,6 @@ function addTopic(topic_element){
     }
     topic_fields = nonempty_topics;
 
-    console.log(topic_fields)
     if (empty_fields.length > 1) {
         for (let i = 0; i < empty_fields.length-1; i++) {
             empty_fields[i].remove();
@@ -81,8 +80,6 @@ function addSubTopic(clicked_id){
         newSubtopic.placeholder = 'Add new sub topic...';
         newSubtopic.className = 'input input-subtopic flex width-full';
         newSubtopic.setAttribute('name', 'subtopic['+(clicked_id)+'][]');
-        // newSubtopic.name = "subtopics!!subtopic-"+(clicked_id);
-        // newSubtopic.name = "subtopic-"+(clicked_id) + "!!";
 
         subtopicContainer.appendChild(newSubtopic);
     }
@@ -124,11 +121,6 @@ function createSubtopics(){
         check_box.setAttribute('type', 'checkbox');
         check_box.setAttribute('id', 'check_box-'+(i));
         check_box.setAttribute('name', 'checkbox_'+i);
-        // document.createElement('input');
-        // hidden_input.setAttribute('type', 'hidden');
-
-
-
 
         let subtopic_container = document.createElement('div');
         subtopic_container.setAttribute("id", "subtopic-"+(i));
@@ -140,8 +132,6 @@ function createSubtopics(){
         input.classList.add("input", "input-subtopic", "flex");
         input.setAttribute("placeholder", "Add new sub topic...");
         input.setAttribute('name', 'subtopic['+(i)+'][]');
-        // input.name = "subtopics!!subtopic-"+(i);
-
 
         //Create the add button
         let add_button = document.createElement("button");

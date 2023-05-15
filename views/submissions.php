@@ -65,8 +65,9 @@
                     <?php
                         $attachmentPath = $sub->getLocation();
                         $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
+                        $attachmentPath = explode(getcwd(), $attachmentPath)[1];
                         foreach ($attachmentFiles as $file) { ?>
-                            <div class="files-views"><a href="<?php echo $file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
+                            <div class="files-views"><a href="<?php echo $attachmentPath . '/' .$file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
                         <?php } ?>
                     <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
                     <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >

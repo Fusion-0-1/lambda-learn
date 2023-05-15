@@ -78,3 +78,7 @@
 input[type='checkbox']{
     accent-color: var(--green);
 }
+
+.edit-course-input{
+    border: var(--white);
+}

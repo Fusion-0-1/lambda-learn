@@ -3,6 +3,7 @@
 namespace app\model;
 
 use app\core\Application;
+use app\core\User;
 
 class Submission
 {
@@ -82,7 +83,8 @@ class Submission
                     $files[] = $file;
                 }
             }
-        }return $files;
+        }
+        return $files;
     }
 
     public function submissionInsert()
@@ -111,7 +113,7 @@ class Submission
             limit: 1
         );
         $lastInsertId = Application::$db->fetch($result);
-        return $lastInsertId['submission_id'];
+        return $lastInsertId['submission_id'] ?? 0;
     }
 
     public static function updateVisibility($courseCode,$submissionId,$visibility)
@@ -138,6 +140,112 @@ class Submission
             table: 'coursesubmission',
             where: ['course_code' => $courseCode,'submission_id'=>$submissionId]
         );
+    }
+
+    public static function deleteAllSubmissions($courseCode)
+    {
+        self::deleteLecAttachmentFolders();
+        Application::$db->delete(
+            table: 'CourseSubmission',
+            where: ['course_code'=>$courseCode]
+        );
+    }
+
+    /**
+     * @description Get all the submissions of a given student
+     * @param User $user
+     * @return array
+     */
+
+    public static function getUserSubmissions(User $user): array
+    {
+        $assignmentSubmissions = [];
+        $results = Application::$db->select(
+            table: 'CourseSubmission CS',
+            columns: ['CS.course_code', 'CS.topic', 'CS.description', 'CS.due_date', 'CS.submission_id'],
+            join: [
+                [
+                    'table' => 'StuCourse SC',
+                    'on' => 'CS.course_code = SC.course_code'
+                ]
+            ],
+            where: ['CS.visibility' => 1, 'SC.stu_reg_no' => $user->getRegNo()],
+        );
+        while ($submission = Application::$db->fetch($results)) {
+            $assignmentSubmissions[] = self::createNewSubmission(
+                courseCode: $submission['course_code'],
+                topic: $submission['topic'],
+                description: $submission['description'],
+                dueDate: $submission['due_date'],
+                submissionId: $submission['submission_id']
+            );
+        }
+        return $assignmentSubmissions;
+    }
+
+    public static function stuSubExists($regNo, $courseCode, $submissionId): bool
+    {
+        return Application::$db->checkExists(
+            table: 'stucoursesubmission',
+            primaryKey: ['stu_reg_no'=> $regNo,'course_code'=>$courseCode,'submission_id'=>$submissionId]
+        );
+    }
+
+    /*
+     * @description Delete all the student submissions of a given course
+     */
+    public static function truncateStuCourseSubmissioms()
+    {
+        self::deleteStuSubmissionFolders();
+        Application::$db->truncateTable('StuCourseSubmission');
+    }
+
+    /*
+     * @description Delete all the student submission folders
+     */
+    private static function deleteStuSubmissionFolders()
+    {
+        if (is_dir(getcwd(). "/User Uploads/Submissions/")) {
+            //pwd - lambda-learn/public
+            $submissions = scandir(getcwd() . "/User Uploads/Submissions/");
+            // rmdir - User Uploads/Submissions/<course_code>/<sub_id>/Student_Submissions
+            foreach ($submissions as $submission) {
+                if (!in_array($submission, ['.', '..'])) {
+                    $submissionFolders = scandir(getcwd() . "/User Uploads/Submissions/$submission");
+                    foreach ($submissionFolders as $submissionFolder) {
+                        if (!in_array($submissionFolder, ['.', '..'])) {
+                            $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Student_Submissions";
+                            if (is_dir($stuSubmissionFolder))
+                                rmdir($stuSubmissionFolder);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    /*
+    * @description Delete all the student submission folders
+    */
+    private static function deleteLecAttachmentFolders()
+    {
+        if (is_dir(getcwd(). "/User Uploads/Submissions/")) {
+            //pwd - lambda-learn/public
+            $submissions = scandir(getcwd() . "/User Uploads/Submissions/");
+            // rmdir - User Uploads/Submissions/<course_code>/<sub_id>/Lecturer_Attachments
+            foreach ($submissions as $submission) {
+                if (!in_array($submission, ['.', '..'])) {
+                    $submissionFolders = scandir(getcwd() . "/User Uploads/Submissions/$submission");
+                    foreach ($submissionFolders as $submissionFolder) {
+                        if (!in_array($submissionFolder, ['.', '..'])) {
+                            $stuSubmissionFolder = getcwd() . "/User Uploads/Submissions/$submission/$submissionFolder/Lecturer_Attachments";
+                            if (is_dir($stuSubmissionFolder))
+                                rmdir($stuSubmissionFolder);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /**

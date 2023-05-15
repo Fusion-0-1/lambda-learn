@@ -29,6 +29,10 @@ class CSVFile
 
 
     // -----------------------------Basic Methods-------------------------------------
+    /**
+     * @description Retrieve attendance reports details from the database
+     * @return array
+     */
     public static function getAttendanceReports()
     {
         $csvFiles = [];
@@ -42,6 +46,12 @@ class CSVFile
         return $csvFiles;
     }
 
+    /**
+     * @description Insert attendance report details into the database
+     * @param $path
+     * @param $date
+     * @return void
+     */
     public function insertAttendanceReport($path, $date): void
     {
         Application::$db->insert(
@@ -60,7 +70,7 @@ class CSVFile
     // ----------------------------Custom Methods--------------------------------------
     /**
      * @description Read the CSV file
-     * two functionalities wrapped into this function.
+     * three functionalities wrapped into this function.
      *  1. Read user account creation csv upload
      *       Read the csv and unwrapped the columns' data. This will categorize data into valid, update and invalid
      *       data. Update array contains the students who are existing in the database, invalid array contains students
@@ -72,12 +82,20 @@ class CSVFile
      *       This will read attendance containing csv file. Will return false if course codes provided are wrong.
      *       This will update student update for each course as specified in the csv file. 10 points will be given for
      *       leaderboard ranking.
+     * 3. Assign Students to a course
+     *      @param bool $assignStudents (this will enable assign students function)
+     *       This will read student registration numbers in the csv file. Will return invalid registration numbers as an array.
+     *       This will assign students to the course and the file should be renamed with the course code.
+     *  4: Upload Exam Marks
+     *       @param bool $uploadExamMarks true (this will enable upload exam marks function)
+     *       Reads the CSV file containing exam marks.
+     *       Returns an array of valid registration numbers and their corresponding exam marks.
      * @param bool $updateAttendance true (This should be true if want to enable this feature).
      * @param string|null $location
      * @return array|bool|null
      */
     public function readCSV($constructor = null, bool $readUserData = false,
-                            bool $updateAttendance = false, bool $assignStudents = false, string $location = null)
+                            bool $updateAttendance = false, bool $assignStudents = false, bool $uploadExamMarks = false, string $location = null)
     {
         $output = null;
         if (!empty($this->filename) && in_array($this->filetype, self::csvMimes)) {
@@ -90,18 +108,13 @@ class CSVFile
                 } else if ($assignStudents) {
                     $output = $this->assignStudents($csvFile);
                 }
+                elseif($uploadExamMarks) {
+                    $output = $this->uploadExamMarks($csvFile);
+                }
                 fclose($csvFile);
                 // Save the file in the server
                 if ($location != null) {
-                    if ($readUserData) { // User account creation file naming
-                        if (count($output['invalid']) > 0) {
-                            $location = $location . '_invalid.csv';
-                        } elseif (count($output['update']) > 0) {
-                            $location = $location . '_update.csv';
-                        } else {
-                            $location = $location . '_valid.csv';
-                        }
-                    } elseif ($updateAttendance) { // Student attendance file naming
+                    if ($updateAttendance) { // Student attendance file naming
                         $date = explode('_', $location);
                         if (count($output) > 0) {
                             $location = $location . '_invalid.csv';
@@ -110,7 +123,7 @@ class CSVFile
                         }
                         $this->insertAttendanceReport($location, end($date));
                     }
-                    move_uploaded_file($this->filepath, $location);
+                    $this->saveFileOnServer($location);
                 }
             } else {
                 return false;
@@ -120,6 +133,17 @@ class CSVFile
     }
 
 
+    public function saveFileOnServer($location): void
+    {
+        if (!file_exists($location)) {
+            // remove file name and create folder structure
+            $location_ = explode('/', $location);
+            array_pop($location_);
+            $location_ = implode('/', $location_);
+            mkdir($location_, recursive: true);
+        }
+        move_uploaded_file($this->filepath, $location);
+    }
     /**
      * @description Create user accounts. This function must be used inside readCSV. This is a passive function.
      * i.e. function itself can not run.
@@ -222,6 +246,26 @@ class CSVFile
         }
         return ['invalid' => $invalidRegNo, 'invalid_course' => $invalidCourse, 'exist' => $exist];
     }
+
+    /**
+    *@description Assigns students to a course by reading a CSV file containing their registration numbers and exam marks.
+    *@param $csvFile - The CSV file containing the registration numbers and exam marks of the students to be assigned.
+    *@return array - Returns an array of valid registration numbers and their corresponding exam marks.
+     */
+    public function uploadExamMarks($csvFile) : array
+    {
+        $student = [];
+        $invalidStudent = [];
+
+        $header = fgetcsv($csvFile);
+        while (($line = fgetcsv($csvFile)) !== FALSE) {
+            $unwrappedData = Course::unwrapExamMarks($line);
+            $student['reg_no'][] = $unwrappedData['regNo'];
+            $student['exam_mark'][] = $unwrappedData['marks'];
+        }
+        return $student;
+    }
+
     // --------------------------------------------------------------------------------
 
 
