@@ -181,9 +181,15 @@
                 <h5> Submissions </h5>
                 <a href="/submissions?course_code=<?php echo $course->getCourseCode()?>" class="hyperlink"> View all </a>
             </div>
-            <button class="inner-container border-radius text-left" id="submission1"> Submission 3 - Greedy Alogrothms </button>
-            <button class="inner-container border-radius text-left"> Submission 2 - Greedy Alogorithms </button>
-            <button class="inner-container border-radius text-left"> Submission 1 - String Matching </button>
+            <?php $count = 1;
+            foreach ($courseSubmissions as $c_sub) {
+            $count++; ?>
+                <button class="inner-container border-radius text-left" id="submission1">
+                    <?php echo $c_sub->getTopic()?>
+                </button>
+                <?php if ($count>3)
+                    break;
+            }?>
         </div>
 
     </div>
