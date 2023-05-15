@@ -16,11 +16,12 @@ class Submission
     private string $dueDate;
     private bool $visibility;
     private string $location;
+    public int $remainingPoints;
 
 
     private function __construct() {}
 
-    public static function createNewSubmission($courseCode, $topic, $description, $dueDate, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
+    public static function createNewSubmission($courseCode, $topic, $description, $dueDate, $remainingPoints, $allocatedMark=0, $allocatedPoint=0, $visibility=false, $location="",$submissionId="") {
         $submission = new Submission();
         if ($submissionId != ""){
             $submission->submissionId = $submissionId;
@@ -33,6 +34,7 @@ class Submission
         $submission->dueDate = $dueDate;
         $submission->visibility = $visibility;
         $submission->location = $location;
+        $submission->remainingPoints = $remainingPoints;
         return $submission;
     }
 
@@ -44,17 +46,29 @@ class Submission
             where: ['course_code' => $course_code],
             order: 'submission_id DESC'
         );
+
+        $total_allocated_marks = Application::$db->select(
+            table: 'coursesubmission',
+            columns: ['SUM(allocated_point)'],
+            where: ['course_code' => $course_code],
+            limit: 1
+        );
+        $marks_row = mysqli_fetch_assoc($total_allocated_marks);
+        $total_allocated_points = $marks_row['SUM(allocated_point)'] * 100 / 100;
+        $remaining_points = 100 - $total_allocated_points;
+
         while ($sub = Application::$db->fetch($results)){
             $assignmentSubmissions[] = self::createNewSubmission(
                 courseCode: $sub['course_code'],
                 topic: $sub['topic'],
                 description: $sub['description'],
                 dueDate: $sub['due_date'],
+                remainingPoints: $remaining_points,
                 allocatedMark: $sub['allocated_mark'],
                 allocatedPoint: $sub['allocated_point'],
                 visibility: $sub['visibility'],
                 location: $sub['attachments']?? '',
-                submissionId: $sub['submission_id']
+                submissionId: $sub['submission_id'] // Pass the remaining points to each submission
             );
         }
         return $assignmentSubmissions;
@@ -314,5 +328,11 @@ class Submission
         $this->location = $location;
     }
 
-
+    /**
+     * @return int
+     */
+    public function getRemainingPoints(): int
+    {
+        return $this->remainingPoints;
+    }
 }
