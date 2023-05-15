@@ -1,51 +1,63 @@
 <link rel="stylesheet" href="css/submissions.css">
+<link rel="stylesheet" href="css/submission_popup.css">
+
 
 <div id="file-upload-container" class="main-container border v-center flex-gap responsive-container">
-    <h3><?php echo $course_code?></h3>
+    <h3><?php use Cassandra\Date;
 
-    <form id="add-attachment" class="flex flex-column" action="/submissions" method="post" enctype="multipart/form-data">
-        <div class="submissions-card border">
-            <div class="topic-container-add grid v-center h-justify">
+        echo $course_code?></h3>
+
+    <?php if ($_SESSION['user-role'] == 'Lecturer') { ?>
+        <form id="add-attachment" class="flex flex-column" action="/submissions" method="post" enctype="multipart/form-data">
+            <div class="submissions-card border">
+                <div class="topic-container-add grid v-center h-justify">
                     <textarea id="heading_textarea" name="heading" placeholder="Type your submission topic..."
                               class="add-headline text-bold v-center text-justify" id="" wrap="hard"></textarea>
-                <button class="btn confirm-btn h-center v-center"
-                        onclick="return submissionInsertValidate(document.getElementById('heading_textarea').value,document.getElementById('add_mark').value,document.getElementById('add_point').value,document.getElementById('content_textarea').value)">Upload
-                </button>
-            </div>
-
-            <div class="submissions-card-inside border">
-                <div class="container-heading-input grid h-justify v-center">
-                    <div class="view-points-and-marks">Marks Allocated:- <input id="add_mark" type="number" name="mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
-                    <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" min="0" pattern="\d+"></div>
-                    <label for="duetime">Due date:- </label>
-                    <input type="datetime-local" id="duetime" name="duetime" class="due-date">
+                    <button class="btn confirm-btn h-center v-center"
+                            onclick="return submissionInsertValidate(document.getElementById('heading_textarea').value,document.getElementById('add_mark').value,document.getElementById('add_point').value,document.getElementById('content_textarea').value)">Upload
+                    </button>
                 </div>
-                <div  class="add-submissions-content-div">
-                    <textarea id="content_textarea" name="content" placeholder="Type your announcement here ..." class="add-submissions-content text-justify"></textarea>
+
+                <div class="submissions-card-inside border">
+                    <div class="container-heading-input grid h-justify v-center">
+                        <div class="view-points-and-marks">Marks Allocated:- <input id="add_mark" type="number" name="mark" placeholder="Add Marks ..." class="add-points-and-marks" min="0" pattern="\d+"></div>
+                        <div class="view-points-and-marks">Points Allocated:- <input id="add_point" type="number" name="point" placeholder="Add Points..." class="add-points-and-marks" min="0" pattern="\d+"></div>
+                        <label for="duetime">Due date:- </label>
+                        <input type="datetime-local" id="duetime" name="duetime" class="due-date">
+                    </div>
+                    <div  class="add-submissions-content-div">
+                        <textarea id="content_textarea" name="content" placeholder="Type your announcement here ..." class="add-submissions-content text-justify"></textarea>
+                    </div>
                 </div>
-            </div>
 
-            <div class="flex v-center">
-                <label for="visibility1" class="visibility-css"> Visibility </label><br>
-                <input type="checkbox" id="visibility1" name="visibility">
-                <input id="upload_attachment" type="file" name="attachment[]" accept=".pdf,.png,.jpg" multiple onchange="previewAttachment()" hidden >
-                <label for="upload_attachment" class="attach-btn dark-btn flex-end h-center">Add Attachments</label>
-                <div id="num-of-files">No Files Chosen</div>
-                <div id="display-files" class="flex"></div>
-            </div>
+                <div class="flex v-center">
+                    <label for="visibility1" class="visibility-css"> Visibility </label><br>
+                    <input type="checkbox" id="visibility1" name="visibility">
+                    <input id="upload_attachment" type="file" name="attachment[]" accept=".pdf,.png,.jpg" multiple onchange="previewAttachment()" hidden >
+                    <label for="upload_attachment" class="attach-btn dark-btn flex-end h-center">Add Attachments</label>
+                    <div id="num-of-files">No Files Chosen</div>
+                    <div id="display-files" class="flex"></div>
+                </div>
 
-            <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
-        </div>
-    </form>
+                <input id="course_code" type="text" name="course_code" value="<?php echo $course_code?>"hidden >
+            </div>
+        </form>
+    <?php } ?>
 
     <?php foreach ($submissions as $sub) { ?>
         <div class="submissions-card border">
             <div class="topic-container grid v-center h-justify" >
                 <h4 class="heading-content text-bold text-justify"><?php echo $sub->getTopic()?></h4>
+                <?php if ($_SESSION['user-role'] == 'Lecturer') { ?>
                     <div class="edit-delete-timeremaining grid v-center">
                         <button class="deletebtn link"><img src="./images/announcement/Delete.png" alt="Delete image" onclick="courseSubmissionDelete('<?php echo $sub->getSubmissionId()."'";?>)"></button>
                         <button class="editbtn link"><img src="./images/announcement/Edit.png" alt="Edit image" onclick="submissionupdate('<?php echo $sub->getTopic()."','".$sub->getDescription()."','".$sub->getDueDate()."','".$sub->getAllocatedMark()."','".$sub->getAllocatedPoint()."','".$sub->getLocation()."','".$sub->getSubmissionId()."'";?>)"></button>
                     </div>
+                <?php } elseif ($_SESSION['user-role'] == 'Student') { ?>
+<!--                    <div class="edit-delete-timeremaining grid v-center">-->
+                        <a href="submissions?course_code=<?php echo $sub->getCourseCode() . '&submission_id=' . $sub->getSubmissionId()?>">Upload Assignment</a>
+<!--                    </div>-->
+                <?php } ?>
             </div>
             <div class="submissions-card-inside border">
                 <div class="container-heading grid h-justify v-center">
@@ -55,18 +67,22 @@
                 </div>
                 <p class="text-justify view-points-and-marks"><?php echo $sub->getDescription()?></p>
                 <form class="submissions flex v-center" action="/submission_visibility" method="post">
-                    <label for="visibility2"> Visibility </label><br>
-                    <input type="hidden" name="visibility" value="0">
-                    <input type="checkbox" onchange="this.form.submit()" id="visibility2" name="visibility" value="1" <?php echo $sub->getVisibility() ? 'checked' : ''; ?>>
-                    <button class="marks-btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
-                    <button class="marks-btn dark-btn">Download All Submissions</button>
+                    <?php if ($_SESSION['user-role'] == 'Lecturer') { ?>
+                        <label for="visibility2"> Visibility </label><br>
+                        <input type="hidden" name="visibility" value="0">
+                        <input type="checkbox" onchange="this.form.submit()" id="visibility2" name="visibility" value="1" <?php echo $sub->getVisibility() ? 'checked' : ''; ?>>
+                        <button class="marks-btn dark-btn" onclick="location.href='marks_upload'">Upload Marks</button>
+                        <button class="marks-btn dark-btn">Download All Submissions</button>
+                    <?php } ?>
                     <?php
                         $attachmentPath = $sub->getLocation();
                         $attachmentFiles = $sub->getAttachmentFileNames($attachmentPath);
-                        $attachmentPath = explode(getcwd(), $attachmentPath)[1];
-                        foreach ($attachmentFiles as $file) { ?>
-                            <div class="files-views"><a href="<?php echo $attachmentPath . '/' .$file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
-                        <?php } ?>
+                        $attachmentPath = explode(getcwd(), $attachmentPath)[1] ?? '';
+                        foreach ($attachmentFiles as $file) {
+                            if ($file != '' or $attachmentPath != '') { ?>
+                                <div class="files-views"><a href="<?php echo $attachmentPath . '/' .$file ?>" class="text-no-decoration" target="_blank"><?php echo $file ?></a></div>
+                            <?php }
+                        } ?>
                     <input id="course_code" type="text" name="course_code" value="<?php echo $sub->getCourseCode() ?>"  hidden >
                     <input id="submission_id" type="text" name="submission_id" value="<?php echo $sub->getSubmissionId() ?>"  hidden >
                 </form>
@@ -150,8 +166,163 @@
         </div>
     </form>
 </div>
+<?php if ($_SESSION['user-role'] == 'Student' && isset($current_submission)) { ?>
+<div class="modal" id="modal_submission" <?php if (isset($submission_id)) echo "hidden"?>>
+    <div class="popup-card modal-content" id="popup_submission">
+        <form method="post" action="stu_submissions" id="stu_submission" enctype="multipart/form-data">
+            <span class="close">&times;</span>
+            <div class="course-name flex h-center text-bold text-center"></div>
+            <div class="course-code flex h-center"><?php echo $course_code ?></div>
+
+            <div class="submission-topic text-bold"><?php echo $current_submission->getTopic()?></div>
+            <div class="submissions-card-insides">
+                <div class="due-date-div grid h-justify v-center">
+                    <div class="due-date-heading flex v-center">
+                        <img src="/images/submissions_popup/submission_pop_due_date.png">
+                        <div>Due Date</div>
+                    </div>
+                    <div class="due-date-contain text-center" id="modal_due_date"><?php echo $current_submission->getDueDate()?></div>
+                </div>
+                <div class="time-remaning-div grid h-justify v-center">
+                    <div class="due-date-heading flex v-center">
+                        <img src="/images/submissions_popup/submission_pop_time_remaining.png">
+                        <div>Time remaining</div>
+                    </div>
+                    <div class="due-date-contain text-center flex h-center" id="remaining_time"></div>
+                </div>
+
+                <div class="break-line"></div>
+
+                <div class="time-remaning-div grid h-justify v-center">
+                    <div class="due-date-heading flex v-center">
+                        <img src="/images/submissions_popup/submission_pop_granding_status.png">
+                        <div>Grading status</div>
+                    </div>
+                    <div class="due-date-contain flex h-center">Pending</div>
+                </div>
+                <div class="text-right file-size-text">*Max Files Size 50MB</div>
+                <div class="time-remaning-div-filesize grid h-justify v-center">
+                    <div class="due-date-heading flex v-center">
+                        <img src="/images/submissions_popup/submission_pop_file_submission.png">
+                        <div>File submission</div>
+                    </div>
+                    <div class="due-date-contain flex h-center" id="display-stu-files">
+                        <?php $user = unserialize($_SESSION['user']);
+                        if ($current_submission->isSubmitted()) { ?>
+                            <a href="<?php echo $current_submission->getAttachmentPath()?>">
+                                <?php echo $current_submission->getFileNameFromPath() ?>
+                            </a>
+                        <?php } ?>
+                    </div>
+                </div>
+                <div class="time-remaning-div grid h-justify v-center">
+                    <div class="due-date-heading flex v-center">
+                        <img src="/images/submissions_popup/submission_pop_submitted-date.png">
+                        <div>Submitted Date</div>
+                    </div>
+                    <div class="due-date-contain flex h-center submitted-date"> <?php echo $current_submission->getSubmittedDate() ?></div>
+                </div>
+                <form action="stu_submissions" enctype="multipart/form-data" method="post" class="submit-buttons flex h-center">
+                    <input id="upload_stu_attachment" type="file" name="attachment" accept=".pdf,.png,.jpg,.zip"
+                           onchange="previewStuAttachment()" hidden>
+                    <label for="upload_stu_attachment" id="upload_stu_attachment_label" class="edit-btn submission-btn text-center">Add
+                        submission</label>
+                    <input type="text" name="course_code" value="<?php echo $current_submission->getCourseCode()?>" hidden>
+                    <input type="text" name="submission_id" value="<?php echo $current_submission->getSubmissionId()?>" hidden>
+                    <button class="edit-btn submission-btn text-center hide" id="edit-stu-submission"
+                            onclick="editAttachment()">Edit submission
+                    </button>
+                    <button class="edit-btn submission-btn text-center hide" id="remove-stu-submission"
+                            onclick="removeAttachment()">Remove submission
+                    </button>
+                    <button class="edit-btn submission-btn text-center hide" id="save-btn">
+                        Save
+                    </button>
+                    <button type="button" class="edit-btn submission-btn text-center hide" onclick="cancelStuAttachment()"
+                            id="stu-cancel-btn">Cancel
+                    </button>
+                </form>
+            </div>
+
+            <input id="submission_stu_id" type="text" name="submission_stu_id" hidden>
+            <input id="course_code" type="text" name="course_code" value="<?php echo $course_code ?>" hidden>
+            <input id="stu_reg_no" type="text" name="stu_reg_no" value="<?php
+            $profile = unserialize($_SESSION['user']);
+            echo $profile->getRegNo();
+            ?>" hidden>
+        </form>
+    </div>
+</div>
+<?php } ?>
+
 
 <script type="text/javascript">
+    const modal = document.getElementById("modal_submission");
+    // click cancel button to close
+    const cancel_btn = modal.getElementsByClassName('close')[0];
+    console.log(cancel_btn);
+    cancel_btn.onclick = function () {
+        modal.hidden = true;
+    };
+
+    // click outside the modal to close
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.hidden = true;
+        }
+    });
+
+
+    // modal_submission
+    function previewStuAttachment() {
+        const fileInput = document.getElementById("upload_stu_attachment");
+        const fileContainer = document.getElementById("display-stu-files");
+        const maxSize = 50 * 1024 * 1024; // 50MB in bytes
+        fileContainer.innerHTML = "";
+
+        if (fileInput.files.length === 1) {
+            const file = fileInput.files[0];
+            if (file.size <= maxSize) {
+                const reader = new FileReader();
+                const figure = document.createElement("figure");
+                const figCap = document.createElement("figcaption");
+                figCap.innerText = file.name;
+                figure.appendChild(figCap);
+                reader.onload = () => {
+                    const fileBlob = new Blob([reader.result], {type: "application/pdf,image/jpeg,image/png,image/jpg"});
+                    const fileUrl = URL.createObjectURL(fileBlob);
+                    figCap.addEventListener("click", () => window.open(fileUrl));
+                };
+                fileContainer.appendChild(figure);
+                reader.readAsArrayBuffer(file);
+
+                // show edit and remove submission buttons
+                document.getElementById("save-btn").classList.remove("hide");
+                document.getElementById("stu-cancel-btn").classList.remove("hide");
+                // hide add submission button
+                document.querySelector("label[for='upload_stu_attachment']").classList.add("hide");
+            } else {
+                alert("The selected file is too large. Please select a file that is 50MB or smaller.");
+                fileInput.value = null;
+            }
+        }
+    }
+
+    function cancelStuAttachment() {
+        const fileInput = document.getElementById("upload_stu_attachment");
+        const fileContainer = document.getElementById("display-stu-files");
+
+        // Hide the Save and Cancel buttons, show the Add button
+        document.getElementById("save-btn").classList.add("hide");
+        document.getElementById("stu-cancel-btn").classList.add("hide");
+        document.querySelector("label[for='upload_stu_attachment']").classList.remove("hide");
+        document.getElementById("edit-stu-submission").classList.add("hide");
+
+        // Clear the file input and remove any displayed files
+        fileInput.value = null;
+        fileContainer.innerHTML = "";
+    }
+
     textarea = document.querySelector("#heading_textarea");
     textarea.addEventListener('input', autoResize, false);
 
