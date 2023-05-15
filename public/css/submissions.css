@@ -104,9 +104,9 @@
     padding: 8px;
     border-radius: 8px;
 }
-a:link{
-    color: var(--white);
-}
+/*a:link{*/
+/*    color: var(--white);*/
+/*}*/
 .card-edit-modal {
     width: 80%;
     margin: 15% auto;
